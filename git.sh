@@ -14,12 +14,12 @@ WHITE=$(tput setaf 7)
 # Check if no commit message is provided
 if [ -z "$1" ]; then
     echo "${RED}No commit message provided."
-    echo "Usage: ./git_push.sh 'Commit message'${RESET_COLOR}"
+    echo "Usage: ./git_push.sh 'Commit message' [merge]${RESET_COLOR}"
     exit 1
 fi
 
 # Get the commit message from the arguments
-commit_message="$*"
+commit_message="$1"
 
 # Get the current branch name
 branch_name=$(git symbolic-ref --short HEAD)
@@ -34,3 +34,13 @@ git commit -m "$commit_message"
 git push origin "$branch_name"
 
 echo "${GREEN}Changes have been pushed to branch ${MAGENTA}$branch_name${GREEN} with message: ${CYAN}$commit_message${RESET_COLOR}"
+
+# Check if merge option is provided
+if [ "$2" = "merge" ]; then
+    echo "${YELLOW}Merging $branch_name into main...${RESET_COLOR}"
+    git checkout main
+    git pull origin main
+    git merge "$branch_name"
+    git push origin main
+    echo "${GREEN}$branch_name has been merged into main${RESET_COLOR}"
+fi
