@@ -1,0 +1,74 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>History API Example</title>
+</head>
+<body>
+  <nav>
+    <a href="/" class="nav__link" data-link>Dashboard</a>
+    <a href="/posts" class="nav__link" data-link>Posts</a>
+    <a href="/settings" class="nav__link" data-link>Settings</a>
+  </nav>
+  <div id="content">
+    <h1>Welcome to the Dashboard</h1>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const links = document.querySelectorAll('[data-link]');
+      links.forEach(link => {
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const path = link.getAttribute('href');
+          navigateTo(path);
+        });
+      });
+    });
+
+    const navigateTo = (url) => {
+      history.pushState(null, null, url);
+      updateContent(url);
+    };
+
+    const updateContent = (url) => {
+      const content = document.getElementById('content');
+      switch (url) {
+        case '/':
+          content.innerHTML = '<h1>Welcome to the Dashboard</h1>';
+          break;
+        case '/posts':
+          content.innerHTML = '<h1>Here are the posts</h1>';
+          break;
+        case '/settings':
+          content.innerHTML = '<h1>Here are the settings</h1>';
+          break;
+        default:
+          content.innerHTML = '<h1>Page not found</h1>';
+      }
+    };
+
+    // window.addEventListener('popstate', (event) => {
+    //   updateContent(document.location.pathname);
+    // });
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Page App</title>
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+<body>
+    <nav class="nav">
+        <a href="/" class="nav__link" data-link>Dashboard</a>
+        <a href="/posts" class="nav__link" data-link>Posts</a>
+        <a href="/settings" class="nav__link" data-link>Settings</a>
+    </nav>
+    <div id="app"></div>
+    <script type="module" src="/static/js/index.js"></script>
+</body>
+</html>
