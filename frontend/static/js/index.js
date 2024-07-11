@@ -1,13 +1,14 @@
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
+import NotFound from "./views/NotFound.js";
 
 // Array that contains all routes where each route has a path and a view
 // A view is a class containing the HTML of a page
 const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
-	{ path: "/settings", view: Settings }
+	{ path: "/settings", view: Settings },
 ];
 
 // When the DOM is loaded, add an event listener to all links
@@ -46,7 +47,7 @@ const router = async () => {
 
 	// If the current path is not in the routes array, set the match to the first route
     if (!match) {
-		match = routes[0];
+		match = { path: "", view: NotFound };
     }
 
 	// Create a new instance of the view
