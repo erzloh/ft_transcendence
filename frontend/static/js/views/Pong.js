@@ -8,6 +8,11 @@ export default class extends AbstractView {
 
     async getHtml() {
         return `
+			<nav class="nav">
+				<a href="/" class="nav__link" data-link>Home</a>
+				<a href="/pong" class="nav__link" data-link>Pong</a>
+				<a href="/settings" class="nav__link" data-link>Settings</a>
+			</nav>
             <h1>Pong</h1>
             <p>so sick</p>
         `;
