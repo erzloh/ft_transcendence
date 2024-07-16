@@ -1,0 +1,11 @@
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    ports:
+      - "443:443"
+    volumes:
+      - ./frontend:/usr/share/nginx/html
