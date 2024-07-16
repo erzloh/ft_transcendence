@@ -43,7 +43,7 @@ if [ "$2" = "merge" ]; then
     git merge "$branch_name"
     git push origin main
     echo "${GREEN}$branch_name has been merged into main${RESET_COLOR}"
-    
+fi
 # Check if merge-main option is provided
 if [ "$2" = "merge-main" ]; then
     echo "${YELLOW}Merging main into $branch_name...${RESET_COLOR}"
