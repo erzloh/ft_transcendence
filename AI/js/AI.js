@@ -7,8 +7,14 @@
 // - Move the paddle
 // - Back Propagation with weights actualization
 
+//! Needs 
+    // a function for the sum of the weights
+    // a function for the back propagation
+    // a function to calculate the cost of the error 
+    // all the datas such as bias and weights
+
 //! Activation function
-// ReLu
+// ReLu (don't know if i'll use it)
 // It returns x if it's greater than 0 
 function relu(x) {
     return Math.max(0, x);
