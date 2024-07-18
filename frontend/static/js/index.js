@@ -1,10 +1,11 @@
+// Import the views
+// A view is a class containing the HTML of a page
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
 import NotFound from "./views/NotFound.js";
 
 // Array that contains all routes where each route has a path and a view
-// A view is a class containing the HTML of a page
 const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
