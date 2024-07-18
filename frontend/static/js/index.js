@@ -1,6 +1,7 @@
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
+import Pacman from "./views/Pacman.js";
 import NotFound from "./views/NotFound.js";
 
 // Array that contains all routes where each route has a path and a view
@@ -8,6 +9,7 @@ import NotFound from "./views/NotFound.js";
 const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
+	{ path: "/pacman", view: Pacman },
 	{ path: "/settings", view: Settings },
 ];
 
