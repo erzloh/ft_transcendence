@@ -47,8 +47,9 @@ fi
 # Check if merge-main option is provided
 if [ "$2" = "merge-main" ]; then
     echo "${YELLOW}Merging main into $branch_name...${RESET_COLOR}"
+    git checkout "$branch_name"
     git fetch origin main
-    git merge origin/main
-    git push origin "$branch_name"
+    git merge --no-edit origin/main
+    git push origin "merged main into my branch : $branch_name"
     echo "${GREEN}main has been merged into $branch_name${RESET_COLOR}"
 fi
