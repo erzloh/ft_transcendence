@@ -12,22 +12,9 @@ const routes = [
 	{ path: "/settings", view: Settings },
 ];
 
-// When the DOM is loaded, add an event listener to all links
 // When the DOM is loaded, call the router function
 document.addEventListener("DOMContentLoaded", () => {
-	// Overwrite the default behavior of the links (<a> tags)
-	// When a link is clicked, the navigateTo function is called
-	// The navigateTo function changes the URL and calls the router function 
-	// to load the new view without reloading the page
-	const links = document.querySelectorAll('[data-link]');
-	links.forEach(link => {
-		link.addEventListener("click", e => {
-			e.preventDefault();
-			navigateTo(link.href);
-		});
-	});
-
-    router();
+	router();
 });
 
 // Navigate to a new view
@@ -56,6 +43,19 @@ const router = async () => {
 
 	// Load the HTML of the view in the app div
     document.querySelector("#app").innerHTML = await view.getHtml();
+
+	// Attach event listeners to the links.
+	// Overwrite the default behavior of the links (<a> tags)
+	// When a link is clicked, the navigateTo function is called
+	// The navigateTo function changes the URL and calls the router function 
+	// to load the new view without reloading the page
+	const links = document.querySelectorAll('[data-link]');
+	links.forEach(link => {
+		link.addEventListener("click", e => {
+			e.preventDefault();
+			navigateTo(link.href);
+		});
+	});
 };
 
 // Listen for the popstate event (back and forward buttons) and call the router function
