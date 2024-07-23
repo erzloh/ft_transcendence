@@ -11968,24 +11968,8 @@ textarea.form-control-lg {
 }
 html, body {
   font-family: "Space Mono", monospace;
-}
-
-html, body {
   margin: 0;
   padding: 0;
-}
-
-.text-container {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: white;
 }
 
 .full-height {
@@ -12043,6 +12027,7 @@ html, body {
   width: 100vw;
   height: 100vh;
   position: absolute;
+  overflow: hidden;
   background: linear-gradient(40deg, var(--color-bg1), var(--color-bg2));
   top: 0;
   left: 0;
