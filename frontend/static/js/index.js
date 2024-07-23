@@ -56,7 +56,75 @@ const router = async () => {
 			navigateTo(link.href);
 		});
 	});
+
+	// Animate letters
+	animateLetters();
 };
 
 // Listen for the popstate event (back and forward buttons) and call the router function
 window.addEventListener("popstate", router);
+
+// ------------------------------- USER INTERACTION ANIMATIONS -------------------------------
+// --- Changing letter animation
+const animateLetters = () => {
+	const letters = "abcdefghijklmnopqrstuvwxyz";
+
+    let interval = null;
+
+    const text = document.querySelector("h1");
+    if (!text) return;
+
+    let iteration = 0;
+
+    const startAnimation = () => {
+        clearInterval(interval);
+
+        interval = setInterval(() => {
+            text.innerText = text.innerText
+                .split("")
+                .map((letter, index) => {
+                    if (index < iteration) {
+                        return text.dataset.value[index];
+                    }
+                    return letters[Math.floor(Math.random() * 26)];
+                })
+                .join("");
+
+            if (iteration >= text.dataset.value.length) { 
+                clearInterval(interval);
+            }
+
+            iteration += 1 / 3;
+        }, 30);
+    };
+
+    // Start the animation immediately
+    startAnimation();
+};
+
+// --- Interactive bubble
+document.addEventListener('DOMContentLoaded', () => {
+	const interBubble = document.querySelector('.interactive');
+	if (!interBubble) return;
+
+    let curX = 0;
+    let curY = 0;
+    let tgX = 0;
+    let tgY = 0;
+
+    function move() {
+        curX += (tgX - curX) / 20;
+        curY += (tgY - curY) / 20;
+        interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+        requestAnimationFrame(() => {
+            move();
+        });
+    }
+
+    window.addEventListener('mousemove', (event) => {
+        tgX = event.clientX;
+        tgY = event.clientY;
+    });
+
+    move();
+});
