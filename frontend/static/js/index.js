@@ -26,7 +26,6 @@ const navigateTo = url => {
     router();
 };
 
-
 // Load the HTML of the view in the app div
 const router = async () => {
 
@@ -43,6 +42,11 @@ const router = async () => {
 
 	// Load the HTML of the view in the app div
     document.querySelector("#app").innerHTML = await view.getHtml();
+
+	// Load the JS of the view
+	let script = document.createElement('script');
+	script.textContent = await view.getJS();
+	document.body.appendChild(script);
 
 	// Attach event listeners to the links.
 	// Overwrite the default behavior of the links (<a> tags)
@@ -107,8 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const interBubble = document.querySelector('.interactive');
 	if (!interBubble) return;
 
-    let curX = 0;
-    let curY = 0;
+    let curX = window.innerWidth / 2;
+    let curY = window.innerHeight / 2;
     let tgX = 0;
     let tgY = 0;
 
