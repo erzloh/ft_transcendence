@@ -1,0 +1,24 @@
+POST http://localhost:8000/api/login/
+Content-Type: application/json
+
+{
+    "username": "bob",
+    "password": "pass"
+}
+
+###
+
+POST http://localhost:8000/api/signup/
+Content-Type: application/json
+
+{
+    "username": "bob", 
+    "password": "pass",
+}
+
+###
+
+GET http://localhost:8000/api/test_token/
+Content-Type: application/json
+
+{}
