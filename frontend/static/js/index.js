@@ -15,7 +15,6 @@ const routes = [
 
 // Loads the view (HTML and JS) in the div with id "app" according to the current path
 const router = async () => {
-
 	// Test if the current path is in the routes array
 	let match = routes.find(route => route.path === location.pathname);
 
@@ -33,21 +32,29 @@ const router = async () => {
 	// Load the JS of the view
 	await loadScript(view);
 
-	// Attach event listeners to the links.
-	// Overwrite the default behavior of the links (<a> tags)
-	// When a link is clicked, the navigateTo function is called
-	// The navigateTo function changes the URL and calls the router function 
-	// to load the new view without reloading the page
+	// Overwrite the default behavior of the links to not reload the page
+	attachEventListenersToLinks();
+
+	// Animate letters
+	animateLetters();
+};
+
+// Function to attach event listeners to the links
+// Overwrite the default behavior of the links (<a> tags)
+// When a link is clicked, the navigateTo function is called
+// The navigateTo function changes the URL and calls the router function 
+// to load the new view without reloading the page.
+const attachEventListenersToLinks = () => {
+	// Select all links with the attribute data-link
 	const links = document.querySelectorAll('[data-link]');
+
+	// Attach event listener to each link
 	links.forEach(link => {
 		link.addEventListener("click", e => {
 			e.preventDefault();
 			navigateTo(link.href);
 		});
 	});
-
-	// Animate letters
-	animateLetters();
 };
 
 // Load script
@@ -84,7 +91,7 @@ const navigateTo = url => {
 // Listen for the popstate event (back and forward buttons) and call the router function
 window.addEventListener("popstate", router);
 
-// ------------------------------- USER INTERACTION ANIMATIONS -------------------------------
+// ------------------------------- FRONTEND EYE CANDIES -------------------------------
 // Changing letter animation
 const animateLetters = () => {
 	const letters = "abcdefghijklmnopqrstuvwxyz";
