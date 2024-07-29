@@ -14,6 +14,7 @@ export default class {
         return "";
     }
 
+	// Returns the JS content of the view
 	async getJS() {
 		return "";
 	}
