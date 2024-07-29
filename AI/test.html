@@ -25,8 +25,12 @@
         let aiY = (canvas.height - paddleHeight) / 2;
         let ballX = canvas.width / 2;
         let ballY = canvas.height / 2;
-        let ballSpeedX = 12;
-        let ballSpeedY = 12;
+        let ballSpeedX = 4;
+        let ballSpeedY = 4;
+
+        // Variable to store ball position
+        let aiBallX = ballX;
+        let aiBallY = ballY;
 
         function drawRect(x, y, width, height, color) {
             context.fillStyle = color;
@@ -46,11 +50,23 @@
                 playerY = event.clientY - paddleHeight / 2;
             });
 
-            // AI paddle follows the ball
+            // AI movement
             if (aiY + paddleHeight / 2 < ballY) {
                 aiY += 6; // Adjust this value to make the AI harder or easier
             } else {
                 aiY -= 6;
+            }
+
+            // Ensure the AI paddle stays within the canvas
+            aiY = Math.max(0, Math.min(aiY, canvas.height - paddleHeight));
+        }
+
+        function updateAI() {
+            // Use the gathered ball position to update AI
+            if (aiY + paddleHeight / 2 < aiBallY) {
+                aiY += 3; // Adjust this value to make the AI harder or easier
+            } else {
+                aiY -= 3;
             }
 
             // Ensure the AI paddle stays within the canvas
@@ -93,9 +109,16 @@
 
             movePaddles();
             moveBall();
+            updateAI();
 
             requestAnimationFrame(draw);
         }
+
+        // Update AI data every second
+        setInterval(() => {
+            aiBallX = ballX;
+            aiBallY = ballY;
+        }, 1000);
 
         draw();
     </script>
