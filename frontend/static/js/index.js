@@ -75,7 +75,7 @@ const animateLetters = () => {
 
     let interval = null;
 
-    const text = document.querySelector("h1");
+    const text = document.querySelector("[animated-letters]");
     if (!text) return;
 
     let iteration = 0;
