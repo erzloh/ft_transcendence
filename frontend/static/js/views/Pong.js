@@ -6,7 +6,7 @@ export default class extends AbstractView {
         this.setTitle("Pong");
     }
 
-    async getHtml() {
+/*    async getHtml() {
         return `
 			<nav class="nav">
 				<a href="/" class="nav__link" data-link>Home</a>
@@ -17,4 +17,14 @@ export default class extends AbstractView {
             <p>so sick</p>
         `;
     }
+	*/
+
+	async getHtml() {
+		return (await fetch("static/html/pong.html")).text();
+    }
+
+	async getJS() {
+		return (await fetch("static/js/viewsJS/pongLogic.js")).text();
+	}
+
 }
