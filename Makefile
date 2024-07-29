@@ -12,11 +12,12 @@ up:
 down:
 	@docker compose -f ${COMPOSE_FILE_PATH} -p ${PROJECT_NAME} down --remove-orphans
 
-# Clean all Docker resources
+# Clean all Docker resources and the data folder
 clean: down hard_clean
 	docker network prune -f
 	docker system prune -f -a
 	docker volume prune -f
+	rm -rf data
 
 re: clean all
 
