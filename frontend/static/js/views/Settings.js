@@ -17,4 +17,9 @@ export default class extends AbstractView {
             <p>Manage your settings here</p>
         `;
     }
+
+	async getJS() {
+		return (await fetch("static/js/viewsJS/home.js")).text();
+	}
+
 }
