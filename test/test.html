@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Example</title>
+</head>
+<body>
+    <button id="load-content">Load Content</button>
+    <div id="content"></div>
+
+    <script>
+        document.getElementById('load-content').addEventListener('click', function() {
+            // 動的にHTMLコンテンツを生成
+            var dynamicContent = `
+                <div>
+                    <p>This is dynamically loaded content.</p>
+                </div>
+            `;
+
+            // コンテンツを挿入
+            var contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = dynamicContent;
+
+            // スクリプト要素を作成
+            var script = document.createElement('script');
+            script.textContent = `
+                // 動的に挿入されたスクリプト
+                console.log("Script inside dynamic content executed.");
+                alert("Hello from the dynamically loaded script!");
+            `;
+
+            // スクリプトを挿入して実行
+            contentDiv.appendChild(script);
+        });
+    </script>
+</body>
+</html>
