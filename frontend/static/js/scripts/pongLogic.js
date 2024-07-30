@@ -1,8 +1,20 @@
+	
 	const canvas = document.getElementById('canvas');
 	const context = canvas.getContext('2d');
 
 	canvas.width = window.innerWidth * 0.60;
 	canvas.height = window.innerHeight * 0.60;
+
+	
+	const startButton = document.getElementById('startButton');
+	startButton.addEventListener('click', startGame);
+
+	function startGame() {
+		console.log("its ok");
+		startButton.disabled = true;
+		gameLoop();
+
+	}
 
 	const keyPressed = [];
 	const RIGHT_UP = 38;
@@ -161,7 +173,7 @@
 		}
 	}
 
-	const ball = new Ball(vec2(200, 200), vec2(20, 20), 20);
+	const ball = new Ball(vec2(200, 200), vec2(15, 15), 20);
 	const paddleLeft = new Paddle(vec2(0, 50), vec2(15, 15), 20, 160);
 	const paddleRight = new Paddle(vec2(canvas.width - 20, 30), vec2(15, 15), 20, 160);
 
@@ -185,6 +197,7 @@
 		paddleRight.draw();
 	}
 
+
 	function	gameLoop() {
 		//context.clearRect(0, 0, canvas.width, canvas.height);
 		context.fillStyle = "rgba(0, 0, 0, 0.2)";
@@ -197,7 +210,7 @@
 	}
 
 
-		gameLoop();
+//		gameLoop();
 
 	/*
 
