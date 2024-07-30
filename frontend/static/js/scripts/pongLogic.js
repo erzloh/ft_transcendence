@@ -5,15 +5,15 @@
 	canvas.width = window.innerWidth * 0.60;
 	canvas.height = window.innerHeight * 0.60;
 
-	
+	let	isPaused = false;
+
 	const startButton = document.getElementById('startButton');
 	startButton.addEventListener('click', startGame);
-
+	
 	function startGame() {
 		console.log("its ok");
 		startButton.disabled = true;
 		gameLoop();
-
 	}
 
 	const keyPressed = [];
@@ -31,6 +31,19 @@
 		//console.log(e.keyCode); //prints the pressed key in console
 		keyPressed[e.keyCode] = false;
 	});
+
+	window.addEventListener('keydown', function(e) {
+		if (e.code === 'Space') {
+			togglePause();
+		}
+	});
+
+	function togglePause() {
+		isPaused = !isPaused;
+		if (!isPaused) {
+			gameLoop(); // Continue the game if it was paused
+		}
+	}
 
 
 	function	vec2(x, y) {
@@ -200,6 +213,8 @@
 
 	function	gameLoop() {
 		//context.clearRect(0, 0, canvas.width, canvas.height);
+		if (isPaused)
+			return;
 		context.fillStyle = "rgba(0, 0, 0, 0.2)";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		window.requestAnimationFrame(gameLoop);
