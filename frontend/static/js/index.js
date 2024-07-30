@@ -3,6 +3,7 @@
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
+import Pacman from "./views/Pacman.js";
 import NotFound from "./views/NotFound.js";
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
@@ -16,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
+	{ path: "/pacman", view: Pacman },
 	{ path: "/settings", view: Settings },
 ];
 
