@@ -5,6 +5,12 @@ import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
 import NotFound from "./views/NotFound.js";
 
+// ------------------------------- THE APP STARTS HERE -------------------------------
+// When the DOM is loaded, call the router function
+document.addEventListener("DOMContentLoaded", () => {
+	router();
+});
+
 // ------------------------------- ROUTING -------------------------------
 // Array that contains all routes where each route has a path and a view
 const routes = [
@@ -70,13 +76,7 @@ const loadScript = async (view) => {
 	// Replace the dynamic script element with the new script element
 	// This is needed to load the new JS content
 	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
-}
-
-// ------------------------------- THE APP STARTS HERE -------------------------------
-// When the DOM is loaded, call the router function
-document.addEventListener("DOMContentLoaded", () => {
-	router();
-});
+};
 
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view
@@ -94,39 +94,29 @@ window.addEventListener("popstate", router);
 // ------------------------------- FRONTEND EYE CANDIES -------------------------------
 // Changing letter animation
 const animateLetters = () => {
-	const letters = "abcdefghijklmnopqrstuvwxyz";
-
-    let interval = null;
-
     const text = document.querySelector("[animated-letters]");
     if (!text) return;
-
+	const letters = "abcdefghijklmnopqrstuvwxyz";
+    let interval = null;
     let iteration = 0;
 
-    const startAnimation = () => {
-        clearInterval(interval);
+	interval = setInterval(() => {
+		text.innerText = text.innerText
+			.split("")
+			.map((letter, index) => {
+				if (index < iteration) {
+					return text.dataset.value[index];
+				}
+				return letters[Math.floor(Math.random() * 26)];
+			})
+			.join("");
 
-        interval = setInterval(() => {
-            text.innerText = text.innerText
-                .split("")
-                .map((letter, index) => {
-                    if (index < iteration) {
-                        return text.dataset.value[index];
-                    }
-                    return letters[Math.floor(Math.random() * 26)];
-                })
-                .join("");
+		if (iteration >= text.dataset.value.length) { 
+			clearInterval(interval);
+		}
 
-            if (iteration >= text.dataset.value.length) { 
-                clearInterval(interval);
-            }
-
-            iteration += 1 / 3;
-        }, 30);
-    };
-
-    // Start the animation immediately
-    startAnimation();
+		iteration += 1 / 3;
+	}, 30);
 };
 
 // Interactive bubble
