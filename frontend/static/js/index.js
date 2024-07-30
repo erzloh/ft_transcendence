@@ -5,6 +5,7 @@ import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
 import Pacman from "./views/Pacman.js";
 import NotFound from "./views/NotFound.js";
+import Games from "./views/Games.js";
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call the router function
@@ -19,6 +20,7 @@ const routes = [
 	{ path: "/pong", view: Pong },
 	{ path: "/pacman", view: Pacman },
 	{ path: "/settings", view: Settings },
+	{ path: "/games", view: Games }
 ];
 
 // Loads the view (HTML and JS) in the div with id "app" according to the current path
@@ -99,6 +101,7 @@ const animateLetters = () => {
     const text = document.querySelector("[animated-letters]");
     if (!text) return;
 	const letters = "abcdefghijklmnopqrstuvwxyz";
+	const initialText = text.innerText;
     let interval = null;
     let iteration = 0;
 
@@ -107,13 +110,13 @@ const animateLetters = () => {
 			.split("")
 			.map((letter, index) => {
 				if (index < iteration) {
-					return text.dataset.value[index];
+					return initialText[index];
 				}
 				return letters[Math.floor(Math.random() * 26)];
 			})
 			.join("");
 
-		if (iteration >= text.dataset.value.length) { 
+		if (iteration >= initialText.length) { 
 			clearInterval(interval);
 		}
 
