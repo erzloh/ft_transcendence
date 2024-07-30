@@ -25,7 +25,7 @@ export default class extends AbstractView {
     }
 
 	async getJS() {
-		return (await fetch("static/js/viewsJS/pongLogic.js")).text();
+		return (await fetch("static/js/scripts/pongLogic.js")).text();
 	}
 
 }
