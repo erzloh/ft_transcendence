@@ -1,8 +1,8 @@
 	const canvas = document.getElementById('canvas');
 	const context = canvas.getContext('2d');
 
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	canvas.width = window.innerWidth * 0.60;
+	canvas.height = window.innerHeight * 0.60;
 
 	const keyPressed = [];
 	const RIGHT_UP = 38;
@@ -190,7 +190,7 @@
 		context.fillStyle = "rgba(0, 0, 0, 0.2)";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		window.requestAnimationFrame(gameLoop);
-		context.clearRect(0, 0, canvas.width, canvas.height);
+		//context.clearRect(0, 0, canvas.width, canvas.height);
 
 		gameUpdate();
 		gameDraw();
