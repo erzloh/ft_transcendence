@@ -9,10 +9,13 @@
 
 	const startButton = document.getElementById('startButton');
 	startButton.addEventListener('click', startGame);
-	
+
 	function startGame() {
-		console.log("its ok");
-		startButton.disabled = true;
+		//console.log("game started bien ouej");
+	//	startButton.disabled = true;
+		if (startButton) {
+  	      startButton.parentNode.removeChild(startButton);
+		}
 		gameLoop();
 	}
 
