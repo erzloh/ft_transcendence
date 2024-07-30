@@ -69,17 +69,22 @@ const attachEventListenersToLinks = () => {
 
 // Load script
 const loadScript = async (view) => {
-	// Get the dynamic script element
-	const dynamicScript = document.getElementById('dynamic-script');
+	// Remove the old script element
+	const oldScript = document.getElementById('dynamic-script');
+	if (oldScript) {
+		oldScript.remove();
+	}
 
 	// Create a new script element
 	const newScript = document.createElement('script');
 	newScript.textContent = await view.getJS();
+	// Wrap the JS content in an Immediately Invoked Function Expression to avoid polluting the global scope
+	newScript.textContent = `(() => {${newScript.textContent}})();`;
 	newScript.id = 'dynamic-script';
 
-	// Replace the dynamic script element with the new script element
-	// This is needed to load the new JS content
-	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
+	// Append the new script element to the body
+	// This is needed to execute the new JS content
+	document.body.appendChild(newScript);
 };
 
 // ------------------------------- NAVIGATION -------------------------------

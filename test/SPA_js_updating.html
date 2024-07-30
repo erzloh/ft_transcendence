@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Example</title>
+</head>
+<body>
+    <button id="load-content">Load Content</button>
+    <div id="content"></div>
+
+    <script>
+        document.getElementById('load-content').addEventListener('click', function() {
+            // 動的にHTMLコンテンツを生成
+            var dynamicContent = `
+                <div>
+                    <p>This is dynamically loaded content.</p>
+                </div>
+            `;
+
+            // コンテンツを挿入
+            var contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = dynamicContent;
+
+            // スクリプト要素の内容を更新
+            updateScriptContent();
+        });
+
+        function updateScriptContent() {
+            // 古いスクリプト要素を削除
+            var oldScript = document.getElementById('dynamic-script');
+            if (oldScript) {
+                oldScript.parentNode.removeChild(oldScript);
+            }
+
+            // 新しいスクリプト要素を作成して内容を設定
+            var newScript = document.createElement('script');
+            newScript.id = 'dynamic-script';
+            newScript.textContent = `
+                // 動的に挿入されたスクリプト
+                (function() {
+                    console.log("Script inside dynamic content executed.");
+                    const pageSpecificVariable = 'Initialized';
+                    console.log("Page specific variable: " + pageSpecificVariable);
+                    alert("Hello from the dynamically loaded script!");
+                })();
+            `;
+
+            // 新しいスクリプト要素をDOMに追加
+            document.body.appendChild(newScript);
+        }
+
+        // ページがロードされたときの初期化処理
+        document.addEventListener('DOMContentLoaded', function() {
+            updateScriptContent();
+        });
+    </script>
+</body>
+</html>
