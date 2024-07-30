@@ -331,32 +331,32 @@ class Cell {
 async function StartGame() {
     // Load needed images
     imgPacman1 = new Image();
-    imgPacman1.src = 'images/pacman1.png';
+    imgPacman1.src = 'static/assets/pacman/images/pacman1.png';
     imgPacman2 = new Image();
-    imgPacman2.src = 'images/pacman2.png';
+    imgPacman2.src = 'static/assets/pacman/images/pacman2.png';
     imgPacman3 = new Image();
-    imgPacman3.src = 'images/pacman3.png';
+    imgPacman3.src = 'static/assets/pacman/images/pacman3.png';
     imgGhost1 = new Image();
-    imgGhost1.src = 'images/ghost1.png';
+    imgGhost1.src = 'static/assets/pacman/images/blueGhost1.png';
 	imgGhost2 = new Image();
-    imgGhost2.src = 'images/ghost2.png';
+    imgGhost2.src = 'static/assets/pacman/images/blueGhost2.png';
 	imgGhost3 = new Image();
-    imgGhost3.src = 'images/ghost3.png';
+    imgGhost3.src = 'static/assets/pacman/images/blueGhost3.png';
 	imgGhost4 = new Image();
-    imgGhost4.src = 'images/ghost4.png';
+    imgGhost4.src = 'static/assets/pacman/images/blueGhost4.png';
 	imgCherry = new Image();
-	imgCherry.src = 'images/cherry.png';
+	imgCherry.src = 'static/assets/pacman/images/cherry.png';
 	imgBanana = new Image();
-	imgBanana.src = 'images/banana.png';
+	imgBanana.src = 'static/assets/pacman/images/banana.png';
 	imgStrawberry = new Image();
-	imgStrawberry.src = 'images/strawberry.png';
+	imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';
 
 	// Set score to 0
 	pScore.textContent = "Pacman's score: 0";
 	timer = new Timer(timerElement);
 
     // Get the map's JSON data
-    const mapData = await LoadMap("map1");
+    const mapData = await LoadMap("static/assets/pacman/maps/map1.json");
     const { tileSize: tmpTileSize, width: tmpWidth, height: tmpHeight, data: tmpData } = mapData;
 	tileSize = tmpTileSize;
 	width = tmpWidth;
@@ -400,9 +400,9 @@ function gameloop() {
 }
 
 // Load the map from the JSON file specified as parameter
-async function LoadMap(mapName) {
+async function LoadMap(mapPath) {
     try {
-        const response = await fetch(`/maps/${mapName}.json`);
+        const response = await fetch(mapPath);
         const mapData = await response.json();
         return mapData;
     } 
