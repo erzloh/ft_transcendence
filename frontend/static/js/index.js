@@ -108,6 +108,12 @@ const navigateTo = url => {
 // Listen for the popstate event (back and forward buttons) and call the router function
 window.addEventListener("popstate", router);
 
+// ------------------------------- APPLY SETTINGS -------------------------------
+// Apply the settings from the local storage
+if (localStorage.getItem('prettyBgSetting') === 'true') {
+	document.querySelector('.gradients-container').style.display = 'block';
+}
+
 // ------------------------------- FRONTEND EYE CANDIES -------------------------------
 // Changing letter animation
 const animateLetters = () => {
