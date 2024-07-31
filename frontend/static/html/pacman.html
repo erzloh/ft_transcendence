@@ -1,13 +1,20 @@
-<nav class="nav">
-	<a href="/" class="nav__link" data-link>Home</a>
-	<a href="/pong" class="nav__link" data-link>Pong</a>
-	<a href="/pacman" class="nav__link" data-link>Pacman</a>
-	<a href="/settings" class="nav__link" data-link>Settings</a>
-</nav>
-<h2>Pacman</h2>
-<!-- <button id="btnStart" onclick="StartGame()">Start game.</button> -->
-<button id="btnStart">Start game.</button>
-<br></br>
-<canvas id="cvsPacman" width="500" height="500" style="border:10px solid #000000;"></canvas>
-<h3 id="pScore">Pacman's score: </h3>
-<h3 id="timer">Time elapsed: 00:00</h3>
+<div class="full-height d-flex align-items-center justify-content-center">
+	<div class="row justify-content-center">
+		<div class="col-12 text-center mb-5">
+			<h1 class="text-white h1" animated-letters>pac-man</h1>
+		</div>
+		<div class="col-12 text-center mb-3">
+			<p class="text-white" id="pScore">Pacman's score: </p>
+			<p class="text-white" id="timer">Time elapsed: 00:00</p>
+		</div>
+		<div class="col-12 text-center mb-3">
+			<canvas class="glass" id="cvsPacman" width="500" height="500"></canvas>
+		</div>
+		<div class="col-12 text-center mb-3">
+			<button id="btnStart" class="btn btn-lg text-light">start game</button>
+		</div>
+		<div class="col-12 text-center mt-5 d-flex justify-content-center">
+			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
+		</div>
+	</div>
+</div>
