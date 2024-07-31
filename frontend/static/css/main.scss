@@ -149,17 +149,25 @@ $blending: hard-light;
 	border-radius: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-	// animation: fadeInSlideIn 1s ease-out;
 }
 
-@keyframes fadeInSlideIn {
+.return-btn {
+	animation: waitFadeIn 1s ease-out;
+}
+
+// ------------------------------- Custom Keyframes -------------------------------
+
+@keyframes waitFadeIn {
 	0% {
-		opacity: 0.8;
-		transform: translateY(-10%);
+		opacity: 0;
 	}
+
+	50% {
+		opacity: 0;
+	}
+
 	100% {
 		opacity: 1;
-		transform: translateY(0);
 	}
 }
 
