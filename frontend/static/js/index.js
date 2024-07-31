@@ -67,7 +67,9 @@ const attachEventListenersToLinks = () => {
 	});
 };
 
-// Load script
+// This is a workaround to execute the JS content of the view
+// The JS has to be adaded to the DOM as a script element to be executed
+// Just adding JS in the script tag like with HTML and innerText doesn't work
 const loadScript = async (view) => {
 	// Remove the old script element
 	const oldScript = document.getElementById('dynamic-script');
@@ -77,10 +79,16 @@ const loadScript = async (view) => {
 
 	// Create a new script element
 	const newScript = document.createElement('script');
-	newScript.textContent = await view.getJS();
-	// Wrap the JS content in an Immediately Invoked Function Expression to avoid polluting the global scope
-	newScript.textContent = `(() => {${newScript.textContent}})();`;
 	newScript.id = 'dynamic-script';
+
+	// Create a function that contains the JS content
+	// This is a workaround to remove comments from the JS content
+	const scriptFunction = new Function(await view.getJS());
+	const scriptContent = scriptFunction.toString();
+
+	// Wrap the JS content in an Immediately Invoked Function Expression
+	// This is a workaround to avoid polluting the global scope
+	newScript.textContent = `(${scriptContent})()`;
 
 	// Append the new script element to the body
 	// This is needed to execute the new JS content

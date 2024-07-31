@@ -10,7 +10,7 @@
     <div id="content"></div>
 
     <script>
-        document.getElementById('load-content').addEventListener('click', function() {
+        document.getElementById('load-content').addEventListener('click', async function() {
             // 動的にHTMLコンテンツを生成
             var dynamicContent = `
                 <div>
@@ -23,36 +23,39 @@
             contentDiv.innerHTML = dynamicContent;
 
             // スクリプト要素の内容を更新
-            updateScriptContent();
+            await updateScriptContent();
         });
 
-        function updateScriptContent() {
+        async function updateScriptContent() {
             // 古いスクリプト要素を削除
             var oldScript = document.getElementById('dynamic-script');
             if (oldScript) {
                 oldScript.parentNode.removeChild(oldScript);
             }
 
-            // 新しいスクリプト要素を作成して内容を設定
+            // スクリプト内容を非同期で取得
+            var scriptContent = `
+				// 動的に挿入されたスクリプト
+				const test = 'Hello from the dynamically loaded script!';
+				console.log("Script inside dynamic content executed.");
+				alert("Hello from the dynamically loaded script!");
+			`;
+
+            // スクリプト内容を関数にラップして文字列化
+            var wrappedScriptContent = new Function(scriptContent);
+
+            // 新しいスクリプト要素を作成
             var newScript = document.createElement('script');
             newScript.id = 'dynamic-script';
-            newScript.textContent = `
-                // 動的に挿入されたスクリプト
-                (function() {
-                    console.log("Script inside dynamic content executed.");
-                    const pageSpecificVariable = 'Initialized';
-                    console.log("Page specific variable: " + pageSpecificVariable);
-                    alert("Hello from the dynamically loaded script!");
-                })();
-            `;
+            newScript.textContent = '(' + wrappedScriptContent.toString() + ')();';
 
             // 新しいスクリプト要素をDOMに追加
             document.body.appendChild(newScript);
         }
 
         // ページがロードされたときの初期化処理
-        document.addEventListener('DOMContentLoaded', function() {
-            updateScriptContent();
+        document.addEventListener('DOMContentLoaded', async function() {
+            await updateScriptContent();
         });
     </script>
 </body>
