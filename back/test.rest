@@ -1,8 +1,8 @@
-POST http://localhost:8000/api/login/
+POST http://localhost:8000/api/login
 Content-Type: application/json
 
 {
-    "username": "pascal",
+    "username": "pascal1",
     "password": "pass1234!"
 }
 
@@ -12,15 +12,15 @@ POST http://localhost:8000/api/signup
 Content-Type: application/json
 
 {
-    "username": "pascal", 
+    "username": "pascal1", 
     "password": "pass1234!",
-    "email": "zack@gmail.com"
+    "email": "zack1@gmail.com"
 }
 
 ###
 
 GET http://localhost:8000/api/test_token/
 Content-Type: application/json
-Authorization: Token 6924cfe289170e0747f4b5f31354ac19a3c10d62
+Authorization: Token dcf16a4b61a14b898f0a943de721747900307fd4
 
 {}
