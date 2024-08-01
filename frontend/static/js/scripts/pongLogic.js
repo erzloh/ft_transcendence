@@ -197,7 +197,8 @@
 	function	gameUpdate() {
 		ball.update();
 		paddleRight.updateRight();
-		paddleLeft.updateLeft();
+		// paddleLeft.updateLeft();
+		aiControlLeftPaddle(paddleLeft, ball);
 		paddleEdgeCollision(paddleLeft);
 		paddleEdgeCollision(paddleRight);
 		ballEdgeCollision(ball);

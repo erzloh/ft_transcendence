@@ -61,7 +61,7 @@
 						this.pos.y += this.velocity.y;
 					}
 				};
-
+				
 				this.updateRight = function () {
 					if (keyPressed[RIGHT_UP]) {
 						this.pos.y -= this.velocity.y;
@@ -165,11 +165,13 @@
 			const paddleLeft = new Paddle(vec2(0, 50), vec2(15, 15), 20, 160);
 			const paddleRight = new Paddle(vec2(canvas.width - 20, 30), vec2(15, 15), 20, 160);
 
-
 			function	gameUpdate() {
+				console.log("Game Update");
+
 				ball.update();
 				paddleRight.updateRight();
 				paddleLeft.updateLeft();
+				// paddleLeft.aiControlLeftPaddle(paddleLeft, ball);
 				paddleEdgeCollision(paddleLeft);
 				paddleEdgeCollision(paddleRight);
 				ballEdgeCollision(ball);
@@ -209,3 +211,4 @@
 			context.fill();
 			context.stroke();
 			*/
+

@@ -21,6 +21,8 @@ clean: down hard_clean
 
 re: clean all
 
+re_soft: down all 
+
 # Clean all Docker resources
 # WARNING: This will remove all containers, images, volumes and networks from your system
 hard_clean:
