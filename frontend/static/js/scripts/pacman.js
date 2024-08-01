@@ -435,33 +435,40 @@ function createCellArray(data) {
 //#region EVENT LISTENERS
 
 window.addEventListener("keydown", (event) => {
-    switch (event.code) {
-        case 'KeyW':
-            pacman.direction = "up";
-            break;
-        case 'KeyS':
-            pacman.direction = "down";
-            break;
-        case 'KeyA':
-            pacman.direction = "left";
-            break;
-        case 'KeyD':
-            pacman.direction = "right";
-            break;
-        case 'ArrowUp':
-            ghost.direction = "up";
-            break;
-        case 'ArrowDown':
-            ghost.direction = "down";
-            break;
-        case 'ArrowLeft':
-            ghost.direction = "left";
-            break;
-        case 'ArrowRight':
-            ghost.direction = "right";
-            break;
-        default:
-            break;
+    // Prevent buttons from moving the page
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
+        event.preventDefault();
+    }
+    
+    if (gameStart) {
+        switch (event.code) {
+            case 'KeyW':
+                pacman.direction = "up";
+                break;
+            case 'KeyS':
+                pacman.direction = "down";
+                break;
+            case 'KeyA':
+                pacman.direction = "left";
+                break;
+            case 'KeyD':
+                pacman.direction = "right";
+                break;
+            case 'ArrowUp':
+                ghost.direction = "up";
+                break;
+            case 'ArrowDown':
+                ghost.direction = "down";
+                break;
+            case 'ArrowLeft':
+                ghost.direction = "left";
+                break;
+            case 'ArrowRight':
+                ghost.direction = "right";
+                break;
+            default:
+                break;
+        }
     }
 });
 
