@@ -6,6 +6,7 @@ import Settings from "./views/Settings.js";
 import Pacman from "./views/Pacman.js";
 import NotFound from "./views/NotFound.js";
 import Games from "./views/Games.js";
+import Profile from "./views/Profile.js";
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call the router function
@@ -20,7 +21,8 @@ const routes = [
 	{ path: "/pong", view: Pong },
 	{ path: "/pacman", view: Pacman },
 	{ path: "/settings", view: Settings },
-	{ path: "/games", view: Games }
+	{ path: "/games", view: Games },
+	{ path: "/profile", view: Profile }
 ];
 
 // Loads the view (HTML and JS) in the div with id "app" according to the current path

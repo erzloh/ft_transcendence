@@ -1,0 +1,36 @@
+<div class="full-height d-flex flex-column align-items-center justify-content-center">
+	<div class="row justify-content-center glass p-5">
+		<div class="col-12 text-left mb-5">
+			<p class="text-white h1" animated-letters>profile</p>
+		</div>
+		<div class="col-12 text-left">
+			<p class="text-white">username: <span id="username">guest</span></p>
+			<p class="text-white">email: <span id="email">none</span></p>
+		</div>
+		<div class="col-12 text-left mb-3">
+			<hr class="text-white">
+		</div>
+		<div class="col-12 text-left">
+			<p class="text-white">stats at a glance:</p>
+			<ul class="text-white" id="high-scores">
+				<li>pong: <span id="pong-score">0</span></li>
+				<li>pac-man: <span id="pacman-score">0</span></li>
+			</ul>
+			<div class="col-12 text-center mb-3">
+				<a role="button" class="btn text-light" href="/pong" data-link>pong</a>
+				<a role="button" class="btn text-light" href="/pacman" data-link>pac-man</a>
+			</div>
+		</div>
+		<div class="col-12 text-left mb-3">
+			<hr class="text-white">
+		</div>
+		<div class="col-12 text-center">
+			<!-- add two buttons to sign up and sign in -->
+			<a role="button" class="btn text-light" href="/signup" data-link>sign up</a>
+			<a role="button" class="btn text-light" href="/signin" data-link>sign in</a>
+		</div>
+	</div>
+	<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3 mt-5" href="/" data-link>
+		<img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow">
+	</a>
+</div>

@@ -7,9 +7,6 @@ export default class extends AbstractView {
     }
 
     async getHtml() {
-        return `
-            <h1>404 Not Found</h1>
-			<p>Sorry, the page you're looking for doesn't exist.</p>
-        `;
+        return (await fetch("static/html/notFound.html")).text();
     }
 }
