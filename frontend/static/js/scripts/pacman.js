@@ -22,6 +22,7 @@ let pacman, ghost;
 let imgPacman1, imgPacman2, imgPacman3;
 let imgGhost1, imgGhost2, imgGhost3, imgGhost4;
 let imgCherry, imgBanana, imgStrawberry;
+let imgPortal1, imgPortal2, imgPortal3, imgPortal4;
 
 let timer;
 let speed = 0.1;
@@ -325,6 +326,13 @@ class Cell {
                 c.arc(this.x * tileSize + tileSize / 2, this.y * tileSize + tileSize / 2, tileSize / 3, 0, Math.PI * 2);
             c.fill();
         }
+
+        if (this.value === 3) {
+            var tmpImg =    frame % 20 < 5 ? imgPortal1 : 
+                            frame % 20 < 10 ? imgPortal2 : 
+                            frame % 20 < 15 ? imgPortal3 : imgPortal4;
+            c.drawImage(tmpImg, this.x * tileSize, this.y * tileSize, tileSize, tileSize);
+        }
     }
 }
 
@@ -350,6 +358,14 @@ async function StartGame() {
 	imgBanana.src = 'static/assets/pacman/images/banana.png';
 	imgStrawberry = new Image();
 	imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';
+    imgPortal1 = new Image();
+    imgPortal1.src = 'static/assets/pacman/images/portal1.png';
+    imgPortal2 = new Image();
+    imgPortal2.src = 'static/assets/pacman/images/portal2.png';
+    imgPortal3 = new Image();
+    imgPortal3.src = 'static/assets/pacman/images/portal3.png';
+    imgPortal4 = new Image();
+    imgPortal4.src = 'static/assets/pacman/images/portal4.png';
 
 	// Set score to 0
 	pScore.textContent = "Pacman's score: 0";
@@ -439,7 +455,7 @@ window.addEventListener("keydown", (event) => {
     if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
         event.preventDefault();
     }
-    
+
     if (gameStart) {
         switch (event.code) {
             case 'KeyW':
