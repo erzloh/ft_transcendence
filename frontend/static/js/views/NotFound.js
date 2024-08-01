@@ -1,4 +1,5 @@
 import AbstractView from "./AbstractView.js";
+import { BASE_URL } from "../index.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -7,6 +8,6 @@ export default class extends AbstractView {
     }
 
     async getHtml() {
-        return (await fetch("static/html/notFound.html")).text();
+        return (await fetch(`${BASE_URL}/static/html/notFound.html`)).text();
     }
 }
