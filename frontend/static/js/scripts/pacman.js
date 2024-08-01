@@ -39,6 +39,26 @@ class Character {
         this.speed = speed;
         this.px = x;
         this.py = y;
+        this.tpReady = true;
+    }
+
+    teleport() {
+        if (this.tpReady == true) {
+            var tmpVal = cells[this.y][this.x].value;
+            for (var i = 0; i < height; i++) {
+                for (var j = 0; j < width; j++) {
+                    if (cells[i][j].value == tmpVal && !(this.y == i && this.x == j)) {
+                        console.log(j + " " + i + ": " + cells[i][j].value);
+                        this.x = j;
+                        this.y = i;
+                        this.px = j;
+                        this.py = i;
+                        this.tpReady = false;
+                        return;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -75,21 +95,27 @@ class Pacman extends Character {
                 }
 				pScore.textContent = "Pacman's score: " + this.points;
 			}
+            else if (cells[this.y][this.x].value >= 2 &&
+                    cells[this.y][this.x].value <=  4) {
+               this.teleport();
+            }
+            else
+                this.tpReady = true;
 			switch (this.direction) {
 				case "up":
-					if (cells[this.y - 1][this.x].value !== 1)
+					if (this.y - 1 >= 0 && cells[this.y - 1][this.x].value !== 1)
 						this.y -= 1;
 					break;
 				case "down":
-					if (cells[this.y + 1][this.x].value !== 1)
+					if (this.y + 1 < height && cells[this.y + 1][this.x].value !== 1)
 						this.y += 1;
 					break;
 				case "left":
-					if (cells[this.y][this.x - 1].value !== 1)
+					if (this.x - 1 >= 0 && cells[this.y][this.x - 1].value !== 1)
 						this.x -= 1;
 					break;
 				case "right":
-					if (cells[this.y][this.x + 1].value !== 1)
+					if (this.x + 1 < width && cells[this.y][this.x + 1].value !== 1)
 						this.x += 1;
 					break;
 				default:
@@ -140,21 +166,27 @@ class Ghost extends Character {
 			console.log("Ghost wins");
 		}
 		if (this.y == this.py && this.x == this.px) {
+            if (cells[this.y][this.x].value >= 2 &&
+                cells[this.y][this.x].value <=  4) {
+                this.teleport();
+            }
+            else
+                this.tpReady = true;
 			switch (this.direction) {
 				case "up":
-					if (cells[this.y - 1][this.x].value !== 1)
+					if (this.y - 1 >= 0 && cells[this.y - 1][this.x].value !== 1)
 						this.y -= 1;
 					break;
 				case "down":
-					if (cells[this.y + 1][this.x].value !== 1)
+					if (this.y + 1 < height && cells[this.y + 1][this.x].value !== 1)
 						this.y += 1;
 					break;
 				case "left":
-					if (cells[this.y][this.x - 1].value !== 1)
+					if (this.x - 1 >= 0 && cells[this.y][this.x - 1].value !== 1)
 						this.x -= 1;
 					break;
 				case "right":
-					if (cells[this.y][this.x + 1].value !== 1)
+					if (this.x + 1 < width && cells[this.y][this.x + 1].value !== 1)
 						this.x += 1;
 					break;
 				default:
@@ -327,7 +359,7 @@ class Cell {
             c.fill();
         }
 
-        if (this.value === 3) {
+        if (this.value >= 2 && this.value <= 4) {
             var tmpImg =    frame % 20 < 5 ? imgPortal1 : 
                             frame % 20 < 10 ? imgPortal2 : 
                             frame % 20 < 15 ? imgPortal3 : imgPortal4;
