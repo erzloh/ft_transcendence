@@ -3,16 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Single Page App</title>
+    <title>asobi</title>
+	<!-- add favicon -->
+	<link rel="icon" href="/static/assets/UI/icons/a.svg">
 	<link rel=" stylesheet" href="/static/css/main.css">
-	<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- The Bootstrap javascript -->
+	<!-- <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script> -->
 </head>
 <body>
+	<!-- The div where all the content of the page will be dynamically loaded -->
     <div id="app"></div>
-	<!-- <div class="text-container">
-		ASOBI
-	</div> -->
+
+	<!-- The website background -->
 	<div class="gradient-bg">
+		<!-- The gooey effect -->
 		<svg xmlns="http://www.w3.org/2000/svg">
 		<defs>
 			<filter id="goo">
@@ -22,7 +26,9 @@
 			</filter>
 		</defs>
 		</svg>
-		<div class="gradients-container">
+		<!-- The animated gradient shapes -->
+		<!-- <div class="gradients-container"> -->
+		<div class="gradients-container" style="display: none;">
 			<div class="g1"></div>
 			<div class="g2"></div>
 			<div class="g3"></div>
@@ -31,7 +37,10 @@
 			<div class="interactive"></div>
 		</div>
 	</div>
+
+	<!-- The javascript that handles the routing and other stuff that is common to all views (pages) -->
     <script type="module" src="/static/js/index.js"></script>
+	<!-- The javascript that will be dynamically loaded according to the view -->
 	<script id="dynamic-script"></script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 import AbstractView from "./AbstractView.js";
+import { BASE_URL } from "../index.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -7,9 +8,6 @@ export default class extends AbstractView {
     }
 
     async getHtml() {
-        return `
-            <h1>404 Not Found</h1>
-			<p>Sorry, the page you're looking for doesn't exist.</p>
-        `;
+        return (await fetch(`${BASE_URL}/static/html/notFound.html`)).text();
     }
 }

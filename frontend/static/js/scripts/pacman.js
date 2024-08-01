@@ -483,3 +483,6 @@ window.addEventListener("keydown", (event) => {
 
 
 //#endregion
+
+// Add Event Listener to the Start Button
+startButton.addEventListener("click", StartGame);
