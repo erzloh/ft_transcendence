@@ -47,12 +47,14 @@
 //     }
 // }
 
+
 let lastAIUpdate = 0;
 let targetY = 0;
 
 // 1000 = 1sec 
-let fps = 500
+let fps = 1000
 
+/*-------------------------------------------BALL FOLLOW AI------------------------------------------------*/
 
 // Simple AI (function) that follows the ball 
 function AiFollowPaddle(paddle, ball) {
@@ -73,28 +75,101 @@ function AiFollowPaddle(paddle, ball) {
 }
 
 
+
+
+ /*-------------------------------------------BALL PREDICTION AI------------------------------------------------*/
+
 // Medium AI that predicts the next ball position
-function predictBallPosition(ball) {
-    const futureX = ball.pos.x + ball.velocity.x * (fps / 60);
-    const futureY = ball.pos.y + ball.velocity.y * (fps / 60);
-
-    let predictedY = futureY;
-    if (predictedY < 0 || predictedY > canvas.height) {
-        predictedY = canvas.height - Math.abs(predictedY % canvas.height);
-    }
-
-    return { x: futureX, y: predictedY };
-}
+let predictedPosition
 
 function AiPredictPaddle(paddle, ball) {
-    const prediction = predictBallPos(ball);
-    const targetY = prediction.y - paddle.height / 2;
-
+    const currentTime = Date.now();
+    
+    if (currentTime - lastAIUpdate >= fps) {
+        lastAIUpdate = currentTime;
+        
+        // Predict ball position
+        predictedPosition = predictBallPosition(ball);
+        // console.log(`Actual: (${ball.pos.x.toFixed(2)}, ${ball.pos.y.toFixed(2)}) | Predicted: (${predictedPosition.x.toFixed(2)}, ${predictedPosition.y.toFixed(2)})`);
+        targetY = predictedPosition.y - paddle.height / 2;
+    }
+    
+    // Move paddle towards target
     if (paddle.pos.y < targetY) {
         paddle.pos.y += paddle.velocity.y;
     } else if (paddle.pos.y > targetY) {
         paddle.pos.y -= paddle.velocity.y;
     }
-
+    
     paddleEdgeCollision(paddle);
 }
+
+function predictBallPosition(ball) {
+    let futureX = ball.pos.x;
+    let futureY = ball.pos.y;
+    let velocityX = ball.velocity.x;
+    let velocityY = ball.velocity.y;
+
+    for (let i = 0; i < 60; i++) {
+        futureX += velocityX;
+        futureY += velocityY;
+
+        if (futureY + ball.radius >= canvas.height) {
+            futureY = canvas.height - ball.radius;
+            velocityY *= -1;
+        } else if (futureY - ball.radius <= 0) {
+            futureY = ball.radius;
+            velocityY *= -1;
+        }
+
+        if (futureX + ball.radius >= canvas.width || futureX - ball.radius <= 0) {
+            break;
+        }
+    }
+
+    return { x: futureX, y: futureY };
+}
+
+// Aim Assit xD
+function drawPredictionDot() {
+    if (predictedPosition) {
+        context.fillStyle = "red";
+        context.beginPath();
+        context.arc(predictedPosition.x, predictedPosition.y, 5, 0, Math.PI * 2);
+        context.fill();
+    }
+}
+
+
+
+
+/*--------------------------------------GAMEMODES-------------------------------------------------*/
+
+let gameMode = 1; //Per default on 1 => 2 Players
+
+document.getElementById('but1').addEventListener('click', () => gameMode = 1);
+document.getElementById('but2').addEventListener('click', () => gameMode = 2);
+document.getElementById('but3').addEventListener('click', () => gameMode = 3);
+
+
+//! Pour Eric si tu veux un truc qui garde le bouton visuellement activé
+// const buttons = document.querySelectorAll('.btn');
+
+// buttons.forEach(button => {
+//     button.addEventListener('click', () => {
+//         // Deactivate all buttons
+//         buttons.forEach(btn => btn.classList.remove('active'));
+        
+//         // Activate the clicked button
+//         button.classList.add('active');
+        
+//         // Perform action based on the clicked button
+//         if (button.id === 'but1') {
+//             // Action for 2 Players
+//         } else if (button.id === 'but2') {
+//             // Action for Easy AI
+//         } else if (button.id === 'but3') {
+//             // Action for Medium AI
+//         }
+//     });
+// });
