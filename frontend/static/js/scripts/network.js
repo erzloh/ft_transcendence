@@ -50,11 +50,16 @@
 let lastAIUpdate = 0;
 let targetY = 0;
 
-function aiControlLeftPaddle(paddle, ball) {
+// 1000 = 1sec 
+let fps = 500
+
+
+// Simple AI (function) that follows the ball 
+function AiFollowPaddle(paddle, ball) {
     const currentTime = Date.now();
     
     // Update AI information once per second
-    if (currentTime - lastAIUpdate >= 1000) {
+    if (currentTime - lastAIUpdate >= fps) {
         lastAIUpdate = currentTime;
         targetY = ball.pos.y;
     }
@@ -65,7 +70,31 @@ function aiControlLeftPaddle(paddle, ball) {
     } else if (paddle.pos.y + paddle.height / 2 > targetY + 10) {
         paddle.pos.y -= paddle.velocity.y;
     }
+}
+
+
+// Medium AI that predicts the next ball position
+function predictBallPosition(ball) {
+    const futureX = ball.pos.x + ball.velocity.x * (fps / 60);
+    const futureY = ball.pos.y + ball.velocity.y * (fps / 60);
+
+    let predictedY = futureY;
+    if (predictedY < 0 || predictedY > canvas.height) {
+        predictedY = canvas.height - Math.abs(predictedY % canvas.height);
+    }
+
+    return { x: futureX, y: predictedY };
+}
+
+function AiPredictPaddle(paddle, ball) {
+    const prediction = predictBallPos(ball);
+    const targetY = prediction.y - paddle.height / 2;
+
+    if (paddle.pos.y < targetY) {
+        paddle.pos.y += paddle.velocity.y;
+    } else if (paddle.pos.y > targetY) {
+        paddle.pos.y -= paddle.velocity.y;
+    }
 
     paddleEdgeCollision(paddle);
 }
-

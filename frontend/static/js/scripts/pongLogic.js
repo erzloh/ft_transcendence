@@ -198,7 +198,8 @@
 		ball.update();
 		paddleRight.updateRight();
 		// paddleLeft.updateLeft();
-		aiControlLeftPaddle(paddleLeft, ball);
+		// AiPredictPaddle(paddleLeft, ball);
+		AiFollowPaddle(paddleLeft, ball);
 		paddleEdgeCollision(paddleLeft);
 		paddleEdgeCollision(paddleRight);
 		ballEdgeCollision(ball);
