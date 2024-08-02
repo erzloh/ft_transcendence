@@ -33,3 +33,9 @@ class signup(views.APIView):
             token = Token.objects.create(user=user)
             return Response({"token": token.key, "user": serializer.data})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+class test_token(views.APIView):
+    def get(self, request):
+        return Response({"message": "You are authenticated"}, status=status.HTTP_200_OK)
