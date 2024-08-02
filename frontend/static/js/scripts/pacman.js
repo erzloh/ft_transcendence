@@ -1,5 +1,7 @@
 // Color constants
 const backgroundColor = 'rgb(0, 0, 0)';
+const ghostWallColor1 = 'rgb(110, 55, 225)';
+const ghostWallColor2 = 'rgb(75, 20, 200)';
 const wallColor = 'rgb(60, 0, 120)';
 const dotColor = 'rgb(105,55,165)';
 const glowColor = 'rgb(145,85,210)';
@@ -8,6 +10,8 @@ const glowColor = 'rgb(145,85,210)';
 const canvas = document.getElementById('cvsPacman');
 const c = canvas.getContext('2d');
 const pScore = document.getElementById('pScore');
+const pCD = document.getElementById('pCD');
+const gCD = document.getElementById('gCD');
 const startButton = document.getElementById('btnStart');
 const timerElement = document.getElementById('timer');
 
@@ -26,7 +30,8 @@ let imgCherry, imgBanana, imgStrawberry, imgStar;
 let imgPortal1, imgPortal2, imgPortal3, imgPortal4;
 
 let timer;
-let speed = 0.1;
+let pSpeed = 1 / 12;
+let gSpeed = 1 / 11;
 let frame = 0; // The frame number
 let gameStart = false;
 
@@ -69,15 +74,14 @@ class Pacman extends Character {
         this.points = 0;
     }
 
-	checkWinCondition() {
-		for (var y = 0; y < height; y++) {
-			for (var x = 0; x < width; x++) {
-				if (cells[y][x].value === 5)
-					return false;
-			}
-		}
-		return true;
-	}
+    useSpell() {
+        if (timer.pacmanUseSpell())
+            ghost.speed = ghost.speed / 2;
+    }
+
+    stopSpell() {
+        ghost.speed = ghost.speed * 2;
+    }
 
 	// Makes the character move until it reaches its destination
 	move() {
@@ -102,26 +106,26 @@ class Pacman extends Character {
             }
             else
                 this.tpReady = true;
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 >= 0 && cells[this.y - 1][this.x].value !== 1)
-						this.y -= 1;
-					break;
-				case "down":
-					if (this.y + 1 < height && cells[this.y + 1][this.x].value !== 1)
-						this.y += 1;
-					break;
-				case "left":
-					if (this.x - 1 >= 0 && cells[this.y][this.x - 1].value !== 1)
-						this.x -= 1;
-					break;
-				case "right":
-					if (this.x + 1 < width && cells[this.y][this.x + 1].value !== 1)
-						this.x += 1;
-					break;
-				default:
-					break;
-			}
+            switch (this.direction) {
+                case "up":
+                    if (cells[this.y - 1][this.x].value !== 1 && cells[this.y - 1][this.x].value !== 9)
+                        this.y -= 1;
+                    break;
+                case "down":
+                    if (cells[this.y + 1][this.x].value !== 1 && cells[this.y + 1][this.x].value !== 9)
+                        this.y += 1;
+                    break;
+                case "left":
+                    if (cells[this.y][this.x - 1].value !== 1 && cells[this.y][this.x - 1].value !== 9)
+                        this.x -= 1;
+                    break;
+                case "right":
+                    if (cells[this.y][this.x + 1].value !== 1 && cells[this.y][this.x + 1].value !== 9)
+                        this.x += 1;
+                    break;
+                default:
+                    break;
+            }
 		}
 	}
 
@@ -133,9 +137,13 @@ class Pacman extends Character {
     // Render the character's sprite
     render(img) {
         if (this.px != this.x)
-            this.px = this.px < this.x ? Math.round((this.px + this.speed) * 10) / 10 : Math.round((this.px - this.speed) * 10) / 10;
+            this.px = this.px < this.x ? 
+                (Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
+                (Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
         else if (this.py != this.y)
-            this.py = this.py < this.y ? Math.round((this.py + this.speed) * 10) / 10 : Math.round((this.py - this.speed) * 10) / 10;
+            this.py = this.py < this.y ? 
+                (Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
+                (Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
         
         // Convert degrees to radians
         var angle = this.direction == "right" ? 0 :
@@ -156,6 +164,20 @@ class Pacman extends Character {
 class Ghost extends Character {
     constructor(x, y, direction, speed) {
         super(x, y, direction, speed);
+        this.lastX;
+        this.lastY;
+        this.cellValue;
+    }
+
+    useSpell() {
+        if (timer.ghostUseSpell()) {
+            this.cellValue = cells[this.lastY][this.lastX].value;
+            cells[this.lastY][this.lastX].value = 9;
+        }   
+    }
+
+    stopSpell() {
+        cells[this.lastY][this.lastX].value = this.cellValue;
     }
 
 	// Makes the character move until it reaches its destination
@@ -173,6 +195,10 @@ class Ghost extends Character {
             }
             else
                 this.tpReady = true;
+            if (timer.gSpellCD == 0) {
+                this.lastX = this.x;
+                this.lastY = this.y;
+            }
 			switch (this.direction) {
 				case "up":
 					if (this.y - 1 >= 0 && cells[this.y - 1][this.x].value !== 1)
@@ -199,9 +225,13 @@ class Ghost extends Character {
     // Render the character's sprite
     render() {
         if (this.px != this.x)
-            this.px = this.px < this.x ? Math.round((this.px + this.speed) * 10) / 10 : Math.round((this.px - this.speed) * 10) / 10;
+            this.px = this.px < this.x ? 
+                (Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
+                (Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
         else if (this.py != this.y)
-            this.py = this.py < this.y ? Math.round((this.py + this.speed) * 10) / 10 : Math.round((this.py - this.speed) * 10) / 10;
+            this.py = this.py < this.y ? 
+            (Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
+            (Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
 		var img;
 		switch (this.direction){
 			case "right":
@@ -283,6 +313,28 @@ class Timer {
         this.sec = 0;
         this.min = 0;
         this.interval = null;
+        this.pSpellDuration = 0;
+        this.pSpellCD = 0;
+        this.gSpellDuration = 0;
+        this.gSpellCD = 0;
+    }
+
+    pacmanUseSpell() {
+        if (this.pSpellCD > 0)
+            return false;
+        this.pSpellDuration = 5;
+        this.pSpellCD = 20;
+        pCD.innerHTML = "Pacman's ability: " + this.pSpellCD.toString().padStart(2, '0');
+        return true;
+    }
+
+    ghostUseSpell() {
+        if (this.gSpellCD > 0)
+            return false;
+        this.gSpellDuration = 30;
+        this.gSpellCD = 30;
+        gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
+        return true;
     }
 
     start() {
@@ -308,8 +360,34 @@ class Timer {
     updateTime() {
         this.sec++;
 		
+        if (this.pSpellDuration > 0) {
+            this.pSpellDuration--;
+            if (this.pSpellDuration == 0) {
+                pCD.innerHTML = "Pacman's ability: Ready";
+                pacman.stopSpell();
+            }
+        }
+            
+        if (this.pSpellCD > 0) {
+            this.pSpellCD--;
+            pCD.innerHTML = "Pacman's ability: " + this.pSpellCD.toString().padStart(2, '0');
+        }
+
+        if (this.gSpellDuration > 0) {
+            this.gSpellDuration--;
+            if (this.gSpellDuration == 0) {
+                gCD.innerHTML = "Ghost's ability: Ready";
+                ghost.stopSpell();
+            }
+        }
+
+        if (this.gSpellCD > 0) {
+            this.gSpellCD--;
+            gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
+        }
+
 		// Every 10 seconds create a fruit
-		if (this.sec % 8 == 0) {
+		if (this.sec % 6 == 0) {
 			var ypos = Math.floor(Math.random() * (height - 1));
 			var xpos = Math.floor(Math.random() * (width - 1));
 			if (cells[ypos][xpos].value !== 1) {
@@ -366,9 +444,10 @@ class Cell {
         // Draw the map's ground and walls
         if (this.value === 1)
             c.fillStyle = wallColor;
+        else if (this.value === 9)
+            c.fillStyle = frame % 30 < 15 ? ghostWallColor1 : ghostWallColor2;
         else
             c.fillStyle = backgroundColor;
-
         c.fillRect(this.x * tileSize, this.y * tileSize, tileSize, tileSize);
 
         // Determine the dot's color in order to make it blink
@@ -495,11 +574,11 @@ function createCellArray(data) {
         var row = [];
         for (let x = 0; x < width; x++) {
             if (data[y][x] === "p") {
-                pacman = new Pacman(x, y, "none", speed);
+                pacman = new Pacman(x, y, "none", pSpeed);
                 data[y][x] = 0;
             }
             else if (data[y][x] === "g") {
-                ghost = new Ghost(x, y, "none", speed);
+                ghost = new Ghost(x, y, "none", gSpeed);
                 data[y][x] = 0;
             }
             row.push(new Cell(x, y, data[y][x]));
@@ -531,6 +610,9 @@ window.addEventListener("keydown", (event) => {
             case 'KeyD':
                 pacman.direction = "right";
                 break;
+            case 'ControlLeft':
+                    pacman.useSpell();
+                    break;
             case 'ArrowUp':
                 ghost.direction = "up";
                 break;
@@ -542,6 +624,9 @@ window.addEventListener("keydown", (event) => {
                 break;
             case 'ArrowRight':
                 ghost.direction = "right";
+                break;
+            case 'Numpad0':
+                ghost.useSpell();
                 break;
             default:
                 break;
