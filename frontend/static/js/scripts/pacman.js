@@ -14,6 +14,7 @@ const timerElement = document.getElementById('timer');
 // Map data
 let cells; // The cells array
 let fruitArray = [];
+let starArray = [];
 let	width;
 let	height;
 let tileSize;
@@ -21,7 +22,7 @@ let tileSize;
 let pacman, ghost;
 let imgPacman1, imgPacman2, imgPacman3;
 let imgGhost1, imgGhost2, imgGhost3, imgGhost4;
-let imgCherry, imgBanana, imgStrawberry;
+let imgCherry, imgBanana, imgStrawberry, imgStar;
 let imgPortal1, imgPortal2, imgPortal3, imgPortal4;
 
 let timer;
@@ -225,6 +226,33 @@ class Ghost extends Character {
 
 //#endregion
 
+class Star {
+    constructor(x, y) {
+        this.x = x;
+		this.y = y;
+    }
+
+    // This function will return false if the fruit gets eaten by pacman
+	render() {
+		if (Math.abs(pacman.py - this.y) < 0.5 &&
+			Math.abs(pacman.px - this.x) < 0.5) {
+            for (var y = 1; y < height - 1; y++) {
+                for (var x = 1; x < width - 1; x++) {
+                    if (cells[y][x].value === 6)
+                        cells[y][x].value = 5;
+                    else if (cells[y][x].value === 8)
+                        cells[y][x].value = 7;
+                }
+            }
+			return false;
+		}
+		else {
+			c.drawImage(imgStar, this.x * tileSize, this.y * tileSize, tileSize, tileSize);
+			return true;
+		}
+	}
+}
+
 class Fruit {
 	constructor(name, points, x, y, image){
 		this.name = name;
@@ -285,22 +313,20 @@ class Timer {
 			var ypos = Math.floor(Math.random() * (height - 1));
 			var xpos = Math.floor(Math.random() * (width - 1));
 			if (cells[ypos][xpos].value !== 1) {
-
 				var ran = Math.floor(Math.random() * 3);
 				switch (ran){
 					case 0:
-						fruitArray.push(new Fruit("Cherry", 500, xpos, ypos, imgCherry));
+						fruitArray.push(new Fruit("Cherry", 1000, xpos, ypos, imgCherry));
 						break;
 					case 1:
-						fruitArray.push(new Fruit("Banana", 300, xpos, ypos, imgBanana));
+						fruitArray.push(new Fruit("Banana", 750, xpos, ypos, imgBanana));
 						break;
 					case 2:
-						fruitArray.push(new Fruit("Strawberry", 200, xpos, ypos, imgStrawberry));
+						fruitArray.push(new Fruit("Strawberry", 500, xpos, ypos, imgStrawberry));
 						break;
 					default:
 						break;
 				}
-				
 			}
 		}
 
@@ -308,14 +334,13 @@ class Timer {
         if (this.sec == 60) {
             this.min++;
             this.sec = 0;
-            if (this.min % 2 == 0) {
-                for (var y = 1; y < height - 1; y++) {
-                    for (var x = 1; x < width - 1; x++) {
-                        if (cells[y][x].value === 6)
-                            cells[y][x].value = 5;
-                        else if (cells[y][x].value === 8)
-                            cells[y][x].value = 7;
-                    }
+            var starSpawned = false;
+            while (!starSpawned) {
+                var ypos = Math.floor(Math.random() * (height - 1));
+                var xpos = Math.floor(Math.random() * (width - 1));
+                if (cells[ypos][xpos].value !== 1) {
+                    starArray.push(new Star(xpos, ypos));
+                    starSpawned = true;
                 }
             }
         }
@@ -398,6 +423,8 @@ async function StartGame() {
     imgPortal3.src = 'static/assets/pacman/images/portal3.png';
     imgPortal4 = new Image();
     imgPortal4.src = 'static/assets/pacman/images/portal4.png';
+    imgStar = new Image();
+    imgStar.src = 'static/assets/pacman/images/star.png';
 
 	// Set score to 0
 	pScore.textContent = "Pacman's score: 0";
@@ -442,8 +469,10 @@ function gameloop() {
     ghost.move();
     ghost.render();
 
-	// Remove eaten fruits from the fruitArray
+	// Remove used objects from arrays
 	fruitArray = fruitArray.filter(food => food.render());
+    starArray = starArray.filter(star => star.render());
+
     frame++;
 }
 
