@@ -1,7 +1,22 @@
-
-
-<h1>trizoPong</h1>
-<canvas id="canvas" ></canvas>
-<button id="startButton">start</button>
-<h2 id="player1Score">0</h3>
-<h2 id="player2Score">0</h3>
+<div class="full-height d-flex align-items-center justify-content-center">
+	<div class="row justify-content-center">
+		<div class="col-12 text-center mb-5">
+			<h1 class="text-white h1" animated-letters>trizoPong</h1>
+		</div>
+		<div class="col-6 mb-3">
+			<div class="d-flex justify-content-between">
+				<h2 class="text-white d-inline" id="player1Score">0</h2>
+				<h2 class="text-white d-inline" id="player2Score">0</h2>
+			</div>
+		</div>
+		<div class="col-12 text-center mb-3">
+			<canvas class="glass" id="canvas" width="500" height="500"></canvas>
+		</div>
+		<div class="col-12 text-center mb-3">
+			<button id="startButton" class="btn btn-lg text-light">start game</button>
+		</div>
+		<div class="col-12 text-center mt-5 d-flex justify-content-center">
+			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
+		</div>
+	</div>
+</div>

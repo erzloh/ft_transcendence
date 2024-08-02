@@ -14,6 +14,8 @@ html, body {
 	font-family: 'Space Mono', monospace;
 	margin: 0;
 	padding: 0;
+	font-variant-ligatures: no-common-ligatures;
+	overflow-x: hidden;
 }
 
 .full-height {
@@ -25,6 +27,8 @@ html, body {
 // Define variables
 $color-bg1: rgb(0, 0, 0);
 $color-bg2: rgb(66, 2, 109);
+// $color-bg1: rgb(248, 153, 57);
+// $color-bg2: rgb(78, 5, 127);
 $color1: rgb(18, 113, 255);
 $color2: rgb(221, 74, 255);
 $color3: rgb(100, 220, 255);
