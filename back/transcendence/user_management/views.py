@@ -34,8 +34,15 @@ class signup(views.APIView):
             return Response({"token": token.key, "user": serializer.data})
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
 class test_token(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         return Response({"message": "You are authenticated"}, status=status.HTTP_200_OK)
+
+class logout(views.APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
