@@ -524,16 +524,33 @@ async function StartGame() {
 		startButton.disabled = true;
 		timer.start();
         // Start animating the map
-        gameloop();
-    } else {
+		requestAnimationFrame(gameloop);
+    } 
+	else {
         console.error("Pacman or Ghost is not initialized.");
     }
 }
 
-// Animate the game 
-function gameloop() {
-    requestAnimationFrame(() => gameloop());
-    for (let y = 0; y < height; y++) {
+let lastTime = 0;
+const fps = 120;
+const interval = 1000 / fps;
+
+function gameloop(timestamp) {
+    if (timestamp - lastTime > interval) {
+        lastTime = timestamp;
+        update();
+        render();
+    }
+    requestAnimationFrame(gameloop);
+}
+
+function update() {
+	pacman.move();
+	ghost.move();
+}
+
+function render() {
+	for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             cells[y][x].render();
         }
@@ -543,16 +560,14 @@ function gameloop() {
                     frame % 20 < 10 ? imgPacman2 :
                     frame % 20 < 15 ? imgPacman3 : imgPacman2;
 
-    pacman.move();
     pacman.render(imgpac);
-    ghost.move();
     ghost.render();
 
 	// Remove used objects from arrays
 	fruitArray = fruitArray.filter(food => food.render());
     starArray = starArray.filter(star => star.render());
 
-    frame++;
+	frame++;
 }
 
 // Load the map from the JSON file specified as parameter
