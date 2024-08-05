@@ -7,6 +7,7 @@ import Pacman from "./views/Pacman.js";
 import NotFound from "./views/NotFound.js";
 import Games from "./views/Games.js";
 import Profile from "./views/Profile.js";
+import SignIn from "./views/SignIn.js";
 
 // ------------------------------- CONFIGURE CONSTANTS -------------------------------
 // Set the base URL of the website
@@ -26,7 +27,8 @@ const routes = [
 	{ path: "/pacman", view: Pacman },
 	{ path: "/settings", view: Settings },
 	{ path: "/games", view: Games },
-	{ path: "/profile", view: Profile }
+	{ path: "/profile", view: Profile },
+	{ path: "/signin", view: SignIn }
 ];
 
 // Loads the view (HTML and JS) in the div with id "app" according to the current path
