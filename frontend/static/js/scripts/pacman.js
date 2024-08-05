@@ -19,21 +19,53 @@ const timerElement = document.getElementById('timer');
 let cells; // The cells array
 let fruitArray = [];
 let starArray = [];
-let	width;
-let	height;
-let tileSize;
+let	width, height, tileSize;
 
+// Keys
+let pUp = 'KeyW', pLeft = 'KeyA', pDown = 'KeyS', pRight = 'KeyD', pSpell = 'ControlLeft';
+let gUp = 'ArrowUp', gLeft = 'ArrowLeft', gDown = 'ArrowDown', gRight = 'ArrowRight', gSpell = 'Numpad0';
+
+// Characters objects
 let pacman, ghost;
+
+// Image objects
 let imgPacman1, imgPacman2, imgPacman3;
 let imgGhost1, imgGhost2, imgGhost3, imgGhost4;
 let imgCherry, imgBanana, imgStrawberry, imgStar;
 let imgPortal1, imgPortal2, imgPortal3, imgPortal4;
 
+// Utils
 let timer;
 let pSpeed = 1 / 20;
 let gSpeed = 1 / 19;
 let frame = 0; // The frame number
 let gameStart = false;
+
+function updateGame() {
+	pacman.move();
+	ghost.move();
+}
+
+function renderGame() {
+	for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            cells[y][x].render();
+        }
+    }
+
+    var imgpac =    frame % 40 < 10 ? imgPacman1 : 
+                    frame % 40 < 20 ? imgPacman2 :
+                    frame % 40 < 30 ? imgPacman3 : imgPacman2;
+
+    pacman.render(imgpac);
+    ghost.render();
+
+	// Remove used objects from arrays
+	fruitArray = fruitArray.filter(food => food.render());
+    starArray = starArray.filter(star => star.render());
+
+	frame++;
+}
 
 //#region CHARACTERS
 
@@ -75,7 +107,7 @@ class Pacman extends Character {
     }
 
     useSpell() {
-        if (timer.pacmanUseSpell())
+        if (timer.pacmanStartCD())
             ghost.speed = ghost.speed / 2;
     }
 
@@ -170,7 +202,7 @@ class Ghost extends Character {
     }
 
     useSpell() {
-        if (timer.ghostUseSpell()) {
+        if (timer.ghostStartCD()) {
             this.cellValue = cells[this.lastY][this.lastX].value;
             cells[this.lastY][this.lastX].value = 9;
         }   
@@ -323,24 +355,6 @@ class Timer {
         this.gSpellCD = 0;
     }
 
-    pacmanUseSpell() {
-        if (this.pSpellCD > 0)
-            return false;
-        this.pSpellDuration = 5;
-        this.pSpellCD = 20;
-        pCD.innerHTML = "Pacman's ability: " + this.pSpellCD.toString().padStart(2, '0');
-        return true;
-    }
-
-    ghostUseSpell() {
-        if (this.gSpellCD > 0)
-            return false;
-        this.gSpellDuration = 30;
-        this.gSpellCD = 30;
-        gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
-        return true;
-    }
-
     start() {
         if (!this.interval) {
             this.interval = setInterval(() => {
@@ -365,8 +379,8 @@ class Timer {
     updateTime() {
 		this.dsec++;
 		
-		update();
-		render();
+		updateGame();
+		renderGame();
 
 		if (this.dsec == 100) {
 			this.dsec = 0;
@@ -434,13 +448,28 @@ class Timer {
 					}
 				}
 			}
-			this.updateDisplay();
+
+			this.timerElement.innerHTML = 
+				"Time elapsed: " + this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
 		}
     }
 
-    updateDisplay() {
-        this.timerElement.innerHTML = 
-			"Time elapsed: " + this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
+	pacmanStartCD() {
+        if (this.pSpellCD > 0)
+            return false;
+        this.pSpellDuration = 5;
+        this.pSpellCD = 20;
+        pCD.innerHTML = "Pacman's ability: " + this.pSpellCD.toString().padStart(2, '0');
+        return true;
+    }
+
+    ghostStartCD() {
+        if (this.gSpellCD > 0)
+            return false;
+        this.gSpellDuration = 30;
+        this.gSpellCD = 30;
+        gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
+        return true;
     }
 }
 
@@ -484,42 +513,41 @@ class Cell {
     }
 }
 
+//#region INITIALIZATION
+
+// Initialize everything needed for the game
 async function StartGame() {
     // Load needed images
     imgPacman1 = new Image();
-    imgPacman1.src = 'static/assets/pacman/images/pacman1.png';
     imgPacman2 = new Image();
-    imgPacman2.src = 'static/assets/pacman/images/pacman2.png';
     imgPacman3 = new Image();
-    imgPacman3.src = 'static/assets/pacman/images/pacman3.png';
     imgGhost1 = new Image();
-    imgGhost1.src = 'static/assets/pacman/images/blueGhost1.png';
 	imgGhost2 = new Image();
-    imgGhost2.src = 'static/assets/pacman/images/blueGhost2.png';
 	imgGhost3 = new Image();
-    imgGhost3.src = 'static/assets/pacman/images/blueGhost3.png';
 	imgGhost4 = new Image();
-    imgGhost4.src = 'static/assets/pacman/images/blueGhost4.png';
 	imgCherry = new Image();
-	imgCherry.src = 'static/assets/pacman/images/cherry.png';
 	imgBanana = new Image();
-	imgBanana.src = 'static/assets/pacman/images/banana.png';
 	imgStrawberry = new Image();
-	imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';
     imgPortal1 = new Image();
-    imgPortal1.src = 'static/assets/pacman/images/portal1.png';
     imgPortal2 = new Image();
-    imgPortal2.src = 'static/assets/pacman/images/portal2.png';
     imgPortal3 = new Image();
-    imgPortal3.src = 'static/assets/pacman/images/portal3.png';
     imgPortal4 = new Image();
-    imgPortal4.src = 'static/assets/pacman/images/portal4.png';
     imgStar = new Image();
+	imgPacman1.src = 'static/assets/pacman/images/pacman1.png';
+	imgPacman2.src = 'static/assets/pacman/images/pacman2.png';
+	imgPacman3.src = 'static/assets/pacman/images/pacman3.png';
+	imgGhost1.src = 'static/assets/pacman/images/blueGhost1.png';
+	imgGhost2.src = 'static/assets/pacman/images/blueGhost2.png';
+	imgGhost3.src = 'static/assets/pacman/images/blueGhost3.png';
+	imgGhost4.src = 'static/assets/pacman/images/blueGhost4.png';
+	imgCherry.src = 'static/assets/pacman/images/cherry.png';
+	imgBanana.src = 'static/assets/pacman/images/banana.png';
+	imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';
+    imgPortal1.src = 'static/assets/pacman/images/portal1.png';
+    imgPortal2.src = 'static/assets/pacman/images/portal2.png';
+    imgPortal3.src = 'static/assets/pacman/images/portal3.png';
+    imgPortal4.src = 'static/assets/pacman/images/portal4.png';
     imgStar.src = 'static/assets/pacman/images/star.png';
-
-	// Set score to 0
-	pScore.textContent = "Pacman's score: 0";
-	timer = new Timer(timerElement);
 
     // Get the map's JSON data
     const mapData = await LoadMap("static/assets/pacman/maps/map1.json");
@@ -528,69 +556,23 @@ async function StartGame() {
 	width = tmpWidth;
 	height = tmpHeight;
 
+	// Set score to 0
+	pScore.textContent = "Pacman's score: 0";
+
+	// Create the timer object
+	timer = new Timer(timerElement);
+
     // Create the cells array
     cells = createCellArray(tmpData);
 
 	if (pacman && ghost) {
         gameStart = true;
 		startButton.disabled = true;
+		// Start the timer, which starts the game
 		timer.start();
-        // Start animating the map
-		// requestAnimationFrame(gameloop);
     } 
 	else {
         console.error("Pacman or Ghost is not initialized.");
-    }
-}
-
-let lastTime = 0;
-const fps = 120;
-const interval = 1000 / fps;
-
-function gameloop(timestamp) {
-    if (timestamp - lastTime > interval) {
-        lastTime = timestamp;
-        update();
-        render();
-    }
-    requestAnimationFrame(gameloop);
-}
-
-function update() {
-	pacman.move();
-	ghost.move();
-}
-
-function render() {
-	for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-            cells[y][x].render();
-        }
-    }
-
-    var imgpac =    frame % 40 < 10 ? imgPacman1 : 
-                    frame % 40 < 20 ? imgPacman2 :
-                    frame % 40 < 30 ? imgPacman3 : imgPacman2;
-
-    pacman.render(imgpac);
-    ghost.render();
-
-	// Remove used objects from arrays
-	fruitArray = fruitArray.filter(food => food.render());
-    starArray = starArray.filter(star => star.render());
-
-	frame++;
-}
-
-// Load the map from the JSON file specified as parameter
-async function LoadMap(mapPath) {
-    try {
-        const response = await fetch(mapPath);
-        const mapData = await response.json();
-        return mapData;
-    } 
-    catch (error) {
-        console.error("Error loading map:", error);
     }
 }
 
@@ -615,6 +597,24 @@ function createCellArray(data) {
     return tmp;
 }
 
+//#endregion
+
+//#region UTILS
+
+// Load the map from the JSON file specified as parameter
+async function LoadMap(mapPath) {
+    try {
+        const response = await fetch(mapPath);
+        const mapData = await response.json();
+        return mapData;
+    } 
+    catch (error) {
+        console.error("Error loading map:", error);
+    }
+}
+
+//#endregion
+
 //#region EVENT LISTENERS
 
 window.addEventListener("keydown", (event) => {
@@ -622,37 +622,37 @@ window.addEventListener("keydown", (event) => {
     if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
         event.preventDefault();
     }
-
+	console.log(event.code);
     if (gameStart) {
         switch (event.code) {
-            case 'KeyW':
+            case pUp:
                 pacman.direction = "up";
                 break;
-            case 'KeyS':
+            case pDown:
                 pacman.direction = "down";
                 break;
-            case 'KeyA':
+            case pLeft:
                 pacman.direction = "left";
                 break;
-            case 'KeyD':
+            case pRight:
                 pacman.direction = "right";
                 break;
-            case 'ControlLeft':
-                    pacman.useSpell();
-                    break;
-            case 'ArrowUp':
+            case pSpell:
+                pacman.useSpell();
+                break;
+            case gUp:
                 ghost.direction = "up";
                 break;
-            case 'ArrowDown':
+            case gDown:
                 ghost.direction = "down";
                 break;
-            case 'ArrowLeft':
+            case gLeft:
                 ghost.direction = "left";
                 break;
-            case 'ArrowRight':
+            case gRight:
                 ghost.direction = "right";
                 break;
-            case 'Numpad0':
+            case gSpell:
                 ghost.useSpell();
                 break;
             default:
@@ -677,8 +677,7 @@ window.addEventListener("keydown", (event) => {
 //     }
 // });
 
-
-//#endregion
-
 // Add Event Listener to the Start Button
 startButton.addEventListener("click", StartGame);
+
+//#endregion
