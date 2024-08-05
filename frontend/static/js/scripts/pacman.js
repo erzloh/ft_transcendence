@@ -30,8 +30,8 @@ let imgCherry, imgBanana, imgStrawberry, imgStar;
 let imgPortal1, imgPortal2, imgPortal3, imgPortal4;
 
 let timer;
-let pSpeed = 1 / 12;
-let gSpeed = 1 / 11;
+let pSpeed = 1 / 20;
+let gSpeed = 1 / 19;
 let frame = 0; // The frame number
 let gameStart = false;
 
@@ -127,6 +127,15 @@ class Pacman extends Character {
                     break;
             }
 		}
+
+		if (this.px != this.x)
+            this.px = this.px < this.x ? 
+                (Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
+                (Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
+        else if (this.py != this.y)
+            this.py = this.py < this.y ? 
+                (Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
+                (Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
 	}
 
 	eatFruit(fruit) {
@@ -136,15 +145,6 @@ class Pacman extends Character {
 
     // Render the character's sprite
     render(img) {
-        if (this.px != this.x)
-            this.px = this.px < this.x ? 
-                (Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
-                (Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
-        else if (this.py != this.y)
-            this.py = this.py < this.y ? 
-                (Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
-                (Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
-        
         // Convert degrees to radians
         var angle = this.direction == "right" ? 0 :
                     this.direction == "up" ? -90 :
@@ -220,11 +220,8 @@ class Ghost extends Character {
 					break;
 			}
 		}
-	}
 
-    // Render the character's sprite
-    render() {
-        if (this.px != this.x)
+		if (this.px != this.x)
             this.px = this.px < this.x ? 
                 (Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
                 (Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
@@ -232,6 +229,10 @@ class Ghost extends Character {
             this.py = this.py < this.y ? 
             (Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
             (Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
+	}
+
+    // Render the character's sprite
+    render() {
 		var img;
 		switch (this.direction){
 			case "right":
@@ -310,9 +311,12 @@ class Fruit {
 class Timer {
     constructor(timerElement) {
         this.timerElement = timerElement;
+		this.dsec = 0;
         this.sec = 0;
         this.min = 0;
         this.interval = null;
+
+		// Spells
         this.pSpellDuration = 0;
         this.pSpellCD = 0;
         this.gSpellDuration = 0;
@@ -341,7 +345,7 @@ class Timer {
         if (!this.interval) {
             this.interval = setInterval(() => {
                 this.updateTime();
-            }, 1000);
+            }, 10);
         }
     }
 
@@ -352,78 +356,86 @@ class Timer {
 
     reset() {
         this.stop();
+		this.dsec = 0;
         this.sec = 0;
         this.min = 0;
         this.updateDisplay();
     }
 
     updateTime() {
-        this.sec++;
+		this.dsec++;
 		
-        if (this.pSpellDuration > 0) {
-            this.pSpellDuration--;
-            if (this.pSpellDuration == 0) {
-                pCD.innerHTML = "Pacman's ability: Ready";
-                pacman.stopSpell();
-            }
-        }
-            
-        if (this.pSpellCD > 0) {
-            this.pSpellCD--;
-            pCD.innerHTML = "Pacman's ability: " + this.pSpellCD.toString().padStart(2, '0');
-        }
+		update();
+		render();
 
-        if (this.gSpellDuration > 0) {
-            this.gSpellDuration--;
-            if (this.gSpellDuration == 0) {
-                gCD.innerHTML = "Ghost's ability: Ready";
-                ghost.stopSpell();
-            }
-        }
-
-        if (this.gSpellCD > 0) {
-            this.gSpellCD--;
-            gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
-        }
-
-		// Every 10 seconds create a fruit
-		if (this.sec % 6 == 0) {
-			var ypos = Math.floor(Math.random() * (height - 1));
-			var xpos = Math.floor(Math.random() * (width - 1));
-			if (cells[ypos][xpos].value !== 1) {
-				var ran = Math.floor(Math.random() * 3);
-				switch (ran){
-					case 0:
-						fruitArray.push(new Fruit("Cherry", 1000, xpos, ypos, imgCherry));
-						break;
-					case 1:
-						fruitArray.push(new Fruit("Banana", 750, xpos, ypos, imgBanana));
-						break;
-					case 2:
-						fruitArray.push(new Fruit("Strawberry", 500, xpos, ypos, imgStrawberry));
-						break;
-					default:
-						break;
+		if (this.dsec == 100) {
+			this.dsec = 0;
+			this.sec++;
+		
+			if (this.pSpellDuration > 0) {
+				this.pSpellDuration--;
+				if (this.pSpellDuration == 0) {
+					pCD.innerHTML = "Pacman's ability: Ready";
+					pacman.stopSpell();
 				}
 			}
+				
+			if (this.pSpellCD > 0) {
+				this.pSpellCD--;
+				pCD.innerHTML = "Pacman's ability: " + this.pSpellCD.toString().padStart(2, '0');
+			}
+	
+			if (this.gSpellDuration > 0) {
+				this.gSpellDuration--;
+				if (this.gSpellDuration == 0) {
+					gCD.innerHTML = "Ghost's ability: Ready";
+					ghost.stopSpell();
+				}
+			}
+	
+			if (this.gSpellCD > 0) {
+				this.gSpellCD--;
+				gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
+			}
+	
+			// Every 10 seconds create a fruit
+			if (this.sec % 6 == 0) {
+				var ypos = Math.floor(Math.random() * (height - 1));
+				var xpos = Math.floor(Math.random() * (width - 1));
+				if (cells[ypos][xpos].value !== 1) {
+					var ran = Math.floor(Math.random() * 3);
+					switch (ran){
+						case 0:
+							fruitArray.push(new Fruit("Cherry", 1000, xpos, ypos, imgCherry));
+							break;
+						case 1:
+							fruitArray.push(new Fruit("Banana", 750, xpos, ypos, imgBanana));
+							break;
+						case 2:
+							fruitArray.push(new Fruit("Strawberry", 500, xpos, ypos, imgStrawberry));
+							break;
+						default:
+							break;
+					}
+				}
+			}
+	
+			// Update minutes if 60 seconds is reached
+			if (this.sec == 60) {
+				this.min++;
+				this.sec = 0;
+				var starSpawned = false;
+				while (!starSpawned) {
+					var ypos = Math.floor(Math.random() * (height - 1));
+					var xpos = Math.floor(Math.random() * (width - 1));
+					if (cells[ypos][xpos].value !== 1) {
+						starArray.push(new Star(xpos, ypos));
+						starSpawned = true;
+					}
+				}
+			}
+			this.updateDisplay();
 		}
-
-		// Update minutes if 60 seconds is reached
-        if (this.sec == 60) {
-            this.min++;
-            this.sec = 0;
-            var starSpawned = false;
-            while (!starSpawned) {
-                var ypos = Math.floor(Math.random() * (height - 1));
-                var xpos = Math.floor(Math.random() * (width - 1));
-                if (cells[ypos][xpos].value !== 1) {
-                    starArray.push(new Star(xpos, ypos));
-                    starSpawned = true;
-                }
-            }
-        }
-
-        this.updateDisplay();
     }
 
     updateDisplay() {
@@ -445,13 +457,13 @@ class Cell {
         if (this.value === 1)
             c.fillStyle = wallColor;
         else if (this.value === 9)
-            c.fillStyle = frame % 30 < 15 ? ghostWallColor1 : ghostWallColor2;
+            c.fillStyle = frame % 40 < 20 ? ghostWallColor1 : ghostWallColor2;
         else
             c.fillStyle = backgroundColor;
         c.fillRect(this.x * tileSize, this.y * tileSize, tileSize, tileSize);
 
         // Determine the dot's color in order to make it blink
-        c.fillStyle = frame % 30 < 15 ? dotColor : glowColor;
+        c.fillStyle = frame % 40 < 20 ? dotColor : glowColor;
 
         // Draw the dot
         if (this.value === 5 || this.value === 7) {
@@ -464,9 +476,9 @@ class Cell {
         }
 
         if (this.value >= 2 && this.value <= 4) {
-            var tmpImg =    frame % 20 < 5 ? imgPortal1 : 
-                            frame % 20 < 10 ? imgPortal2 : 
-                            frame % 20 < 15 ? imgPortal3 : imgPortal4;
+            var tmpImg =    frame % 40 < 10 ? imgPortal1 : 
+                            frame % 40 < 20 ? imgPortal2 : 
+                            frame % 40 < 30 ? imgPortal3 : imgPortal4;
             c.drawImage(tmpImg, this.x * tileSize, this.y * tileSize, tileSize, tileSize);
         }
     }
@@ -524,7 +536,7 @@ async function StartGame() {
 		startButton.disabled = true;
 		timer.start();
         // Start animating the map
-		requestAnimationFrame(gameloop);
+		// requestAnimationFrame(gameloop);
     } 
 	else {
         console.error("Pacman or Ghost is not initialized.");
@@ -556,9 +568,9 @@ function render() {
         }
     }
 
-    var imgpac =    frame % 20 < 5 ? imgPacman1 : 
-                    frame % 20 < 10 ? imgPacman2 :
-                    frame % 20 < 15 ? imgPacman3 : imgPacman2;
+    var imgpac =    frame % 40 < 10 ? imgPacman1 : 
+                    frame % 40 < 20 ? imgPacman2 :
+                    frame % 40 < 30 ? imgPacman3 : imgPacman2;
 
     pacman.render(imgpac);
     ghost.render();
