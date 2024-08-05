@@ -4,6 +4,8 @@
 
 	canvas.width = window.innerWidth * 0.60;
 	canvas.height = window.innerHeight * 0.60;
+	console.log(canvas.width);
+	console.log(canvas.height);
 
 	let	isPaused = false;
 
@@ -189,9 +191,9 @@
 		}
 	}
 
-	const ball = new Ball(vec2(200, 200), vec2(15, 15), 20);
-	const paddleLeft = new Paddle(vec2(0, 50), vec2(15, 15), 20, 160);
-	const paddleRight = new Paddle(vec2(canvas.width - 20, 30), vec2(15, 15), 20, 160);
+	const ball = new Ball(vec2(200, 200), vec2(canvas.width / 69, canvas.height / 69), 20);
+	const paddleLeft = new Paddle(vec2(0, 50), vec2(canvas.width / 69, canvas.height / 69), 20, 160);
+	const paddleRight = new Paddle(vec2(canvas.width - 20, 30), vec2(canvas.width / 69, canvas.height / 69), 20, 160);
 
 
 	function	gameUpdate() {
