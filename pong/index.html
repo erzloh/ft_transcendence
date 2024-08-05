@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport". content="width=device.width, initial-scale=1.0">
+		<title>pong</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				overflow: hidden;
+			}
+
+			#canvas {
+				/*background-color: #111;*/
+			}
+
+			h1 {
+				color: #fff;
+				font-family: sans-serif;
+				font-size: 4rem;
+				position: absolute;
+				top: 50px;
+			}
+
+			#player1Score {
+				left: 35%;
+			}
+
+			#player2Score {
+				right: 35%;
+			}
+
+		</style>
+		<link rel="stylesheet" href="pong.css">
+	</head>
+	<body>
+		<canvas id="canvas"></canvas> 
+		<h1 id = "player1Score">0</h1>
+		<h1 id = "player2Score">0</h1>
+		<script src="pong.js"></script>
+		<script src="AI/js/network.js"></script>
+	</head>
+	</body>
+
+
+</html>

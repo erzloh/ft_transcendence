@@ -197,7 +197,15 @@
 	function	gameUpdate() {
 		ball.update();
 		paddleRight.updateRight();
-		paddleLeft.updateLeft();
+
+	    if (gameMode === 1) {
+			paddleLeft.updateLeft();
+		} else if (gameMode === 2) {
+			AiFollowPaddle(paddleLeft, ball);
+		} else if (gameMode === 3) {
+			AiPredictPaddle(paddleLeft, ball);
+		}
+		
 		paddleEdgeCollision(paddleLeft);
 		paddleEdgeCollision(paddleRight);
 		ballEdgeCollision(ball);
@@ -211,6 +219,7 @@
 		ball.draw();
 		paddleLeft.draw();
 		paddleRight.draw();
+		drawPredictionDot();
 	}
 
 

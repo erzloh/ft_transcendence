@@ -6,6 +6,11 @@ import Settings from "./views/Settings.js";
 import Pacman from "./views/Pacman.js";
 import NotFound from "./views/NotFound.js";
 import Games from "./views/Games.js";
+import Profile from "./views/Profile.js";
+
+// ------------------------------- CONFIGURE CONSTANTS -------------------------------
+// Set the base URL of the website
+export const BASE_URL = "https://localhost";
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call the router function
@@ -20,23 +25,26 @@ const routes = [
 	{ path: "/pong", view: Pong },
 	{ path: "/pacman", view: Pacman },
 	{ path: "/settings", view: Settings },
-	{ path: "/games", view: Games }
+	{ path: "/games", view: Games },
+	{ path: "/profile", view: Profile }
 ];
 
 // Loads the view (HTML and JS) in the div with id "app" according to the current path
 const router = async () => {
 	// Test if the current path is in the routes array
 	let match = routes.find(route => route.path === location.pathname);
-
+	
 	// If the current path is not in the routes array, set the match to the NotFound view
     if (!match) {
 		match = { path: "", view: NotFound };
     }
-
+	
 	// Create a new instance of the view
     const view = new match.view();
-
+	
 	// Load the HTML of the view in the app div
+	// console.log(view);
+	// console.log(await view.getHtml());
     document.querySelector("#app").innerHTML = await view.getHtml();
 
 	// Load the JS of the view
