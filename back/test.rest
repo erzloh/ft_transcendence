@@ -21,7 +21,7 @@ Content-Type: application/json
 
 POST http://localhost:8000/api/logout
 Content-Type: application/json
-Authorization: Token aec19b86e65ed3e487e1fd6c59d5a045d8157221
+Authorization: Token 36c6c1fa2c1ed1256c1a6be1f52656ac2077056d
 
 {}
 
@@ -29,7 +29,7 @@ Authorization: Token aec19b86e65ed3e487e1fd6c59d5a045d8157221
 
 GET http://localhost:8000/api/test_token
 Content-Type: application/json
-Authorization: Token aec19b86e65ed3e487e1fd6c59d5a045d8157221
+Authorization: Token e284191971305e7266a2b8c02a06fda6a3c59ffa
 
 {}
 
@@ -37,8 +37,23 @@ Authorization: Token aec19b86e65ed3e487e1fd6c59d5a045d8157221
 
 PUT http://localhost:8000/api/update_bio
 Content-Type: application/json
-Authorization: Token aec19b86e65ed3e487e1fd6c59d5a045d8157221
+Authorization: Token f1b2e7263e0db6c910d3af66357f31db7282fc55
 
 {
     "bio": "testestes."
 }
+
+###
+
+PUT http://localhost:8000/api/update_profile_picture
+Content-Type: multipart/form-data; boundary=MyUniqueBoundaryString
+Authorization: Token f1b2e7263e0db6c910d3af66357f31db7282fc55
+
+--MyUniqueBoundaryString
+Content-Disposition: form-data; name="profile_picture"; filename="bird.jpg"
+Content-Type: image/jpeg
+
+< profile_pictures/bird.jpg
+--MyUniqueBoundaryString--
+
+###
