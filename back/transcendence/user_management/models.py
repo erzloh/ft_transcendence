@@ -21,6 +21,7 @@ class CustomUser(AbstractUser):
 		}
 	)
 	email = models.EmailField(unique=True)
+	bio = models.TextField(blank=True, null=True)
 	objects = CustomUserManager()
 
 	def __str__(self):
