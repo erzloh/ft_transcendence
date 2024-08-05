@@ -11972,6 +11972,9 @@ html, body {
   padding: 0;
   font-variant-ligatures: no-common-ligatures;
   overflow-x: hidden;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 .full-height {
