@@ -1,4 +1,5 @@
 import AbstractView from "./AbstractView.js";
+import { signIn } from "../scripts/signIn.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -9,8 +10,8 @@ export default class extends AbstractView {
     async getHtml() {
 		return (await fetch("static/html/signIn.html")).text();
     }
-
-	async getJS() {
-		return (await fetch("static/js/scripts/signIn.js")).text();
+	
+	loadJS() {
+		signIn();
 	}
 }
