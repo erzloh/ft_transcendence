@@ -1,24 +1,11 @@
 import AbstractView from "./AbstractView.js";
+// import { pong, eventLiseners } from "../scripts/pongLogic.js";
 
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("Pong");
+        this.setTitle("pong");
     }
-
-/*    async getHtml() {
-        return `
-			<nav class="nav">
-				<a href="/" class="nav__link" data-link>Home</a>
-				<a href="/pong" class="nav__link" data-link>Pong</a>
-                <a href="/pacman" class="nav__link" data-link>Pacman</a>
-				<a href="/settings" class="nav__link" data-link>Settings</a>
-			</nav>
-            <h1>Pong</h1>
-            <p>so sick</p>
-        `;
-    }
-	*/
 
 	async getHtml() {
 		return (await fetch("static/html/pong.html")).text();
@@ -29,6 +16,16 @@ export default class extends AbstractView {
         const AI = await (await fetch("static/js/scripts/network.js")).text();
         return pongLogic + AI;
 		// return (await fetch("static/js/scripts/pongLogic.js")).text();
+	}
+
+	loadJS() {
+		// pong();
+	}
+
+	cleanUpEventListeners() {
+		// for (const [event, listener] of Object.entries(eventListeners)) {
+		// 	document.removeEventListener(event, listener);
+		// }
 	}
 
 }

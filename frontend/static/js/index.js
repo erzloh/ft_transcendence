@@ -31,6 +31,9 @@ const routes = [
 	{ path: "/signin", view: SignIn }
 ];
 
+// Store the current view
+let view = null;
+
 // Loads the view (HTML and JS) in the div with id "app" according to the current path
 const router = async () => {
 	// Test if the current path is in the routes array
@@ -42,15 +45,14 @@ const router = async () => {
     }
 	
 	// Create a new instance of the view
-    const view = new match.view();
+    view = new match.view();
 	
 	// Load the HTML of the view in the app div
-	// console.log(view);
-	// console.log(await view.getHtml());
     document.querySelector("#app").innerHTML = await view.getHtml();
 
 	// Load the JS of the view
-	await loadScript(view);
+	// await loadScript(view);
+	view.loadJS();
 
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();
@@ -77,6 +79,7 @@ const attachEventListenersToLinks = () => {
 	});
 };
 
+// DEPRECATED
 // This is a workaround to execute the JS content of the view
 // The JS has to be adaded to the DOM as a script element to be executed
 // Just adding JS in the script tag like with HTML and innerText doesn't work
@@ -90,6 +93,8 @@ const loadScript = async (view) => {
 	// Create a new script element
 	const newScript = document.createElement('script');
 	newScript.id = 'dynamic-script';
+	newScript.src = "static/js/scripts/home.js";
+	newScript.type = "module";
 
 	// Create a function that contains the JS content
 	// This is a workaround to remove comments from the JS content
@@ -107,7 +112,10 @@ const loadScript = async (view) => {
 
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view
-const navigateTo = url => {
+export const navigateTo = url => {
+	// Clean up event listeners (that are attached to the document)
+	view.cleanUpEventListeners();
+
 	// Change the URL to the new URL and add a state to the history stack
     history.pushState(null, null, url);
 

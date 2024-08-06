@@ -14,8 +14,11 @@ export default class {
         return "";
     }
 
-	// Returns the JS content of the view
-	async getJS() {
-		return "";
-	}
+	// This is a method that will be overridden by the child classes
+	// Calls a function that contains the JavaScript code for the view
+	loadJS() {}
+
+	// This is a method that will be overridden by the child classes
+	// Removes all the event listeners attached to the document that were added by the view 
+	cleanUpEventListeners() {}
 }
