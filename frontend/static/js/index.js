@@ -1,4 +1,4 @@
-// ------------------------------- IMPORT THE VIEWS -------------------------------
+// ------------------------------- IMPORT VIEWS -------------------------------
 // A view is a class containing the HTML and JS of a page
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
@@ -13,6 +13,9 @@ import SignIn from "./views/SignIn.js";
 import './visual/interactiveBg.js'
 import { animateLetters } from './visual/effects.js'
 
+// ------------------------------- IMPORT UTILS ---------------------------------
+import { translations, setLanguage, updateTexts } from "./utils/languages.js";
+
 // ------------------------------- CONFIGURE CONSTANTS -------------------------------
 // Set the base URL of the website
 export const BASE_URL = "https://localhost";
@@ -21,6 +24,7 @@ export const BASE_URL = "https://localhost";
 // When the DOM is loaded, call the router function
 document.addEventListener("DOMContentLoaded", () => {
 	router();
+	setLanguage('en');
 });
 
 // ------------------------------- ROUTING -------------------------------
@@ -59,6 +63,9 @@ const router = async () => {
 
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();
+
+	// Initialize with default language
+	updateTexts();
 
 	// Animate letters
 	animateLetters();
@@ -103,4 +110,3 @@ window.addEventListener("popstate", router);
 if (localStorage.getItem('prettyBgSetting') === 'true') {
 	document.querySelector('.gradients-container').style.display = 'block';
 }
-

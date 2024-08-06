@@ -1,7 +1,7 @@
 <div class="full-height d-flex flex-column align-items-center justify-content-center">
 	<div class="row justify-content-center glass p-5">
 		<div class="col-12 text-left mb-5">
-			<p class="text-white h1" animated-letters>settings</p>
+			<p class="text-white h1" animated-letters data-translate="settings">settings</p>
 		</div>
 		<div class="col-12 text-center mb-3">
 			<div class="form-check">
@@ -10,6 +10,17 @@
 					enable pretty background (warning: can slow down your device)
 				</label>
 			</div>
+		</div>
+		<div class="col-12 text-left mb-3">
+			<hr class="text-white">
+		</div>
+		<div class="col-12 text-center mb-3">
+			<label for="languageSwitcher" class="text-white">select language:</label>
+			<select id="languageSwitcher">
+				<option value="en">English</option>
+				<option value="fr">French</option>
+				<option value="jp">日本語</option>
+			</select>
 		</div>
 	</div>
 	<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3 mt-5" href="/" data-link>

@@ -1,0 +1,24 @@
+// Switch language setting
+export let translations = {};
+
+async function loadTranslations(language) {
+	const response = await fetch(`static/languages/${language}.json`);
+	const translations = await response.json();
+	return translations;
+}
+
+export async function setLanguage(language) {
+	translations = await loadTranslations(language);
+	updateTexts();
+}
+
+export function updateTexts() {
+	document.querySelectorAll('[data-translate]').forEach(element => {
+		const key = element.getAttribute('data-translate');
+		element.textContent = translations[key];
+	});
+}
+
+// document.getElementById('languageSwitcher').addEventListener('change', (event) => {
+// 	setLanguage(event.target.value);
+// });
