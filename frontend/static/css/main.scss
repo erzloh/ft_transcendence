@@ -159,6 +159,10 @@ $blending: hard-light;
 	animation: waitFadeIn 1s ease-out;
 }
 
+.title {
+	user-select: none;
+}
+
 // ------------------------------- Custom Keyframes -------------------------------
 
 @keyframes waitFadeIn {

@@ -9,8 +9,4 @@ export default class extends AbstractView {
     async getHtml() {
 		return (await fetch("static/html/games.html")).text();
     }
-
-	// async getJS() {
-	// 	return (await fetch("static/js/scripts/games.js")).text();
-	// }
 }

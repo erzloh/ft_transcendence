@@ -1,4 +1,5 @@
 import AbstractView from "./AbstractView.js";
+import { profile } from "../scripts/profile.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -10,7 +11,7 @@ export default class extends AbstractView {
 		return (await fetch("static/html/profile.html")).text();
     }
 
-	async getJS() {
-		return (await fetch("static/js/scripts/profile.js")).text();
+	loadJS() {
+		profile();
 	}
 }

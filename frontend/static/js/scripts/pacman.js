@@ -1,19 +1,20 @@
-// Color constants
-const backgroundColor = 'rgb(0, 0, 0)';
+export function pacman() {
+	// Color constants
+	const backgroundColor = 'rgb(0, 0, 0)';
 const ghostWallColor1 = 'rgb(110, 55, 225)';
 const ghostWallColor2 = 'rgb(75, 20, 200)';
-const wallColor = 'rgb(60, 0, 120)';
-const dotColor = 'rgb(105,55,165)';
-const glowColor = 'rgb(145,85,210)';
+	const wallColor = 'rgb(60, 0, 120)';
+	const dotColor = 'rgb(105,55,165)';
+	const glowColor = 'rgb(145,85,210)';
 
-// Canvas
-const canvas = document.getElementById('cvsPacman');
-const c = canvas.getContext('2d');
-const pScore = document.getElementById('pScore');
+	// Canvas
+	const canvas = document.getElementById('cvsPacman');
+	const c = canvas.getContext('2d');
+	const pScore = document.getElementById('pScore');
 const pCD = document.getElementById('pCD');
 const gCD = document.getElementById('gCD');
-const startButton = document.getElementById('btnStart');
-const timerElement = document.getElementById('timer');
+	const startButton = document.getElementById('btnStart');
+	const timerElement = document.getElementById('timer');
 
 // Map data
 let cells; // The cells array
@@ -67,7 +68,7 @@ function renderGame() {
 	frame++;
 }
 
-//#region CHARACTERS
+	//#region CHARACTERS
 
 class Character {
     constructor(x, y, direction, speed) {
@@ -100,11 +101,11 @@ class Character {
     }
 }
 
-class Pacman extends Character {
-    constructor(x, y, direction, speed) {
-        super(x, y, direction, speed);
-        this.points = 0;
-    }
+	class Pacman extends Character {
+		constructor(x, y, direction, speed) {
+			super(x, y, direction, speed);
+			this.points = 0;
+		}
 
     useSpell() {
         if (timer.pacmanStartCD())
@@ -170,10 +171,10 @@ class Pacman extends Character {
                 (Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
 	}
 
-	eatFruit(fruit) {
-		this.points += fruit.points;
-		pScore.textContent = "Pacman's score: " + this.points;
-	}
+		eatFruit(fruit) {
+			this.points += fruit.points;
+			pScore.textContent = "Pacman's score: " + this.points;
+		}
 
     // Render the character's sprite
     render(img) {
@@ -182,16 +183,16 @@ class Pacman extends Character {
                     this.direction == "up" ? -90 :
                     this.direction == "left" ? 180 : 90;
 
-        var radians = angle * Math.PI / 180;
+			var radians = angle * Math.PI / 180;
 
-        c.save();
-        c.translate(this.px * tileSize + tileSize / 2, this.py * tileSize + tileSize / 2);
-        c.rotate(radians);
+			c.save();
+			c.translate(this.px * tileSize + tileSize / 2, this.py * tileSize + tileSize / 2);
+			c.rotate(radians);
 
-        c.drawImage(img, -tileSize / 2, -tileSize / 2, tileSize, tileSize);
-        c.restore();
-    }
-}
+			c.drawImage(img, -tileSize / 2, -tileSize / 2, tileSize, tileSize);
+			c.restore();
+		}
+	}
 
 class Ghost extends Character {
     constructor(x, y, direction, speed) {
@@ -316,29 +317,29 @@ class Star {
 	}
 }
 
-class Fruit {
-	constructor(name, points, x, y, image){
-		this.name = name;
-		this.points = points;
-		this.eaten = false;
-		this.x = x;
-		this.y = y;
-		this.image = image;
-	}
+	class Fruit {
+		constructor(name, points, x, y, image){
+			this.name = name;
+			this.points = points;
+			this.eaten = false;
+			this.x = x;
+			this.y = y;
+			this.image = image;
+		}
 
-	// This function will return false if the fruit gets eaten by pacman
-	render() {
-		if (Math.abs(pacman.py - this.y) < 0.5 &&
-			Math.abs(pacman.px - this.x) < 0.5) {
-			pacman.eatFruit(this);
-			return false;
-		}
-		else {
-			c.drawImage(this.image, this.x * tileSize, this.y * tileSize, tileSize, tileSize);
-			return true;
+		// This function will return false if the fruit gets eaten by pacman
+		render() {
+			if (Math.abs(pacman.py - this.y) < 0.5 &&
+				Math.abs(pacman.px - this.x) < 0.5) {
+				pacman.eatFruit(this);
+				return false;
+			}
+			else {
+				c.drawImage(this.image, this.x * tileSize, this.y * tileSize, tileSize, tileSize);
+				return true;
+			}
 		}
 	}
-}
 
 class Timer {
     constructor(timerElement) {
@@ -363,10 +364,10 @@ class Timer {
         }
     }
 
-    stop() {
-        clearInterval(this.interval);
-        this.interval = null;
-    }
+		stop() {
+			clearInterval(this.interval);
+			this.interval = null;
+		}
 
     reset() {
         this.stop();
@@ -473,12 +474,12 @@ class Timer {
     }
 }
 
-class Cell {
-    constructor(x, y, value) {
-        this.x = x;
-        this.y = y;
-        this.value = value;
-    }
+	class Cell {
+		constructor(x, y, value) {
+			this.x = x;
+			this.y = y;
+			this.value = value;
+		}
 
     // render the cell
     render() {
@@ -562,8 +563,8 @@ async function StartGame() {
 	// Create the timer object
 	timer = new Timer(timerElement);
 
-    // Create the cells array
-    cells = createCellArray(tmpData);
+		// Create the cells array
+		cells = createCellArray(tmpData);
 
 	if (pacman && ghost) {
         gameStart = true;
@@ -615,7 +616,7 @@ async function LoadMap(mapPath) {
 
 //#endregion
 
-//#region EVENT LISTENERS
+	//#region EVENT LISTENERS
 
 window.addEventListener("keydown", (event) => {
     // Prevent buttons from moving the page
@@ -661,23 +662,40 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
-// To make the players stop when releasing the movement buttons
-// window.addEventListener("keyup", (event) => {
-//     if (event.code == "KeyW" && pacman.orientation == "up" || 
-//         event.code == "KeyA" && pacman.orientation == "left" || 
-//         event.code == "KeyS" && pacman.orientation == "down" || 
-//         event.code == "KeyD" && pacman.orientation == "right" ) {
-//         pacman.orientation = "none";
-//     }
-//     if (event.code == "ArrowUp" && ghost.orientation == "up" || 
-//         event.code == "ArrowLeft" && ghost.orientation == "left" || 
-//         event.code == "ArrowDown" && ghost.orientation == "down" || 
-//         event.code == "ArrowRight" && ghost.orientation == "right" ) {
-//         ghost.orientation = "none";
-//     }
-// });
+	// To make the players stop when releasing the movement buttons
+	// window.addEventListener("keyup", (event) => {
+	//     if (event.code == "KeyW" && pacman.orientation == "up" || 
+	//         event.code == "KeyA" && pacman.orientation == "left" || 
+	//         event.code == "KeyS" && pacman.orientation == "down" || 
+	//         event.code == "KeyD" && pacman.orientation == "right" ) {
+	//         pacman.orientation = "none";
+	//     }
+	//     if (event.code == "ArrowUp" && ghost.orientation == "up" || 
+	//         event.code == "ArrowLeft" && ghost.orientation == "left" || 
+	//         event.code == "ArrowDown" && ghost.orientation == "down" || 
+	//         event.code == "ArrowRight" && ghost.orientation == "right" ) {
+	//         ghost.orientation = "none";
+	//     }
+	// });
 
-// Add Event Listener to the Start Button
-startButton.addEventListener("click", StartGame);
 
-//#endregion
+	//#endregion
+
+	// Add Event Listener to the Start Button
+	startButton.addEventListener("click", StartGame);
+}
+
+// --------------------------- Event Listener Functions ---------------------------
+// (Only Event Listener that are attached to the document.
+// Those attached to elements in the view are gonna be removed
+// when the view changes anyway)
+
+// Example:
+// function printKey (event) {
+// 	console.log(event.key);
+// }
+
+// --------------------------- Export Event Listeners Object ---------------------------
+export const eventListeners = {
+	// "keydown": printKey
+}
