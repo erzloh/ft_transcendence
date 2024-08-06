@@ -9,6 +9,10 @@ import Games from "./views/Games.js";
 import Profile from "./views/Profile.js";
 import SignIn from "./views/SignIn.js";
 
+// ------------------------------- IMPORT VISUALS -------------------------------
+import './visual/interactiveBg.js'
+import { animateLetters } from './visual/effects.js'
+
 // ------------------------------- CONFIGURE CONSTANTS -------------------------------
 // Set the base URL of the website
 export const BASE_URL = "https://localhost";
@@ -100,58 +104,3 @@ if (localStorage.getItem('prettyBgSetting') === 'true') {
 	document.querySelector('.gradients-container').style.display = 'block';
 }
 
-// ------------------------------- FRONTEND EYE CANDIES -------------------------------
-// Changing letter animation
-const animateLetters = () => {
-    const text = document.querySelector("[animated-letters]");
-    if (!text) return;
-	const letters = "abcdefghijklmnopqrstuvwxyz";
-	const initialText = text.innerText;
-    let interval = null;
-    let iteration = 0;
-
-	interval = setInterval(() => {
-		text.innerText = text.innerText
-			.split("")
-			.map((letter, index) => {
-				if (index < iteration) {
-					return initialText[index];
-				}
-				return letters[Math.floor(Math.random() * 26)];
-			})
-			.join("");
-
-		if (iteration >= initialText.length) { 
-			clearInterval(interval);
-		}
-
-		iteration += 1 / 3;
-	}, 30);
-};
-
-// Interactive bubble
-document.addEventListener('DOMContentLoaded', () => {
-	const interBubble = document.querySelector('.interactive');
-	if (!interBubble) return;
-
-    let curX = window.innerWidth / 2;
-    let curY = window.innerHeight / 2;
-    let tgX = 0;
-    let tgY = 0;
-
-    function move() {
-        curX += (tgX - curX) / 20;
-        curY += (tgY - curY) / 20;
-        interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
-        requestAnimationFrame(() => {
-            move();
-        });
-    }
-
-    window.addEventListener('mousemove', (event) => {
-        tgX = event.clientX;
-        tgY = event.clientY;
-    });
-
-    move();
-});
