@@ -22,9 +22,9 @@ export const BASE_URL = "https://localhost";
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call the router function
-document.addEventListener("DOMContentLoaded", () => {
-	router();
-	setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
+document.addEventListener("DOMContentLoaded", async () => {
+	await setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
+	await router();
 });
 
 // ------------------------------- ROUTING -------------------------------
@@ -59,7 +59,7 @@ const router = async () => {
     document.querySelector("#app").innerHTML = await view.getHtml();
 
 	// Load the JS of the view
-	view.loadJS();
+	await view.loadJS();
 
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();

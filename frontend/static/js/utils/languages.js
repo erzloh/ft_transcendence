@@ -1,7 +1,7 @@
 // Switch language setting
 let translations = {};
 
-export async function loadTranslations(language) {
+async function loadTranslations(language) {
 	const response = await fetch(`static/languages/${language}.json`);
 	const translations = await response.json();
 	return translations;

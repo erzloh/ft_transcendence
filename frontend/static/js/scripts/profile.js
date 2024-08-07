@@ -1,4 +1,6 @@
-export function profile() {
+import { navigateTo } from "../index.js";
+
+export async function profile() {
 	async function renderLoggingInfo() {
 		// Check if the user is logged in or not
 		// const response = await fetch('https://jsonplaceholder.typicode.com/users/1', {
@@ -31,7 +33,7 @@ export function profile() {
 			const logOutButton = document.querySelector('#log-out-button');
 			logOutButton.addEventListener('click', () => {
 				document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-				renderLoggingInfo();
+				navigateTo('/profile');
 			});
 		} else {
 			loggingInfo.innerHTML = `<div class="col-12 text-center">
@@ -39,7 +41,9 @@ export function profile() {
 				<a role="button" class="btn text-light" href="/signin" data-link data-translate="login">login</a>
 			</div>`;
 		}
+		console.log('finished rendering logging info');
 	}
 
-	renderLoggingInfo();
+	await renderLoggingInfo();
+	console.log('Hello from profile.js');
 }

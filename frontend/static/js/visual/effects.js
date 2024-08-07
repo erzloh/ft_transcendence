@@ -1,6 +1,5 @@
 // ------------------------------- FRONTEND EYE CANDIES -------------------------------
 // Changing letter animation
-import { loadTranslations } from '../utils/languages.js';
 
 export const animateLetters = () => {
     const text = document.querySelector("[animated-letters]");
