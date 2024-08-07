@@ -12127,6 +12127,7 @@ html, body {
   background: rgba(255, 255, 255, 0.1);
   color: white;
   padding: 5px;
+  margin-left: 10px;
 }
 
 .custom-checkbox {
