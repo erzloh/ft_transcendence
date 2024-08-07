@@ -19,8 +19,7 @@ class PacmanGame {
 		this.width, this.height, this.tileSize;
 
 		// Keys
-		this.pUp = 'KeyW', this.pLeft = 'KeyA', this.pDown = 'KeyS', this.pRight = 'KeyD', this.pSpell = 'ControlLeft';
-		this.gUp = 'ArrowUp', this.gLeft = 'ArrowLeft', this.gDown = 'ArrowDown', this.gRight = 'ArrowRight', this.gSpell = 'Numpad0';
+		this.keybinds;
 
 		// Characters objects
 		this.pacman, this.ghost;
@@ -43,8 +42,9 @@ class PacmanGame {
 		this.boundPacmanHandleKeyDown = this.pacmanHandleKeyDown.bind(this);
 	}
 
-	Initialize() {
+	Initialize(keybinds) {
 		// Add Event Listener to the Start Button
+		this.keybinds = keybinds;
 		this.startButton.addEventListener("click", () => this.StartGame());
 	}
 
@@ -160,7 +160,7 @@ class PacmanGame {
 		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
-		console.log(event.code);
+		// console.log(event.code);
 		switch (event.code) {
 			case this.pUp:
 				this.pacman.direction = "up";
