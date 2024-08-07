@@ -1,14 +1,13 @@
 import AbstractView from "./AbstractView.js";
-// import { pong, eventLiseners } from "../scripts/pongLogic.js";
 
-export default class extends AbstractView {
+export default class Pong extends AbstractView {
     constructor() {
         super();
-        this.setTitle("pong");
+        this.setTitle("Pong");
     }
 
-	async getHtml() {
-		return (await fetch("static/html/pong.html")).text();
+    async getHtml() {
+        return (await fetch("/static/html/pong.html")).text();
     }
 
 	async getJS() {
