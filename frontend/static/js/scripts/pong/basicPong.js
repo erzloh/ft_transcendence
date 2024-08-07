@@ -1,4 +1,4 @@
-const canvas = document.getElementById('pongCanvas');
+const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 const startButton = document.getElementById('startButton');
 
@@ -184,6 +184,18 @@ function draw() {
        // drawText("Pause", canvas.width / 2 - 50, canvas.height / 2, "#FFF");
     }
 }
+
+function initGame(mode, context, canvas) {
+  
+	if (mode === 'cpu') {
+		console.log("test-its cpu this time");
+	} else {
+		console.log("its 1v1 this time");
+	}
+  
+	// Commencez la boucle du jeu
+	gameLoop(context, canvas, player1, player2);
+  }
 
 function update() {
     if (!paused) {
