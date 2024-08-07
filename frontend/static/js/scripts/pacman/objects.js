@@ -1,25 +1,27 @@
 export class Star {
-	constructor(x, y) {
+	constructor(x, y, imgStar, pcG) {
 		this.x = x;
 		this.y = y;
+		this.imgStar = imgStar;
+		this.pcG = pcG;
 	}
 
 	// This function will return false if the fruit gets eaten by pacman
 	render() {
-		if (Math.abs(pacman.py - this.y) < 0.5 &&
-			Math.abs(pacman.px - this.x) < 0.5) {
-			for (var y = 1; y < height - 1; y++) {
-				for (var x = 1; x < width - 1; x++) {
-					if (cells[y][x].value === 6)
-						cells[y][x].value = 5;
-					else if (cells[y][x].value === 8)
-						cells[y][x].value = 7;
+		if (Math.abs(this.pcG.pacman.py - this.y) < 0.5 &&
+			Math.abs(this.pcG.pacman.px - this.x) < 0.5) {
+			for (var y = 1; y < this.pcG.height - 1; y++) {
+				for (var x = 1; x < this.pcG.width - 1; x++) {
+					if (this.pcG.cells[y][x].value === 6)
+						this.pcG.cells[y][x].value = 5;
+					else if (this.pcG.cells[y][x].value === 8)
+						this.pcG.cells[y][x].value = 7;
 				}
 			}
 			return false;
 		}
 		else {
-			c.drawImage(imgStar, this.x * tileSize, this.y * tileSize, tileSize, tileSize);
+			this.pcG.c.drawImage(this.imgStar, this.x * this.pcG.tileSize, this.y * this.pcG.tileSize, this.pcG.tileSize, this.pcG.tileSize);
 			return true;
 		}
 	}
@@ -130,21 +132,21 @@ export class Timer {
 				this.gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
 			}
 	
-			// Every 10 seconds create a fruit
-			if (this.sec % 6 == 0) {
+			// Every 8 seconds create a fruit
+			if (this.sec % 8 == 0) {
 				var ypos = Math.floor(Math.random() * (this.pcG.height - 1));
 				var xpos = Math.floor(Math.random() * (this.pcG.width - 1));
 				if (this.pcG.cells[ypos][xpos].value !== 1) {
 					var ran = Math.floor(Math.random() * 3);
 					switch (ran){
 						case 0:
-							this.pcG.fruitArray.push(new Fruit("Cherry", 1000, xpos, ypos, this.images.imgCherry));
+							this.pcG.fruitArray.push(new Fruit("Cherry", 1000, xpos, ypos, this.images.imgCherry, this.pcG));
 							break;
 						case 1:
-							this.pcG.fruitArray.push(new Fruit("Banana", 750, xpos, ypos, this.images.imgBanana));
+							this.pcG.fruitArray.push(new Fruit("Banana", 750, xpos, ypos, this.images.imgBanana, this.pcG));
 							break;
 						case 2:
-							this.pcG.fruitArray.push(new Fruit("Strawberry", 500, xpos, ypos, this.images.imgStrawberry));
+							this.pcG.fruitArray.push(new Fruit("Strawberry", 500, xpos, ypos, this.images.imgStrawberry, this.pcG));
 							break;
 						default:
 							break;
@@ -158,11 +160,11 @@ export class Timer {
 				this.sec = 0;
 				var starSpawned = false;
 				while (!starSpawned) {
-					var ypos = Math.floor(Math.random() * (height - 1));
-					var xpos = Math.floor(Math.random() * (width - 1));
+					var ypos = Math.floor(Math.random() * (this.pcG.height - 1));
+					var xpos = Math.floor(Math.random() * (this.pcG.width - 1));
 					if (this.pcG.cells[ypos][xpos].value !== 1) {
-						this.pcG.starArray.push(new Star(xpos, ypos));
-						this.pcG.starSpawned = true;
+						this.pcG.starArray.push(new Star(xpos, ypos, this.images.imgStar, this.pcG));
+						starSpawned = true;
 					}
 				}
 			}

@@ -13,11 +13,11 @@ class Character {
 
 	teleport() {
 		if (this.tpReady == true) {
-			var tmpVal = this.cells[this.y][this.x].value;
-			for (var i = 0; i < height; i++) {
-				for (var j = 0; j < width; j++) {
-					if (cells[i][j].value == tmpVal && !(this.y == i && this.x == j)) {
-						console.log(j + " " + i + ": " + cells[i][j].value);
+			var tmpVal = this.pcG.cells[this.y][this.x].value;
+			for (var i = 0; i < this.pcG.height; i++) {
+				for (var j = 0; j < this.pcG.width; j++) {
+					if (this.pcG.cells[i][j].value == tmpVal && !(this.y == i && this.x == j)) {
+						console.log(j + " " + i + ": " + this.pcG.cells[i][j].value);
 						this.x = j;
 						this.y = i;
 						this.px = j;
@@ -39,7 +39,7 @@ export class Pacman extends Character {
 	}
 
 	useSpell() {
-		if (timer.pacmanStartCD())
+		if (this.pcG.timer.pacmanStartCD())
 			this.pcG.ghost.speed = this.pcG.ghost.speed / 2;
 	}
 
@@ -52,39 +52,39 @@ export class Pacman extends Character {
 		if (this.direction == "none")
 			return;
 		if (this.y == this.py && this.x == this.px) {
-			if (cells[this.y][this.x].value === 5 ||
-				cells[this.y][this.x].value === 7) {
-				if (cells[this.y][this.x].value === 5){
-					cells[this.y][this.x].value = 6;
+			if (this.pcG.cells[this.y][this.x].value === 5 ||
+				this.pcG.cells[this.y][this.x].value === 7) {
+				if (this.pcG.cells[this.y][this.x].value === 5){
+					this.pcG.cells[this.y][this.x].value = 6;
 					this.points += 10;
 				}
 				else {
-					cells[this.y][this.x].value = 8;
+					this.pcG.cells[this.y][this.x].value = 8;
 					this.points += 100;
 				}
-				pScore.textContent = "Pacman's score: " + this.points;
+				this.pcG.pScore.textContent = "Pacman's score: " + this.points;
 			}
-			else if (cells[this.y][this.x].value >= 2 &&
-					cells[this.y][this.x].value <=  4) {
-			this.teleport();
+			else if (this.pcG.cells[this.y][this.x].value >= 2 &&
+						this.pcG.cells[this.y][this.x].value <=  4) {
+				this.teleport();
 			}
 			else
 				this.tpReady = true;
 			switch (this.direction) {
 				case "up":
-					if (this.y - 1 >= 0 && cells[this.y - 1][this.x].value !== 1 && cells[this.y - 1][this.x].value !== 9)
+					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9)
 						this.y -= 1;
 					break;
 				case "down":
-					if (this.y + 1 < height && cells[this.y + 1][this.x].value !== 1 && cells[this.y + 1][this.x].value !== 9)
+					if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9)
 						this.y += 1;
 					break;
 				case "left":
-					if (this.x - 1 >= 0 && cells[this.y][this.x - 1].value !== 1 && cells[this.y][this.x - 1].value !== 9)
+					if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9)
 						this.x -= 1;
 					break;
 				case "right":
-					if (this.x + 1 < width && cells[this.y][this.x + 1].value !== 1 && cells[this.y][this.x + 1].value !== 9)
+					if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9)
 						this.x += 1;
 					break;
 				default:
@@ -104,7 +104,7 @@ export class Pacman extends Character {
 
 	eatFruit(fruit) {
 		this.points += fruit.points;
-		pScore.textContent = "Pacman's score: " + this.points;
+		this.pcG.pScore.textContent = "Pacman's score: " + this.points;
 	}
 
 	// Render the character's sprite
@@ -135,50 +135,50 @@ export class Ghost extends Character {
 	}
 
 	useSpell() {
-		if (timer.ghostStartCD()) {
-			this.cellValue = cells[this.lastY][this.lastX].value;
-			cells[this.lastY][this.lastX].value = 9;
+		if (this.pcG.timer.ghostStartCD()) {
+			this.cellValue = this.pcG.cells[this.lastY][this.lastX].value;
+			this.pcG.cells[this.lastY][this.lastX].value = 9;
 		}   
 	}
 
 	stopSpell() {
-		cells[this.lastY][this.lastX].value = this.cellValue;
+		this.pcG.cells[this.lastY][this.lastX].value = this.cellValue;
 	}
 
 	// Makes the character move until it reaches its destination
 	move() {
 		if (this.direction == "none")
 			return;
-		if (Math.abs(pacman.py - this.py) < 0.5 &&
-			Math.abs(pacman.px - this.px) < 0.5) {
+		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
+			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
 			console.log("Ghost wins");
 		}
 		if (this.y == this.py && this.x == this.px) {
-			if (cells[this.y][this.x].value >= 2 &&
-				cells[this.y][this.x].value <=  4) {
+			if (this.pcG.cells[this.y][this.x].value >= 2 &&
+				this.pcG.cells[this.y][this.x].value <=  4) {
 				this.teleport();
 			}
 			else
 				this.tpReady = true;
-			if (timer.gSpellCD == 0) {
+			if (this.pcG.timer.gSpellCD == 0) {
 				this.lastX = this.x;
 				this.lastY = this.y;
 			}
 			switch (this.direction) {
 				case "up":
-					if (this.y - 1 >= 0 && cells[this.y - 1][this.x].value !== 1)
+					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1)
 						this.y -= 1;
 					break;
 				case "down":
-					if (this.y + 1 < height && cells[this.y + 1][this.x].value !== 1)
+					if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1)
 						this.y += 1;
 					break;
 				case "left":
-					if (this.x - 1 >= 0 && cells[this.y][this.x - 1].value !== 1)
+					if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1)
 						this.x -= 1;
 					break;
 				case "right":
-					if (this.x + 1 < width && cells[this.y][this.x + 1].value !== 1)
+					if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1)
 						this.x += 1;
 					break;
 				default:

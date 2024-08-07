@@ -110,7 +110,7 @@ class PacmanGame {
 		// Set score to 0
 		this.pScore.textContent = "Pacman's score: 0";
 
-		window.addEventListener("keydown", () =>  this.pacmanHandleKeyDown());
+		window.addEventListener("keydown", (event) =>  this.pacmanHandleKeyDown(event, this));
 
 		// Create the timer object
 		this.timer = new Timer(this);
@@ -150,42 +150,42 @@ class PacmanGame {
 		return tmp;
 	}
 
-	pacmanHandleKeyDown = (event) => {
+	pacmanHandleKeyDown = (event, pcG) => {
 		// Prevent buttons from moving the page
 		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
 		console.log(event.code);
 		switch (event.code) {
-			case pUp:
-				pacman.direction = "up";
+			case pcG.pUp:
+				pcG.pacman.direction = "up";
 				break;
-			case pDown:
-				pacman.direction = "down";
+			case pcG.pDown:
+				pcG.pacman.direction = "down";
 				break;
-			case pLeft:
-				pacman.direction = "left";
+			case pcG.pLeft:
+				pcG.pacman.direction = "left";
 				break;
-			case pRight:
-				pacman.direction = "right";
+			case pcG.pRight:
+				pcG.pacman.direction = "right";
 				break;
-			case pSpell:
-				pacman.useSpell();
+			case pcG.pSpell:
+				pcG.pacman.useSpell();
 				break;
-			case gUp:
-				ghost.direction = "up";
+			case pcG.gUp:
+				pcG.ghost.direction = "up";
 				break;
-			case gDown:
-				ghost.direction = "down";
+			case pcG.gDown:
+				pcG.ghost.direction = "down";
 				break;
-			case gLeft:
-				ghost.direction = "left";
+			case pcG.gLeft:
+				pcG.ghost.direction = "left";
 				break;
-			case gRight:
-				ghost.direction = "right";
+			case pcG.gRight:
+				pcG.ghost.direction = "right";
 				break;
-			case gSpell:
-				ghost.useSpell();
+			case pcG.gSpell:
+				pcG.ghost.useSpell();
 				break;
 			default:
 				break;
