@@ -57,7 +57,8 @@ const attachEventListenersToLinks = () => {
 			navigateTo(link.href);
 		});
 	});
-};
+}
+
 
 // Load script
 const loadScript = async (view) => {
@@ -66,6 +67,7 @@ const loadScript = async (view) => {
 
 	// Create a new script element
 	const newScript = document.createElement('script');
+    //newScript.type = 'module'; // Ensure the script is treated as an ES module
 	newScript.textContent = await view.getJS();
 	newScript.id = 'dynamic-script';
 
