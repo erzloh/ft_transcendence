@@ -2,8 +2,10 @@
 	const canvas = document.getElementById('canvas');
 	const context = canvas.getContext('2d');
 
-	canvas.width = window.innerWidth * 0.60;
+	canvas.width = window.innerWidth * 0.75;
 	canvas.height = window.innerHeight * 0.60;
+	//console.log(canvas.width);
+	//console.log(canvas.height);
 
 	let	isPaused = false;
 
@@ -73,6 +75,17 @@
 
 		};
 	}
+
+	function	Map(pos, width, height) {
+		this.pos = pos;
+		this.width = width;
+		this.height = height;
+
+		this.draw = function () {
+			context.fillStyle = "33ff00";
+			context.fillRect(this.pos.x, this.pos.y, this.width, this.height);
+		};
+	};
 
 	function	Paddle(pos, velocity, width, height) {
 		this.pos = pos;
@@ -189,9 +202,15 @@
 		}
 	}
 
-	const ball = new Ball(vec2(200, 200), vec2(15, 15), 20);
-	const paddleLeft = new Paddle(vec2(0, 50), vec2(15, 15), 20, 160);
-	const paddleRight = new Paddle(vec2(canvas.width - 20, 30), vec2(15, 15), 20, 160);
+
+	//function	Map(pos, width, height) {
+
+	const ball = new Ball(vec2(200, 200), vec2(canvas.width / 69, canvas.height / 69), 20);
+	const paddleLeft = new Paddle(vec2(75, 50), vec2(canvas.width / 69, canvas.height / 69), 20, 160);
+	const paddleRight = new Paddle(vec2(canvas.width - 95, 50), vec2(canvas.width / 69, canvas.height / 69), 20, 160);
+	const mapTop = new Map(vec2(0, 0), canvas.width, 20);
+	const mapBot= new Map(vec2(0, canvas.height - 20), canvas.width, 20);
+	const mapMid = new Map(vec2(canvas.width / 2, 0), 20, canvas.height);
 
 
 	function	gameUpdate() {
@@ -216,17 +235,22 @@
 	}
 
 	function	gameDraw() {
-		ball.draw();
 		paddleLeft.draw();
 		paddleRight.draw();
 		drawPredictionDot();
+		mapTop.draw();
+		mapBot.draw();
+		mapMid.draw();
+		ball.draw();
 	}
 
 
 	function	gameLoop() {
 		//context.clearRect(0, 0, canvas.width, canvas.height);
-		if (isPaused)
+		if (isPaused) {
+			//pause text
 			return;
+		}
 		context.fillStyle = "rgba(0, 0, 0, 0.2)";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 		window.requestAnimationFrame(gameLoop);
