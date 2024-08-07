@@ -1,0 +1,22 @@
+{
+	"play": "プレイ",
+	"profile": "プロフィール",
+	"settings": "設定",
+
+	"pong": "ポン",
+	"pac-man": "パックマン",
+
+	"start game": "ゲーム開始",
+
+	"username": "ユーザー名",
+	"e-mail": "メール",
+	"statistics": "統計",
+	"logout": "ログアウト",
+	"sign up": "サインアップ",
+	"login": "ログイン",
+
+	"enable bg": "プリティ背景を有効にする（警告：デバイスが遅くなる可能性があります）",
+	"select language": "言語を選択",
+
+	"404-message": "お探しのページが見つかりませんでした。"
+}

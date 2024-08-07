@@ -11,7 +11,7 @@ export default class extends AbstractView {
 		return (await fetch("static/html/profile.html")).text();
     }
 
-	loadJS() {
-		profile();
+	async loadJS() {
+		await profile();
 	}
 }

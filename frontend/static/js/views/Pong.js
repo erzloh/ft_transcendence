@@ -10,12 +10,12 @@ export default class Pong extends AbstractView {
         return (await fetch("/static/html/pong.html")).text();
     }
 
-	async getJS() {
-        const pongLogic = await (await fetch("static/js/scripts/pongLogic.js")).text();
-        const AI = await (await fetch("static/js/scripts/network.js")).text();
-        return pongLogic + AI;
-		// return (await fetch("static/js/scripts/pongLogic.js")).text();
-	}
+	// async getJS() {
+    //     const pongLogic = await (await fetch("static/js/scripts/pongLogic.js")).text();
+    //     const AI = await (await fetch("static/js/scripts/network.js")).text();
+    //     return pongLogic + AI;
+	// 	// return (await fetch("static/js/scripts/pongLogic.js")).text();
+	// }
 
 	loadJS() {
 		// pong();

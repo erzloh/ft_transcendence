@@ -1,4 +1,6 @@
-export function profile() {
+import { navigateTo } from "../index.js";
+
+export async function profile() {
 	async function renderLoggingInfo() {
 		// Check if the user is logged in or not
 		// const response = await fetch('https://jsonplaceholder.typicode.com/users/1', {
@@ -26,20 +28,22 @@ export function profile() {
 			const user = await response.json();
 			loggingInfo.innerHTML = `<div class="col-12 text-center">
 				<p class="text-light">Welcome, ${user.username}!</p>
-				<button class="btn text-light" id="log-out-button">sign out</button>
+				<button class="btn text-light" id="log-out-button" data-translate="logout">logout</button>
 			</div>`;
 			const logOutButton = document.querySelector('#log-out-button');
 			logOutButton.addEventListener('click', () => {
 				document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-				renderLoggingInfo();
+				navigateTo('/profile');
 			});
 		} else {
 			loggingInfo.innerHTML = `<div class="col-12 text-center">
-				<a role="button" class="btn text-light" href="/signup" data-link>sign up</a>
-				<a role="button" class="btn text-light" href="/signin" data-link>sign in</a>
+				<a role="button" class="btn text-light" href="/signup" data-link data-translate="sign up">sign up</a>
+				<a role="button" class="btn text-light" href="/signin" data-link data-translate="login">login</a>
 			</div>`;
 		}
+		console.log('finished rendering logging info');
 	}
 
-	renderLoggingInfo();
+	await renderLoggingInfo();
+	console.log('Hello from profile.js');
 }

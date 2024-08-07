@@ -1,0 +1,22 @@
+{
+	"play": "jouer",
+	"profile": "profil",
+	"settings": "paramètres",
+
+	"pong": "pong",
+	"pac-man": "pac-man",
+
+	"start game": "démarrer le jeu",
+
+	"username": "nom d'utilisateur",
+	"e-mail": "e-mail",
+	"statistics": "statistiques",
+	"logout": "se déconnecter",
+	"sign up": "s'inscrire",
+	"login": "se connecter",
+
+	"enable bg": "activer le pretty background (attention: peut ralentir votre appareil)",
+	"select language": "sélectionner la langue",
+
+	"404-message": "La page que vous recherchez est introuvable."
+}

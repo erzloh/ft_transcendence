@@ -20,6 +20,7 @@ export function home () {
 // when the view changes anyway)
 function printKey (event) {
 	console.log(event.key);
+	
 }
 
 // --------------------------- Export Event Listeners Object ---------------------------
