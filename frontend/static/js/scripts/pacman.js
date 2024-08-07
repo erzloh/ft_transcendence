@@ -1,6 +1,8 @@
 import { Pacman, Ghost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
 
+let eventListeners = { }
+
 class PacmanGame {
 	constructor (){
 		// Canvas
@@ -37,6 +39,8 @@ class PacmanGame {
 		this.gSpeed = 1 / 19;
 		this.frame = 0; // The frame number
 		this.gameStart = false;
+
+		this.boundPacmanHandleKeyDown = this.pacmanHandleKeyDown.bind(this);
 	}
 
 	Initialize() {
@@ -110,7 +114,8 @@ class PacmanGame {
 		// Set score to 0
 		this.pScore.textContent = "Pacman's score: 0";
 
-		window.addEventListener("keydown", (event) =>  this.pacmanHandleKeyDown(event, this));
+		document.addEventListener("keydown", this.boundPacmanHandleKeyDown);
+		eventListeners["keydown"] = this.boundPacmanHandleKeyDown;
 
 		// Create the timer object
 		this.timer = new Timer(this);
@@ -150,42 +155,42 @@ class PacmanGame {
 		return tmp;
 	}
 
-	pacmanHandleKeyDown = (event, pcG) => {
+	pacmanHandleKeyDown = (event) => {
 		// Prevent buttons from moving the page
 		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
 		console.log(event.code);
 		switch (event.code) {
-			case pcG.pUp:
-				pcG.pacman.direction = "up";
+			case this.pUp:
+				this.pacman.direction = "up";
 				break;
-			case pcG.pDown:
-				pcG.pacman.direction = "down";
+			case this.pDown:
+				this.pacman.direction = "down";
 				break;
-			case pcG.pLeft:
-				pcG.pacman.direction = "left";
+			case this.pLeft:
+				this.pacman.direction = "left";
 				break;
-			case pcG.pRight:
-				pcG.pacman.direction = "right";
+			case this.pRight:
+				this.pacman.direction = "right";
 				break;
-			case pcG.pSpell:
-				pcG.pacman.useSpell();
+			case this.pSpell:
+				this.pacman.useSpell();
 				break;
-			case pcG.gUp:
-				pcG.ghost.direction = "up";
+			case this.gUp:
+				this.ghost.direction = "up";
 				break;
-			case pcG.gDown:
-				pcG.ghost.direction = "down";
+			case this.gDown:
+				this.ghost.direction = "down";
 				break;
-			case pcG.gLeft:
-				pcG.ghost.direction = "left";
+			case this.gLeft:
+				this.ghost.direction = "left";
 				break;
-			case pcG.gRight:
-				pcG.ghost.direction = "right";
+			case this.gRight:
+				this.ghost.direction = "right";
 				break;
-			case pcG.gSpell:
-				pcG.ghost.useSpell();
+			case this.gSpell:
+				this.ghost.useSpell();
 				break;
 			default:
 				break;
@@ -204,8 +209,5 @@ class PacmanGame {
 // }
 
 // --------------------------- Export Event Listeners Object ---------------------------
-const eventListeners = {
-	"keydown": PacmanGame.pacmanHandleKeyDown
-}
 
 export { PacmanGame, eventListeners };
