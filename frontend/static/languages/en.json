@@ -10,6 +10,7 @@
 
 	"username": "username",
 	"e-mail": "e-mail",
+	"password": "password",
 	"statistics": "statistics",
 	"logout": "logout",
 	"sign up": "sign up",
