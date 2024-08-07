@@ -14,7 +14,7 @@ import './visual/interactiveBg.js'
 import { animateLetters } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
-import { translations, setLanguage, updateTexts } from "./utils/languages.js";
+import { setLanguage, updateTexts } from "./utils/languages.js";
 
 // ------------------------------- CONFIGURE CONSTANTS -------------------------------
 // Set the base URL of the website
@@ -24,7 +24,7 @@ export const BASE_URL = "https://localhost";
 // When the DOM is loaded, call the router function
 document.addEventListener("DOMContentLoaded", () => {
 	router();
-	setLanguage('en');
+	setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
 });
 
 // ------------------------------- ROUTING -------------------------------

@@ -1,5 +1,22 @@
 {
 	"play": "play",
 	"profile": "profile",
-	"settings": "settings"
+	"settings": "settings",
+
+	"pong": "pong",
+	"pac-man": "pac-man",
+
+	"start game": "start game",
+
+	"username": "username",
+	"e-mail": "e-mail",
+	"statistics": "statistics",
+	"logout": "logout",
+	"sign up": "sign up",
+	"login": "login",
+
+	"enable bg": "enable  pretty background (warning: can slow down your device)",
+	"select language": "select language",
+
+	"404-message": "The page you are looking for cannot be found."
 }

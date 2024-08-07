@@ -18,6 +18,7 @@ export function settings() {
 
 	// Change letter animation setting
 
+	
 	// Switch language setting
 	document.getElementById('languageSwitcher').addEventListener('change', (event) => {
 		setLanguage(event.target.value);

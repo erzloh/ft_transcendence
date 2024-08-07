@@ -1,7 +1,7 @@
 // Switch language setting
-export let translations = {};
+let translations = {};
 
-async function loadTranslations(language) {
+export async function loadTranslations(language) {
 	const response = await fetch(`static/languages/${language}.json`);
 	const translations = await response.json();
 	return translations;
@@ -18,7 +18,3 @@ export function updateTexts() {
 		element.textContent = translations[key];
 	});
 }
-
-// document.getElementById('languageSwitcher').addEventListener('change', (event) => {
-// 	setLanguage(event.target.value);
-// });

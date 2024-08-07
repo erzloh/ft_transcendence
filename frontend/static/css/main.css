@@ -12117,12 +12117,6 @@ html, body {
   animation: waitFadeIn 1s ease-out;
 }
 
-.title {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
-}
-
 @keyframes waitFadeIn {
   0% {
     opacity: 0;

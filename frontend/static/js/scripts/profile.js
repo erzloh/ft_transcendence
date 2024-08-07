@@ -26,7 +26,7 @@ export function profile() {
 			const user = await response.json();
 			loggingInfo.innerHTML = `<div class="col-12 text-center">
 				<p class="text-light">Welcome, ${user.username}!</p>
-				<button class="btn text-light" id="log-out-button">sign out</button>
+				<button class="btn text-light" id="log-out-button" data-translate="logout">logout</button>
 			</div>`;
 			const logOutButton = document.querySelector('#log-out-button');
 			logOutButton.addEventListener('click', () => {
@@ -35,8 +35,8 @@ export function profile() {
 			});
 		} else {
 			loggingInfo.innerHTML = `<div class="col-12 text-center">
-				<a role="button" class="btn text-light" href="/signup" data-link>sign up</a>
-				<a role="button" class="btn text-light" href="/signin" data-link>sign in</a>
+				<a role="button" class="btn text-light" href="/signup" data-link data-translate="sign up">sign up</a>
+				<a role="button" class="btn text-light" href="/signin" data-link data-translate="login">login</a>
 			</div>`;
 		}
 	}
