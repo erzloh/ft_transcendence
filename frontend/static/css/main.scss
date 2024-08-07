@@ -188,21 +188,21 @@ $blending: hard-light;
 }
 
 /* Custom radio button styles */
-// .custom-checkbox {
-// 	appearance: none; /* Remove default styling */
-// 	-webkit-appearance: none;
-// 	background-color: #fff;
-// 	border: 1px solid #ced4da;
-// 	border-radius: 50%;
-// 	width: 1.25rem;
-// 	height: 1.25rem;
-// 	position: relative;
-// 	cursor: pointer;
-// 	outline: none;
-// 	margin-right: .5rem;
-//   }
+.custom-checkbox {
+	appearance: none; /* Remove default styling */
+	-webkit-appearance: none;
+	background-color: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 50%;
+	width: 1.25rem;
+	height: 1.25rem;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+	// margin-right: .5rem;
+}
   
-//   .custom-checkbox:checked {
-// 	background-color: #d7c900; /* Change to your desired color */
-// 	border-color: #bc5e00; /* Change to your desired color */
-//   }
+  .custom-checkbox:checked {
+	background-color: #d7c900;
+	border-color: rgba(255, 255, 255, 0.5);
+}
