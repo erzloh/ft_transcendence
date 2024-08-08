@@ -1,6 +1,6 @@
 // Function that will be called when the view is loaded
 export function home () {
-	const test = "Hello from the home view!";
+	const test = "Hello from the example view!";
 	console.log(test);
 
 	// add event listner for keydown
@@ -18,6 +18,7 @@ export function home () {
 // (Only Event Listener that are attached to the document.
 // Those attached to elements in the view are gonna be removed
 // when the view changes anyway)
+
 function printKey (event) {
 	console.log(event.key);
 	

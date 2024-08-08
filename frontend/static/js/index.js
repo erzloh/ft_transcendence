@@ -8,6 +8,7 @@ import NotFound from "./views/NotFound.js";
 import Games from "./views/Games.js";
 import Profile from "./views/Profile.js";
 import SignIn from "./views/SignIn.js";
+import SignUp from "./views/SignUp.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
@@ -36,7 +37,8 @@ const routes = [
 	{ path: "/settings", view: Settings },
 	{ path: "/games", view: Games },
 	{ path: "/profile", view: Profile },
-	{ path: "/signin", view: SignIn }
+	{ path: "/signin", view: SignIn },
+	{ path: "/signup", view: SignUp }
 ];
 
 // Store the current view
