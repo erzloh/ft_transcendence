@@ -42,10 +42,15 @@ class PacmanGame {
 		this.boundPacmanHandleKeyDown = this.pacmanHandleKeyDown.bind(this);
 	}
 
-	Initialize(keybinds) {
-		// Add Event Listener to the Start Button
-		this.keybinds = keybinds;
+	Initialize() {
 		this.startButton.addEventListener("click", () => this.StartGame());
+
+		const keybindsString = localStorage.getItem('keybinds');
+		console.log(keybindsString);
+		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
+			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
+			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
+		};
 	}
 
 	updateGame() {
@@ -162,34 +167,34 @@ class PacmanGame {
 		}
 		// console.log(event.code);
 		switch (event.code) {
-			case this.pUp:
+			case this.keybinds.pUp:
 				this.pacman.direction = "up";
 				break;
-			case this.pDown:
+			case this.keybinds.pDown:
 				this.pacman.direction = "down";
 				break;
-			case this.pLeft:
+			case this.keybinds.pLeft:
 				this.pacman.direction = "left";
 				break;
-			case this.pRight:
+			case this.keybinds.pRight:
 				this.pacman.direction = "right";
 				break;
-			case this.pSpell:
+			case this.keybinds.pSpell:
 				this.pacman.useSpell();
 				break;
-			case this.gUp:
+			case this.keybinds.gUp:
 				this.ghost.direction = "up";
 				break;
-			case this.gDown:
+			case this.keybinds.gDown:
 				this.ghost.direction = "down";
 				break;
-			case this.gLeft:
+			case this.keybinds.gLeft:
 				this.ghost.direction = "left";
 				break;
-			case this.gRight:
+			case this.keybinds.gRight:
 				this.ghost.direction = "right";
 				break;
-			case this.gSpell:
+			case this.keybinds.gSpell:
 				this.ghost.useSpell();
 				break;
 			default:
