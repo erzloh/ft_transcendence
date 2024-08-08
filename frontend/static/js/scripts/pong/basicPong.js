@@ -139,7 +139,7 @@ export function basePong () {
 	}
 
 	function movePaddles(selectedMode) {
-		console.log(selectedMode);
+		//console.log(selectedMode);
 		if (selectedMode == 1) {
 			if (upLeftPressed && leftPad.y > 0) {
 				leftPad.y -= leftPad.dy;
