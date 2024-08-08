@@ -1,13 +1,16 @@
 export function basePong () {
 	const canvas = document.getElementById('canvas');
 	const context = canvas.getContext('2d');
-	const startButton = document.getElementById('startButton');
-
+	const startButton= document.getElementById('startButton');
+	const twoButton = document.getElementById('but1');
+	const easyButton = document.getElementById('but2');
 
 	const paddleWidth = 10, paddleHeight = 100;
 	const ballSize = 10;
-	let upArrowPressed = false, downArrowPressed = false;
+	let upLeftPressed = false, downLeftPressed = false;
+	let upRightPressed = false, downRightPressed = false;
 	let paused = false;
+	let selectedMode = 0;
 
 	let scoreLeft = 0;
 	let	scoreRight = 0;
@@ -15,7 +18,7 @@ export function basePong () {
 	//let playerScore = 0;
 	//let computerScore = 0;
 
-	const player = {
+	const leftPad = {
 		x: 0,
 		y: canvas.height / 2 - paddleHeight / 2,
 		width: paddleWidth,
@@ -24,7 +27,7 @@ export function basePong () {
 		dy: 5
 	};
 
-	const computer = {
+	const rightPad = {
 		x: canvas.width - paddleWidth,
 		y: canvas.height / 2 - paddleHeight / 2,
 		width: paddleWidth,
@@ -61,7 +64,7 @@ export function basePong () {
 		*/
 
 	function drawNet() {
-		for (let i = 0; i <= canvas.height; i += 20) {
+		for (let i = 5; i <= canvas.height; i += 20) {
 			drawRect(canvas.width / 2 - 5, i, 10, 10, "#FFF");
 		}
 	}
@@ -88,7 +91,7 @@ export function basePong () {
 			ball.dy *= -1;
 		}
 
-		let currentPlayer = (ball.x < canvas.width / 2) ? player : computer;
+		let currentPlayer = (ball.x < canvas.width / 2) ? leftPad : rightPad;
 
 		if (collisionDetect(currentPlayer, ball)) {
 			ball.dx *= -1;
@@ -108,11 +111,10 @@ export function basePong () {
 
 		if (ball.x + ball.size > canvas.width) {
 			scoreLeft += 1;
-			document.getElementById("leftScore").innerHTML= scoreLeft;
+			document.getElementById("leftScore").innerHTML = scoreLeft;
 			//playerScore++;
 			resetBall();
 		} else if (ball.x < 0) {
-			
 			scoreRight += 1;
 			document.getElementById("rightScore").innerHTML = scoreRight;
 			//computerScore++;
@@ -136,41 +138,69 @@ export function basePong () {
 		}
 	}
 
-	function movePaddles() {
-		if (upArrowPressed && player.y > 0) {
-			player.y -= player.dy;
-		} else if (downArrowPressed && player.y < canvas.height - player.height) {
-			player.y += player.dy;
-		}
+	function movePaddles(selectedMode) {
+		console.log(selectedMode);
+		if (selectedMode == 1) {
+			if (upLeftPressed && leftPad.y > 0) {
+				leftPad.y -= leftPad.dy;
+			} else if (downLeftPressed && leftPad.y < canvas.height - leftPad.height) {
+				leftPad.y += leftPad.dy;
+			}
 
-		if (computer.y + computer.height / 2 < ball.y) {
-			computer.y += computer.dy;
-		} else {
-			computer.y -= computer.dy;
+			if (rightPad.y + rightPad.height / 2 < ball.y) {
+				rightPad.y += rightPad.dy;
+			} else {
+				rightPad.y -= rightPad.dy;
+			}
+		}
+		else if (selectedMode == 2) {
+			if (upLeftPressed && leftPad.y > 0) {
+				leftPad.y -= leftPad.dy;
+			} else if (downLeftPressed && leftPad.y < canvas.height - leftPad.height) {
+				leftPad.y += leftPad.dy;
+			}
+			
+			if (upRightPressed && rightPad.y > 0) {
+				rightPad.y -= rightPad.dy;
+			} else if (downRightPressed && rightPad.y < canvas.height - rightPad.height) {
+				rightPad.y += rightPad.dy;
+			}
 		}
 	}
 
 	document.addEventListener("keydown", function(event) {
-		switch (event.keyCode) {
-			case 38:
-				upArrowPressed = true;
+		switch (event.code) {
+			case 'KeyW':
+				upLeftPressed = true;
 				break;
-			case 40:
-				downArrowPressed = true;
+			case 'KeyS':
+				downLeftPressed = true;
 				break;
-			case 32:
+			case 'ArrowUp':
+				upRightPressed = true;
+				break;
+			case 'ArrowDown':
+				downRightPressed = true;
+				break;
+			case 'Space':
 				paused = !paused;
 				break;
 		}
 	});
 
 	document.addEventListener("keyup", function(event) {
-		switch (event.keyCode) {
-			case 38:
-				upArrowPressed = false;
+		switch (event.code) {
+			case 'KeyW':
+				upLeftPressed = false;
 				break;
-			case 40:
-				downArrowPressed = false;
+			case 'KeyS':
+				downLeftPressed = false;
+				break;
+			case 'ArrowUp':
+				upRightPressed = false;
+				break;
+			case 'ArrowDown':
+				downRightPressed = false;
 				break;
 		}
 	});
@@ -180,8 +210,8 @@ export function basePong () {
 
 		drawNet();
 
-		drawRect(player.x, player.y, player.width, player.height, player.color);
-		drawRect(computer.x, computer.y, computer.width, computer.height, computer.color);
+		drawRect(leftPad.x, leftPad.y, leftPad.width, leftPad.height, leftPad.color);
+		drawRect(rightPad.x, rightPad.y, rightPad.width, rightPad.height, rightPad.color);
 
 		drawSquare(ball.x, ball.y, ball.size, ball.color);
 
@@ -211,7 +241,7 @@ export function basePong () {
 
 	function update() {
 		if (!paused) {
-			movePaddles();
+			movePaddles(selectedMode);
 			moveBall();
 		}
 	}
@@ -223,8 +253,28 @@ export function basePong () {
 	}
 
 	startButton.addEventListener("click", function() {
-		startButton.style.display = "none";
-		canvas.style.display = "block";
-		gameLoop();
+		if (selectedMode == 1) {
+			startButton.style.display = "none";
+			gameLoop();
+		}
+		else if (selectedMode == 2) {
+			startButton.style.display = "none";
+			gameLoop();
+		}
+		else
+			alert("no game mode selected");
+		//canvas.style.display = "block";
 	});
+
+	twoButton.addEventListener("click", function() {
+		selectedMode = 2;
+		console.log("game mode is 1v1");
+		//canvas.style.display = "block";
+	});
+
+	easyButton.addEventListener("click", function() {
+		selectedMode = 1;
+		console.log("game mode is single player and easy");
+	});
+
 }
