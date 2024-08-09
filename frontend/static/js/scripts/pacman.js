@@ -30,7 +30,9 @@ class PacmanGame {
 			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
 			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image()
-		}		
+		}
+		
+		this.isPacgirl = false;
 
 		// Utils
 		this.timer;
@@ -46,11 +48,16 @@ class PacmanGame {
 		this.startButton.addEventListener("click", () => this.StartGame());
 
 		const keybindsString = localStorage.getItem('keybinds');
-		console.log(keybindsString);
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
 		};
+
+		const pacmanSkinString = localStorage.getItem('pacmanSkin');
+		this.pacmanSkin = pacmanSkinString ? JSON.parse(pacmanSkinString) : "pacman";
+
+		const ghostSkinString = localStorage.getItem('ghostSkin');
+		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
 	}
 
 	updateGame() {
@@ -93,13 +100,13 @@ class PacmanGame {
 
 	// Initialize everything needed for the game
 	async StartGame() {
-		this.images.imgPacman1.src = 'static/assets/pacman/images/pacman1.png';
-		this.images.imgPacman2.src = 'static/assets/pacman/images/pacman2.png';
-		this.images.imgPacman3.src = 'static/assets/pacman/images/pacman3.png';
-		this.images.imgGhost1.src = 'static/assets/pacman/images/blueGhost1.png';
-		this.images.imgGhost2.src = 'static/assets/pacman/images/blueGhost2.png';
-		this.images.imgGhost3.src = 'static/assets/pacman/images/blueGhost3.png';
-		this.images.imgGhost4.src = 'static/assets/pacman/images/blueGhost4.png';
+		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
+		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
+		this.images.imgPacman3.src = 'static/assets/pacman/images/' + this.pacmanSkin + '3.png';
+		this.images.imgGhost1.src = 'static/assets/pacman/images/' + this.ghostSkin + '1.png';
+		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
+		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
+		this.images.imgGhost4.src = 'static/assets/pacman/images/' + this.ghostSkin + '4.png';
 		this.images.imgCherry.src = 'static/assets/pacman/images/cherry.png';
 		this.images.imgBanana.src = 'static/assets/pacman/images/banana.png';
 		this.images.imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';

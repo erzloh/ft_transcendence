@@ -112,13 +112,17 @@ export class Pacman extends Character {
 		// Convert degrees to radians
 		var angle = this.direction == "right" ? 0 :
 			this.direction == "up" ? -90 :
-			this.direction == "left" ? 180 : 90;
+			this.direction == "left" ? 0 : 90;
 
 		var radians = angle * Math.PI / 180;
 
 		this.pcG.c.save();
 		this.pcG.c.translate(this.px * this.ts + this.ts / 2, this.py * this.ts + this.ts / 2);
-		this.pcG.c.rotate(radians);
+
+		if (this.direction == "left")
+            this.pcG.c.scale(-1, 1); // Flip horizontally
+		else
+			this.pcG.c.rotate(radians);
 
 		this.pcG.c.drawImage(img, -this.ts / 2, -this.ts / 2, this.ts, this.ts);
 		this.pcG.c.restore();

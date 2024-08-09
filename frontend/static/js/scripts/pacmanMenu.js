@@ -14,10 +14,17 @@ export class PacmanMenu {
 		this.waitForKey = false;
 		this.waitingKey = "";
 
-		this.keybinds = {
+		const pacmanSkinString = localStorage.getItem('pacmanSkin');
+		this.pacmanSkin = pacmanSkinString ? JSON.parse(pacmanSkinString) : "pacman";
+
+		const ghostSkinString = localStorage.getItem('ghostSkin');
+		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
+
+		const keybindsString = localStorage.getItem('keybinds');
+		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
-		}
+		};
 	}
 		
 
@@ -35,6 +42,8 @@ export class PacmanMenu {
 		document.getElementById('startGameButton').addEventListener('click', (event) => {
 			event.preventDefault();
 			localStorage.setItem('keybinds', JSON.stringify(this.keybinds));
+			localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
+			localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
 			window.location.href = "/pacman";
 		});
 	}
@@ -157,22 +166,61 @@ export class PacmanMenu {
 		btnGSpell.addEventListener("click", (event) => this.changeKeybind(event, "gSpell"));
 	}
 
-	changeKeybind(event, key) {
-		console.log(key);
-		this.waitForKey = true;
-		this.waitingKey = key;
-	}
-
 	showPacmanSkinConfig() {
 		this.configContainer.innerHTML = `
-			<h2 class="text-white" id="pacmanSkinTitle">Pacman skins</h2>
+			<div class="row justify-content-center">
+				<div class="col-12 justify-content-center glass mt-3">
+					<h2 class="text-white" id="pacmanSkins">Pacman skins</h2>
+					<div class="row justify-content-center text-center mt-1">
+						<div class="col-3 d-flex justify-content-end">
+							<img id="pPacmanSkin" src="/static/assets/pacman/images/pacman1.png">
+						</div>
+						<div class="col-3 d-flex justify-content-start">
+							<img id="pPacgirlSkin" src="/static/assets/pacman/images/pacgirl1.png">
+						</div>
+					</div>
+				</div>
+			</div>
 		`;
+
+		var btnPacmanSkin = document.getElementById('pPacmanSkin');
+        var btnPacgirlSkin = document.getElementById('pPacgirlSkin');
+		btnPacmanSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacman"));
+		btnPacgirlSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacgirl"));
 	}
 
 	showGhostSkinConfig() {
 		this.configContainer.innerHTML = `
-			<h2 class="text-white" id="ghostSkinTitle">Ghost skins</h2>
+			<div class="row justify-content-center">
+				<div class="col-12 justify-content-center glass mt-3">
+					<h2 class="text-white" id="ghostSkin">Ghost skins</h2>
+					<div class="row justify-content-center text-center mt-1">
+						<div class="col-3 d-flex justify-content-center">
+							<img id="pBlueGhostSkin" src="/static/assets/pacman/images/blueGhost1.png">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img id="pOrangeGhostSkin" src="/static/assets/pacman/images/orangeGhost1.png">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img id="pPinkGhostSkin" src="/static/assets/pacman/images/pinkGhost1.png">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img id="pGreenGhostSkin" src="/static/assets/pacman/images/greenGhost1.png">
+						</div>
+					</div>
+				</div>
+			</div>
 		`;
+
+		var btnBlueSkin = document.getElementById('pBlueGhostSkin');
+        var btnOrangeSkin = document.getElementById('pOrangeGhostSkin');
+		var btnPinkSkin = document.getElementById('pPinkGhostSkin');
+        var btnGreenSkin = document.getElementById('pGreenGhostSkin');
+
+		btnBlueSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "blueGhost"));
+		btnOrangeSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "orangeGhost"));
+		btnPinkSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "pinkGhost"));
+		btnGreenSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "greenGhost"));
 	}
 
 	showMapConfig() {
@@ -185,6 +233,23 @@ export class PacmanMenu {
 		this.configContainer.innerHTML = `
 			<h2 class="text-white" id="colorSchemeTitle">Color schemes</h2>
 		`;
+	}
+
+	//#region EVENT LISTENERS HANDLERS
+
+	selectPacmanSkin(event, skin) {
+		console.log("Chosen pacman skin: " + skin);
+		this.pacmanSkin = skin;
+	}
+
+	selectGhostSkin(event, skin) {
+		console.log("Chosen ghost skin: " + skin);
+		this.ghostSkin = skin;
+	}
+
+	changeKeybind(event, key) {
+		this.waitForKey = true;
+		this.waitingKey = key;
 	}
 
 	keyDownSettings = (event) => {
@@ -233,4 +298,7 @@ export class PacmanMenu {
 			this.showKeysConfig();
 		}
 	}
+
+	//#endregion
+
 }
