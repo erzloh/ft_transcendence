@@ -20,6 +20,15 @@ export class PacmanMenu {
 		const ghostSkinString = localStorage.getItem('ghostSkin');
 		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
 
+		const mapNameString = localStorage.getItem('mapName');
+		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
+
+		const themeString = localStorage.getItem('theme');
+		this.theme = themeString ? JSON.parse(themeString) : {
+			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
+			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
+		};
+
 		const keybindsString = localStorage.getItem('keybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
@@ -44,6 +53,8 @@ export class PacmanMenu {
 			localStorage.setItem('keybinds', JSON.stringify(this.keybinds));
 			localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
 			localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
+			localStorage.setItem('mapName', JSON.stringify(this.mapName));
+			localStorage.setItem('theme', JSON.stringify(this.theme));
 			window.location.href = "/pacman";
 		});
 	}
@@ -225,14 +236,60 @@ export class PacmanMenu {
 
 	showMapConfig() {
 		this.configContainer.innerHTML = `
-			<h2 class="text-white" id="mapsTitle">Maps</h2>
+			<div class="row justify-content-center">
+				<div class="col-12 justify-content-center glass mt-3">
+					<h2 class="text-white" id="ghostSkin">Ghost skins</h2>
+					<div class="row justify-content-center text-center mt-1">
+						<div class="col-3 d-flex justify-content-start">
+							<a class="text-white" id="pMaze">Maze</a>
+						</div>
+						<div class="col-3 d-flex justify-content-start">
+							<a class="text-white" id="pSpiral">Spiral</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		`;
+
+		var btnMaze = document.getElementById('pMaze');
+        var btnSpiral = document.getElementById('pSpiral');
+
+		btnMaze.addEventListener("click", (event) => this.selectMap(event, "maze"));
+		btnSpiral.addEventListener("click", (event) => this.selectMap(event, "spiral"));
 	}
 
 	showColorSchemeConfig() {
 		this.configContainer.innerHTML = `
-			<h2 class="text-white" id="colorSchemeTitle">Color schemes</h2>
+			<div class="row justify-content-center">
+				<div class="col-12 justify-content-center glass mt-3">
+					<h2 class="text-white" id="ghostSkin">Themes</h2>
+					<div class="row justify-content-center text-center mt-1">
+						<div class="col-3 d-flex justify-content-start">
+							<a class="text-white" id="pObsidian">Obsidian</a>
+						</div>
+						<div class="col-3 d-flex justify-content-start">
+							<a class="text-white" id="pAutumn">Autumn</a>
+						</div>
+						<div class="col-3 d-flex justify-content-start">
+							<a class="text-white" id="pGarden">Garden</a>
+						</div>
+						<div class="col-3 d-flex justify-content-start">
+							<a class="text-white" id="pSpacial">Spacial</a>
+						</div>
+					</div>
+				</div>
+			</div>
 		`;
+
+		var btnObsidian = document.getElementById('pObsidian');
+        var btnAutumn = document.getElementById('pAutumn');
+		var btnGarden = document.getElementById('pGarden');
+        var btnSpacial = document.getElementById('pSpacial');
+
+		btnObsidian.addEventListener("click", (event) => this.selectTheme(event, "obsidian"));
+		btnAutumn.addEventListener("click", (event) => this.selectTheme(event, "autumn"));
+		btnGarden.addEventListener("click", (event) => this.selectTheme(event, "garden"));
+		btnSpacial.addEventListener("click", (event) => this.selectTheme(event, "spacial"));
 	}
 
 	//#region EVENT LISTENERS HANDLERS
@@ -245,6 +302,43 @@ export class PacmanMenu {
 	selectGhostSkin(event, skin) {
 		console.log("Chosen ghost skin: " + skin);
 		this.ghostSkin = skin;
+	}
+
+	selectGhostSkin(event, map) {
+		console.log("Chosen map: " + map);
+		this.mapName = map;
+	}
+
+	selectTheme(event, theme) {
+		console.log("Chosen theme: " + theme);
+		switch (theme) {
+			case "obsidian":
+				this.theme = {
+					backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
+					wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
+				};
+				break;
+			case "autumn":
+				this.theme = {
+					backgroundColor : 'rgb(15, 0, 0)', ghostWallColor1 : 'rgb(138, 22, 1)', ghostWallColor2 : 'rgb(181, 32, 2)',
+					wallColor : 'rgb(143, 34, 1)', dotColor : 'rgb(145, 67, 3)', glowColor : 'rgb(194, 90, 6)'
+				};
+				break;
+			case "garden":
+				this.theme = {
+					backgroundColor : 'rgb(0, 8, 2)', ghostWallColor1 : 'rgb(148, 13, 32)', ghostWallColor2 : 'rgb(201, 18, 43)',
+					wallColor : 'rgb(0, 54, 12)', dotColor : 'rgb(2, 56, 173)', glowColor : 'rgb(0, 66, 209)'
+				};
+				break;
+			case "spacial":
+				this.theme = {
+					backgroundColor : 'rgb(1, 1, 26)', ghostWallColor1 : 'rgb(0, 0, 176)', ghostWallColor2 : 'rgb(4, 4, 212)',
+					wallColor : 'rgb(0, 0, 176)', dotColor : 'rgb(145, 135, 19)', glowColor : 'rgb(186, 173, 20)'
+				};
+				break;
+			default:
+				break;
+		}
 	}
 
 	changeKeybind(event, key) {

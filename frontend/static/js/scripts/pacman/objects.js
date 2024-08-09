@@ -194,36 +194,31 @@ export class Timer {
 }
 
 export class Cell {
-	constructor(x, y, value, pacmanGame, tileSize) {
+	constructor(x, y, value, pacmanGame) {
 		this.x = x;
 		this.y = y;
 		this.value = value;
 		this.pcG = pacmanGame;
-		this.ts = tileSize;
+		this.ts = pacmanGame.tileSize;
 		this.images = pacmanGame.images;
 
 		// Color constants
-		this.backgroundColor = 'rgb(0, 0, 0)';
-		this.ghostWallColor1 = 'rgb(110, 55, 225)';
-		this.ghostWallColor2 = 'rgb(75, 20, 200)';
-		this.wallColor = 'rgb(60, 0, 120)';
-		this.dotColor = 'rgb(105,55,165)';
-		this.glowColor = 'rgb(145,85,210)';
+		this.theme = pacmanGame.theme;
 	}
 
 	// render the cell
 	render() {
 		// Draw the map's ground and walls
 		if (this.value === 1)
-			this.pcG.c.fillStyle = this.wallColor;
+			this.pcG.c.fillStyle = this.theme.wallColor;
 		else if (this.value === 9)
-			this.pcG.c.fillStyle = this.pcG.frame % 40 < 20 ? this.ghostWallColor1 : this.ghostWallColor2;
+			this.pcG.c.fillStyle = this.pcG.frame % 40 < 20 ? this.theme.ghostWallColor1 : this.theme.ghostWallColor2;
 		else
-			this.pcG.c.fillStyle = this.backgroundColor;
+			this.pcG.c.fillStyle = this.theme.backgroundColor;
 		this.pcG.c.fillRect(this.x * this.ts, this.y * this.ts, this.ts, this.ts);
 
 		// Determine the dot's color in order to make it blink
-		this.pcG.c.fillStyle = this.pcG.frame % 40 < 20 ? this.dotColor : this.glowColor;
+		this.pcG.c.fillStyle = this.pcG.frame % 40 < 20 ? this.theme.dotColor : this.theme.glowColor;
 
 		// Draw the dot
 		if (this.value === 5 || this.value === 7) {

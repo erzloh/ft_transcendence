@@ -56,11 +56,11 @@ export class Pacman extends Character {
 				this.pcG.cells[this.y][this.x].value === 7) {
 				if (this.pcG.cells[this.y][this.x].value === 5){
 					this.pcG.cells[this.y][this.x].value = 6;
-					this.points += 10;
+					this.points += 25;
 				}
 				else {
 					this.pcG.cells[this.y][this.x].value = 8;
-					this.points += 100;
+					this.points += 250;
 				}
 				this.pcG.pScore.textContent = "Pacman's score: " + this.points;
 			}

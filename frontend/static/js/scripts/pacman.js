@@ -31,8 +31,6 @@ class PacmanGame {
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
 			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image()
 		}
-		
-		this.isPacgirl = false;
 
 		// Utils
 		this.timer;
@@ -58,6 +56,15 @@ class PacmanGame {
 
 		const ghostSkinString = localStorage.getItem('ghostSkin');
 		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
+
+		const mapNameString = localStorage.getItem('mapName');
+		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
+
+		const themeString = localStorage.getItem('theme');
+		this.theme = themeString ? JSON.parse(themeString) : {
+			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
+			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
+		};
 	}
 
 	updateGame() {
@@ -117,7 +124,7 @@ class PacmanGame {
 		this.images.imgStar.src = 'static/assets/pacman/images/star.png';
 
 		// Get the map's JSON data
-		const mapData = await this.loadMap("static/assets/pacman/maps/map1.json");
+		const mapData = await this.loadMap("static/assets/pacman/maps/" + this.mapName + ".json");
 		const { tileSize: tmpTileSize, width: tmpWidth, height: tmpHeight, data: tmpData } = mapData;
 		this.tileSize = tmpTileSize;
 		this.width = tmpWidth;
