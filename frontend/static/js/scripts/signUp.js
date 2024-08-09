@@ -4,50 +4,76 @@ import { navigateTo } from '../index.js';
 
 // Function that will be called when the view is loaded
 export function signUp () {
-    document.getElementById('username').addEventListener('blur', validateUsername);
-	document.getElementById('email').addEventListener('blur', validateEmail);
-	document.getElementById('password').addEventListener('blur', validatePassword);
-	document.getElementById('sign-up-button').addEventListener('click', submitForm);
+	// Get the elements from the HTML
+	const usernameElem = document.getElementById('username');
+	const emailElem = document.getElementById('email');
+	const passwordElem = document.getElementById('password');
+	
+	const usernameErrorElem = document.getElementById('username-error');
+	const emailErrorElem = document.getElementById('email-error');
+	const passwordErrorElem = document.getElementById('password-error');
+	
+	// Add event listeners for when the user leaves the input fields
+	usernameElem.addEventListener('blur', validateUsername);
+	emailElem.addEventListener('blur', validateEmail);
+	passwordElem.addEventListener('blur', validatePassword);
+	
+	// Add event listener for the submit button
+	const signUpButtonElem = document.getElementById('sign-up-button');
+	signUpButtonElem.addEventListener('click', submitForm);
 
+	// Validates the username, returns true if it is valid
 	function validateUsername() {
-		const username = document.getElementById('username').value;
-		const usernameError = document.getElementById('username-error');
+		const username = usernameElem.value;
 		if (username === '') {
-			updateTextForElem(usernameError, 'username-empty-error');
+			updateTextForElem(usernameErrorElem, 'username-empty-error');
 			return false;
 		} else {
-			usernameError.textContent = '\u00A0';
+			usernameErrorElem.textContent = '\u00A0';
 			return true;
 		}
 	}
 
 	function validateEmail() {
-		const email = document.getElementById('email').value;
-		const emailError = document.getElementById('email-error');
+		const email = emailElem.value;
 		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (email === '') {
-			updateTextForElem(emailError, 'e-mail-empty-error');
+			updateTextForElem(emailErrorElem, 'e-mail-empty-error');
 			return false;
 		} else if (!emailPattern.test(email)) {
-			updateTextForElem(emailError, 'e-mail-invalid-error');
+			updateTextForElem(emailErrorElem, 'e-mail-invalid-error');
 			return false;
 		} else {
-			emailError.textContent = '\u00A0';
+			emailErrorElem.textContent = '\u00A0';
 			return true;
 		}
 	}
 
 	function validatePassword() {
-		const password = document.getElementById('password').value;
-		const passwordError = document.getElementById('password-error');
+		const password = passwordElem.value;
 		if (password === '') {
-			updateTextForElem(passwordError, 'password-empty-error');
+			updateTextForElem(passwordErrorElem, 'password-empty-error');
 			return false;
 		} else if (password.length < 8) {
-			updateTextForElem(passwordError, 'password-short-error');
+			updateTextForElem(passwordErrorElem, 'password-short-error');
+			return false;
+		} else if (password.length > 64) {
+			updateTextForElem(passwordErrorElem, 'password-long-error');
+			return false;
+		} else if (!/[A-Z]/.test(password)) {
+			updateTextForElem(passwordErrorElem, 'password-uppercase-error');
+			return false;
+		} else if (!/[a-z]/.test(password)) {
+			updateTextForElem(passwordErrorElem, 'password-lowercase-error');
+			return false;
+		} else if (!/\d/.test(password)) {
+			updateTextForElem(passwordErrorElem, 'password-number-error');
+			return false;
+		} else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+			updateTextForElem(passwordErrorElem, 'password-special-error');
 			return false;
 		} else {
-			passwordError.textContent = '\u00A0';
+			passwordErrorElem.textContent = '\u00A0';
 			return true;
 		}
 	}
@@ -56,21 +82,25 @@ export function signUp () {
 		console.log('submitForm');
 		e.preventDefault();
 
-		// Make sure that all the fields are valid
+		// Make sure that all the fields are valid (at least front-end-wise)
 		const usernameValid = validateUsername();
 		const emailValid = validateEmail();
 		const passwordValid = validatePassword();
 
 		// If all the fields are valid, send the data to the server
 		if (usernameValid && emailValid && passwordValid) {
-			const username = document.getElementById('username').value;
-			const email = document.getElementById('email').value;
-			const password = document.getElementById('password').value;
+			// Prepare the data to be sent
+			const username = usernameElem.value;
+			const email = emailElem.value;
+			const password = passwordElem.value;
+
 			const data = {
 				username: username,
 				email: email,
 				password: password
 			};
+
+			// Send the data to the server
 			const response = await fetch(`${BASE_URL}/api/signup`, {
 				method: 'POST',
 				headers: {
@@ -79,6 +109,7 @@ export function signUp () {
 				body: JSON.stringify(data)
 			})
 
+			// Get the response data into json
 			const responseData = await response.json();
 			
 			// simulate response data
@@ -86,9 +117,8 @@ export function signUp () {
 			// 	status: 'success'
 			// }
 
-			// If the response status is an error, show error message in the correct fields
+			// If the response status is an error, show the error message in the correct fields
 			if (responseData.status === 'error') {
-				// Show error message on the correct field
 				if (responseData.field === 'username') {
 					updateTextForElem(document.getElementById('username-error'), responseData.message);
 				} else if (responseData.field === 'email') {
@@ -97,7 +127,7 @@ export function signUp () {
 					updateTextForElem(document.getElementById('password-error'), responseData.message);
 				}
 			} else if (responseData.status === 'success') {
-				// If the response status is success, show success message
+				// If the response status is success, show success message and navigate to the login page
 				const containerLogin = document.querySelector('.container-login');
 				containerLogin.innerHTML = `
 					<div class="success">
@@ -126,7 +156,6 @@ export function signUp () {
 					</div>
 				`;
 				updateTextForElem(document.getElementById('failure-message'), 'sign-up-failure');
-
 			}
 		}
 	};
