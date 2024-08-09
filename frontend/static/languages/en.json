@@ -16,6 +16,22 @@
 	"sign up": "sign up",
 	"login": "login",
 
+	"username-empty-error": "username cannot be empty",
+	"e-mail-empty-error": "e-mail cannot be empty",
+	"e-mail-invalid-error": "e-mail is invalid",
+	"password-empty-error": "password cannot be empty",
+	"password-short-error": "password must be at least 8 characters",
+	"password-long-error": "password must be at most 64 characters",
+	"password-uppercase-error": "password must contain at least one uppercase letter",
+	"password-lowercase-error": "password must contain at least one lowercase letter",
+	"password-number-error": "password must contain at least one number",
+	"password-special-error": "password must contain at least one special character",
+	"username-exists-error": "username already exists",
+	"e-mail-exists-error": "e-mail already exists",
+
+	"sign-up-success": "sign up successful!",
+	"sign-up-failure": "an error occured while signing up",
+
 	"enable bg": "enable  pretty background (warning: can slow down your device)",
 	"select language": "select language",
 

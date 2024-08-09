@@ -153,6 +153,7 @@ $blending: hard-light;
 	border-radius: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+	// animation: fadeIn 0.5s ease-out;
 }
 
 .return-btn {
@@ -193,6 +194,11 @@ $blending: hard-light;
   .custom-checkbox:checked {
 	background-color: #d7c900;
 	border-color: rgba(255, 255, 255, 0.5);
+}
+
+// SIGN IN PAGE
+.loading-icon {
+	animation: spin 1s linear infinite;
 }
 
 // LOGIN PAGE
@@ -240,3 +246,21 @@ $blending: hard-light;
 	}
 }
 
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
