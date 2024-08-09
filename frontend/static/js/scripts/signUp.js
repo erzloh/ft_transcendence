@@ -4,7 +4,7 @@ import { navigateTo } from '../index.js';
 
 // Function that will be called when the view is loaded
 export function signUp () {
-	// Get the elements from the HTML
+	// Get the form elements from the HTML
 	const usernameElem = document.getElementById('username');
 	const emailElem = document.getElementById('email');
 	const passwordElem = document.getElementById('password');
@@ -79,7 +79,7 @@ export function signUp () {
 	}
 
 	async function submitForm(e) {
-		console.log('submitForm');
+		// Prevent the default behavior of the form
 		e.preventDefault();
 
 		// Make sure that all the fields are valid (at least front-end-wise)
@@ -95,9 +95,9 @@ export function signUp () {
 			const password = passwordElem.value;
 
 			const data = {
-				username: username,
-				email: email,
-				password: password
+				username,
+				email,
+				password
 			};
 
 			// Send the data to the server

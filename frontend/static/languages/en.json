@@ -32,6 +32,9 @@
 	"sign-up-success": "sign up successful!",
 	"sign-up-failure": "an error occured while signing up",
 
+	"login-success": "login successful!",
+	"login-failure": "an error occured while logging in",
+
 	"enable bg": "enable  pretty background (warning: can slow down your device)",
 	"select language": "select language",
 

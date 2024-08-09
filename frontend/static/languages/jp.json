@@ -32,6 +32,9 @@
 	"sign-up-success": "サインアップ成功！",
 	"sign-up-failure": "サインアップ中にエラーが発生しました",
 
+	"login-success": "ログイン成功！",
+	"login-failure": "ログイン中にエラーが発生しました",
+
 	"enable bg": "プリティ背景を有効にする（警告：デバイスが遅くなる可能性があります）",
 	"select language": "言語を選択",
 

@@ -32,6 +32,9 @@
 	"sign-up-success": "inscription réussie!",
 	"sign-up-failure": "une erreur s'est produite lors de l'inscription",
 
+	"login-success": "connexion réussie!",
+	"login-failure": "une erreur s'est produite lors de la connexion",
+
 	"enable bg": "activer le pretty background (attention: peut ralentir votre appareil)",
 	"select language": "sélectionner la langue",
 
