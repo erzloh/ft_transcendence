@@ -9,12 +9,15 @@ export function settings() {
 	prettyBgSetting.addEventListener('change', () => {
 		localStorage.setItem('prettyBgSetting', prettyBgSetting.checked);
 		document.querySelector('.gradients-container').style.display = prettyBgSetting.checked ? 'block' : 'none';
+		document.querySelector('#video-background').style.display = prettyBgSetting.checked ? 'none' : 'block';
 	});
 
 	// Apply the pretty background setting from the local storage
-	const prettyBgSettingValue = localStorage.getItem('prettyBgSetting');
+	const prettyBgSettingValue = localStorage.getItem('prettyBgSetting') === 'true';
 	prettyBgSetting.checked = prettyBgSettingValue === 'true';
 	document.querySelector('.gradients-container').style.display = prettyBgSettingValue === 'true' ? 'block' : 'none';
+	document.querySelector('#video-background').style.display = prettyBgSettingValue === 'true' ? 'none' : 'block';
+
 
 	// Change letter animation setting
 

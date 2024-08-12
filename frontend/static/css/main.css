@@ -12100,6 +12100,14 @@ html, body {
   opacity: 0.7;
 }
 
+#video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
 .btn:hover {
   border: 1px solid white;
 }
