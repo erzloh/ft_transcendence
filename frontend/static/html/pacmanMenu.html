@@ -1,22 +1,43 @@
 <div class="full-height d-flex align-items-center justify-content-center">
 	<div class="row justify-content-center">
 		<div class="col-12 text-center mb-5">
-			<h1 class="text-white h1" animated-letters>Pac-Man Menu</h1>
+			<label class="text-white h1" animated-letters>Pac-Man Menu</label>
 		</div>
-		<div class="col-12 text-center mb-5">
-			<p class="text-white" id="btnKeys">Keys</p>
-			<p class="text-white" id="btnPSkin">Pacman skin</p>
-			<p class="text-white" id="btnGSkin">Ghost skin</p>
-			<p class="text-white" id="btnMap">Map</p>
-			<p class="text-white" id="btnColor">Color scheme</p>
+		<div class="row justify-content-center mb-2">
+			<div class="col-10">
+				<div class="row justify-content-center">
+					<!-- Column for Player 1 -->
+					<div class="col-5 d-flex flex-column align-items-center glass mt-1">
+						<label class="h4 text-white">Player 1</label>
+						<a role="button" class="text-light">Yolkers</a>
+					</div>
+		
+					<div class="col-2"></div>
+		
+					<!-- Column for Player 2 -->
+					<div class="col-5 d-flex flex-column align-items-center glass mt-1">
+						<label class="h4 text-white">Player 2</label>
+						<a role="button" class="text-light">Erzloh</a>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="col-12 text-center mt-3" id="configContainer">
+		
+		<p></p>
+		<div class="col-12 text-center mb-1">
+			<p role="button" class="btn btn-lg text-white" id="btnKeys">Keys</p>
+			<p role="button" class="btn btn-lg text-white" id="btnPSkin">Pacman skin</p>
+			<p role="button" class="btn btn-lg text-white" id="btnGSkin">Ghost skin</p>
+			<p role="button" class="btn btn-lg text-white" id="btnMap">Map</p>
+			<p role="button" class="btn btn-lg text-white" id="btnColor">Color scheme</p>
+		</div>
+		<div class="col-10 text-center mt-1" id="configContainer">
             <!-- Configuration interface will be dynamically loaded here -->
         </div>
-		<div class="col-12 text-center">
+		<div class="col-12 text-center mt-4">
 			<a role="button" class="btn btn-lg text-light" id="startGameButton" href="/pacman" data-link>Start game</a>
 		</div>
-		<div class="col-12 text-center mt-5 d-flex justify-content-center">
+		<div class="col-12 text-center mt-4 d-flex justify-content-center">
 			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
 		</div>
 	</div>

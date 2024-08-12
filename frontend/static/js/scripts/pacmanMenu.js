@@ -61,97 +61,102 @@ export class PacmanMenu {
 
 	showKeysConfig() {
 		this.configContainer.innerHTML = `
-			<div class="row justify-content-center">
-				<div class="col-12 justify-content-center glass mt-3">
-					<h2 class="text-white" id="keysTitle">Keys settings</h2>
-					<div class="row justify-content-center text-center mt-3">
-						<h3 class="text-white">Pacman keys</h3>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Move up</p>
+			<div class="row justify-content-center glass">
+				<div class="row mt-3"></div>
+				<label class="h2 text-white">Keys settings</label>
+				<div class="col-12 d-flex justify-content-center">
+					<div class="col-5">
+						<div class="row justify-content-center text-center mt-2">
+							<label class="h3 text-white">Pacman keys</label>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</a>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Move up</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</a>
+							</div>
 						</div>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Move left</p>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Move left</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</a>
+							</div>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</a>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Move down</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</a>
+							</div>
 						</div>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Move down</p>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Move right</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</a>
+							</div>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</a>
-						</div>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Move right</p>
-						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</a>
-						</div>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Use spell</p>
-						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</a>
-						</div>
-					</div>
-
-					<div class="row justify-content-center text-center mt-3">
-						<h3 class="text-white">Ghost keys</h3>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Move up</p>
-						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</a>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Use spell</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</a>
+							</div>
 						</div>
 					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Move left</p>
+					<div class="col-5">
+						<div class="row justify-content-center text-center mt-2">
+							<h3 class="text-white">Ghost keys</h3>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</a>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Move up</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</a>
+							</div>
 						</div>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Move down</p>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Move left</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</a>
+							</div>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</a>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Move down</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</a>
+							</div>
 						</div>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Move right</p>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Move right</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</a>
+							</div>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</a>
-						</div>
-					</div>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<p class="text-white">Use spell</p>
-						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</a>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white">Use spell</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<a role="button" class="text-white" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</a>
+							</div>
 						</div>
 					</div>
 				</div>
+				<div class="row mt-3"></div>
 			</div>
 		`;
 
@@ -179,15 +184,17 @@ export class PacmanMenu {
 
 	showPacmanSkinConfig() {
 		this.configContainer.innerHTML = `
-			<div class="row justify-content-center">
-				<div class="col-12 justify-content-center glass mt-3">
-					<h2 class="text-white" id="pacmanSkins">Pacman skins</h2>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-end">
-							<img id="pPacmanSkin" src="/static/assets/pacman/images/pacman1.png">
+			<div class="row justify-content-center glass">
+				<div class="col-12 justify-content-center">
+					<div class="row justify-content-center text-center mt-2 mb-3">
+						<div class="row mb-2">
+							<label class="h2 text-white">Pacman skins</label>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<img id="pPacgirlSkin" src="/static/assets/pacman/images/pacgirl1.png">
+						<div class="col-3 d-flex justify-content-center">
+							<img role="button" id="pPacmanSkin" src="/static/assets/pacman/images/pacman1.png">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img role="button" id="pPacgirlSkin" src="/static/assets/pacman/images/pacgirl1.png">
 						</div>
 					</div>
 				</div>
@@ -202,10 +209,12 @@ export class PacmanMenu {
 
 	showGhostSkinConfig() {
 		this.configContainer.innerHTML = `
-			<div class="row justify-content-center">
-				<div class="col-12 justify-content-center glass mt-3">
-					<h2 class="text-white" id="ghostSkin">Ghost skins</h2>
-					<div class="row justify-content-center text-center mt-1">
+			<div class="row justify-content-center glass">
+				<div class="col-12 justify-content-center">
+					<div class="row justify-content-center text-center mt-2 mb-3">
+						<div class="row mb-2">
+							<label class="h2 text-white">Ghost skins</label>
+						</div>
 						<div class="col-3 d-flex justify-content-center">
 							<img id="pBlueGhostSkin" src="/static/assets/pacman/images/blueGhost1.png">
 						</div>
@@ -236,15 +245,17 @@ export class PacmanMenu {
 
 	showMapConfig() {
 		this.configContainer.innerHTML = `
-			<div class="row justify-content-center">
-				<div class="col-12 justify-content-center glass mt-3">
-					<h2 class="text-white" id="ghostSkin">Ghost skins</h2>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pMaze">Maze</a>
+			<div class="row justify-content-center glass">
+				<div class="col-12 justify-content-center">
+					<div class="row justify-content-center text-center mt-2 mb-3">
+						<div class="row mb-1">
+							<label class="h2 text-white">Maps</label>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pSpiral">Spiral</a>
+						<div class="col-3 d-flex justify-content-center">
+							<a role="button" class="text-white" id="pMaze">Maze</a>
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<a role="button" class="text-white" id="pSpiral">Spiral</a>
 						</div>
 					</div>
 				</div>
@@ -260,21 +271,25 @@ export class PacmanMenu {
 
 	showColorSchemeConfig() {
 		this.configContainer.innerHTML = `
-			<div class="row justify-content-center">
-				<div class="col-12 justify-content-center glass mt-3">
-					<h2 class="text-white" id="ghostSkin">Themes</h2>
-					<div class="row justify-content-center text-center mt-1">
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pObsidian">Obsidian</a>
+			<div class="row justify-content-center glass">
+				<div class="col-12 justify-content-center">
+					<div class="row justify-content-center text-center mt-2 mb-3">
+						<div class="row mb-1">
+							<label class="h2 text-white">Themes</label>
 						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pAutumn">Autumn</a>
-						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pGarden">Garden</a>
-						</div>
-						<div class="col-3 d-flex justify-content-start">
-							<a class="text-white" id="pSpacial">Spacial</a>
+						<div class="row justify-content-center text-center">
+							<div class="col-3 d-flex justify-content-center">
+								<a role="button"  class="text-white" id="pObsidian">Obsidian</a>
+							</div>
+							<div class="col-3 d-flex justify-content-center">
+								<a role="button"  class="text-white" id="pAutumn">Autumn</a>
+							</div>
+							<div class="col-3 d-flex justify-content-center">
+								<a role="button"  class="text-white" id="pGarden">Garden</a>
+							</div>
+							<div class="col-3 d-flex justify-content-center">
+								<a role="button"  class="text-white" id="pSpacial">Spacial</a>
+							</div>
 						</div>
 					</div>
 				</div>
