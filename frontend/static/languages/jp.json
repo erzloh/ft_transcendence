@@ -28,6 +28,7 @@
 	"password-special-error": "パスワードには少なくとも1つの特殊文字を含める必要があります",
 	"username-exists-error": "ユーザー名は既に存在します",
 	"e-mail-exists-error": "メールは既に存在します",
+	"invalid-credentials-error": "無効な資格情報",
 
 	"sign-up-success": "サインアップ成功！",
 	"sign-up-failure": "サインアップ中にエラーが発生しました",

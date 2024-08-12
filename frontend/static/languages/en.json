@@ -28,9 +28,11 @@
 	"password-special-error": "password must contain at least one special character",
 	"username-exists-error": "username already exists",
 	"e-mail-exists-error": "e-mail already exists",
+	"invalid-credentials-error": "invalid credentials",
 
 	"sign-up-success": "sign up successful!",
 	"sign-up-failure": "an error occured while signing up",
+
 
 	"login-success": "login successful!",
 	"login-failure": "an error occured while logging in",
