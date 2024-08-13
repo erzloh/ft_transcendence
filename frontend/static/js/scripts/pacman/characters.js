@@ -17,7 +17,6 @@ class Character {
 			for (var i = 0; i < this.pcG.height; i++) {
 				for (var j = 0; j < this.pcG.width; j++) {
 					if (this.pcG.cells[i][j].value == tmpVal && !(this.y == i && this.x == j)) {
-						console.log(j + " " + i + ": " + this.pcG.cells[i][j].value);
 						this.x = j;
 						this.y = i;
 						this.px = j;

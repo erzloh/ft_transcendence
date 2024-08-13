@@ -9,6 +9,11 @@ class PacmanGame {
 		this.pScore = document.getElementById('pScore');
 		this.startButton = document.getElementById('btnStart');
 
+		this.pacmanUsername = document.getElementById('pacmanPlayerLabel');
+		this.ghostUsername = document.getElementById('ghostPlayerLabel');
+		this.imgPacmanSkin = document.getElementById('imgPacmanSkin');
+		this.imgGhostSkin = document.getElementById('imgGhostSkin');
+
 		this.canvas = document.getElementById('cvsPacman');
 		this.c = this.canvas.getContext('2d');
 
@@ -45,6 +50,14 @@ class PacmanGame {
 	Initialize() {
 		this.startButton.addEventListener("click", () => this.StartGame());
 
+		const usernamesString = localStorage.getItem('usernames');
+		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
+			player1: "Player1", player2: "Player2"
+		};
+
+		this.pacmanUsername.innerHTML = this.usernames.player1;
+		this.ghostUsername.innerHTML = this.usernames.player2;
+
 		const keybindsString = localStorage.getItem('keybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
@@ -57,6 +70,9 @@ class PacmanGame {
 		const ghostSkinString = localStorage.getItem('ghostSkin');
 		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
 
+		this.imgPacmanSkin.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
+		this.imgGhostSkin.src = this.images.imgGhost1.src = 'static/assets/pacman/images/' + this.ghostSkin + '1.png';
+
 		const mapNameString = localStorage.getItem('mapName');
 		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
 
@@ -65,6 +81,7 @@ class PacmanGame {
 			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
+
 	}
 
 	updateGame() {

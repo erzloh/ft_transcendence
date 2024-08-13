@@ -8,11 +8,23 @@ export class PacmanMenu {
         this.mapButton = document.getElementById('btnMap');
         this.colorButton = document.getElementById('btnColor');
         this.configContainer = document.getElementById('configContainer');
+		this.player1UsernameLabel = document.getElementById('player1Name');
+		this.player1Input = document.getElementById('player1Input');
+		this.player2UsernameLabel = document.getElementById('player2Name');
+		this.player2Input = document.getElementById('player2Input');
 
 		this.boundKeyDownSettings = this.keyDownSettings.bind(this);
 
 		this.waitForKey = false;
 		this.waitingKey = "";
+
+		const usernamesString = localStorage.getItem('usernames');
+		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
+			player1: "Player1", player2: "Player2"
+		};
+
+		this.player1UsernameLabel.innerHTML = this.usernames.player1;
+		this.player2UsernameLabel.innerHTML = this.usernames.player2;
 
 		const pacmanSkinString = localStorage.getItem('pacmanSkin');
 		this.pacmanSkin = pacmanSkinString ? JSON.parse(pacmanSkinString) : "pacman";
@@ -34,8 +46,23 @@ export class PacmanMenu {
 			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
 		};
+
+		player1Input.addEventListener('keypress', (event) => {
+			if (event.key === 'Enter') {
+				this.usernames.player1 = player1Input.value;
+				player1Input.value = ""; // Clear the input box
+				this.player1UsernameLabel.innerHTML = this.usernames.player1;
+			}
+		});
+
+		player2Input.addEventListener('keypress', (event) => {
+			if (event.key === 'Enter') {
+				this.usernames.player2 = player2Input.value;
+				player2Input.value = ""; // Clear the input box
+				this.player2UsernameLabel.innerHTML = this.usernames.player2;
+			}
+		});
 	}
-		
 
 	Initialize() {
 		// Add Event Listener to the Start Button
@@ -55,6 +82,7 @@ export class PacmanMenu {
 			localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
 			localStorage.setItem('mapName', JSON.stringify(this.mapName));
 			localStorage.setItem('theme', JSON.stringify(this.theme));
+			localStorage.setItem('usernames', JSON.stringify(this.usernames))
 			window.location.href = "/pacman";
 		});
 	}
@@ -216,16 +244,16 @@ export class PacmanMenu {
 							<label class="h2 text-white">Ghost skins</label>
 						</div>
 						<div class="col-3 d-flex justify-content-center">
-							<img id="pBlueGhostSkin" src="/static/assets/pacman/images/blueGhost1.png">
+							<img role="button" id="pBlueGhostSkin" src="/static/assets/pacman/images/blueGhost1.png">
 						</div>
 						<div class="col-3 d-flex justify-content-center">
-							<img id="pOrangeGhostSkin" src="/static/assets/pacman/images/orangeGhost1.png">
+							<img role="button" id="pOrangeGhostSkin" src="/static/assets/pacman/images/orangeGhost1.png">
 						</div>
 						<div class="col-3 d-flex justify-content-center">
-							<img id="pPinkGhostSkin" src="/static/assets/pacman/images/pinkGhost1.png">
+							<img role="button" id="pPinkGhostSkin" src="/static/assets/pacman/images/pinkGhost1.png">
 						</div>
 						<div class="col-3 d-flex justify-content-center">
-							<img id="pGreenGhostSkin" src="/static/assets/pacman/images/greenGhost1.png">
+							<img role="button" id="pGreenGhostSkin" src="/static/assets/pacman/images/greenGhost1.png">
 						</div>
 					</div>
 				</div>
@@ -319,7 +347,7 @@ export class PacmanMenu {
 		this.ghostSkin = skin;
 	}
 
-	selectGhostSkin(event, map) {
+	selectMap(event, map) {
 		console.log("Chosen map: " + map);
 		this.mapName = map;
 	}
@@ -341,7 +369,7 @@ export class PacmanMenu {
 				break;
 			case "garden":
 				this.theme = {
-					backgroundColor : 'rgb(0, 8, 2)', ghostWallColor1 : 'rgb(148, 13, 32)', ghostWallColor2 : 'rgb(201, 18, 43)',
+					backgroundColor : 'rgb(0, 8, 2)', ghostWallColor1 : 'rgb(38, 82, 0)', ghostWallColor2 : 'rgb(58, 125, 0)',
 					wallColor : 'rgb(0, 54, 12)', dotColor : 'rgb(2, 56, 173)', glowColor : 'rgb(0, 66, 209)'
 				};
 				break;
@@ -411,3 +439,4 @@ export class PacmanMenu {
 	//#endregion
 
 }
+

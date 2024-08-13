@@ -108,29 +108,29 @@ export class Timer {
 		
 			if (this.pSpellDuration > 0) {
 				this.pSpellDuration--;
-				if (this.pSpellDuration == 0) {
-					this.pCD.innerHTML = "Pacman's ability: Ready";
+				if (this.pSpellDuration == 0)
 					this.pcG.pacman.stopSpell();
-				}
 			}
 				
 			if (this.pSpellCD > 0) {
 				this.pSpellCD--;
-				this.pCD.innerHTML = "Pacman's ability: " + this.pSpellCD.toString().padStart(2, '0');
+				this.pCD.innerHTML = this.pSpellCD.toString().padStart(2, '0');
 			}
+			else
+				this.pCD.innerHTML = "Ready";
 	
 			if (this.gSpellDuration > 0) {
 				this.gSpellDuration--;
-				if (this.gSpellDuration == 0) {
-					this.gCD.innerHTML = "Ghost's ability: Ready";
+				if (this.gSpellDuration == 0)
 					this.pcG.ghost.stopSpell();
-				}
 			}
 	
 			if (this.gSpellCD > 0) {
 				this.gSpellCD--;
-				this.gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
+				this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
 			}
+			else
+				this.gCD.innerHTML = "Ready";
 	
 			// Every 8 seconds create a fruit
 			if (this.sec % 8 == 0) {
@@ -179,7 +179,7 @@ export class Timer {
 			return false;
 		this.pSpellDuration = 5;
 		this.pSpellCD = 20;
-		this.pCD.innerHTML = "Pacman's ability: " + this.pSpellCD.toString().padStart(2, '0');
+		this.pCD.innerHTML = this.pSpellCD.toString().padStart(2, '0');
 		return true;
 	}
 
@@ -188,7 +188,7 @@ export class Timer {
 			return false;
 		this.gSpellDuration = 30;
 		this.gSpellCD = 30;
-		this.gCD.innerHTML = "Ghost's ability: " + this.gSpellCD.toString().padStart(2, '0');
+		this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
 		return true;
 	}
 }
