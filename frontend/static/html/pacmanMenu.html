@@ -3,23 +3,23 @@
 		<div class="col-12 text-center mb-5">
 			<label class="text-white h1" animated-letters>Pac-Man Menu</label>
 		</div>
-		<div class="row justify-content-center mb-2">
-			<div class="col-10">
-				<div class="row justify-content-center">
+		<div class="row justify-content-center mb-2" style="width: 75vw;">
+			<div class="col d-flex flex-column">
+				<div class="row justify-content-between gap-5">
 					<!-- Column for Player 1 -->
-					<div class="col-5 d-flex flex-column align-items-center glass mt-2">
-						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
+					<div class="col d-flex flex-column align-items-center glass mt-2">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
 							<label class="h3 text-white">Pacman</label>
 							<label class="h5 text-white" id="player1Name">Player 1</label>
 							<input type="text" id="player1Input" class="form-control form-control-sm" placeholder="Enter username">
 						</div>
 					</div>
 		
-					<div class="col-2"></div>
+					<!-- <div class="col-1"></div> -->
 		
 					<!-- Column for Player 2 -->
-					<div class="col-5 d-flex flex-column align-items-center glass mt-1">
-						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
+					<div class="col d-flex flex-column align-items-center glass mt-1">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
 							<label class="h3 text-white">Ghost</label>
 							<label class="h5 text-white" id="player2Name">Player 2</label>
 							<input type="text" id="player2Input" class="form-control form-control-sm" placeholder="Enter username">
@@ -30,17 +30,17 @@
 		</div>
 		
 		<p></p>
-		<div class="col-12 text-center mb-1">
+		<div style="width: 75vw;" class="col-12 text-center mb-1">
 			<p role="button" class="btn btn-lg text-white" id="btnKeys">Keys</p>
 			<p role="button" class="btn btn-lg text-white" id="btnPSkin">Pacman skin</p>
 			<p role="button" class="btn btn-lg text-white" id="btnGSkin">Ghost skin</p>
 			<p role="button" class="btn btn-lg text-white" id="btnMap">Map</p>
 			<p role="button" class="btn btn-lg text-white" id="btnColor">Color scheme</p>
 		</div>
-		<div class="col-10 text-center mt-1" id="configContainer">
+		<div style="width: 75vw; height: 25vh;" class="col-10 text-center mt-1" id="configContainer">
             <!-- Configuration interface will be dynamically loaded here -->
         </div>
-		<div class="col-12 text-center mt-4">
+		<div class="col-12 text-center mt-5">
 			<a role="button" class="btn btn-lg text-light" id="startGameButton" href="/pacman" data-link>Start game</a>
 		</div>
 		<div class="col-12 text-center mt-4 d-flex justify-content-center">

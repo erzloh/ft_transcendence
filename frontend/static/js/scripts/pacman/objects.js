@@ -218,7 +218,10 @@ export class Cell {
 		this.pcG.c.fillRect(this.x * this.ts, this.y * this.ts, this.ts, this.ts);
 
 		// Determine the dot's color in order to make it blink
-		this.pcG.c.fillStyle = this.pcG.frame % 40 < 20 ? this.theme.dotColor : this.theme.glowColor;
+		if (this.x % 2 == 0)
+			this.pcG.c.fillStyle = this.pcG.frame % 60 < 30 ? (this.y % 2 == 0 ? this.theme.dotColor : this.theme.glowColor) : (this.y % 2 == 0 ? this.theme.glowColor : this.theme.dotColor);
+		else
+			this.pcG.c.fillStyle = this.pcG.frame % 60 < 30 ? (this.y % 2 == 0 ? this.theme.glowColor : this.theme.dotColor) : (this.y % 2 == 0 ? this.theme.dotColor : this.theme.glowColor);
 
 		// Draw the dot
 		if (this.value === 5 || this.value === 7) {

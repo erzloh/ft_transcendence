@@ -375,7 +375,7 @@ export class PacmanMenu {
 				break;
 			case "spacial":
 				this.theme = {
-					backgroundColor : 'rgb(1, 1, 26)', ghostWallColor1 : 'rgb(0, 0, 176)', ghostWallColor2 : 'rgb(4, 4, 212)',
+					backgroundColor : 'rgb(1, 1, 26)', ghostWallColor1 : 'rgb(14, 58, 179)', ghostWallColor2 : 'rgb(18, 71, 219)',
 					wallColor : 'rgb(0, 0, 176)', dotColor : 'rgb(145, 135, 19)', glowColor : 'rgb(186, 173, 20)'
 				};
 				break;
