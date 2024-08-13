@@ -1,17 +1,5 @@
 // Function that will be called when the view is loaded
 export function home () {
-	const test = "Hello from the example view!";
-	console.log(test);
-
-	// add event listner for keydown
-	document.addEventListener("keydown", printKey);
-
-	function testFunction () {
-		const test = "this is a test function";
-		console.log(test);
-	}
-
-	testFunction();
 }
 
 // --------------------------- Event Listener Functions ---------------------------

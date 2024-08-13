@@ -137,7 +137,7 @@ if (!noiseSetting) {
 export const ids = {};
 if (noiseSetting === 'on') {
 	document.querySelector('.background-noise').style.display = 'block';
-	ids.moveNoiseInterval = setInterval(moveNoise, 200);
+	ids.moveNoiseInterval = setInterval(moveNoise, 100);
 } else {
 	document.querySelector('.background-noise').style.display = 'none';
 }

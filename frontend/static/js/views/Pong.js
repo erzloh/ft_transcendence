@@ -4,7 +4,7 @@ import AbstractView from "./AbstractView.js";
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("pong");
+        this.setTitle("satori - pong");
     }
 
 	async getHtml() {

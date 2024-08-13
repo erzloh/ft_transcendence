@@ -4,7 +4,7 @@ import { settings } from "../scripts/settings.js";
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("settings");
+        this.setTitle("satori - settings");
     }
 
     async getHtml() {

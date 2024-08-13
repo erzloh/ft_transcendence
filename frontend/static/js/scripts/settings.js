@@ -41,7 +41,7 @@ export function settings() {
 		if (noiseCheckbox.checked) {
 			localStorage.setItem('noise', 'on');
 			document.querySelector('.background-noise').style.display = 'block';
-			ids.moveNoiseInterval = setInterval(moveNoise, 200);
+			ids.moveNoiseInterval = setInterval(moveNoise, 100);
 
 		} else {
 			localStorage.setItem('noise', 'off');

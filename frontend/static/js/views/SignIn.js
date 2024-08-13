@@ -4,7 +4,7 @@ import { signIn } from "../scripts/signIn.js";
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("sign in");
+        this.setTitle("satori - sign in");
     }
 
     async getHtml() {
