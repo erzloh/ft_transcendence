@@ -36,7 +36,12 @@
 	"login-success": "connexion réussie!",
 	"login-failure": "une erreur s'est produite lors de la connexion",
 
-	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention: peut ralentir l'appareil)",
+	"graphics": "graphiques",
+	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",
+	"ultra": "ultra",
+	"medium": "moyen",
+	"none": "aucun",
+	"other": "autre",
 	"select language": "sélectionner la langue",
 
 	"404-message": "La page que vous recherchez est introuvable."

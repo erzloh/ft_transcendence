@@ -109,6 +109,19 @@ window.addEventListener("popstate", router);
 
 // ------------------------------- APPLY SETTINGS -------------------------------
 // Apply the settings from the local storage
-if (localStorage.getItem('prettyBgSetting') === 'true') {
+let graphicsSetting = localStorage.getItem('graphics');
+if (!graphicsSetting) {
+	localStorage.setItem('graphics', 'medium');
+	graphicsSetting = 'medium';
+}
+
+if (graphicsSetting === 'ultra') {
 	document.querySelector('.gradients-container').style.display = 'block';
+	document.querySelector('#video-background').style.display = 'none';
+} else if (graphicsSetting === 'medium') {
+	document.querySelector('.gradients-container').style.display = 'none';
+	document.querySelector('#video-background').style.display = 'block';
+} else {
+	document.querySelector('.gradients-container').style.display = 'none';
+	document.querySelector('#video-background').style.display = 'none';
 }

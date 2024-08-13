@@ -37,7 +37,11 @@
 	"login-success": "login successful!",
 	"login-failure": "an error occured while logging in",
 
-	"enable bg": "enable superior-quality interactive background (warning: may slow down device)",
+	"graphics": "graphics", 
+	"ultra": "ultra",
+	"medium": "medium",
+	"none": "none",
+	"other": "other",
 	"select language": "select language",
 
 	"404-message": "The page you are looking for cannot be found."
