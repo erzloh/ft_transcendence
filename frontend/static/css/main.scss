@@ -25,21 +25,37 @@ html, body {
 // ------------------------------- BACKGROUND ANIMATION -------------------------------
 
 // Define variables
+// 42 color palette
+// $color-bg1: rgb(46, 50, 62);
+// $color-bg2: rgb(0, 186, 187);
+// $color1: rgb(147, 47, 78);
+// $color2: rgb(88, 153, 194);
+// $color3: rgb(112, 174, 133);
+// $color4: rgb(41, 45, 57);
+// $color5: rgb(185, 170, 204);
+// $color-interactive: rgb(3, 30, 42);
+
+// Multicolor palette
 $color-bg1: rgb(0, 0, 0);
-$color-bg2: rgb(0, 0, 0);
-// $color-bg1: rgb(248, 153, 57);
-// $color-bg2: rgb(78, 5, 127);
-// $color1: rgb(18, 113, 255);
-// $color2: rgb(221, 74, 255);
-// $color3: rgb(100, 220, 255);
-// $color4: rgb(200, 50, 50);
-// $color5: rgb(180, 180, 50);
-$color1: rgb(255, 123, 0);
-$color2: rgb(255, 183, 0);
-$color3: rgb(255, 31, 31);
-$color4: rgb(129, 79, 13);
-$color5: rgb(255, 229, 31);
-$color-interactive: rgb(135, 15, 15);
+$color-bg2: rgb(47, 0, 79);
+$color1: rgb(22, 75, 154);
+$color2: rgb(148, 49, 171);
+$color3: rgb(68, 149, 174);
+$color4: rgb(149, 34, 119);
+$color5: rgb(136, 140, 40);
+$color-interactive: rgb(7, 56, 201);
+
+// Red color palette
+// $color-bg1: rgb(84, 0, 0);
+// $color-bg2: rgb(60, 63, 0);
+// $color1: rgb(255, 123, 0);
+// $color2: rgb(255, 183, 0);
+// $color3: rgb(255, 31, 31);
+// $color4: rgb(129, 79, 13);
+// $color5: rgb(255, 229, 31);
+// $color-interactive: rgb(135, 15, 15);
+
+
 $circle-size: 80%;
 $blending: hard-light;
 
@@ -86,6 +102,7 @@ $blending: hard-light;
 	position: absolute;
 	overflow: hidden;
 	background: linear-gradient(40deg, $color-bg1, $color-bg2);
+	// background-image: url(/static/assets/background/bg_42.jpg);
 	// background: black;
 
 	top: 0;
