@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Main Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #ccc;
+            filter: url(#grain);
+        }
+    </style>
 </head>
 <body>
-  <div id="main-container"></div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const user = JSON.parse(localStorage.getItem('loggedInUser'));
-
-      if (user) {
-        document.getElementById('main-container').innerHTML = `
-          <h1>Welcome, ${user.username}</h1>
-          <a href="profile.html">Go to your profile</a>
-        `;
-      } else {
-        document.getElementById('main-container').innerHTML = `
-          <h1>Welcome to our website</h1>
-          <a href="login.html">Login</a> or <a href="signup.html">Signup</a>
-        `;
-      }
-    });
-  </script>
+    <svg width="0" height="0">
+        <filter id="grain">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+        </filter>
+    </svg>
 </body>
 </html>

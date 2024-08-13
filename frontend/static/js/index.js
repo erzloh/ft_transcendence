@@ -12,7 +12,7 @@ import SignUp from "./views/SignUp.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
-import { animateLetters } from './visual/effects.js'
+import { animateLetters, moveNoise } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { setLanguage, updateTexts } from "./utils/languages.js";
@@ -109,6 +109,8 @@ window.addEventListener("popstate", router);
 
 // ------------------------------- APPLY SETTINGS -------------------------------
 // Apply the settings from the local storage
+
+// Background gradients
 let graphicsSetting = localStorage.getItem('graphics');
 if (!graphicsSetting) {
 	localStorage.setItem('graphics', 'medium');
@@ -124,4 +126,18 @@ if (graphicsSetting === 'ultra') {
 } else {
 	document.querySelector('.gradients-container').style.display = 'none';
 	document.querySelector('#video-background').style.display = 'none';
+}
+
+let noiseSetting = localStorage.getItem('noise');
+if (!noiseSetting) {
+	localStorage.setItem('noise', 'on');
+	noiseSetting = 'on';
+}
+
+export const ids = {};
+if (noiseSetting === 'on') {
+	document.querySelector('.background-noise').style.display = 'block';
+	ids.moveNoiseInterval = setInterval(moveNoise, 100);
+} else {
+	document.querySelector('.background-noise').style.display = 'none';
 }

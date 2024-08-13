@@ -12012,7 +12012,7 @@ html, body {
   }
 }
 .gradient-bg {
-  z-index: -1;
+  z-index: -2;
   width: 100vw;
   height: 100vh;
   position: absolute;
@@ -12100,6 +12100,28 @@ html, body {
   opacity: 0.7;
 }
 
+.background-noise {
+  background-image: url(/static/assets/background/noise-light.png);
+  background-repeat: repeat;
+  background-size: auto;
+  background-blend-mode: overlay;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+@keyframes moveGrain {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100vh;
+  }
+}
 #video-background {
   position: absolute;
   top: 0;

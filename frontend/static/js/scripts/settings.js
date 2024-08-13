@@ -1,5 +1,6 @@
 import { setLanguage } from '../utils/languages.js';
-import { BASE_URL } from '../index.js';
+import { moveNoise } from '../visual/effects.js';
+import { ids } from '../index.js';
 
 // Function that will be called when the view is loaded
 export function settings() {
@@ -7,6 +8,7 @@ export function settings() {
 	const ultraRadio = document.getElementById("graphics-ultra-radio");
 	const mediumRadio = document.getElementById("graphics-medium-radio");
 	const noneRadio = document.getElementById("graphics-none-radio");
+	const noiseCheckbox = document.getElementById("graphics-noise-checkbox");
 	
 	const gradientsContainer = document.querySelector('.gradients-container');
 	const videoBackground = document.querySelector('#video-background');
@@ -19,7 +21,7 @@ export function settings() {
 		}
 	});
 
-	mediumRadio.addEventListener("change", function() {
+	mediumRadio.addEventListener("change", () => {
 		if (mediumRadio.checked) {
 			localStorage.setItem('graphics', 'medium');
 			gradientsContainer.style.display = 'none';
@@ -27,11 +29,24 @@ export function settings() {
 		}
 	});
 
-	noneRadio.addEventListener("change", function() {
+	noneRadio.addEventListener("change", () => {
 		if (noneRadio.checked) {
 			localStorage.setItem('graphics', 'none');
 			gradientsContainer.style.display = 'none';
 			videoBackground.style.display = 'none';
+		}
+	});
+
+	noiseCheckbox.addEventListener("change", () => {
+		if (noiseCheckbox.checked) {
+			localStorage.setItem('noise', 'on');
+			document.querySelector('.background-noise').style.display = 'block';
+			ids.moveNoiseInterval = setInterval(moveNoise, 100);
+
+		} else {
+			localStorage.setItem('noise', 'off');
+			document.querySelector('.background-noise').style.display = 'none';
+			clearInterval(ids.moveNoiseInterval);
 		}
 	});
 
@@ -55,6 +70,18 @@ export function settings() {
 		gradientsContainer.style.display = 'none';
 		videoBackground.style.display = 'none';
 	}
+
+	// Apply the noise setting from the local storage
+	let noiseSetting = localStorage.getItem('noise');
+	if (!noiseSetting) {
+		localStorage.setItem('noise', 'on');
+		noiseSetting = 'on';
+	}
+
+	if (noiseSetting === 'on') {
+		noiseCheckbox.checked = true;
+		document.querySelector('.background-noise').style.display = 'block';
+	}		
 	
 	// Switch language setting
 	document.getElementById('languageSwitcher').addEventListener('change', (event) => {
