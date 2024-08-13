@@ -30,7 +30,26 @@
 					<label class="text-white h5" id="gCD">Ready</label>	
 				</div>
 			</div>
-		</div>		
+		</div>
+		<div class="modal fade" id="endgameModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+			  	<div class="modal-content">
+					<div class="modal-header">
+						<label class="h3 modal-title text-dark" id="endgameModalWinner"></label>
+					</div>
+					<div class="modal-body">
+				  		<label class="h5 text-dark" id="endgameModalScore"></label>
+						  <br>
+				  		<label class="h5 text-dark" id="endgameModalTime"></label>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-lg text-dark" id="playAgainButton" data-bs-dismiss="modal">Play Again</button>
+				  		<a type="button" class="btn btn-lg text-dark" href="/pacmanMenu">Menu</a>
+				  		<a type="button" class="btn btn-lg text-dark" href="/">Home page</a>
+					</div>
+			  	</div>
+			</div>
+		</div>			  
 		<div class="col-12 text-center mb-3">
 			<button id="btnStart" class="btn btn-lg text-light" data-translate="start game">start game</button>
 		</div>

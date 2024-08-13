@@ -55,11 +55,11 @@ export class Pacman extends Character {
 				this.pcG.cells[this.y][this.x].value === 7) {
 				if (this.pcG.cells[this.y][this.x].value === 5){
 					this.pcG.cells[this.y][this.x].value = 6;
-					this.points += 25;
+					this.points += 10;
 				}
 				else {
 					this.pcG.cells[this.y][this.x].value = 8;
-					this.points += 250;
+					this.points += 150;
 				}
 				this.pcG.pScore.textContent = "Pacman's score: " + this.points;
 			}
@@ -154,7 +154,7 @@ export class Ghost extends Character {
 			return;
 		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
 			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
-			console.log("Ghost wins");
+			this.pcG.partyOver(this.pcG.usernames.player2);
 		}
 		if (this.y == this.py && this.x == this.px) {
 			if (this.pcG.cells[this.y][this.x].value >= 2 &&

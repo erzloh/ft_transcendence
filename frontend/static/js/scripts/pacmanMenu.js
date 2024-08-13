@@ -13,6 +13,10 @@ export class PacmanMenu {
 		this.player2UsernameLabel = document.getElementById('player2Name');
 		this.player2Input = document.getElementById('player2Input');
 
+		this.toastNotification = document.getElementById('liveToast');
+		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
+		this.toastBody = document.getElementById('toastBody');
+
 		this.boundKeyDownSettings = this.keyDownSettings.bind(this);
 
 		this.waitForKey = false;
@@ -338,22 +342,26 @@ export class PacmanMenu {
 	//#region EVENT LISTENERS HANDLERS
 
 	selectPacmanSkin(event, skin) {
-		console.log("Chosen pacman skin: " + skin);
+		this.toastBody.innerHTML = "Chosen pacman skin: " + skin;
+		this.toastBootstrap.show();
 		this.pacmanSkin = skin;
 	}
 
 	selectGhostSkin(event, skin) {
-		console.log("Chosen ghost skin: " + skin);
+		this.toastBody.innerHTML = "Chosen ghost skin: " + skin;
+		this.toastBootstrap.show();
 		this.ghostSkin = skin;
 	}
 
 	selectMap(event, map) {
-		console.log("Chosen map: " + map);
+		this.toastBody.innerHTML = "Chosen map: " + map;
+		this.toastBootstrap.show();
 		this.mapName = map;
 	}
 
 	selectTheme(event, theme) {
-		console.log("Chosen theme: " + theme);
+		this.toastBody.innerHTML = "Chosen theme: " + theme;
+		this.toastBootstrap.show();
 		switch (theme) {
 			case "obsidian":
 				this.theme = {
