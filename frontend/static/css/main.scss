@@ -81,6 +81,7 @@ $blending: hard-light;
 	position: absolute;
 	overflow: hidden;
 	background: linear-gradient(40deg, $color-bg1, $color-bg2);
+	// background: black;
 
 	top: 0;
 	left: 0;
@@ -155,16 +156,6 @@ $blending: hard-light;
 	top: 0;
 	left: 0;
 
-	// animation: moveGrain 30s infinite linear;
-}
-
-@keyframes moveGrain {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 0 100vh;
-    }
 }
 
 // Video Background
