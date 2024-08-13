@@ -12017,7 +12017,7 @@ html, body {
   height: 100vh;
   position: absolute;
   overflow: hidden;
-  background: linear-gradient(40deg, rgb(0, 0, 0), rgb(66, 2, 109));
+  background: linear-gradient(40deg, rgb(0, 0, 0), rgb(0, 0, 0));
   top: 0;
   left: 0;
 }
@@ -12031,7 +12031,7 @@ html, body {
 }
 .gradient-bg .g1 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(18, 113, 255, 0.8) 0, rgba(18, 113, 255, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(255, 123, 0, 0.8) 0, rgba(255, 123, 0, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 80%;
   height: 80%;
@@ -12043,7 +12043,7 @@ html, body {
 }
 .gradient-bg .g2 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(221, 74, 255, 0.8) 0, rgba(221, 74, 255, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(255, 183, 0, 0.8) 0, rgba(255, 183, 0, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 80%;
   height: 80%;
@@ -12055,7 +12055,7 @@ html, body {
 }
 .gradient-bg .g3 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(100, 220, 255, 0.8) 0, rgba(100, 220, 255, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(255, 31, 31, 0.8) 0, rgba(255, 31, 31, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 80%;
   height: 80%;
@@ -12067,7 +12067,7 @@ html, body {
 }
 .gradient-bg .g4 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(200, 50, 50, 0.8) 0, rgba(200, 50, 50, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(129, 79, 13, 0.8) 0, rgba(129, 79, 13, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 80%;
   height: 80%;
@@ -12079,7 +12079,7 @@ html, body {
 }
 .gradient-bg .g5 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(180, 180, 50, 0.8) 0, rgba(180, 180, 50, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(255, 229, 31, 0.8) 0, rgba(255, 229, 31, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 160%;
   height: 160%;
@@ -12091,7 +12091,7 @@ html, body {
 }
 .gradient-bg .interactive {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(78, 221, 138, 0.8) 0, rgba(78, 221, 138, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(135, 15, 15, 0.8) 0, rgba(135, 15, 15, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 100%;
   height: 100%;
@@ -12141,7 +12141,7 @@ html, body {
 }
 
 .container-settings {
-  max-width: 800px;
+  max-width: 400px;
 }
 
 #languageSwitcher {
