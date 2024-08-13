@@ -1,4 +1,4 @@
-// ------------------------------- IMPORT THE VIEWS -------------------------------
+// ------------------------------- IMPORT VIEWS -------------------------------
 // A view is a class containing the HTML and JS of a page
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
@@ -14,14 +14,18 @@ import SignIn from "./views/SignIn.js";
 import './visual/interactiveBg.js'
 import { animateLetters } from './visual/effects.js'
 
+// ------------------------------- IMPORT UTILS ---------------------------------
+import { setLanguage, updateTexts } from "./utils/languages.js";
+
 // ------------------------------- CONFIGURE CONSTANTS -------------------------------
 // Set the base URL of the website
 export const BASE_URL = "https://localhost";
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call the router function
-document.addEventListener("DOMContentLoaded", () => {
-	router();
+document.addEventListener("DOMContentLoaded", async () => {
+	await setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
+	await router();
 });
 
 // ------------------------------- ROUTING -------------------------------
@@ -57,10 +61,13 @@ const router = async () => {
     document.querySelector("#app").innerHTML = await view.getHtml();
 
 	// Load the JS of the view
-	view.loadJS();
+	await view.loadJS();
 
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();
+
+	// Initialize with default language
+	updateTexts();
 
 	// Animate letters
 	animateLetters();
@@ -82,7 +89,30 @@ const attachEventListenersToLinks = () => {
 			navigateTo(link.href);
 		});
 	});
-};
+}
+
+
+// Load script
+const loadScript = async (view) => {
+	// Get the dynamic script element
+	const dynamicScript = document.getElementById('dynamic-script');
+
+	// Create a new script element
+	const newScript = document.createElement('script');
+    //newScript.type = 'module'; // Ensure the script is treated as an ES module
+	newScript.textContent = await view.getJS();
+	newScript.id = 'dynamic-script';
+
+	// Replace the dynamic script element with the new script element
+	// This is needed to load the new JS content
+	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
+}
+
+// ------------------------------- THE APP STARTS HERE -------------------------------
+// When the DOM is loaded, call the router function
+document.addEventListener("DOMContentLoaded", () => {
+	router();
+});
 
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view
@@ -105,4 +135,3 @@ window.addEventListener("popstate", router);
 if (localStorage.getItem('prettyBgSetting') === 'true') {
 	document.querySelector('.gradients-container').style.display = 'block';
 }
-

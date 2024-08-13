@@ -160,7 +160,15 @@ $blending: hard-light;
 }
 
 .title {
-	user-select: none;
+	// user-select: none;
+}
+
+#languageSwitcher {
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.1);
+	color: white;
+	padding: 5px;
 }
 
 // ------------------------------- Custom Keyframes -------------------------------
