@@ -4,6 +4,7 @@ import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
 import Pacman from "./views/Pacman.js";
+import PacmanMenu from "./views/PacmanMenu.js";
 import NotFound from "./views/NotFound.js";
 import Games from "./views/Games.js";
 import Profile from "./views/Profile.js";
@@ -33,6 +34,7 @@ const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
 	{ path: "/pacman", view: Pacman },
+	{ path: "/pacmanMenu", view: PacmanMenu },
 	{ path: "/settings", view: Settings },
 	{ path: "/games", view: Games },
 	{ path: "/profile", view: Profile },

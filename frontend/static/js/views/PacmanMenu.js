@@ -1,19 +1,19 @@
 import AbstractView from "./AbstractView.js";
-import { PacmanGame, eventListeners } from "../scripts/pacman.js";
+import { PacmanMenu, eventListeners } from "../scripts/pacmanMenu.js";
 
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("pacman");
+        this.setTitle("pacman menu");
     }
 
     async getHtml() {
-        return (await fetch("static/html/pacman.html")).text();
+        return (await fetch("static/html/pacmanMenu.html")).text();
     }
 
 	loadJS() {
-		const game = new PacmanGame();
-		game.Initialize();
+		var pacmanMenu = new PacmanMenu();
+		pacmanMenu.Initialize();
 	}
 
 	cleanUpEventListeners() {

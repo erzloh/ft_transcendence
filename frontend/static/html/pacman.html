@@ -7,9 +7,30 @@
 			<p class="text-white" id="pScore">Pacman's score: </p>
 			<p class="text-white" id="timer">Time elapsed: 00:00</p>
 		</div>
-		<div class="col-12 text-center mb-3">
-			<canvas class="glass" id="cvsPacman" width="500" height="500"></canvas>
-		</div>
+		<div class="col">
+			<div class="row-12">
+				<div class="col-12 d-flex flex-column align-items-center mb-3">
+					<canvas class="glass" id="cvsPacman" width="500" height="500"></canvas>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-3 d-flex flex-column align-items-center mb-1">
+					<label class="h4 text-white" id="pacmanPlayerLabel"></label>
+					<img id="imgPacmanSkin"/>
+					<br>
+					<label class="text-white h5">Ability</label>
+					<label class="text-white h5" id="pCD">Ready</p>	
+				</div>
+				
+				<div class="col-3 d-flex flex-column align-items-center mb-1">
+					<label class="h4 text-white" id="ghostPlayerLabel"></label>
+					<img id="imgGhostSkin"/>
+					<br>
+					<label class="text-white h5">Ability</label>
+					<label class="text-white h5" id="gCD">Ready</p>	
+				</div>
+			</div>
+		</div>		
 		<div class="col-12 text-center mb-3">
 			<button id="btnStart" class="btn btn-lg text-light" data-translate="start game">start game</button>
 		</div>
