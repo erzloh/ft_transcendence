@@ -42,7 +42,8 @@ class PacmanGame {
 			imgPacman1 : new Image(), imgPacman2 : new Image(), imgPacman3 : new Image(),
 			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
-			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image()
+			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image(),
+			imgBluePortal1 : new Image(), imgBluePortal2 : new Image(), imgBluePortal3 : new Image(), imgBluePortal4 : new Image()
 		}
 
 		// Utils
@@ -122,6 +123,10 @@ class PacmanGame {
 		this.images.imgPortal2.src = 'static/assets/pacman/images/portal2.png';
 		this.images.imgPortal3.src = 'static/assets/pacman/images/portal3.png';
 		this.images.imgPortal4.src = 'static/assets/pacman/images/portal4.png';
+		this.images.imgBluePortal1.src = 'static/assets/pacman/images/portalBlue1.png';
+		this.images.imgBluePortal2.src = 'static/assets/pacman/images/portalBlue2.png';
+		this.images.imgBluePortal3.src = 'static/assets/pacman/images/portalBlue3.png';
+		this.images.imgBluePortal4.src = 'static/assets/pacman/images/portalBlue4.png';
 		this.images.imgStar.src = 'static/assets/pacman/images/star.png';
 
 	}
