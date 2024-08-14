@@ -61,11 +61,11 @@ class PacmanGame {
 
 		const usernamesString = localStorage.getItem('usernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
-			player1: "Player1", player2: "Player2"
+			pacman: "Player1", ghost: "Player2"
 		};
 
-		this.pacmanUsername.innerHTML = this.usernames.player1;
-		this.ghostUsername.innerHTML = this.usernames.player2;
+		this.pacmanUsername.innerHTML = this.usernames.pacman;
+		this.ghostUsername.innerHTML = this.usernames.ghost;
 
 		const keybindsString = localStorage.getItem('keybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {

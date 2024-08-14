@@ -8,10 +8,10 @@ export class PacmanMenu {
         this.mapButton = document.getElementById('btnMap');
         this.colorButton = document.getElementById('btnColor');
         this.configContainer = document.getElementById('configContainer');
-		this.player1UsernameLabel = document.getElementById('player1Name');
-		this.player1Input = document.getElementById('player1Input');
-		this.player2UsernameLabel = document.getElementById('player2Name');
-		this.player2Input = document.getElementById('player2Input');
+		this.pacmanUsernameLabel = document.getElementById('pacmanName');
+		this.pacmanInput = document.getElementById('pacmanInput');
+		this.ghostUsernameLabel = document.getElementById('ghostName');
+		this.ghostInput = document.getElementById('ghostInput');
 
 		this.toastNotification = document.getElementById('liveToast');
 		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
@@ -24,11 +24,11 @@ export class PacmanMenu {
 
 		const usernamesString = localStorage.getItem('usernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
-			player1: "Player1", player2: "Player2"
+			pacman: "Player1", ghost: "Player2"
 		};
 
-		this.player1UsernameLabel.innerHTML = this.usernames.player1;
-		this.player2UsernameLabel.innerHTML = this.usernames.player2;
+		this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
+		this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
 
 		const pacmanSkinString = localStorage.getItem('pacmanSkin');
 		this.pacmanSkin = pacmanSkinString ? JSON.parse(pacmanSkinString) : "pacman";
@@ -51,21 +51,26 @@ export class PacmanMenu {
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
 		};
 
-		player1Input.addEventListener('keypress', (event) => {
-			if (event.key === 'Enter') {
-				this.usernames.player1 = player1Input.value;
-				player1Input.value = ""; // Clear the input box
-				this.player1UsernameLabel.innerHTML = this.usernames.player1;
-			}
-		});
+		this.pacmanInput.addEventListener('keypress', (event) => this.pacmanPlayerInputHandle(event));
+		this.pacmanInput.addEventListener('blur', (event) => this.pacmanPlayerInputHandle(event));
+		this.ghostInput.addEventListener('keypress', (event) => this.ghostPlayerInputHandle(event));
+		this.ghostInput.addEventListener('blur', (event) => this.ghostPlayerInputHandle(event));
+	}
 
-		player2Input.addEventListener('keypress', (event) => {
-			if (event.key === 'Enter') {
-				this.usernames.player2 = player2Input.value;
-				player2Input.value = ""; // Clear the input box
-				this.player2UsernameLabel.innerHTML = this.usernames.player2;
-			}
-		});
+	pacmanPlayerInputHandle(event) {
+		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && this.pacmanInput.value != "") {
+			this.usernames.pacman = this.pacmanInput.value;
+			this.pacmanInput.value = ""; // Clear the input box
+			this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
+		}
+	}
+
+	ghostPlayerInputHandle(event) {
+		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && this.ghostInput.value != "") {
+			this.usernames.ghost = this.ghostInput.value;
+			this.ghostInput.value = ""; // Clear the input box
+			this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
+		}
 	}
 
 	Initialize() {
@@ -93,7 +98,7 @@ export class PacmanMenu {
 
 	showKeysConfig() {
 		this.configContainer.innerHTML = `
-			<div class="row justify-content-center glass">
+			<div class="row justify-content-center glass" style="max-height: 350px; overflow-y: auto;">
 				<div class="row mt-3"></div>
 				<label class="h2 text-white">Keys settings</label>
 				<div class="col-12 d-flex justify-content-center">
@@ -103,42 +108,42 @@ export class PacmanMenu {
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Move up</label>
+								<label class="text-white" style="padding: 3px 0px;">Move up</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</label>
 							</div>
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Move left</label>
+								<label class="text-white" style="padding: 3px 0px;">Move left</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</label>
 							</div>
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Move down</label>
+								<label class="text-white" style="padding: 3px 0px;">Move down</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</label>
 							</div>
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Move right</label>
+								<label class="text-white" style="padding: 3px 0px;">Move right</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</label>
 							</div>
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Use spell</label>
+								<label class="text-white" style="padding: 3px 0px;">Use spell</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</label>
 							</div>
 						</div>
 					</div>
@@ -148,42 +153,42 @@ export class PacmanMenu {
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Move up</label>
+								<label class="text-white" style="padding: 3px 0px;">Move up</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</label>
 							</div>
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Move left</label>
+								<label class="text-white" style="padding: 3px 0px;">Move left</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</label>
 							</div>
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Move down</label>
+								<label class="text-white" style="padding: 3px 0px;">Move down</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</label>
 							</div>
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Move right</label>
+								<label class="text-white" style="padding: 3px 0px;">Move right</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</label>
 							</div>
 						</div>
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white">Use spell</label>
+								<label class="text-white" style="padding: 3px 0px;">Use spell</label>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<a role="button" class="text-white" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</a>
+								<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</label>
 							</div>
 						</div>
 					</div>
@@ -202,16 +207,16 @@ export class PacmanMenu {
 		var btnGDown = document.getElementById('gDown');
 		var btnGRight = document.getElementById('gRight');
 		var btnGSpell = document.getElementById('gSpell');
-		btnPUp.addEventListener("click", (event) => this.changeKeybind(event, "pUp"));
-		btnPLeft.addEventListener("click", (event) => this.changeKeybind(event, "pLeft"));
-		btnPDown.addEventListener("click", (event) => this.changeKeybind(event, "pDown"));
-		btnPRight.addEventListener("click", (event) => this.changeKeybind(event, "pRight"));
-		btnPSpell.addEventListener("click", (event) => this.changeKeybind(event, "pSpell"));
-		btnGUp.addEventListener("click", (event) => this.changeKeybind(event, "gUp"));
-		btnGLeft.addEventListener("click", (event) => this.changeKeybind(event, "gLeft"));
-		btnGDown.addEventListener("click", (event) => this.changeKeybind(event, "gDown"));
-		btnGRight.addEventListener("click", (event) => this.changeKeybind(event, "gRight"));
-		btnGSpell.addEventListener("click", (event) => this.changeKeybind(event, "gSpell"));
+		btnPUp.addEventListener("click", (event) => this.changeKeybind(event, "pUp", btnPUp));
+		btnPLeft.addEventListener("click", (event) => this.changeKeybind(event, "pLeft", btnPLeft));
+		btnPDown.addEventListener("click", (event) => this.changeKeybind(event, "pDown", btnPDown));
+		btnPRight.addEventListener("click", (event) => this.changeKeybind(event, "pRight", btnPRight));
+		btnPSpell.addEventListener("click", (event) => this.changeKeybind(event, "pSpell", btnPSpell));
+		btnGUp.addEventListener("click", (event) => this.changeKeybind(event, "gUp", btnGUp));
+		btnGLeft.addEventListener("click", (event) => this.changeKeybind(event, "gLeft", btnGLeft));
+		btnGDown.addEventListener("click", (event) => this.changeKeybind(event, "gDown", btnGDown));
+		btnGRight.addEventListener("click", (event) => this.changeKeybind(event, "gRight", btnGRight));
+		btnGSpell.addEventListener("click", (event) => this.changeKeybind(event, "gSpell", btnGSpell));
 	}
 
 	showPacmanSkinConfig() {
@@ -278,16 +283,19 @@ export class PacmanMenu {
 	showMapConfig() {
 		this.configContainer.innerHTML = `
 			<div class="row justify-content-center glass">
-				<div class="col-12 justify-content-center">
+				<div class="col-auto mr-2 ml-3">
 					<div class="row justify-content-center text-center mt-2 mb-3">
-						<div class="row mb-1">
+						<div class="col-12 mb-2">
 							<label class="h2 text-white">Maps</label>
 						</div>
-						<div class="col-3 d-flex justify-content-center">
-							<a role="button" class="text-white" id="pMaze">Maze</a>
+						<div class="col-4 d-flex justify-content-center mb-3">
+							<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze"/>
 						</div>
-						<div class="col-3 d-flex justify-content-center">
-							<a role="button" class="text-white" id="pSpiral">Spiral</a>
+						<div class="col-4 d-flex justify-content-center mb-3">
+							<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral"/>
+						</div>
+						<div class="col-4 d-flex justify-content-center mb-3">
+							<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" src="/static/assets/pacman/images/butterfly.png" id="pButterfly"/>
 						</div>
 					</div>
 				</div>
@@ -296,9 +304,11 @@ export class PacmanMenu {
 
 		var btnMaze = document.getElementById('pMaze');
         var btnSpiral = document.getElementById('pSpiral');
+		var btnButterfly = document.getElementById('pButterfly');
 
 		btnMaze.addEventListener("click", (event) => this.selectMap(event, "maze"));
 		btnSpiral.addEventListener("click", (event) => this.selectMap(event, "spiral"));
+		btnButterfly.addEventListener("click", (event) => this.selectMap(event, "butterfly"));
 	}
 
 	showColorSchemeConfig() {
@@ -306,21 +316,21 @@ export class PacmanMenu {
 			<div class="row justify-content-center glass">
 				<div class="col-12 justify-content-center">
 					<div class="row justify-content-center text-center mt-2 mb-3">
-						<div class="row mb-1">
+						<div class="col-12 mb-2">
 							<label class="h2 text-white">Themes</label>
 						</div>
 						<div class="row justify-content-center text-center">
-							<div class="col-3 d-flex justify-content-center">
-								<a role="button"  class="text-white" id="pObsidian">Obsidian</a>
+							<div class="col-3 d-flex justify-content-center mb-3">
+								<img class="img-fluid"style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian"/>
 							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<a role="button"  class="text-white" id="pAutumn">Autumn</a>
+							<div class="col-3 d-flex justify-content-center mb-3">
+								<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn"/>
 							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<a role="button"  class="text-white" id="pGarden">Garden</a>
+							<div class="col-3 d-flex justify-content-center mb-3">
+								<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden"/>
 							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<a role="button"  class="text-white" id="pSpacial">Spacial</a>
+							<div class="col-3 d-flex justify-content-center mb-3">
+								<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial"/>
 							</div>
 						</div>
 					</div>
@@ -392,7 +402,8 @@ export class PacmanMenu {
 		}
 	}
 
-	changeKeybind(event, key) {
+	changeKeybind(event, key, btn) {
+		btn.innerHTML = "...";
 		this.waitForKey = true;
 		this.waitingKey = key;
 	}
