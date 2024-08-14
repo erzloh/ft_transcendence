@@ -1,16 +1,23 @@
 import AbstractView from "./AbstractView.js";
+import { home, eventListeners } from "../scripts/home.js";
 
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("home");
+        this.setTitle("satori - home");
     }
 
     async getHtml() {
 		return (await fetch("static/html/home.html")).text();
     }
+	
+	loadJS() {
+		home();
+	}
 
-	async getJS() {
-		return (await fetch("static/js/scripts/home.js")).text();
+	cleanUpEventListeners() {
+		for (const [event, listener] of Object.entries(eventListeners)) {
+			document.removeEventListener(event, listener);
+		}
 	}
 }

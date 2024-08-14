@@ -1,16 +1,17 @@
 import AbstractView from "./AbstractView.js";
+import { profile } from "../scripts/profile.js";
 
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("profile");
+        this.setTitle("satori - profile");
     }
 
     async getHtml() {
 		return (await fetch("static/html/profile.html")).text();
     }
 
-	async getJS() {
-		return (await fetch("static/js/scripts/profile.js")).text();
+	async loadJS() {
+		await profile();
 	}
 }

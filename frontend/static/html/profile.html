@@ -1,33 +1,34 @@
 <div class="full-height d-flex flex-column align-items-center justify-content-center">
-	<div class="row justify-content-center glass p-5">
+	<div class="row justify-content-center container-profile glass p-5">
 		<div class="col-12 text-left mb-5">
-			<p class="text-white h1" animated-letters>profile</p>
+			<p class="text-white h1" animated-letters data-translate="profile">profile</p>
 		</div>
 		<div class="col-12 text-left">
-			<p class="text-white">username: <span id="username">guest</span></p>
-			<p class="text-white">email: <span id="email">none</span></p>
+			<p class="text-white"><span data-translate="username">username</span>: <span id="username">guest</span></p>
+			<p class="text-white"><span data-translate="e-mail">email</span>: <span id="email">none</span></p>
 		</div>
 		<div class="col-12 text-left mb-3">
 			<hr class="text-white">
 		</div>
 		<div class="col-12 text-left">
-			<p class="text-white">statistics at a glance:</p>
+			<p class="text-white" data-translate="statistics">statistics at a glance:</p>
 			<ul class="text-white" id="high-scores">
 				<li>pong matches: <span id="pong-score">0</span></li>
 				<li>pac-man matches: <span id="pacman-score">0</span></li>
 			</ul>
-			<div class="col-12 text-center mb-3">
-				<a role="button" class="btn text-light" href="/stats/pong" data-link>pong</a>
-				<a role="button" class="btn text-light" href="stats/pacman" data-link>pac-man</a>
+			<div class="col-12 text-center mb-2">
+				<a role="button" class="btn text-light" href="/stats/pong" data-link data-translate="pong">pong</a>
+				<a role="button" class="btn text-light" href="stats/pacman" data-link data-translate="pac-man">pac-man</a>
 			</div>
 		</div>
-		<div class="col-12 text-left mb-3">
+		<div class="col-12 text-left mb-4">
 			<hr class="text-white">
 		</div>
-		<div class="col-12 text-center">
-			<!-- add two buttons to sign up and sign in -->
+		<!-- <div class="col-12 text-center">
 			<a role="button" class="btn text-light" href="/signup" data-link>sign up</a>
 			<a role="button" class="btn text-light" href="/signin" data-link>sign in</a>
+		</div> -->
+		<div class="col-12 text-center text-white" id="logging-info">
 		</div>
 	</div>
 	<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3 mt-5" href="/" data-link>

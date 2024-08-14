@@ -1,21 +1,33 @@
-// ------------------------------- IMPORT THE VIEWS -------------------------------
+// ------------------------------- IMPORT VIEWS -------------------------------
 // A view is a class containing the HTML and JS of a page
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
 import Pacman from "./views/Pacman.js";
+import PacmanMenu from "./views/PacmanMenu.js";
 import NotFound from "./views/NotFound.js";
 import Games from "./views/Games.js";
 import Profile from "./views/Profile.js";
+import SignIn from "./views/SignIn.js";
+import SignUp from "./views/SignUp.js";
 
-// ------------------------------- CONFIGURE CONSTANTS -------------------------------
+// ------------------------------- IMPORT VISUALS -------------------------------
+import './visual/interactiveBg.js'
+import { animateLetters, moveNoise } from './visual/effects.js'
+
+// ------------------------------- IMPORT UTILS ---------------------------------
+import { setLanguage, updateTexts } from "./utils/languages.js";
+
+// ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
 // Set the base URL of the website
 export const BASE_URL = "https://localhost";
+// Store interval IDs (to be able to clear them later)
+export const ids = {};
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call the router function
-document.addEventListener("DOMContentLoaded", () => {
-	router();
+document.addEventListener("DOMContentLoaded", async () => {
+	await router();
 });
 
 // ------------------------------- ROUTING -------------------------------
@@ -24,10 +36,16 @@ const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
 	{ path: "/pacman", view: Pacman },
+	{ path: "/pacmanMenu", view: PacmanMenu },
 	{ path: "/settings", view: Settings },
 	{ path: "/games", view: Games },
-	{ path: "/profile", view: Profile }
+	{ path: "/profile", view: Profile },
+	{ path: "/signin", view: SignIn },
+	{ path: "/signup", view: SignUp }
 ];
+
+// Store the current view
+let view = null;
 
 // Loads the view (HTML and JS) in the div with id "app" according to the current path
 const router = async () => {
@@ -40,18 +58,19 @@ const router = async () => {
     }
 	
 	// Create a new instance of the view
-    const view = new match.view();
+    view = new match.view();
 	
 	// Load the HTML of the view in the app div
-	// console.log(view);
-	// console.log(await view.getHtml());
     document.querySelector("#app").innerHTML = await view.getHtml();
 
 	// Load the JS of the view
-	await loadScript(view);
+	await view.loadJS();
 
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();
+
+	// Initialize with default language
+	updateTexts();
 
 	// Animate letters
 	animateLetters();
@@ -73,39 +92,37 @@ const attachEventListenersToLinks = () => {
 			navigateTo(link.href);
 		});
 	});
-};
+}
 
-// This is a workaround to execute the JS content of the view
-// The JS has to be adaded to the DOM as a script element to be executed
-// Just adding JS in the script tag like with HTML and innerText doesn't work
+
+// Load script
 const loadScript = async (view) => {
-	// Remove the old script element
-	const oldScript = document.getElementById('dynamic-script');
-	if (oldScript) {
-		oldScript.remove();
-	}
+	// Get the dynamic script element
+	const dynamicScript = document.getElementById('dynamic-script');
 
 	// Create a new script element
 	const newScript = document.createElement('script');
+    //newScript.type = 'module'; // Ensure the script is treated as an ES module
+	newScript.textContent = await view.getJS();
 	newScript.id = 'dynamic-script';
 
-	// Create a function that contains the JS content
-	// This is a workaround to remove comments from the JS content
-	const scriptFunction = new Function(await view.getJS());
-	const scriptContent = scriptFunction.toString();
+	// Replace the dynamic script element with the new script element
+	// This is needed to load the new JS content
+	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
+}
 
-	// Wrap the JS content in an Immediately Invoked Function Expression
-	// This is a workaround to avoid polluting the global scope
-	newScript.textContent = `(${scriptContent})()`;
-
-	// Append the new script element to the body
-	// This is needed to execute the new JS content
-	document.body.appendChild(newScript);
-};
+// ------------------------------- THE APP STARTS HERE -------------------------------
+// When the DOM is loaded, call the router function
+document.addEventListener("DOMContentLoaded", () => {
+	router();
+});
 
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view
-const navigateTo = url => {
+export const navigateTo = url => {
+	// Clean up event listeners (that are attached to the document)
+	view.cleanUpEventListeners();
+
 	// Change the URL to the new URL and add a state to the history stack
     history.pushState(null, null, url);
 
@@ -118,62 +135,40 @@ window.addEventListener("popstate", router);
 
 // ------------------------------- APPLY SETTINGS -------------------------------
 // Apply the settings from the local storage
-if (localStorage.getItem('prettyBgSetting') === 'true') {
-	document.querySelector('.gradients-container').style.display = 'block';
+
+// Background gradients
+let graphicsSetting = localStorage.getItem('graphics');
+// If the graphics setting is not set, set it to "medium" by default
+if (!graphicsSetting) {
+	localStorage.setItem('graphics', 'medium');
+	graphicsSetting = 'medium';
 }
 
-// ------------------------------- FRONTEND EYE CANDIES -------------------------------
-// Changing letter animation
-const animateLetters = () => {
-    const text = document.querySelector("[animated-letters]");
-    if (!text) return;
-	const letters = "abcdefghijklmnopqrstuvwxyz";
-	const initialText = text.innerText;
-    let interval = null;
-    let iteration = 0;
+if (graphicsSetting === 'ultra') {
+	document.querySelector('.gradients-container').style.display = 'block';
+	document.querySelector('#video-background').style.display = 'none';
+} else if (graphicsSetting === 'medium') {
+	document.querySelector('.gradients-container').style.display = 'none';
+	document.querySelector('#video-background').style.display = 'block';
+} else {
+	document.querySelector('.gradients-container').style.display = 'none';
+	document.querySelector('#video-background').style.display = 'none';
+}
 
-	interval = setInterval(() => {
-		text.innerText = text.innerText
-			.split("")
-			.map((letter, index) => {
-				if (index < iteration) {
-					return initialText[index];
-				}
-				return letters[Math.floor(Math.random() * 26)];
-			})
-			.join("");
+// Background noise
+let noiseSetting = localStorage.getItem('noise');
+// If the noise setting is not set, set it to "on" by default
+if (!noiseSetting) {
+	localStorage.setItem('noise', 'on');
+	noiseSetting = 'on';
+}
 
-		if (iteration >= initialText.length) { 
-			clearInterval(interval);
-		}
+if (noiseSetting === 'on') {
+	document.querySelector('.background-noise').style.display = 'block';
+	ids.moveNoiseInterval = setInterval(moveNoise, 100);
+} else {
+	document.querySelector('.background-noise').style.display = 'none';
+}
 
-		iteration += 1 / 3;
-	}, 30);
-};
-
-// Interactive bubble
-document.addEventListener('DOMContentLoaded', () => {
-	const interBubble = document.querySelector('.interactive');
-	if (!interBubble) return;
-
-    let curX = window.innerWidth / 2;
-    let curY = window.innerHeight / 2;
-    let tgX = 0;
-    let tgY = 0;
-
-    function move() {
-        curX += (tgX - curX) / 20;
-        curY += (tgY - curY) / 20;
-        interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
-        requestAnimationFrame(() => {
-            move();
-        });
-    }
-
-    window.addEventListener('mousemove', (event) => {
-        tgX = event.clientX;
-        tgY = event.clientY;
-    });
-
-    move();
-});
+// Set Language
+setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');

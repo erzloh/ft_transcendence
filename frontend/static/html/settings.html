@@ -1,14 +1,62 @@
 <div class="full-height d-flex flex-column align-items-center justify-content-center">
-	<div class="row justify-content-center glass p-5">
-		<div class="col-12 text-left mb-5">
-			<p class="text-white h1" animated-letters>settings</p>
+	<div class="container container-settings glass p-5">
+		<div class="row justify-content-center mb-5">
+			<div class="col-12 text-left">
+				<p class="text-white h1" animated-letters data-translate="settings">settings</p>
+			</div>
 		</div>
-		<div class="col-12 text-center mb-3">
-			<div class="form-check">
-				<input class="form-check-input custom-checkbox" type="checkbox" value="" id="pretty-bg-setting">
-				<label class="form-check-label text-white" for="pretty-bg-setting">
-					enable pretty background (warning: can slow down your device)
-				</label>
+		<div class="row justify-content-center mb-3">
+			<p class="text-white h4" data-translate="graphics">graphics</p>
+		</div>
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-center">
+				<div class="form-check">
+					<input class="form-check-input custom-checkbox" type="radio" name="graphics-radio" id="graphics-ultra-radio">
+					<label class="form-check-label text-white" for="graphics-ultra-radio" data-translate="ultra">
+					  	smooth as butter
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input custom-checkbox" type="radio" name="graphics-radio" id="graphics-medium-radio">
+					<label class="form-check-label text-white" for="graphics-medium-radio" data-translate="medium">
+						pretty good
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input custom-checkbox" type="radio" name="graphics-radio" id="graphics-none-radio">
+					<label class="form-check-label text-white" for="graphics-none-radio" data-translate="none">
+						bruh
+					</label>
+				</div>
+				
+			</div>
+		</div>
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-center">
+				<div class="form-check">
+					<input class="form-check-input custom-checkbox" type="checkbox" value="" id="graphics-noise-checkbox">
+					<label class="form-check-label text-white" for="graphics-noise-checkbox" data-translate="noise">
+						enable grainy background
+					</label>
+				</div>
+			</div>
+		</div>
+		<div class="row justify-content-center mb-4">
+			<div class="col-12 text-left">
+				<hr class="text-white">
+			</div>
+		</div>
+		<div class="row justify-content-center mb-3">
+			<p class="text-white h4" data-translate="other">other</p>
+		</div>
+		<div class="row justify-content-center mb-2">
+			<div class="col-12 text-center ">
+				<label for="languageSwitcher" class="text-white" data-translate="select language">select language:</label>
+				<select id="languageSwitcher">
+					<option value="en">English</option>
+					<option value="fr">Français</option>
+					<option value="jp">日本語</option>
+				</select>
 			</div>
 		</div>
 	</div>

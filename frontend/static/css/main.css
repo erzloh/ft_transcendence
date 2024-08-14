@@ -12012,12 +12012,12 @@ html, body {
   }
 }
 .gradient-bg {
-  z-index: -1;
+  z-index: -2;
   width: 100vw;
   height: 100vh;
   position: absolute;
   overflow: hidden;
-  background: linear-gradient(40deg, rgb(0, 0, 0), rgb(66, 2, 109));
+  background: linear-gradient(40deg, rgb(0, 0, 0), rgb(47, 0, 79));
   top: 0;
   left: 0;
 }
@@ -12031,7 +12031,7 @@ html, body {
 }
 .gradient-bg .g1 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(18, 113, 255, 0.8) 0, rgba(18, 113, 255, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(22, 75, 154, 0.8) 0, rgba(22, 75, 154, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 80%;
   height: 80%;
@@ -12043,7 +12043,7 @@ html, body {
 }
 .gradient-bg .g2 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(221, 74, 255, 0.8) 0, rgba(221, 74, 255, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(148, 49, 171, 0.8) 0, rgba(148, 49, 171, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 80%;
   height: 80%;
@@ -12055,7 +12055,7 @@ html, body {
 }
 .gradient-bg .g3 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(100, 220, 255, 0.8) 0, rgba(100, 220, 255, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(68, 149, 174, 0.8) 0, rgba(68, 149, 174, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 80%;
   height: 80%;
@@ -12067,7 +12067,7 @@ html, body {
 }
 .gradient-bg .g4 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(200, 50, 50, 0.8) 0, rgba(200, 50, 50, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(149, 34, 119, 0.8) 0, rgba(149, 34, 119, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 80%;
   height: 80%;
@@ -12079,7 +12079,7 @@ html, body {
 }
 .gradient-bg .g5 {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(180, 180, 50, 0.8) 0, rgba(180, 180, 50, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(136, 140, 40, 0.8) 0, rgba(136, 140, 40, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 160%;
   height: 160%;
@@ -12091,13 +12091,36 @@ html, body {
 }
 .gradient-bg .interactive {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(78, 221, 138, 0.8) 0, rgba(78, 221, 138, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(7, 56, 201, 0.8) 0, rgba(7, 56, 201, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 100%;
   height: 100%;
   top: -50%;
   left: -50%;
   opacity: 0.7;
+}
+
+.background-noise {
+  background-image: url(/static/assets/background/noise-light.png);
+  opacity: 0.8;
+  background-repeat: repeat;
+  background-size: auto;
+  background-blend-mode: overlay;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+}
+
+#video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .btn:hover {
@@ -12117,6 +12140,72 @@ html, body {
   animation: waitFadeIn 1s ease-out;
 }
 
+.container-settings {
+  max-width: 400px;
+}
+
+#languageSwitcher {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.custom-checkbox {
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+}
+
+.custom-checkbox:checked {
+  background-color: #d7c900;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.loading-icon {
+  animation: spin 1s linear infinite;
+}
+
+.container-login {
+  max-width: 400px;
+}
+
+.text-input {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  color: white;
+  caret-color: white;
+}
+
+.text-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: white;
+}
+
+.text-input::-moz-placeholder {
+  color: white;
+}
+
+.text-input::placeholder {
+  color: white;
+}
+
+.container-profile {
+  max-width: 400px;
+}
+
 @keyframes waitFadeIn {
   0% {
     opacity: 0;
@@ -12128,4 +12217,19 @@ html, body {
     opacity: 1;
   }
 }
-/* Custom radio button styles */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
