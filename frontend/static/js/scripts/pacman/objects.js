@@ -140,13 +140,13 @@ export class Timer {
 					var ran = Math.floor(Math.random() * 3);
 					switch (ran){
 						case 0:
-							this.pcG.fruitArray.push(new Fruit("Cherry", 1000, xpos, ypos, this.images.imgCherry, this.pcG));
+							this.pcG.fruitArray.push(new Fruit("Cherry", 750, xpos, ypos, this.images.imgCherry, this.pcG));
 							break;
 						case 1:
-							this.pcG.fruitArray.push(new Fruit("Banana", 750, xpos, ypos, this.images.imgBanana, this.pcG));
+							this.pcG.fruitArray.push(new Fruit("Banana", 500, xpos, ypos, this.images.imgBanana, this.pcG));
 							break;
 						case 2:
-							this.pcG.fruitArray.push(new Fruit("Strawberry", 500, xpos, ypos, this.images.imgStrawberry, this.pcG));
+							this.pcG.fruitArray.push(new Fruit("Strawberry", 400, xpos, ypos, this.images.imgStrawberry, this.pcG));
 							break;
 						default:
 							break;
