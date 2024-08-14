@@ -4,7 +4,7 @@ import { home, eventListeners } from "../scripts/home.js";
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("home");
+        this.setTitle("satori - home");
     }
 
     async getHtml() {

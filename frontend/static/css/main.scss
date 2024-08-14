@@ -25,16 +25,37 @@ html, body {
 // ------------------------------- BACKGROUND ANIMATION -------------------------------
 
 // Define variables
+// 42 color palette
+// $color-bg1: rgb(46, 50, 62);
+// $color-bg2: rgb(0, 186, 187);
+// $color1: rgb(147, 47, 78);
+// $color2: rgb(88, 153, 194);
+// $color3: rgb(112, 174, 133);
+// $color4: rgb(41, 45, 57);
+// $color5: rgb(185, 170, 204);
+// $color-interactive: rgb(3, 30, 42);
+
+// Multicolor palette
 $color-bg1: rgb(0, 0, 0);
-$color-bg2: rgb(66, 2, 109);
-// $color-bg1: rgb(248, 153, 57);
-// $color-bg2: rgb(78, 5, 127);
-$color1: rgb(18, 113, 255);
-$color2: rgb(221, 74, 255);
-$color3: rgb(100, 220, 255);
-$color4: rgb(200, 50, 50);
-$color5: rgb(180, 180, 50);
-$color-interactive: rgb(78, 221, 138);
+$color-bg2: rgb(47, 0, 79);
+$color1: rgb(22, 75, 154);
+$color2: rgb(148, 49, 171);
+$color3: rgb(68, 149, 174);
+$color4: rgb(149, 34, 119);
+$color5: rgb(136, 140, 40);
+$color-interactive: rgb(7, 56, 201);
+
+// Red color palette
+// $color-bg1: rgb(84, 0, 0);
+// $color-bg2: rgb(60, 63, 0);
+// $color1: rgb(255, 123, 0);
+// $color2: rgb(255, 183, 0);
+// $color3: rgb(255, 31, 31);
+// $color4: rgb(129, 79, 13);
+// $color5: rgb(255, 229, 31);
+// $color-interactive: rgb(135, 15, 15);
+
+
 $circle-size: 80%;
 $blending: hard-light;
 
@@ -75,12 +96,15 @@ $blending: hard-light;
 }
 
 .gradient-bg {
-	z-index: -1;
+	z-index: -2;
 	width: 100vw;
 	height: 100vh;
 	position: absolute;
 	overflow: hidden;
 	background: linear-gradient(40deg, $color-bg1, $color-bg2);
+	// background-image: url(/static/assets/background/bg_42.jpg);
+	// background: black;
+
 	top: 0;
 	left: 0;
 
@@ -139,6 +163,33 @@ $blending: hard-light;
 	}
 }
 
+// Background noise
+.background-noise {
+	background-image: url(/static/assets/background/noise-light.png);
+	opacity: 0.8;
+	background-repeat: repeat;
+	background-size: auto;
+    background-blend-mode: overlay;
+
+	z-index: -1;
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+
+}
+
+// Video Background
+#video-background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	min-height: 100%;
+}
+
 // ------------------------------- Custom Buttons -------------------------------
 .btn {
 	&:hover {
@@ -147,12 +198,14 @@ $blending: hard-light;
 }
 
 // ------------------------------- Custom Classes -------------------------------
+
 .glass {
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
 	border-radius: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+	// animation: fadeIn 0.5s ease-out;
 }
 
 .return-btn {
@@ -163,12 +216,70 @@ $blending: hard-light;
 	// user-select: none;
 }
 
+// SETTINGS PAGE
+.container-settings {
+	max-width: 400px;
+}
+
 #languageSwitcher {
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	border-radius: 10px;
 	background: rgba(255, 255, 255, 0.1);
 	color: white;
 	padding: 5px;
+	margin-left: 10px;
+}
+
+.custom-checkbox {
+	appearance: none;
+	-webkit-appearance: none;
+	background-color: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 50%;
+	width: 1.25rem;
+	height: 1.25rem;
+	position: relative;
+	cursor: pointer;
+	outline: none;
+}
+  
+  .custom-checkbox:checked {
+	background-color: #d7c900;
+	border-color: rgba(255, 255, 255, 0.5);
+}
+
+// SIGN IN PAGE
+.loading-icon {
+	animation: spin 1s linear infinite;
+}
+
+// LOGIN PAGE
+.container-login {
+	max-width: 400px;
+}
+
+.text-input {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	color: white;
+	caret-color: white;
+
+}
+
+.text-input:focus {
+	background: rgba(255, 255, 255, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.7);
+	color: white;
+}
+
+.text-input::placeholder {
+	color: white;
+}
+
+// PROFILE PAGE
+.container-profile {
+	max-width: 400px;
 }
 
 // ------------------------------- Custom Keyframes -------------------------------
@@ -187,22 +298,21 @@ $blending: hard-light;
 	}
 }
 
-/* Custom radio button styles */
-// .custom-checkbox {
-// 	appearance: none; /* Remove default styling */
-// 	-webkit-appearance: none;
-// 	background-color: #fff;
-// 	border: 1px solid #ced4da;
-// 	border-radius: 50%;
-// 	width: 1.25rem;
-// 	height: 1.25rem;
-// 	position: relative;
-// 	cursor: pointer;
-// 	outline: none;
-// 	margin-right: .5rem;
-//   }
-  
-//   .custom-checkbox:checked {
-// 	background-color: #d7c900; /* Change to your desired color */
-// 	border-color: #bc5e00; /* Change to your desired color */
-//   }
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}

@@ -29,3 +29,12 @@ export const animateLetters = () => {
 	}, 30);
 };
 
+// Background noise animation
+export const moveNoise = () => {
+	const noiseElement = document.querySelector('.background-noise');
+	
+	const randomX = Math.floor(Math.random() * window.innerWidth);
+	const randomY = Math.floor(Math.random() * window.innerHeight);
+
+	noiseElement.style.backgroundPosition = `${randomX}px ${randomY}px`;
+}

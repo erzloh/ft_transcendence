@@ -4,7 +4,7 @@ import { PacmanGame, eventListeners } from "../scripts/pacman.js";
 export default class extends AbstractView {
     constructor() {
         super();
-        this.setTitle("pacman");
+        this.setTitle("satori - pacman");
     }
 
     async getHtml() {

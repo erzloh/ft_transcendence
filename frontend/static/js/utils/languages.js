@@ -18,3 +18,7 @@ export function updateTexts() {
 		element.textContent = translations[key];
 	});
 }
+
+export function updateTextForElem(elem, key) {
+	elem.textContent = translations[key];
+}

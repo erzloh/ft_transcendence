@@ -10,12 +10,38 @@
 
 	"username": "ユーザー名",
 	"e-mail": "メール",
+	"password": "パスワード",
 	"statistics": "統計",
 	"logout": "ログアウト",
 	"sign up": "サインアップ",
 	"login": "ログイン",
 
-	"enable bg": "プリティ背景を有効にする（警告：デバイスが遅くなる可能性があります）",
+	"username-empty-error": "ユーザー名は空にできません",
+	"e-mail-empty-error": "メールは空にできません",
+	"e-mail-invalid-error": "メールが無効です",
+	"password-empty-error": "パスワードは空にできません",
+	"password-short-error": "パスワードは少なくとも8文字でなければなりません",
+	"password-long-error": "パスワードは最大64文字でなければなりません",
+	"password-uppercase-error": "パスワードには少なくとも1つの大文字を含める必要があります",
+	"password-lowercase-error": "パスワードには少なくとも1つの小文字を含める必要があります",
+	"password-number-error": "パスワードには少なくとも1つの数字を含める必要があります",
+	"password-special-error": "パスワードには少なくとも1つの特殊文字を含める必要があります",
+	"username-exists-error": "ユーザー名は既に存在します",
+	"e-mail-exists-error": "メールは既に存在します",
+	"invalid-credentials-error": "無効な資格情報",
+
+	"sign-up-success": "サインアップ成功！",
+	"sign-up-failure": "サインアップ中にエラーが発生しました",
+
+	"login-success": "ログイン成功！",
+	"login-failure": "ログイン中にエラーが発生しました",
+
+	"graphics": "グラフィックス",
+	"ultra": "ウルトラ",
+	"medium": "普通",
+	"none": "なし",
+	"noise": "ノイズ",
+	"other": "その他",
 	"select language": "言語を選択",
 
 	"404-message": "お探しのページが見つかりませんでした。"

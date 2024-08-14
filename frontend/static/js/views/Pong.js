@@ -4,7 +4,7 @@ import { basePong }  from "../scripts/pong/basicPong.js";
 export default class Pong extends AbstractView {
     constructor() {
         super();
-        this.setTitle("Pong");
+        this.setTitle("satori - pong");
     }
 
     async getHtml() {

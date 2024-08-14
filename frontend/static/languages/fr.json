@@ -10,12 +10,39 @@
 
 	"username": "nom d'utilisateur",
 	"e-mail": "e-mail",
+	"password": "mot de passe",
 	"statistics": "statistiques",
 	"logout": "se déconnecter",
 	"sign up": "s'inscrire",
 	"login": "se connecter",
 
-	"enable bg": "activer le pretty background (attention: peut ralentir votre appareil)",
+	"username-empty-error": "le nom d'utilisateur ne peut pas être vide",
+	"e-mail-empty-error": "l'e-mail ne peut pas être vide",
+	"e-mail-invalid-error": "l'e-mail est invalide",
+	"password-empty-error": "le mot de passe ne peut pas être vide",
+	"password-short-error": "le mot de passe doit comporter au moins 8 caractères",
+	"password-long-error": "le mot de passe doit comporter au maximum 64 caractères",
+	"password-uppercase-error": "le mot de passe doit contenir au moins une lettre majuscule",
+	"password-lowercase-error": "le mot de passe doit contenir au moins une lettre minuscule",
+	"password-number-error": "le mot de passe doit contenir au moins un chiffre",
+	"password-special-error": "le mot de passe doit contenir au moins un caractère spécial",
+	"username-exists-error": "le nom d'utilisateur existe déjà",
+	"e-mail-exists-error": "l'e-mail existe déjà",
+	"invalid-credentials-error": "identifiants invalides",
+
+	"sign-up-success": "inscription réussie!",
+	"sign-up-failure": "une erreur s'est produite lors de l'inscription",
+
+	"login-success": "connexion réussie!",
+	"login-failure": "une erreur s'est produite lors de la connexion",
+
+	"graphics": "graphiques",
+	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",
+	"ultra": "ultra",
+	"medium": "moyen",
+	"none": "aucun",
+	"noise": "granules",
+	"other": "autre",
 	"select language": "sélectionner la langue",
 
 	"404-message": "La page que vous recherchez est introuvable."
