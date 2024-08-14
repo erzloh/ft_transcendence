@@ -1,24 +1,37 @@
 <div class="full-height d-flex flex-column align-items-center justify-content-center">
-	<div class="row justify-content-center container-profile glass p-5">
-		<div class="col-12 text-left mb-5">
-			<p class="text-white h1" animated-letters data-translate="profile">profile</p>
+	<div class="container container-profile glass p-5">
+		<div class="row justify-content-center mb-5">
+			<div class="col-12 text-left">
+				<p class="text-white h1" animated-letters data-translate="profile">profile</p>
+			</div>
 		</div>
-		<div class="col-12 text-left">
-			<p class="text-white"><span data-translate="username">username</span>: <span id="username">guest</span></p>
-			<p class="text-white"><span data-translate="e-mail">email</span>: <span id="email">none</span></p>
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-center">
+				<img src="static/assets/UI/icons/user.svg" alt="user icon" class="user-icon">
+			</div>
 		</div>
-		<div class="col-12 text-left mb-3">
-			<hr class="text-white">
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-left">
+				<p class="text-white"><span data-translate="username">username</span>: <span id="username">guest</span></p>
+				<p class="text-white"><span data-translate="e-mail">email</span>: <span id="email">none</span></p>
+			</div>
 		</div>
-		<div class="col-12 text-left">
-			<p class="text-white" data-translate="statistics">statistics at a glance:</p>
-			<ul class="text-white" id="high-scores">
-				<li>pong matches: <span id="pong-score">0</span></li>
-				<li>pac-man matches: <span id="pacman-score">0</span></li>
-			</ul>
-			<div class="col-12 text-center mb-2">
-				<a role="button" class="btn text-light" href="/stats/pong" data-link data-translate="pong">pong</a>
-				<a role="button" class="btn text-light" href="stats/pacman" data-link data-translate="pac-man">pac-man</a>
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-left">
+				<hr class="text-white">
+			</div>
+		</div>
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-left">
+				<p class="text-white" data-translate="statistics">statistics at a glance:</p>
+				<ul class="text-white" id="high-scores">
+					<li>pong matches: <span id="pong-score">0</span></li>
+					<li>pac-man matches: <span id="pacman-score">0</span></li>
+				</ul>
+				<div class="col-12 text-center mb-2">
+					<a role="button" class="btn text-light" href="/stats/pong" data-link data-translate="pong">pong</a>
+					<a role="button" class="btn text-light" href="stats/pacman" data-link data-translate="pac-man">pac-man</a>
+				</div>
 			</div>
 		</div>
 		<div class="col-12 text-left mb-4">
