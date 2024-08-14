@@ -56,7 +56,7 @@ export class Pacman extends Character {
 				this.pcG.cells[this.y][this.x].value === 7) {
 				if (this.pcG.cells[this.y][this.x].value === 5){
 					this.pcG.cells[this.y][this.x].value = 6;
-					this.points += 10;
+					this.points += 15;
 				}
 				else {
 					this.pcG.cells[this.y][this.x].value = 8;
