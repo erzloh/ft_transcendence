@@ -59,19 +59,12 @@ export function settings() {
 
 	if (graphicsSetting === 'ultra') {
 		ultraRadio.checked = true;
-		gradientsContainer.style.display = 'block';
-		videoBackground.style.display = 'none';
 	} else if (graphicsSetting === 'medium') {
 		mediumRadio.checked = true;
-		gradientsContainer.style.display = 'none';
-		videoBackground.style.display = 'block';
 	} else {
 		noneRadio.checked = true;
-		gradientsContainer.style.display = 'none';
-		videoBackground.style.display = 'none';
 	}
 
-	// Apply the noise setting from the local storage
 	let noiseSetting = localStorage.getItem('noise');
 	if (!noiseSetting) {
 		localStorage.setItem('noise', 'on');
@@ -80,7 +73,6 @@ export function settings() {
 
 	if (noiseSetting === 'on') {
 		noiseCheckbox.checked = true;
-		document.querySelector('.background-noise').style.display = 'block';
 	}		
 	
 	// Switch language setting

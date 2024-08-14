@@ -17,14 +17,15 @@ import { animateLetters, moveNoise } from './visual/effects.js'
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { setLanguage, updateTexts } from "./utils/languages.js";
 
-// ------------------------------- CONFIGURE CONSTANTS -------------------------------
+// ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
 // Set the base URL of the website
 export const BASE_URL = "https://localhost";
+// Store interval IDs (to be able to clear them later)
+export const ids = {};
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call the router function
 document.addEventListener("DOMContentLoaded", async () => {
-	await setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
 	await router();
 });
 
@@ -112,6 +113,7 @@ window.addEventListener("popstate", router);
 
 // Background gradients
 let graphicsSetting = localStorage.getItem('graphics');
+// If the graphics setting is not set, set it to "medium" by default
 if (!graphicsSetting) {
 	localStorage.setItem('graphics', 'medium');
 	graphicsSetting = 'medium';
@@ -128,16 +130,20 @@ if (graphicsSetting === 'ultra') {
 	document.querySelector('#video-background').style.display = 'none';
 }
 
+// Background noise
 let noiseSetting = localStorage.getItem('noise');
+// If the noise setting is not set, set it to "on" by default
 if (!noiseSetting) {
 	localStorage.setItem('noise', 'on');
 	noiseSetting = 'on';
 }
 
-export const ids = {};
 if (noiseSetting === 'on') {
 	document.querySelector('.background-noise').style.display = 'block';
 	ids.moveNoiseInterval = setInterval(moveNoise, 100);
 } else {
 	document.querySelector('.background-noise').style.display = 'none';
 }
+
+// Set Language
+setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
