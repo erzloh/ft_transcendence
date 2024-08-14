@@ -282,6 +282,12 @@ $blending: hard-light;
 	max-width: 400px;
 }
 
+.profile-pic {
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
+}
+
 // ------------------------------- Custom Keyframes -------------------------------
 
 @keyframes waitFadeIn {

@@ -12206,6 +12206,12 @@ html, body {
   max-width: 400px;
 }
 
+.profile-pic {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
 @keyframes waitFadeIn {
   0% {
     opacity: 0;

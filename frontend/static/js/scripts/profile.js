@@ -44,6 +44,5 @@ export async function profile() {
 		console.log('finished rendering logging info');
 	}
 
-	await renderLoggingInfo();
-	console.log('Hello from profile.js');
+	// await renderLoggingInfo();
 }
