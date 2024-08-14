@@ -295,7 +295,7 @@ export class PacmanMenu {
 							<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral"/>
 						</div>
 						<div class="col-4 d-flex justify-content-center mb-3">
-							<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" src="/static/assets/pacman/images/butterfly.png" id="pButterfly"/>
+							<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly"/>
 						</div>
 					</div>
 				</div>
