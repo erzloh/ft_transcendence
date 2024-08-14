@@ -4,8 +4,6 @@ from django.contrib.auth.password_validation import validate_password
 
 class CustomUserManager(BaseUserManager):
 	def create_user(self, username, email, password=None, **extra_fields):
-		if not email:
-			raise ValueError('e-mail-empty-error')
 		email = self.normalize_email(email)
 		user = self.model(username=username.strip(), email=email, **extra_fields)
 		validate_password(password, user)
