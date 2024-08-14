@@ -46,6 +46,7 @@ class test_token(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
+        serializer = CustomUserSerializer(request.user)
         return Response({"user": serializer.data}, status=status.HTTP_200_OK)
 
 class logout(views.APIView):
@@ -63,7 +64,7 @@ class UpdateBio(views.APIView):
         serializer = CustomUserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class UpdateProfilePicture(views.APIView):

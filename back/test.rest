@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "username": "pascal",
-    "password": "pascal1234!"
+    "password": "Pascal1234!"
 }
 
 ###
@@ -14,14 +14,14 @@ Content-Type: application/json
 {
     "username": "pascal", 
     "password": "Pascal1234!",
-    "email": "pascal@gmail"
+    "email": "pascal@gmail.com"
 }
 
 ###
 
 POST http://localhost:8000/api/logout
 Content-Type: application/json
-Authorization: Token 22faf15fe60fdb8fa42bb118caa1555362508a31
+Authorization: Token 8adda7ee25da1925a6e348208ae31daaa45b392d
 
 {}
 
@@ -29,7 +29,7 @@ Authorization: Token 22faf15fe60fdb8fa42bb118caa1555362508a31
 
 GET http://localhost:8000/api/test_token
 Content-Type: application/json
-Authorization: Token 07dd787d91f64c449903b53ab17e52be766be5fc
+Authorization: Token e80232d2a804ad0f58afdde2387476e7afeafa54
 
 {}
 
@@ -42,18 +42,5 @@ Authorization: Token 99a6c7bacd508caa9f89f5760e21ce99bb0529a7
 {
     "bio": "testestes."
 }
-
-###
-
-PUT http://localhost:8000/api/update_profile_picture
-Content-Type: multipart/form-data; boundary=MyUniqueBoundaryString
-Authorization: Token f1b2e7263e0db6c910d3af66357f31db7282fc55
-
---MyUniqueBoundaryString
-Content-Disposition: form-data; name="profile_picture"; filename="bird.jpg"
-Content-Type: image/jpeg
-
-< profile_pictures/bird.jpg
---MyUniqueBoundaryString--
 
 ###
