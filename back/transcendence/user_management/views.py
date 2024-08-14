@@ -12,6 +12,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.core.exceptions import ValidationError
 
 class login(views.APIView):
     def post(self, request):
@@ -30,7 +31,10 @@ class signup(views.APIView):
     def post(self, request):
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            try:
+                serializer.save()
+            except ValidationError as e:
+                return Response({'password': e.messages}, status=status.HTTP_400_BAD_REQUEST)
             user = CustomUser.objects.get(username=serializer.data['username'])
             token = Token.objects.create(user=user)
             response = Response(status=status.HTTP_200_OK)
