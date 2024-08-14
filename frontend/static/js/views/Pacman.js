@@ -1,5 +1,5 @@
 import AbstractView from "./AbstractView.js";
-import { pacman, eventListeners } from "../scripts/pacman.js";
+import { PacmanGame, eventListeners } from "../scripts/pacman.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -12,7 +12,8 @@ export default class extends AbstractView {
     }
 
 	loadJS() {
-		pacman();
+		const game = new PacmanGame();
+		game.Initialize();
 	}
 
 	cleanUpEventListeners() {

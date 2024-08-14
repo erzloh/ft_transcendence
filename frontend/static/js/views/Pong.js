@@ -1,14 +1,14 @@
 import AbstractView from "./AbstractView.js";
-// import { pong, eventLiseners } from "../scripts/pongLogic.js";
+import { basePong }  from "../scripts/pong/basicPong.js";
 
-export default class extends AbstractView {
+export default class Pong extends AbstractView {
     constructor() {
         super();
         this.setTitle("satori - pong");
     }
 
-	async getHtml() {
-		return (await fetch("static/html/pong.html")).text();
+    async getHtml() {
+        return (await fetch("/static/html/pong.html")).text();
     }
 
 	// async getJS() {
@@ -19,7 +19,7 @@ export default class extends AbstractView {
 	// }
 
 	loadJS() {
-		// pong();
+		basePong();
 	}
 
 	cleanUpEventListeners() {

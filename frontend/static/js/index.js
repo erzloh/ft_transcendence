@@ -4,6 +4,7 @@ import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
 import Settings from "./views/Settings.js";
 import Pacman from "./views/Pacman.js";
+import PacmanMenu from "./views/PacmanMenu.js";
 import NotFound from "./views/NotFound.js";
 import Games from "./views/Games.js";
 import Profile from "./views/Profile.js";
@@ -35,6 +36,7 @@ const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
 	{ path: "/pacman", view: Pacman },
+	{ path: "/pacmanMenu", view: PacmanMenu },
 	{ path: "/settings", view: Settings },
 	{ path: "/games", view: Games },
 	{ path: "/profile", view: Profile },
@@ -90,7 +92,30 @@ const attachEventListenersToLinks = () => {
 			navigateTo(link.href);
 		});
 	});
-};
+}
+
+
+// Load script
+const loadScript = async (view) => {
+	// Get the dynamic script element
+	const dynamicScript = document.getElementById('dynamic-script');
+
+	// Create a new script element
+	const newScript = document.createElement('script');
+    //newScript.type = 'module'; // Ensure the script is treated as an ES module
+	newScript.textContent = await view.getJS();
+	newScript.id = 'dynamic-script';
+
+	// Replace the dynamic script element with the new script element
+	// This is needed to load the new JS content
+	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
+}
+
+// ------------------------------- THE APP STARTS HERE -------------------------------
+// When the DOM is loaded, call the router function
+document.addEventListener("DOMContentLoaded", () => {
+	router();
+});
 
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view
