@@ -1,11 +1,11 @@
 <div class="full-height d-flex align-items-center justify-content-center">
 	<div class="row justify-content-center">
-		<div class="col-12 text-center mb-5">
-			<h1 class="text-white h1" animated-letters data-translate="pacman">pac-man</h1>
-		</div>
 		<div class="col-12 text-center mb-3">
-			<p class="text-white" id="pScore">Pacman's score: </p>
-			<p class="text-white" id="timer">Time elapsed: 00:00</p>
+			<p class="text-white h1" animated-letters data-translate="pac-man">pac-man</p>
+			<br>
+			<p class="text-white h3" id="pGamemode"></p>
+			<p class="text-white h5" id="pScore">Pacman's score: 0</p>
+			<p class="text-white h5" id="timer">Time elapsed: 00:00</p>
 		</div>
 		<div class="col">
 			<div class="row-12">
@@ -14,23 +14,42 @@
 				</div>
 			</div>
 			<div class="row justify-content-center">
-				<div class="col-3 d-flex flex-column align-items-center mb-1">
+				<div class="col-3 d-flex flex-column align-items-center mb-3">
 					<label class="h4 text-white" id="pacmanPlayerLabel"></label>
 					<img id="imgPacmanSkin"/>
 					<br>
-					<label class="text-white h5">Ability</label>
-					<label class="text-white h5" id="pCD">Ready</p>	
+					<label class="text-white h5">Freeze</label>
+					<label class="text-white h5" id="pCD">Ready</label>	
 				</div>
 				
-				<div class="col-3 d-flex flex-column align-items-center mb-1">
+				<div class="col-3 d-flex flex-column align-items-center mb-3">
 					<label class="h4 text-white" id="ghostPlayerLabel"></label>
 					<img id="imgGhostSkin"/>
 					<br>
-					<label class="text-white h5">Ability</label>
-					<label class="text-white h5" id="gCD">Ready</p>	
+					<label class="text-white h5">Ghost block</label>
+					<label class="text-white h5" id="gCD">Ready</label>	
 				</div>
 			</div>
-		</div>		
+		</div>
+		<div class="modal fade" id="endgameModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+			  	<div class="modal-content">
+					<div class="modal-header">
+						<label class="h3 modal-title text-dark" id="endgameModalWinner"></label>
+					</div>
+					<div class="modal-body">
+				  		<label class="h5 text-dark" id="endgameModalScore"></label>
+						  <br>
+				  		<label class="h5 text-dark" id="endgameModalTime"></label>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-lg text-dark" id="playAgainButton" data-bs-dismiss="modal">Play Again</button>
+				  		<a type="button" class="btn btn-lg text-dark" href="/pacmanMenu">Menu</a>
+				  		<a type="button" class="btn btn-lg text-dark" href="/">Home page</a>
+					</div>
+			  	</div>
+			</div>
+		</div>			  
 		<div class="col-12 text-center mb-3">
 			<button id="btnStart" class="btn btn-lg text-light" data-translate="start game">start game</button>
 		</div>
