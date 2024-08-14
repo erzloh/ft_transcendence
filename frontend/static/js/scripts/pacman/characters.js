@@ -35,6 +35,7 @@ export class Pacman extends Character {
 		super(x, y, direction, pacmanGame);
 		this.speed = pacmanGame.pSpeed;
 		this.points = 0;
+		this.objective = -1;
 	}
 
 	useSpell() {
@@ -108,6 +109,12 @@ export class Pacman extends Character {
 
 	// Render the character's sprite
 	render(img) {
+		if (this.objective > 0) {
+			if (this.points >= this.objective) {
+				this.pcG.partyOver(this.pcG.usernames.pacman);
+			}
+		}
+
 		// Convert degrees to radians
 		var angle = this.direction == "right" ? 0 :
 			this.direction == "up" ? -90 :
@@ -154,7 +161,7 @@ export class Ghost extends Character {
 			return;
 		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
 			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
-			this.pcG.partyOver(this.pcG.usernames.player2);
+			this.pcG.partyOver(this.pcG.usernames.ghost);
 		}
 		if (this.y == this.py && this.x == this.px) {
 			if (this.pcG.cells[this.y][this.x].value >= 2 &&

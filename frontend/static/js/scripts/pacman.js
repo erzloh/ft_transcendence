@@ -6,6 +6,7 @@ let eventListeners = { }
 class PacmanGame {
 	constructor (){
 		// Canvas
+		this.pGamemode = document.getElementById('pGamemode');
 		this.pScore = document.getElementById('pScore');
 		this.startButton = document.getElementById('btnStart');
 
@@ -78,6 +79,22 @@ class PacmanGame {
 
 		const ghostSkinString = localStorage.getItem('ghostSkin');
 		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
+
+		const objectiveString = localStorage.getItem('objective');
+		this.objective = objectiveString ? JSON.parse(objectiveString) : "10000";
+
+		const gamemodeString = localStorage.getItem('gamemode');
+		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
+		switch (this.gamemode) {
+			case "objective":
+				this.pGamemode.innerHTML = "Objective: " + this.objective;
+				break;
+			case "infinite":
+				this.pGamemode.innerHTML = "Endless";
+				break;
+			default:
+				break;
+		}
 
 		this.imgPacmanSkin.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
 		this.imgGhostSkin.src = this.images.imgGhost1.src = 'static/assets/pacman/images/' + this.ghostSkin + '1.png';
@@ -202,6 +219,9 @@ class PacmanGame {
 
 		// Create the cells array
 		this.cells = this.createCellArray(tmpData);
+
+		if (this.gamemode == "objective")
+			this.pacman.objective = this.objective;
 
 		if (this.pacman && this.ghost) {
 			this.gameStart = true;

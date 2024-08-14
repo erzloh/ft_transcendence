@@ -5,6 +5,7 @@ export class PacmanMenu {
 		this.keysButton = document.getElementById('btnKeys');
         this.pSkinButton = document.getElementById('btnPSkin');
         this.gSkinButton = document.getElementById('btnGSkin');
+        this.gamemodeButton = document.getElementById('btnGamemode');
         this.mapButton = document.getElementById('btnMap');
         this.colorButton = document.getElementById('btnColor');
         this.configContainer = document.getElementById('configContainer');
@@ -35,6 +36,12 @@ export class PacmanMenu {
 
 		const ghostSkinString = localStorage.getItem('ghostSkin');
 		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
+
+		const gamemodeString = localStorage.getItem('gamemode');
+		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
+
+		const objectiveString = localStorage.getItem('objective');
+		this.objective = objectiveString ? JSON.parse(objectiveString) : "10000";
 
 		const mapNameString = localStorage.getItem('mapName');
 		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
@@ -78,6 +85,7 @@ export class PacmanMenu {
 		this.keysButton.addEventListener("click", () => this.showKeysConfig());
 		this.pSkinButton.addEventListener("click", () => this.showPacmanSkinConfig());
 		this.gSkinButton.addEventListener("click", () => this.showGhostSkinConfig());
+		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
 		this.mapButton.addEventListener("click", () => this.showMapConfig());
 		this.colorButton.addEventListener("click", () => this.showColorSchemeConfig());
 
@@ -89,6 +97,8 @@ export class PacmanMenu {
 			localStorage.setItem('keybinds', JSON.stringify(this.keybinds));
 			localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
 			localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
+			localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
+			localStorage.setItem('objective', JSON.stringify(this.objective));
 			localStorage.setItem('mapName', JSON.stringify(this.mapName));
 			localStorage.setItem('theme', JSON.stringify(this.theme));
 			localStorage.setItem('usernames', JSON.stringify(this.usernames))
@@ -280,6 +290,71 @@ export class PacmanMenu {
 		btnGreenSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "greenGhost"));
 	}
 
+	showGamemodeConfig() {
+		this.configContainer.innerHTML = `
+			<div class="row justify-content-center glass">
+				<div class="col-auto mr-2 ml-3">
+					<div class="row justify-content-center text-center mt-2 mb-3">
+						<div class="col-12 mb-2">
+							<label class="h2 text-white">Gamemodes</label>
+						</div>
+						<div class="col-3 d-flex justify-content-center mb-3">
+							<button role="button" class="btn btn-lg text-light" id="btnObjective">Objective</button>
+						</div>
+						<div class="col-3 d-flex justify-content-center mb-3">
+							<button role="button" class="btn btn-lg text-white" id="btnInfinite">Endless</button>
+						</div>
+						<div class="col-10 mb-4">
+							<label class="text-white" id="gamemodeDescription"></label>
+						</div>
+						<div id="rangeContainer">
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+
+
+        var btnObjective = document.getElementById('btnObjective');
+		var btnInfinite = document.getElementById('btnInfinite');
+		var labelDescription = document.getElementById('gamemodeDescription');
+		var rangeContainer = document.getElementById('rangeContainer');
+
+		btnObjective.addEventListener("click", (event) => this.selectGamemode(event, "objective"));
+		btnInfinite.addEventListener("click", (event) => this.selectGamemode(event, "infinite"));
+
+		switch (this.gamemode) {
+			case "objective":
+				btnObjective.disabled = true;
+				btnInfinite.disabled = false;
+				labelDescription.innerHTML = "The game ends once Pacman's score reaches the objective or the Ghost catches Pacman.";
+				rangeContainer.innerHTML = `
+							<div class="col-12 justify-content-center mb-2">
+									<label class="text-white h5" id="rangeLabel"></label>
+									<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1000" max="30000" value="${this.objective}" step="1000" id="rangeInput">
+							</div>
+							`;
+				var rangeInput = document.getElementById('rangeInput');
+				var rangeLabel = document.getElementById('rangeLabel');
+
+				rangeLabel.innerHTML = "Objective: " + this.objective;
+
+				rangeInput.addEventListener('input', (event) => {
+					rangeLabel.textContent = "Objective: " + event.target.value;
+					this.objective = event.target.value;
+				});
+
+				break;
+			case "infinite":
+				btnObjective.disabled = false;
+				btnInfinite.disabled = true;
+				labelDescription.innerHTML = "The game ends once the Ghost catches Pacman.";
+				break;
+			default:
+				break;
+		}
+	}
+
 	showMapConfig() {
 		this.configContainer.innerHTML = `
 			<div class="row justify-content-center glass">
@@ -361,6 +436,14 @@ export class PacmanMenu {
 		this.toastBody.innerHTML = "Chosen ghost skin: " + skin;
 		this.toastBootstrap.show();
 		this.ghostSkin = skin;
+	}
+
+	selectGamemode(event, gamemode, btnObjective, btnInfinite) {
+		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
+		this.toastBootstrap.show();
+		this.gamemode = gamemode;
+
+		this.showGamemodeConfig();
 	}
 
 	selectMap(event, map) {
