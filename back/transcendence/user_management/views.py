@@ -21,8 +21,10 @@ class login(views.APIView):
         if user:
             token, created = Token.objects.get_or_create(user=user)
             serializer = CustomUserSerializer(instance=user)
-            return Response({"token": token.key, "user": serializer.data}, status=status.HTTP_200_OK)
-        return Response({'error': 'Invalid login credentials'}, status=status.HTTP_400_BAD_REQUEST)
+            response = Response(status=status.HTTP_200_OK)
+            response.set_cookie(key='jwt', value=token.key, httponly=True, secure=True)
+            return response
+        return Response({'error': ' invalid-credentials-error'}, status=status.HTTP_400_BAD_REQUEST)
 
 class signup(views.APIView):
     def post(self, request):
@@ -31,14 +33,16 @@ class signup(views.APIView):
             serializer.save()
             user = CustomUser.objects.get(username=serializer.data['username'])
             token = Token.objects.create(user=user)
-            return Response({"token": token.key, "user": serializer.data})
+            response = Response(status=status.HTTP_200_OK)
+            response.set_cookie(key='jwt', value=token.key, httponly=True, secure=True)
+            return response
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class test_token(views.APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        return Response({"message": "You are authenticated"}, status=status.HTTP_200_OK)
+        return Response({"user": serializer.data}, status=status.HTTP_200_OK)
 
 class logout(views.APIView):
     authentication_classes = [TokenAuthentication]
