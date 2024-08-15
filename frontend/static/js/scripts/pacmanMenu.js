@@ -24,7 +24,7 @@ export class PacmanMenu {
 		this.waitForKey = false;
 		this.waitingKey = "";
 
-		const usernamesString = localStorage.getItem('usernames');
+		const usernamesString = localStorage.getItem('pacmanUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
 			pacman: "Player1", ghost: "Player2"
 		};
@@ -47,13 +47,13 @@ export class PacmanMenu {
 		const mapNameString = localStorage.getItem('mapName');
 		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
 
-		const themeString = localStorage.getItem('theme');
+		const themeString = localStorage.getItem('pacmanTheme');
 		this.theme = themeString ? JSON.parse(themeString) : {
 			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
 
-		const keybindsString = localStorage.getItem('keybinds');
+		const keybindsString = localStorage.getItem('pacmanKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
@@ -101,14 +101,14 @@ export class PacmanMenu {
 
 		document.getElementById('startGameButton').addEventListener('click', (event) => {
 			event.preventDefault();
-			localStorage.setItem('keybinds', JSON.stringify(this.keybinds));
+			localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 			localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
 			localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
 			localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
 			localStorage.setItem('objective', JSON.stringify(this.objective));
 			localStorage.setItem('mapName', JSON.stringify(this.mapName));
-			localStorage.setItem('theme', JSON.stringify(this.theme));
-			localStorage.setItem('usernames', JSON.stringify(this.usernames))
+			localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
+			localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames))
 			window.location.href = "/pacman";
 		});
 	}
@@ -117,7 +117,7 @@ export class PacmanMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Keys settings</h2>
+					<h2 class="modal-title text-white w-100 text-center">Keybinds settings</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 d-flex justify-content-center">

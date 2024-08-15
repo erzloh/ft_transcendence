@@ -61,7 +61,7 @@ class PacmanGame {
 		this.startButton.addEventListener("click", () => this.StartGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
 
-		const usernamesString = localStorage.getItem('usernames');
+		const usernamesString = localStorage.getItem('pacmanUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
 			pacman: "Player1", ghost: "Player2"
 		};
@@ -69,7 +69,7 @@ class PacmanGame {
 		this.pacmanUsername.innerHTML = this.usernames.pacman;
 		this.ghostUsername.innerHTML = this.usernames.ghost;
 
-		const keybindsString = localStorage.getItem('keybinds');
+		const keybindsString = localStorage.getItem('pacmanKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
@@ -103,7 +103,7 @@ class PacmanGame {
 		const mapNameString = localStorage.getItem('mapName');
 		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
 
-		const themeString = localStorage.getItem('theme');
+		const themeString = localStorage.getItem('pacmanTheme');
 		this.theme = themeString ? JSON.parse(themeString) : {
 			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
