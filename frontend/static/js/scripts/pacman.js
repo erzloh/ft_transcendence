@@ -20,6 +20,7 @@ class PacmanGame {
     	this.endgameModalTime = document.getElementById('endgameModalTime');
 		this.endgameModalPlayAgain = document.getElementById('playAgainButton');
 
+		this.pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
 		this.endgameModal = new bootstrap.Modal(document.getElementById('endgameModal'));
 
 		this.canvas = document.getElementById('cvsPacman');
@@ -133,11 +134,16 @@ class PacmanGame {
 
 	pauseGame() {
 		if (!this.gameOver) {
-			if (!this.gamePaused)
+			if (!this.gamePaused) {
 				this.timer.stop();
+				this.c.fillStyle = "rgba(0, 0, 0, 0.5)";
+				this.c.fillRect(0, 0, this.canvas.width, this.canvas.height);
+				this.pauseModal.show();
+			}
 			else
 				this.timer.start();
 			this.gamePaused = !this.gamePaused;
+
 		}
 	}
 
