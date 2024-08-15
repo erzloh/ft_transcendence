@@ -52,6 +52,7 @@ export class PongMenu {
 
 			this.toastBody.innerHTML = "Changed Left paddle username to: " + this.usernames.left;
 			this.toastBootstrap.show();
+			localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
 		}
 	}
 
@@ -63,6 +64,7 @@ export class PongMenu {
 
 			this.toastBody.innerHTML = "Changed Right paddle username to: " + this.usernames.right;
 			this.toastBootstrap.show();
+			localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
 		}
 	}
 
@@ -72,14 +74,6 @@ export class PongMenu {
 
 		document.addEventListener("keydown", this.boundKeyDownSettings);
 		eventListeners["keydown"] = this.boundKeyDownSettings;
-
-		document.getElementById('startGameButton').addEventListener('click', (event) => {
-			event.preventDefault();
-			localStorage.setItem('pongKeybinds', JSON.stringify(this.keybinds));
-			localStorage.setItem('pongTheme', JSON.stringify(this.theme));
-			localStorage.setItem('pongUsernames', JSON.stringify(this.usernames))
-			window.location.href = "/pong";
-		});
 	}
 
 	showKeysConfig() {
@@ -235,6 +229,8 @@ export class PongMenu {
 	// 		default:
 	// 			break;
 	// 	}
+	//localStorage.setItem('pongTheme', JSON.stringify(this.theme));
+	//
 	// }
 
 	changeKeybind(event, key, btn) {
@@ -274,6 +270,7 @@ export class PongMenu {
 			}
 			this.waitForKey = false;
 			this.toastBootstrap.show();
+			localStorage.setItem('pongKeybinds', JSON.stringify(this.keybinds));
 			this.showKeysConfig();
 		}
 	}

@@ -73,6 +73,8 @@ export class PacmanMenu {
 
 			this.toastBody.innerHTML = "Changed Pacman username to: " + this.usernames.pacman;
 			this.toastBootstrap.show();
+
+			localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames))
 		}
 	}
 
@@ -84,6 +86,8 @@ export class PacmanMenu {
 
 			this.toastBody.innerHTML = "Changed Ghost username to: " + this.usernames.ghost;
 			this.toastBootstrap.show();
+
+			localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames))
 		}
 	}
 
@@ -98,19 +102,6 @@ export class PacmanMenu {
 
 		document.addEventListener("keydown", this.boundKeyDownSettings);
 		eventListeners["keydown"] = this.boundKeyDownSettings;
-
-		document.getElementById('startGameButton').addEventListener('click', (event) => {
-			event.preventDefault();
-			localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
-			localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
-			localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
-			localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
-			localStorage.setItem('objective', JSON.stringify(this.objective));
-			localStorage.setItem('mapName', JSON.stringify(this.mapName));
-			localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
-			localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames))
-			window.location.href = "/pacman";
-		});
 	}
 
 	showKeysConfig() {
@@ -371,10 +362,13 @@ export class PacmanMenu {
 				var rangeLabel = document.getElementById('rangeLabel');
 
 				rangeLabel.innerHTML = "Objective: " + this.objective;
+				localStorage.setItem('objective', JSON.stringify(this.objective));
 
 				rangeInput.addEventListener('input', (event) => {
 					rangeLabel.textContent = "Objective: " + event.target.value;
 					this.objective = event.target.value;
+					localStorage.setItem('objective', JSON.stringify(this.objective));
+
 				});
 
 				break;
@@ -486,18 +480,22 @@ export class PacmanMenu {
 		this.toastBody.innerHTML = "Chosen pacman skin: " + skin;
 		this.toastBootstrap.show();
 		this.pacmanSkin = skin;
+		localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
 	}
 
 	selectGhostSkin(event, skin) {
 		this.toastBody.innerHTML = "Chosen ghost skin: " + skin;
 		this.toastBootstrap.show();
 		this.ghostSkin = skin;
+		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
+
 	}
 
 	selectGamemode(event, gamemode, btnObjective, btnInfinite) {
 		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
+		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
 
 		this.showGamemodeConfig();
 	}
@@ -506,6 +504,8 @@ export class PacmanMenu {
 		this.toastBody.innerHTML = "Chosen map: " + map;
 		this.toastBootstrap.show();
 		this.mapName = map;
+
+		localStorage.setItem('mapName', JSON.stringify(this.mapName));
 	}
 
 	selectTheme(event, theme) {
@@ -539,6 +539,9 @@ export class PacmanMenu {
 			default:
 				break;
 		}
+
+		localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
+
 	}
 
 	changeKeybind(event, key, btn) {
@@ -602,6 +605,7 @@ export class PacmanMenu {
 			}
 			this.waitForKey = false;
 			this.toastBootstrap.show();
+			localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 			this.showKeysConfig();
 		}
 	}
