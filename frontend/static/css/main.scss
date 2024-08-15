@@ -18,6 +18,10 @@ html, body {
 	overflow-x: hidden;
 }
 
+button {
+	font-variant-ligatures: no-common-ligatures;
+}
+
 .full-height {
 	height: 100vh;
 }
@@ -194,6 +198,7 @@ $blending: hard-light;
 .btn {
 	&:hover {
 		border: 1px solid white;
+		cursor: pointer;
 	}
 }
 
@@ -214,6 +219,14 @@ $blending: hard-light;
 
 .title {
 	// user-select: none;
+}
+
+.fixed-width-btn {
+    width: 150px;
+}
+
+.fixed-width-btn-lg {
+	min-width: 180px;
 }
 
 // SETTINGS PAGE
@@ -267,6 +280,14 @@ $blending: hard-light;
 
 }
 
+.light-text {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.sign {
+	color: white;
+}
+
 .text-input:focus {
 	background: rgba(255, 255, 255, 0.2);
 	border: 1px solid rgba(255, 255, 255, 0.7);
@@ -280,6 +301,12 @@ $blending: hard-light;
 // PROFILE PAGE
 .container-profile {
 	max-width: 400px;
+}
+
+.profile-pic {
+	border-radius: 50%;
+	width: 100px;
+	height: 100px;
 }
 
 // ------------------------------- Custom Keyframes -------------------------------

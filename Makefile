@@ -18,6 +18,7 @@ clean: down hard_clean
 	docker system prune -f -a
 	docker volume prune -f
 	rm -rf data
+	find back/transcendence/media/profile_pictures/ -type f ! -name 'default.jpg' -delete
 
 re: clean all
 

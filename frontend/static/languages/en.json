@@ -15,6 +15,8 @@
 	"logout": "logout",
 	"sign up": "sign up",
 	"login": "login",
+	"no account": "no account?",
+	"have account": "have an account?",
 
 	"username-empty-error": "username cannot be empty",
 	"e-mail-empty-error": "e-mail cannot be empty",
@@ -37,13 +39,17 @@
 	"login-success": "login successful!",
 	"login-failure": "an error occured while logging in",
 
+	"see-friends": "see friends",
+	"edit-profile": "edit profile",
+	"logout": "logout",
+
 	"graphics": "graphics", 
 	"ultra": "ultra",
 	"medium": "medium",
 	"none": "none",
 	"noise": "grainy",
 	"other": "other",
-	"select language": "select language",
+	"select language": "language",
 
-	"404-message": "The page you are looking for cannot be found."
+	"404-message": "the page you are looking for cannot be found."
 }

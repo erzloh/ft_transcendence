@@ -1,6 +1,7 @@
 import { navigateTo } from "../index.js";
 
 export async function profile() {
+	console.log('hello from profile')
 	async function renderLoggingInfo() {
 		// Check if the user is logged in or not
 		// const response = await fetch('https://jsonplaceholder.typicode.com/users/1', {
@@ -23,27 +24,41 @@ export async function profile() {
 			};
 		}
 		
-		const loggingInfo = document.querySelector('#logging-info');
+		// const loggingInfo = document.querySelector('#logging-info');
 		if (response.ok) {
-			const user = await response.json();
-			loggingInfo.innerHTML = `<div class="col-12 text-center">
-				<p class="text-light">Welcome, ${user.username}!</p>
-				<button class="btn text-light" id="log-out-button" data-translate="logout">logout</button>
-			</div>`;
-			const logOutButton = document.querySelector('#log-out-button');
-			logOutButton.addEventListener('click', () => {
-				document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-				navigateTo('/profile');
-			});
+			console.log('user is logged in');
+			const profilePage = document.getElementById('profile-page');
+			profilePage.style.display = 'flex';
+			
+			// const user = await response.json();
+			// loggingInfo.innerHTML = `<div class="col-12 text-center">
+			// 	<p class="text-light">Welcome, ${user.username}!</p>
+			// 	<button class="btn text-light" id="log-out-button" data-translate="logout">logout</button>
+			// </div>`;
+			// const logOutButton = document.querySelector('#log-out-button');
+			// logOutButton.addEventListener('click', () => {
+			// 	document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+			// 	navigateTo('/profile');
+			// });
 		} else {
-			loggingInfo.innerHTML = `<div class="col-12 text-center">
-				<a role="button" class="btn text-light" href="/signup" data-link data-translate="sign up">sign up</a>
-				<a role="button" class="btn text-light" href="/signin" data-link data-translate="login">login</a>
-			</div>`;
+			console.log('user is not logged in');
+			const profilePage = document.getElementById('profile-page');
+			profilePage.style.display = 'none !important';
+			navigateTo('/signin');
+			// loggingInfo.innerHTML = `<div class="col-12 text-center">
+			// 	<a role="button" class="btn text-light" href="/signup" data-link data-translate="sign up">sign up</a>
+			// 	<a role="button" class="btn text-light" href="/signin" data-link data-translate="login">login</a>
+			// </div>`;
 		}
 		console.log('finished rendering logging info');
 	}
 
+	// Log out button
+	const logoutButton = document.querySelector('#logout-button');
+	logoutButton.addEventListener('click', () => {
+		document.cookie = 'session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+		navigateTo('/profile');
+	})
+
 	await renderLoggingInfo();
-	console.log('Hello from profile.js');
 }
