@@ -1,12 +1,12 @@
 <div class="full-height d-flex align-items-center justify-content-center">
 	<div class="row justify-content-center">
 		<div class="toast-container position-fixed top-0 end-0 p-3">
-			<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-				<div class="d-flex">
-					<div class="toast-body" id="toastBody">
-					  Hello, world! This is a toast message.
+			<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none;" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="d-flex glass">
+					<div class="toast-body" >
+						<label class="text-white" id="toastBody">Hello, world! This is a toast message.</label>
 					</div>
-					<button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+					<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
 				</div>
 			</div>
 		</div>
@@ -45,9 +45,12 @@
 			<p role="button" class="btn btn-lg text-white" id="btnMap">Map</p>
 			<p role="button" class="btn btn-lg text-white" id="btnColor">Themes</p>
 		</div>
-		<div style="width: 75vw; height: 25vh;" class="col-10 text-center mt-1" id="configContainer">
-            <!-- Configuration interface will be dynamically loaded here -->
-        </div>
+		<div class="modal fade glass" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;" id="settingsModalContent">
+			  	</div>
+			</div>
+		</div>
 		<div class="col-12 text-center mt-5">
 			<a role="button" class="btn btn-lg text-light" id="startGameButton" href="/pacman" data-link>Start game</a>
 		</div>
