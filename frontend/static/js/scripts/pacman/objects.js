@@ -71,7 +71,6 @@ export class Timer {
 		// Spells
 		this.pSpellDuration = 0;
 		this.pSpellCD = 0;
-		this.gSpellDuration = 0;
 		this.gSpellCD = 0;
 	}
 
@@ -119,11 +118,11 @@ export class Timer {
 			else
 				this.pCD.innerHTML = "Ready";
 	
-			if (this.gSpellDuration > 0) {
-				this.gSpellDuration--;
-				if (this.gSpellDuration == 0)
-					this.pcG.ghost.stopSpell();
-			}
+			// if (this.gSpellDuration > 0) {
+			// 	this.gSpellDuration--;
+			// 	if (this.gSpellDuration == 0)
+			// 		this.pcG.ghost.stopSpell();
+			// }
 	
 			if (this.gSpellCD > 0) {
 				this.gSpellCD--;
@@ -168,6 +167,7 @@ export class Timer {
 					}
 				}
 			}
+
 			this.updateDisplay();		
 		}
 	}
@@ -188,8 +188,7 @@ export class Timer {
 	ghostStartCD() {
 		if (this.gSpellCD > 0)
 			return false;
-		this.gSpellDuration = 30;
-		this.gSpellCD = 30;
+		this.gSpellCD = 5;
 		this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
 		return true;
 	}

@@ -110,12 +110,12 @@ export function signUp () {
 			})
 
 			// Get the response data into json
-			const responseData = await response.json();
+			// const responseData = await response.json();
 			
 			// simulate response data
-			// const responseData = {
-			// 	status: 'success'
-			// }
+			const responseData = {
+				status: 'success'
+			}
 
 			// If the response status is an error, show the error message in the correct fields
 			if (responseData.status === 'error') {

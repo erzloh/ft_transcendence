@@ -140,20 +140,27 @@ export class Ghost extends Character {
 		super(x, y, direction, pacmanGame);
 		this.lastX;
 		this.lastY;
-		this.cellValue;
+		this.gBlockX;
+		this.gBlockY;
+		this.cellValue = "";
 		this.speed = pacmanGame.gSpeed;
 	}
 
 	useSpell() {
 		if (this.pcG.timer.ghostStartCD()) {
-			this.cellValue = this.pcG.cells[this.lastY][this.lastX].value;
-			this.pcG.cells[this.lastY][this.lastX].value = 9;
+			if (this.cellValue != "") {
+				this.pcG.cells[this.gBlockX][this.gBlockY].value = this.cellValue;
+			}
+			this.gBlockX = this.lastY;
+			this.gBlockY = this.lastX;
+			this.cellValue = this.pcG.cells[this.gBlockX][this.gBlockY].value;
+			this.pcG.cells[this.gBlockX][this.gBlockY].value = 9;
 		}   
 	}
 
-	stopSpell() {
-		this.pcG.cells[this.lastY][this.lastX].value = this.cellValue;
-	}
+	// stopSpell() {
+	// 	this.pcG.cells[this.lastY][this.lastX].value = this.cellValue;
+	// }
 
 	// Makes the character move until it reaches its destination
 	move() {
@@ -168,12 +175,11 @@ export class Ghost extends Character {
 				this.pcG.cells[this.y][this.x].value <=  4) {
 				this.teleport();
 			}
-			else
+			else {
 				this.tpReady = true;
-			if (this.pcG.timer.gSpellCD == 0) {
-				this.lastX = this.x;
-				this.lastY = this.y;
 			}
+			this.lastX = this.x;
+			this.lastY = this.y;
 			switch (this.direction) {
 				case "up":
 					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1)

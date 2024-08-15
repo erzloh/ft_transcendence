@@ -4,6 +4,7 @@ import { ids } from '../index.js';
 
 // Function that will be called when the view is loaded
 export function settings() {
+	console.log('hello from settings')
 	// Graphics settings
 	const ultraRadio = document.getElementById("graphics-ultra-radio");
 	const mediumRadio = document.getElementById("graphics-medium-radio");
