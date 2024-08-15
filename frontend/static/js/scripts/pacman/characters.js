@@ -35,6 +35,7 @@ export class Pacman extends Character {
 		super(x, y, direction, pacmanGame);
 		this.speed = pacmanGame.pSpeed;
 		this.points = 0;
+		this.objective = -1;
 	}
 
 	useSpell() {
@@ -55,11 +56,11 @@ export class Pacman extends Character {
 				this.pcG.cells[this.y][this.x].value === 7) {
 				if (this.pcG.cells[this.y][this.x].value === 5){
 					this.pcG.cells[this.y][this.x].value = 6;
-					this.points += 25;
+					this.points += 15;
 				}
 				else {
 					this.pcG.cells[this.y][this.x].value = 8;
-					this.points += 250;
+					this.points += 150;
 				}
 				this.pcG.pScore.textContent = "Pacman's score: " + this.points;
 			}
@@ -108,6 +109,12 @@ export class Pacman extends Character {
 
 	// Render the character's sprite
 	render(img) {
+		if (this.objective > 0) {
+			if (this.points >= this.objective) {
+				this.pcG.partyOver(this.pcG.usernames.pacman);
+			}
+		}
+
 		// Convert degrees to radians
 		var angle = this.direction == "right" ? 0 :
 			this.direction == "up" ? -90 :
@@ -133,20 +140,27 @@ export class Ghost extends Character {
 		super(x, y, direction, pacmanGame);
 		this.lastX;
 		this.lastY;
-		this.cellValue;
+		this.gBlockX;
+		this.gBlockY;
+		this.cellValue = "";
 		this.speed = pacmanGame.gSpeed;
 	}
 
 	useSpell() {
 		if (this.pcG.timer.ghostStartCD()) {
-			this.cellValue = this.pcG.cells[this.lastY][this.lastX].value;
-			this.pcG.cells[this.lastY][this.lastX].value = 9;
+			if (this.cellValue != "") {
+				this.pcG.cells[this.gBlockX][this.gBlockY].value = this.cellValue;
+			}
+			this.gBlockX = this.lastY;
+			this.gBlockY = this.lastX;
+			this.cellValue = this.pcG.cells[this.gBlockX][this.gBlockY].value;
+			this.pcG.cells[this.gBlockX][this.gBlockY].value = 9;
 		}   
 	}
 
-	stopSpell() {
-		this.pcG.cells[this.lastY][this.lastX].value = this.cellValue;
-	}
+	// stopSpell() {
+	// 	this.pcG.cells[this.lastY][this.lastX].value = this.cellValue;
+	// }
 
 	// Makes the character move until it reaches its destination
 	move() {
@@ -154,19 +168,18 @@ export class Ghost extends Character {
 			return;
 		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
 			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
-			console.log("Ghost wins");
+			this.pcG.partyOver(this.pcG.usernames.ghost);
 		}
 		if (this.y == this.py && this.x == this.px) {
 			if (this.pcG.cells[this.y][this.x].value >= 2 &&
 				this.pcG.cells[this.y][this.x].value <=  4) {
 				this.teleport();
 			}
-			else
+			else {
 				this.tpReady = true;
-			if (this.pcG.timer.gSpellCD == 0) {
-				this.lastX = this.x;
-				this.lastY = this.y;
 			}
+			this.lastX = this.x;
+			this.lastY = this.y;
 			switch (this.direction) {
 				case "up":
 					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1)

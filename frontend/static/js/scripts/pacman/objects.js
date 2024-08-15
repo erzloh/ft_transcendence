@@ -71,7 +71,6 @@ export class Timer {
 		// Spells
 		this.pSpellDuration = 0;
 		this.pSpellCD = 0;
-		this.gSpellDuration = 0;
 		this.gSpellCD = 0;
 	}
 
@@ -119,11 +118,11 @@ export class Timer {
 			else
 				this.pCD.innerHTML = "Ready";
 	
-			if (this.gSpellDuration > 0) {
-				this.gSpellDuration--;
-				if (this.gSpellDuration == 0)
-					this.pcG.ghost.stopSpell();
-			}
+			// if (this.gSpellDuration > 0) {
+			// 	this.gSpellDuration--;
+			// 	if (this.gSpellDuration == 0)
+			// 		this.pcG.ghost.stopSpell();
+			// }
 	
 			if (this.gSpellCD > 0) {
 				this.gSpellCD--;
@@ -140,13 +139,13 @@ export class Timer {
 					var ran = Math.floor(Math.random() * 3);
 					switch (ran){
 						case 0:
-							this.pcG.fruitArray.push(new Fruit("Cherry", 1000, xpos, ypos, this.images.imgCherry, this.pcG));
+							this.pcG.fruitArray.push(new Fruit("Cherry", 750, xpos, ypos, this.images.imgCherry, this.pcG));
 							break;
 						case 1:
-							this.pcG.fruitArray.push(new Fruit("Banana", 750, xpos, ypos, this.images.imgBanana, this.pcG));
+							this.pcG.fruitArray.push(new Fruit("Banana", 500, xpos, ypos, this.images.imgBanana, this.pcG));
 							break;
 						case 2:
-							this.pcG.fruitArray.push(new Fruit("Strawberry", 500, xpos, ypos, this.images.imgStrawberry, this.pcG));
+							this.pcG.fruitArray.push(new Fruit("Strawberry", 400, xpos, ypos, this.images.imgStrawberry, this.pcG));
 							break;
 						default:
 							break;
@@ -169,9 +168,12 @@ export class Timer {
 				}
 			}
 
-			this.timer.innerHTML = 
-				"Time elapsed: " + this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
+			this.updateDisplay();		
 		}
+	}
+	updateDisplay() {
+		this.timer.innerHTML = 
+			"Time elapsed: " + this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
 	}
 
 	pacmanStartCD() {
@@ -186,8 +188,7 @@ export class Timer {
 	ghostStartCD() {
 		if (this.gSpellCD > 0)
 			return false;
-		this.gSpellDuration = 30;
-		this.gSpellCD = 30;
+		this.gSpellCD = 5;
 		this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
 		return true;
 	}
@@ -218,7 +219,10 @@ export class Cell {
 		this.pcG.c.fillRect(this.x * this.ts, this.y * this.ts, this.ts, this.ts);
 
 		// Determine the dot's color in order to make it blink
-		this.pcG.c.fillStyle = this.pcG.frame % 40 < 20 ? this.theme.dotColor : this.theme.glowColor;
+		if (this.x % 2 == 0)
+			this.pcG.c.fillStyle = this.pcG.frame % 60 < 30 ? (this.y % 2 == 0 ? this.theme.dotColor : this.theme.glowColor) : (this.y % 2 == 0 ? this.theme.glowColor : this.theme.dotColor);
+		else
+			this.pcG.c.fillStyle = this.pcG.frame % 60 < 30 ? (this.y % 2 == 0 ? this.theme.glowColor : this.theme.dotColor) : (this.y % 2 == 0 ? this.theme.dotColor : this.theme.glowColor);
 
 		// Draw the dot
 		if (this.value === 5 || this.value === 7) {
@@ -230,10 +234,17 @@ export class Cell {
 			this.pcG.c.fill();
 		}
 
-		if (this.value >= 2 && this.value <= 4) {
-			var tmpImg =    this.pcG.frame % 40 < 10 ? this.images.imgPortal1 : 
+		if (this.value == 2 || this.value == 3) {
+			if (this.value == 2) {
+				var tmpImg = this.pcG.frame % 40 < 10 ? this.images.imgPortal1 : 
 					this.pcG.frame % 40 < 20 ? this.images.imgPortal2 : 
 					this.pcG.frame % 40 < 30 ? this.images.imgPortal3 : this.images.imgPortal4;
+			}				
+			else {
+				var tmpImg = this.pcG.frame % 40 < 10 ? this.images.imgBluePortal1 : 
+					this.pcG.frame % 40 < 20 ? this.images.imgBluePortal2 : 
+					this.pcG.frame % 40 < 30 ? this.images.imgBluePortal3 : this.images.imgBluePortal4;
+			}
 			this.pcG.c.drawImage(tmpImg, this.x * this.ts, this.y * this.ts, this.ts, this.ts);
 		}
 	}

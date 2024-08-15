@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth.password_validation import validate_password
 
 class CustomUserManager(BaseUserManager):
 	def create_user(self, username, email, password=None, **extra_fields):
-		if not email:
-			raise ValueError('The email field must be set')
 		email = self.normalize_email(email)
 		user = self.model(username=username.strip(), email=email, **extra_fields)
+		validate_password(password, user)
 		user.set_password(password)
 		user.save(using=self._db)
 		return user
@@ -17,10 +17,15 @@ class CustomUser(AbstractUser):
 		unique=True,
 		validators=[],
 		error_messages={
-			'unique': "A user with that username already exists.",
+			'unique': "username-exists-error",
 		}
 	)
-	email = models.EmailField(unique=True)
+	email = models.EmailField(
+		unique=True,
+		error_messages={
+			'unique': "email-exists-error",
+		}
+	)
 	bio = models.TextField(blank=True, null=True)
 	profile_picture = models.ImageField(upload_to='profile_pictures/', default='default.jpg')
 	objects = CustomUserManager()
