@@ -12140,6 +12140,10 @@ html, body {
   animation: waitFadeIn 1s ease-out;
 }
 
+.fixed-width-btn {
+  width: 150px;
+}
+
 .container-settings {
   max-width: 400px;
 }
@@ -12186,6 +12190,14 @@ html, body {
   border-radius: 10px;
   color: white;
   caret-color: white;
+}
+
+.light-text {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sign-up {
+  color: white;
 }
 
 .text-input:focus {

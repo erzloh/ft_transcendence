@@ -7,7 +7,7 @@
 		</div>
 		<div class="row justify-content-center mb-3">
 			<div class="col-12 text-center">
-				<img src="static/assets/images/profile_picture_default.png" alt="profile picture" class="profile-pic glass">
+				<img src="static/assets/images/profile_pic_transparent.png" alt="profile picture" class="profile-pic glass">
 			</div>
 		</div>
 		<div class="row justify-content-center mb-3">
@@ -27,19 +27,42 @@
 		</div>
 		<div class="row justify-content-center mb-3">
 			<div class="col-12 text-left">
-				<p class="text-white h5" data-translate="statistics">statistics at a glance:</p>
-				<ul class="text-white" id="high-scores">
+				<p class="text-white h5" data-translate="statistics">statistics</p>
+				<!-- <ul class="text-white" id="high-scores">
 					<li>pong matches: <span id="pong-score">0</span></li>
 					<li>pac-man matches: <span id="pacman-score">0</span></li>
 				</ul>
 				<div class="col-12 text-center mb-2">
 					<a role="button" class="btn text-light" href="/stats/pong" data-link data-translate="pong">pong</a>
 					<a role="button" class="btn text-light" href="stats/pacman" data-link data-translate="pac-man">pac-man</a>
-				</div>
+				</div> -->
 			</div>
 		</div>
-		<div class="col-12 text-left mb-4">
-			<hr class="text-white">
+
+		<div class="row justify-content-center mb-3">
+			<div class="col-6 d-flex justify-content-center">
+				<a role="button" class="btn text-light w-100" href="/stats/pong" data-link data-translate="pong">pong</a>
+			</div>
+			<div class="col-6 d-flex justify-content-center">
+				<a role="button" class="btn text-light w-100" href="stats/pacman" data-link data-translate="pac-man">pac-man</a>
+			</div>
+		</div>
+
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-left">
+				<hr class="text-white">
+			</div>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-12 d-flex justify-content-center mb-2">
+				<a role="button" class="btn text-light w-100" href="/friends" data-link>see friends</a>
+			</div>
+			<div class="col-12 d-flex justify-content-center mb-2">
+				<a role="button" class="btn text-light w-100" href="/edit-profile" data-link>edit profile</a>
+			</div>
+			<div class="col-12 d-flex justify-content-center">
+				<a role="button" class="btn text-light w-100" href="/logout" data-link>log out</a>
+			</div>
 		</div>
 		<!-- <div class="col-12 text-center">
 			<a role="button" class="btn text-light" href="/signup" data-link>sign up</a>
