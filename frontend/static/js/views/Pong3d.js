@@ -21,7 +21,6 @@ export default class Pong extends AbstractView {
 
 	loadJS() {
 		pongThree();
-
 	}
 
 	cleanUpEventListeners() {
