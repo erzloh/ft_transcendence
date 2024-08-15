@@ -222,7 +222,11 @@ $blending: hard-light;
 
 .fixed-width-btn {
     width: 150px;
-  }
+}
+
+.fixed-width-btn-lg {
+	min-width: 180px;
+}
 
 // SETTINGS PAGE
 .container-settings {
@@ -279,7 +283,7 @@ $blending: hard-light;
 	color: rgba(255, 255, 255, 0.7);
 }
 
-.sign-up {
+.sign {
 	color: white;
 }
 

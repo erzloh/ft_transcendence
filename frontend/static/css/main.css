@@ -12148,6 +12148,10 @@ button {
   width: 150px;
 }
 
+.fixed-width-btn-lg {
+  min-width: 180px;
+}
+
 .container-settings {
   max-width: 400px;
 }
@@ -12200,7 +12204,7 @@ button {
   color: rgba(255, 255, 255, 0.7);
 }
 
-.sign-up {
+.sign {
   color: white;
 }
 

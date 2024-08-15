@@ -15,6 +15,8 @@
 	"logout": "se déconnecter",
 	"sign up": "s'inscrire",
 	"login": "se connecter",
+	"no account": "pas de compte ?",
+	"have account": "vous avez un compte ?",
 
 	"username-empty-error": "le nom d'utilisateur ne peut pas être vide",
 	"e-mail-empty-error": "l'e-mail ne peut pas être vide",
@@ -36,6 +38,9 @@
 	"login-success": "connexion réussie!",
 	"login-failure": "une erreur s'est produite lors de la connexion",
 
+	"see-friends": "voir les amis",
+	"edit-profile": "modifier le profil",
+
 	"graphics": "graphiques",
 	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",
 	"ultra": "ultra",
@@ -43,7 +48,7 @@
 	"none": "aucun",
 	"noise": "granules",
 	"other": "autre",
-	"select language": "sélectionner la langue",
+	"select language": "langue",
 
 	"404-message": "la page que vous recherchez est introuvable."
 }
