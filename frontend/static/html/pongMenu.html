@@ -4,32 +4,30 @@
 			<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none; max-width: none; width: auto;" role="alert" aria-live="assertive" aria-atomic="true">
 				<div class="d-flex glass">
 					<div class="toast-body" >
-						<label class="text-white" id="toastBody">Hello, world! This is a toast message.</label>
+						<label class="text-white" id="toastBody"></label>
 					</div>
 					<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
 				</div>
 			</div>
 		</div>
 		<div class="col-12 text-center mb-5">
-			<label class="text-white h1" animated-letters>Pac-Man Menu</label>
+			<label class="text-white h1" animated-letters>Pong Menu</label>
 		</div>
 		<div class="row justify-content-center mb-2" style="width: 75vw;">
 			<div class="col d-flex flex-column">
 				<div class="row justify-content-between gap-5">
 					<div class="col d-flex flex-column align-items-center glass mt-2">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h3 text-white">Pacman</label>
-							<img src="/static/assets/pacman/images/pacman1.png"/>
-							<label class="h5 text-white" id="pacmanName">Player 1</label>
-							<input type="text" id="pacmanInput" class="form-control form-control-sm" placeholder="Enter username">
+							<label class="h3 text-white text-center">Left paddle</label>
+							<label class="h5 text-white text-center" id="leftPaddleName">Player 1</label>
+							<input type="text" id="leftPaddleInput" class="form-control form-control-sm" placeholder="Enter username">
 						</div>
 					</div>		
 					<div class="col d-flex flex-column align-items-center glass mt-1">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h3 text-white">Ghost</label>
-							<img src="/static/assets/pacman/images/blueGhost1.png"/>
-							<label class="h5 text-white" id="ghostName">Player 2</label>
-							<input type="text" id="ghostInput" class="form-control form-control-sm" placeholder="Enter username">
+							<label class="h3 text-white text-center">Right paddle</label>
+							<label class="h5 text-white text-center" id="rightPaddleName">Player 2</label>
+							<input type="text" id="rightPaddleInput" class="form-control form-control-sm" placeholder="Enter username">
 						</div>
 					</div>
 				</div>
@@ -39,11 +37,6 @@
 		<p></p>
 		<div style="width: 75vw;" class="col-12 text-center mb-1">
 			<p role="button" class="btn btn-lg text-white" id="btnKeys">Keys</p>
-			<p role="button" class="btn btn-lg text-white" id="btnPSkin">Pacman skin</p>
-			<p role="button" class="btn btn-lg text-white" id="btnGSkin">Ghost skin</p>
-			<p role="button" class="btn btn-lg text-white" id="btnGamemode">Gamemode</p>
-			<p role="button" class="btn btn-lg text-white" id="btnMap">Map</p>
-			<p role="button" class="btn btn-lg text-white" id="btnColor">Themes</p>
 		</div>
 		<div class="modal fade glass" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
@@ -52,7 +45,7 @@
 			</div>
 		</div>
 		<div class="col-12 text-center mt-3">
-			<a role="button" class="btn btn-lg text-light" href="/pacman" data-link>Start game</a>
+			<a role="button" class="btn btn-lg text-light" href="/pong" data-link>Start game</a>
 		</div>
 		<div class="col-12 text-center mt-4 d-flex justify-content-center">
 			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>

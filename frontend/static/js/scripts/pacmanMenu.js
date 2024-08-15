@@ -24,7 +24,7 @@ export class PacmanMenu {
 		this.waitForKey = false;
 		this.waitingKey = "";
 
-		const usernamesString = localStorage.getItem('usernames');
+		const usernamesString = localStorage.getItem('pacmanUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
 			pacman: "Player1", ghost: "Player2"
 		};
@@ -47,13 +47,13 @@ export class PacmanMenu {
 		const mapNameString = localStorage.getItem('mapName');
 		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
 
-		const themeString = localStorage.getItem('theme');
+		const themeString = localStorage.getItem('pacmanTheme');
 		this.theme = themeString ? JSON.parse(themeString) : {
 			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
 
-		const keybindsString = localStorage.getItem('keybinds');
+		const keybindsString = localStorage.getItem('pacmanKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			pUp : 'KeyW', pLeft : 'KeyA', pDown : 'KeyS', pRight : 'KeyD', pSpell : 'KeyE',
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
@@ -73,6 +73,8 @@ export class PacmanMenu {
 
 			this.toastBody.innerHTML = "Changed Pacman username to: " + this.usernames.pacman;
 			this.toastBootstrap.show();
+
+			localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames))
 		}
 	}
 
@@ -84,6 +86,8 @@ export class PacmanMenu {
 
 			this.toastBody.innerHTML = "Changed Ghost username to: " + this.usernames.ghost;
 			this.toastBootstrap.show();
+
+			localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames))
 		}
 	}
 
@@ -98,26 +102,13 @@ export class PacmanMenu {
 
 		document.addEventListener("keydown", this.boundKeyDownSettings);
 		eventListeners["keydown"] = this.boundKeyDownSettings;
-
-		document.getElementById('startGameButton').addEventListener('click', (event) => {
-			event.preventDefault();
-			localStorage.setItem('keybinds', JSON.stringify(this.keybinds));
-			localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
-			localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
-			localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
-			localStorage.setItem('objective', JSON.stringify(this.objective));
-			localStorage.setItem('mapName', JSON.stringify(this.mapName));
-			localStorage.setItem('theme', JSON.stringify(this.theme));
-			localStorage.setItem('usernames', JSON.stringify(this.usernames))
-			window.location.href = "/pacman";
-		});
 	}
 
 	showKeysConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Keys settings</h2>
+					<h2 class="modal-title text-white w-100 text-center">Keybinds settings</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 d-flex justify-content-center">
@@ -371,10 +362,13 @@ export class PacmanMenu {
 				var rangeLabel = document.getElementById('rangeLabel');
 
 				rangeLabel.innerHTML = "Objective: " + this.objective;
+				localStorage.setItem('objective', JSON.stringify(this.objective));
 
 				rangeInput.addEventListener('input', (event) => {
 					rangeLabel.textContent = "Objective: " + event.target.value;
 					this.objective = event.target.value;
+					localStorage.setItem('objective', JSON.stringify(this.objective));
+
 				});
 
 				break;
@@ -486,18 +480,22 @@ export class PacmanMenu {
 		this.toastBody.innerHTML = "Chosen pacman skin: " + skin;
 		this.toastBootstrap.show();
 		this.pacmanSkin = skin;
+		localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
 	}
 
 	selectGhostSkin(event, skin) {
 		this.toastBody.innerHTML = "Chosen ghost skin: " + skin;
 		this.toastBootstrap.show();
 		this.ghostSkin = skin;
+		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
+
 	}
 
 	selectGamemode(event, gamemode, btnObjective, btnInfinite) {
 		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
+		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
 
 		this.showGamemodeConfig();
 	}
@@ -506,6 +504,8 @@ export class PacmanMenu {
 		this.toastBody.innerHTML = "Chosen map: " + map;
 		this.toastBootstrap.show();
 		this.mapName = map;
+
+		localStorage.setItem('mapName', JSON.stringify(this.mapName));
 	}
 
 	selectTheme(event, theme) {
@@ -539,6 +539,9 @@ export class PacmanMenu {
 			default:
 				break;
 		}
+
+		localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
+
 	}
 
 	changeKeybind(event, key, btn) {
@@ -602,6 +605,7 @@ export class PacmanMenu {
 			}
 			this.waitForKey = false;
 			this.toastBootstrap.show();
+			localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 			this.showKeysConfig();
 		}
 	}
