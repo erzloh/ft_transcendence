@@ -39,6 +39,11 @@ export function signIn() {
 
 	// Add event listener for the submit button
 	signInButton.addEventListener("click", async (e) => {
+		// test
+		document.cookie = "session=123";
+		navigateTo("/profile");
+		return
+
 		// Prevent the default behavior of the form
 		e.preventDefault();
 

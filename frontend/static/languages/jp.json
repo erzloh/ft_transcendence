@@ -12,9 +12,10 @@
 	"e-mail": "メール",
 	"password": "パスワード",
 	"statistics": "統計",
-	"logout": "ログアウト",
 	"sign up": "サインアップ",
 	"login": "ログイン",
+	"no account": "アカウントがありませんか？",
+	"have account": "アカウントをお持ちですか？",
 
 	"username-empty-error": "ユーザー名は空にできません",
 	"e-mail-empty-error": "メールは空にできません",
@@ -36,13 +37,17 @@
 	"login-success": "ログイン成功！",
 	"login-failure": "ログイン中にエラーが発生しました",
 
+	"see-friends": "友達を見る",
+	"edit-profile": "プロフィールを編集",
+	"logout": "ログアウト",
+
 	"graphics": "グラフィックス",
 	"ultra": "ウルトラ",
 	"medium": "普通",
 	"none": "なし",
 	"noise": "ノイズ",
 	"other": "その他",
-	"select language": "言語を選択",
+	"select language": "言語",
 
 	"404-message": "お探しのページが見つかりませんでした。"
 }

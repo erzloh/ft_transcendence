@@ -11974,6 +11974,10 @@ html, body {
   overflow-x: hidden;
 }
 
+button {
+  font-variant-ligatures: no-common-ligatures;
+}
+
 .full-height {
   height: 100vh;
 }
@@ -12125,6 +12129,7 @@ html, body {
 
 .btn:hover {
   border: 1px solid white;
+  cursor: pointer;
 }
 
 .glass {
@@ -12138,6 +12143,14 @@ html, body {
 
 .return-btn {
   animation: waitFadeIn 1s ease-out;
+}
+
+.fixed-width-btn {
+  width: 150px;
+}
+
+.fixed-width-btn-lg {
+  min-width: 180px;
 }
 
 .container-settings {
@@ -12188,6 +12201,14 @@ html, body {
   caret-color: white;
 }
 
+.light-text {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.sign {
+  color: white;
+}
+
 .text-input:focus {
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.7);
@@ -12204,6 +12225,12 @@ html, body {
 
 .container-profile {
   max-width: 400px;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
 }
 
 @keyframes waitFadeIn {
