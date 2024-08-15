@@ -70,6 +70,9 @@ export class PacmanMenu {
 			this.usernames.pacman = this.pacmanInput.value;
 			this.pacmanInput.value = ""; // Clear the input box
 			this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
+
+			this.toastBody.innerHTML = "Changed Pacman username to: " + this.usernames.pacman;
+			this.toastBootstrap.show();
 		}
 	}
 
@@ -78,6 +81,9 @@ export class PacmanMenu {
 			this.usernames.ghost = this.ghostInput.value;
 			this.ghostInput.value = ""; // Clear the input box
 			this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
+
+			this.toastBody.innerHTML = "Changed Ghost username to: " + this.usernames.ghost;
+			this.toastBootstrap.show();
 		}
 	}
 
@@ -552,38 +558,50 @@ export class PacmanMenu {
 			}
 			switch (this.waitingKey) {
 				case "pUp":
+					this.toastBody.innerHTML = "Changed Pacman Move Up keybind to: " + event.code;
 					this.keybinds.pUp = event.code;
 					break;
 				case "pLeft":
+					this.toastBody.innerHTML = "Changed Pacman Move Left keybind to: " + event.code;
 					this.keybinds.pLeft = event.code;
 					break;
 				case "pDown":
+					this.toastBody.innerHTML = "Changed Pacman Move Down keybind to: " + event.code;
 					this.keybinds.pDown = event.code;
 					break;
 				case "pRight":
+					this.toastBody.innerHTML = "Changed Pacman Move Right keybind to: " + event.code;
 					this.keybinds.pRight = event.code;
 					break;
 				case "pSpell":
+					this.toastBody.innerHTML = "Changed Pacman Spell keybind to: " + event.code;
 					this.keybinds.pSpell = event.code;
 					break;
 				case "gUp":
+					this.toastBody.innerHTML = "Changed Ghost Move Up keybind to: " + event.code;
 					this.keybinds.gUp = event.code;
 					break;
 				case "gLeft":
+					this.toastBody.innerHTML = "Changed Ghost Move Left keybind to: " + event.code;
 					this.keybinds.gLeft = event.code;
 					break;
 				case "gDown":
+					this.toastBody.innerHTML = "Changed Ghost Move Down keybind to: " + event.code;
 					this.keybinds.gDown = event.code;
 					break;
 				case "gRight":
+					this.toastBody.innerHTML = "Changed Ghost Move right keybind to: " + event.code;
 					this.keybinds.gRight = event.code;
 					break;
 				case "gSpell":
+					this.toastBody.innerHTML = "Changed Ghost Spell keybind to: " + event.code;
 					this.keybinds.gSpell = event.code;
 					break;
 				default:
-					break;
+					return ;
 			}
+			this.waitForKey = false;
+			this.toastBootstrap.show();
 			this.showKeysConfig();
 		}
 	}
