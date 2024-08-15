@@ -2,6 +2,7 @@
 // A view is a class containing the HTML and JS of a page
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
+import Pong3d from "./views/Pong3d.js";
 import PongMenu from "./views/PongMenu.js";
 import Settings from "./views/Settings.js";
 import Pacman from "./views/Pacman.js";
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
+	{ path: "/pong3d", view: Pong3d },
 	{ path: "/pongMenu", view: PongMenu },
 	{ path: "/pacman", view: Pacman },
 	{ path: "/pacmanMenu", view: PacmanMenu },

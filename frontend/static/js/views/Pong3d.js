@@ -1,5 +1,6 @@
 import AbstractView from "./AbstractView.js";
-import { basePong }  from "../scripts/pong/basicPong.js";
+//import { basePong }  from "../scripts/pong/basicPong.js";
+import { pongThree } from "../scripts/pong/pong3d.js";
 
 export default class Pong extends AbstractView {
     constructor() {
@@ -8,7 +9,7 @@ export default class Pong extends AbstractView {
     }
 
     async getHtml() {
-        return (await fetch("/static/html/pong.html")).text();
+        return (await fetch("/static/html/pong3d.html")).text();
     }
 
 	// async getJS() {
@@ -19,7 +20,7 @@ export default class Pong extends AbstractView {
 	// }
 
 	loadJS() {
-		basePong();
+		pongThree();
 
 	}
 
