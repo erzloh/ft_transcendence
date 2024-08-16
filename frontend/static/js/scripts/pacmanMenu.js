@@ -1,3 +1,16 @@
+// All close buttons were removed. The modal can be closed by clicking outside of it.
+// Here is the button div just in case though:
+
+// with an icon
+{/* <div class="col-12 d-flex justify-content-center mt-4 mb-3">
+	<button type="button" class="btn btn-lg text-white text-center d-flex align-items-center justify-content-center p-3" data-bs-dismiss="modal" aria-label="Close"><img src="static/assets/UI/icons/cross.svg" alt="close" id="close-button" width="16"></button>
+</div> */}
+
+// with text
+{/* <div class="col-12 d-flex justify-content-center mt-1">
+	<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
+</div> */}
+
 export let eventListeners = { }
 
 export class PacmanMenu {
@@ -203,9 +216,6 @@ export class PacmanMenu {
 							</div>
 						</div>
 					</div>
-					<div class="col-12 d-flex justify-content-center mt-4">
-						<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
-					</div>
 				</div>
 			</div>
 		`;
@@ -251,9 +261,6 @@ export class PacmanMenu {
 							</div>
 						</div>
 					</div>
-					<div class="col-12 d-flex justify-content-center mt-4">
-						<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
-					</div>
 				</div>
 			</div>
 		`;
@@ -286,9 +293,6 @@ export class PacmanMenu {
 							</div>
 							<div class="col-3 d-flex justify-content-center">
 								<img role="button" id="pGreenGhostSkin" style="border: 2px solid #260045; padding: 5px;" src="/static/assets/pacman/images/greenGhost1.png">
-							</div>
-							<div class="col-12 d-flex justify-content-center mt-4">
-								<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
 							</div>
 						</div>
 					</div>
@@ -328,9 +332,6 @@ export class PacmanMenu {
 								<label class="text-white" id="gamemodeDescription"></label>
 							</div>
 							<div id="rangeContainer">
-							</div>
-							<div class="col-12 d-flex justify-content-center mt-1">
-								<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
 							</div>
 						</div>
 					</div>
@@ -406,9 +407,6 @@ export class PacmanMenu {
 								<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly"/>
 							</div>
 						</div>
-						<div class="col-12 d-flex justify-content-center mt-2">
-							<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -453,9 +451,6 @@ export class PacmanMenu {
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-12 d-flex justify-content-center mt-2">
-							<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
 					</div>
 				</div>
 			</div>
