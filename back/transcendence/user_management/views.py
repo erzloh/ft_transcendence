@@ -25,7 +25,7 @@ class login(views.APIView):
             response = Response(status=status.HTTP_200_OK)
             response.set_cookie(key='jwt', value=token.key, httponly=True, secure=True)
             return response
-        return Response({'error': ' invalid-credentials-error'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': ['invalid-credentials-error']}, status=status.HTTP_400_BAD_REQUEST)
 
 class signup(views.APIView):
     def post(self, request):
