@@ -1,21 +1,22 @@
-//import { startTournament, runTournament, playMatch, displayBracket } from "./pongTournament.js";
+let eventListeners = { }
 
-
-/*const scene = new THREE.Scene();
-//const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
-*/
-
-export function basePong() {
+function basePong() {
 	const canvas = document.getElementById('canvas');
 	const context = canvas.getContext('2d');
 	const startButton= document.getElementById('startButton');
 	const twoButton = document.getElementById('but1');
 	const easyButton = document.getElementById('but2');
 	const tournamentButton = document.getElementById('but3');
+
+	const leftPaddleName = document.getElementById('leftPaddleName');
+	const rightPaddleName = document.getElementById('rightPaddleName');
+
+	let endgameModalWinner = document.getElementById('endgameModalWinner');
+	// let endgameModalScore = document.getElementById('endgameModalScore');
+	// let endgameModalTime = document.getElementById('endgameModalTime');
+	// let endgameModalPlayAgain = document.getElementById('playAgainButton');
+	let pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
+	let endgameModal = new bootstrap.Modal(document.getElementById('endgameModal'));
 
 	const paddleWidth = 10, paddleHeight = 100;
 	const ballSize = 10;
@@ -27,8 +28,18 @@ export function basePong() {
 	let scoreLeft = 0;
 	let	scoreRight = 0;
 
-	//let playerScore = 0;
-	//let computerScore = 0;
+	const usernamesString = localStorage.getItem('pongUsernames');
+	let usernames = usernamesString ? JSON.parse(usernamesString) : {
+		left: "Player1", right: "Player2"
+	};
+
+	leftPaddleName.innerHTML = usernames.left;
+	rightPaddleName.innerHTML = usernames.right;
+
+	const keybindsString = localStorage.getItem('pongKeybinds');
+	let keybinds = keybindsString ? JSON.parse(keybindsString) : {
+		lUp : 'KeyW', lDown : 'KeyS', rUp : 'ArrowUp', rDown : 'ArrowDown'
+	};
 
 	const leftPad = {
 		x: 0,
@@ -57,6 +68,18 @@ export function basePong() {
 		dy: 4,
 		color: "#FFF"
 	};
+
+	function endGame(winner) {
+		// this.gameOver = true;
+		// this.timer.stop();
+
+		endgameModalWinner.textContent = winner + " won the game !";
+		// endgameModalScore.textContent = "Pacman's score: " + pacman.points;
+		// endgameModalTime.textContent = "Time elapsed: " + this.timer.min.toString().padStart(2, '0') + ":" + this.timer.sec.toString().padStart(2, '0');
+
+		// Show the modal
+		endgameModal.show();
+	}
 
 	function drawRect(x, y, w, h, color) {
 		context.fillStyle = color;
@@ -126,7 +149,7 @@ export function basePong() {
 			document.getElementById("leftScore").innerHTML = scoreLeft;
 			//playerSc
             if (scoreLeft === 3) {
-                callback('Player 1');
+                endGame(usernames.left);
             }
 			resetBall();
 		} else if (ball.x < 0) {
@@ -134,7 +157,7 @@ export function basePong() {
 			document.getElementById("rightScore").innerHTML = scoreRight;
 		
             if (scoreRight === 3) {
-                callback('Player 1');
+                endGame(usernames.right);
             }	
 			//computerScore++;
 			resetBall();
@@ -187,43 +210,6 @@ export function basePong() {
 		}
 	}
 
-	document.addEventListener("keydown", function(event) {
-		switch (event.code) {
-			case 'KeyW':
-				upLeftPressed = true;
-				break;
-			case 'KeyS':
-				downLeftPressed = true;
-				break;
-			case 'ArrowUp':
-				upRightPressed = true;
-				break;
-			case 'ArrowDown':
-				downRightPressed = true;
-				break;
-			case 'Space':
-				paused = !paused;
-				break;
-		}
-	});
-
-	document.addEventListener("keyup", function(event) {
-		switch (event.code) {
-			case 'KeyW':
-				upLeftPressed = false;
-				break;
-			case 'KeyS':
-				downLeftPressed = false;
-				break;
-			case 'ArrowUp':
-				upRightPressed = false;
-				break;
-			case 'ArrowDown':
-				downRightPressed = false;
-				break;
-		}
-	});
-
 	function draw() {
 		context.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -234,14 +220,9 @@ export function basePong() {
 
 		drawSquare(ball.x, ball.y, ball.size, ball.color);
 
-		//drawText(playerScore, canvas.width / 4, canvas.height / 5, "#FFF");
-		//drawText(computerScore, 3 * canvas.width / 4, canvas.height / 5, "#FFF");
-
 		if (paused) {
 			context.fillStyle = "rgba(0, 0, 0, 0.5)";
 			context.fillRect(0, 0, canvas.width, canvas.height);
-
-		// drawText("Pause", canvas.width / 2 - 50, canvas.height / 2, "#FFF");
 		}
 	}
 
@@ -305,4 +286,49 @@ export function basePong() {
 		selectedMode = 3;
 		console.log("tournament mode")
 	});
+
+	document.addEventListener("keydown", function(event) {
+		switch (event.code) {
+			case keybinds.lUp:
+				upLeftPressed = true;
+				break;
+			case keybinds.lDown:
+				downLeftPressed = true;
+				break;
+			case keybinds.rUp:
+				upRightPressed = true;
+				break;
+			case keybinds.rDown:
+				downRightPressed = true;
+				break;
+			case 'Escape':
+				if (!paused)
+					pauseModal.show();
+				paused = !paused;
+				break;
+			default:
+				break;
+		}
+	});
+
+	document.addEventListener("keyup", function(event) {
+		switch (event.code) {
+			case keybinds.lUp:
+				upLeftPressed = false;
+				break;
+			case keybinds.lDown:
+				downLeftPressed = false;
+				break;
+			case keybinds.rUp:
+				upRightPressed = false;
+				break;
+			case keybinds.rDown:
+				downRightPressed = false;
+				break;
+			default:
+				break;
+		}
+	});
 }
+
+export { basePong, eventListeners };
