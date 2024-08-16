@@ -1,9 +1,21 @@
-export function basePong () {
+//import { startTournament, runTournament, playMatch, displayBracket } from "./pongTournament.js";
+
+
+/*const scene = new THREE.Scene();
+//const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+document.body.appendChild( renderer.domElement );
+*/
+
+export function basePong() {
 	const canvas = document.getElementById('canvas');
 	const context = canvas.getContext('2d');
 	const startButton= document.getElementById('startButton');
 	const twoButton = document.getElementById('but1');
 	const easyButton = document.getElementById('but2');
+	const tournamentButton = document.getElementById('but3');
 
 	const paddleWidth = 10, paddleHeight = 100;
 	const ballSize = 10;
@@ -110,13 +122,20 @@ export function basePong () {
 		}
 
 		if (ball.x + ball.size > canvas.width) {
-			scoreLeft += 1;
+			scoreLeft++;
 			document.getElementById("leftScore").innerHTML = scoreLeft;
-			//playerScore++;
+			//playerSc
+            if (scoreLeft === 3) {
+                callback('Player 1');
+            }
 			resetBall();
 		} else if (ball.x < 0) {
-			scoreRight += 1;
+			scoreRight++;
 			document.getElementById("rightScore").innerHTML = scoreRight;
+		
+            if (scoreRight === 3) {
+                callback('Player 1');
+            }	
 			//computerScore++;
 			resetBall();
 		}
@@ -243,6 +262,7 @@ export function basePong () {
 		if (!paused) {
 			movePaddles(selectedMode);
 			moveBall();
+			//draw();
 		}
 	}
 
@@ -261,6 +281,11 @@ export function basePong () {
 			startButton.style.display = "none";
 			gameLoop();
 		}
+		else if (selectedMode == 3) {
+			startButton.style.display = "none";
+			console.log("tournament mode")
+//			startTournament();
+		}
 		else
 			alert("no game mode selected");
 		//canvas.style.display = "block";
@@ -276,5 +301,8 @@ export function basePong () {
 		selectedMode = 1;
 		console.log("game mode is single player and easy");
 	});
-
+	tournamentButton.addEventListener("click", function() {
+		selectedMode = 3;
+		console.log("tournament mode")
+	});
 }
