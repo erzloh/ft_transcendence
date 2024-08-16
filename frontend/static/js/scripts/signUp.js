@@ -109,19 +109,15 @@ export function signUp () {
 				body: JSON.stringify(data)
 			})
 
-			console.log(response);
-
 			// If the status is an error, show the error message in the correct fields
 			if (response.status === 400) {
 				// Get the response data into json
 				const responseData = await response.json();
 				console.log(responseData);
 				if (responseData.username) {
-					console.log(responseData.username[0]);
 					updateTextForElem(document.getElementById('username-error'), responseData.username[0]);
 				}
 				if (responseData.email) {
-					console.log(responseData.email[0]);
 					updateTextForElem(document.getElementById('email-error'), responseData.email[0]);
 				}
 				if (responseData.password) {

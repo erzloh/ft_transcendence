@@ -39,10 +39,10 @@ export function signIn() {
 
 	// Add event listener for the submit button
 	signInButton.addEventListener("click", async (e) => {
-		// test
-		document.cookie = "session=123";
-		navigateTo("/profile");
-		return
+		// // test
+		// document.cookie = "session=123";
+		// navigateTo("/profile");
+		// return
 
 		// Prevent the default behavior of the form
 		e.preventDefault();
@@ -59,31 +59,31 @@ export function signIn() {
 		const username = usernameElem.value;
 		const password = passwordElem.value;
 
+		const data = {
+			username,
+			password
+		};
+
 		// Send data to the server
 		const response = await fetch("/api/login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify({
-				username,
-				password
-			}),
+			body: JSON.stringify(data),
 		});
 
-		// Get the response data into json
-		const responseData = await response.json();
-
 		// If there is an error
-		if (responseData.status === "error") {
+		if (response.status === 400) {
+			const responseData = await response.json();
 			// If the response status is an error, show the error message in the correct fields
-			updateTextForElem(usernameErrorElem, responseData.message);
-			updateTextForElem(passwordErrorElem, responseData.message);
+			updateTextForElem(usernameErrorElem, responseData.username[0]);
+			updateTextForElem(passwordErrorElem, responseData.password[0]);
 
-		} else if (responseData.status === "success") {
+		} else if (response.status === 200) {
 			// If the response status is success, navigate to the profile page
-			// simulate getting a cookie from the server
-			document.cookie = "session=123";
+			// // simulate getting a cookie from the server
+			// document.cookie = "session=123";
 			navigateTo("/profile");
 		} else {
 			// If the response status is unknown, show an error message
