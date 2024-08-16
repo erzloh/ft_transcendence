@@ -6,7 +6,7 @@ urlpatterns = [
 	re_path('login', login.as_view()),
 	re_path('signup', signup.as_view()),
 	re_path('logout', logout.as_view()),
-	re_path('test_token', test_token.as_view()),
+	re_path('profile', profile.as_view()),
 	re_path('update_bio', UpdateBio.as_view()),
-	re_path('update_profile_picture', UpdateProfilePicture.as_view()),
+	re_path('update_avatar', UpdateAvatar.as_view()),
 ]
