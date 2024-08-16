@@ -29,13 +29,13 @@ Cookie: jwt=5f5d0e8ea7c0a112d8a767f289a5e3f659cfc7aa
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=8c339da31b455837181178811aedfa846893f2a9
+Cookie: jwt=329ed5f82a39d6a8d5305d37f658107e9185cfb1
 
 ###
 
 PUT https://localhost/api/update_user
 Content-Type: application/json
-Cookie: jwt=8c339da31b455837181178811aedfa846893f2a9
+Cookie: jwt=efcebb4e9c52af9cbc2de13976c7d6d9f95a1387
 
 {
     "bio": "coucou"
