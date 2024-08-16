@@ -1,4 +1,4 @@
-POST http://localhost:8000/api/login
+POST https://localhost/api/login
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/api/signup
+POST https://localhost/api/signup
 Content-Type: application/json
 
 {
@@ -19,25 +19,23 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/api/logout
+POST https://localhost/api/logout
 Content-Type: application/json
-Authorization: Token 8adda7ee25da1925a6e348208ae31daaa45b392d
+Cookie: jwt=a80232477c0a01ed0f0a73c7f086d4a3d382973e
 
 {}
 
 ###
 
-GET http://localhost:8000/api/test_token
+GET https://localhost/api/profile
 Content-Type: application/json
-Authorization: Token e80232d2a804ad0f58afdde2387476e7afeafa54
-
-{}
+Cookie: jwt=a77f30c9c50bd44e484d93cbc4341d78e99670b1
 
 ###
 
-PUT http://localhost:8000/api/update_bio
+PUT https://localhost/api/update_bio
 Content-Type: application/json
-Authorization: Token 99a6c7bacd508caa9f89f5760e21ce99bb0529a7
+Cookie: jwt=2183132b3e2f472f07eb27239a92110453f98fd2
 
 {
     "bio": "testestes."
