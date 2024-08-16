@@ -109,29 +109,30 @@ export function signUp () {
 				body: JSON.stringify(data)
 			})
 
-			// Get the response data into json
-			// const responseData = await response.json();
-			
-			// simulate response data
-			const responseData = {
-				status: 'success'
-			}
+			console.log(response);
 
-			// If the response status is an error, show the error message in the correct fields
-			if (responseData.status === 'error') {
-				if (responseData.field === 'username') {
-					updateTextForElem(document.getElementById('username-error'), responseData.message);
-				} else if (responseData.field === 'email') {
-					updateTextForElem(document.getElementById('email-error'), responseData.message);
-				} else if (responseData.field === 'password') {
-					updateTextForElem(document.getElementById('password-error'), responseData.message);
+			// If the status is an error, show the error message in the correct fields
+			if (response.status === 400) {
+				// Get the response data into json
+				const responseData = await response.json();
+				console.log(responseData);
+				if (responseData.username) {
+					console.log(responseData.username[0]);
+					updateTextForElem(document.getElementById('username-error'), responseData.username[0]);
 				}
-			} else if (responseData.status === 'success') {
+				if (responseData.email) {
+					console.log(responseData.email[0]);
+					updateTextForElem(document.getElementById('email-error'), responseData.email[0]);
+				}
+				if (responseData.password) {
+					updateTextForElem(document.getElementById('password-error'), responseData.password[0]);
+				}
+			} else if (response.status === 200) {
 				// If the response status is success, show success message and navigate to the login page
 				const containerLogin = document.querySelector('.container-login');
 				containerLogin.innerHTML = `
 					<div class="success">
-						<h1 id="success-message" class="text-white">Sign up successful!</h1>
+						<h1 id="success-message" class="text-white" data-translate"sign-up-success">Sign up successful!</h1>
 						<div class="d-flex align-items-center justify-content-center p-5">
 							<svg class='loading-icon' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24" id="Timer-Zero--Streamline-Sharp">
 								<desc>Timer Zero Streamline Icon: https://streamlinehq.com</desc>
@@ -147,6 +148,7 @@ export function signUp () {
 					navigateTo('/signin');
 				}, 2000);
 			} else {
+				const responseData = await response.json();
 				// If the response status is unknown, show an error message
 				const containerLogin = document.querySelector('.container-login');
 				containerLogin.innerHTML = `

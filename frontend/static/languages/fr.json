@@ -29,7 +29,7 @@
 	"password-number-error": "le mot de passe doit contenir au moins un chiffre",
 	"password-special-error": "le mot de passe doit contenir au moins un caractère spécial",
 	"username-exists-error": "le nom d'utilisateur existe déjà",
-	"e-mail-exists-error": "l'e-mail existe déjà",
+	"email-exists-error": "l'e-mail existe déjà",
 	"invalid-credentials-error": "identifiants invalides",
 
 	"sign-up-success": "inscription réussie!",
