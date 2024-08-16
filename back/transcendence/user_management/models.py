@@ -27,7 +27,7 @@ class CustomUser(AbstractUser):
 		}
 	)
 	bio = models.TextField(blank=True, null=True)
-	profile_picture = models.ImageField(upload_to='profile_pictures/', default='default.jpg')
+	profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default.jpg')
 	#friends = models.ManyToManyField('self', blank=True)
 	objects = CustomUserManager()
 
