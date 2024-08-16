@@ -134,7 +134,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -142,7 +142,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move left</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -150,7 +150,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -158,7 +158,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move right</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -166,7 +166,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Use spell</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -179,7 +179,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -187,7 +187,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move left</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -195,7 +195,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -203,7 +203,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move right</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -211,7 +211,7 @@ export class PacmanMenu {
 									<label class="text-white" style="padding: 3px 0px;">Use spell</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</label>
+									<label role="button" class="text-white" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</label>
 								</div>
 							</div>
 						</div>

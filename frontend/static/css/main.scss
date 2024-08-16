@@ -315,9 +315,67 @@ $blending: hard-light;
 }
 
 // PACMAN MENU PAGE
-// .modal-content {
-//     background-color: #f8f9fa;
-// }
+/* Remove default appearance */
+#rangeInput {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: transparent; /* Make the background of the slider transparent */
+    outline: none;
+}
+
+/* Custom track (background of the slider) */
+#rangeInput::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 20px; /* Adjust the height for the dots */
+    cursor: pointer;
+    background: url('/static/assets/pacman/images/food2.png') repeat-x; /* Dots as background */
+    border: none;
+}
+
+#rangeInput::-moz-range-track {
+    width: 100%;
+    height: 20px;
+    cursor: pointer;
+    background: url('/static/assets/pacman/images/food2.png') repeat-x;
+    border: none;
+}
+
+/* Custom handle (thumb) with Pac-Man image */
+#rangeInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 40px; /* Adjust size based on your Pac-Man icon */
+    height: 40px;
+    background: url('/static/assets/pacman/images/pacman1.png') no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    border: none;
+    margin-top: -10px; /* Adjust to center the thumb over the track */
+}
+
+#rangeInput::-moz-range-thumb {
+    width: 40px;
+    height: 40px;
+    background: url('/static/assets/pacman/images/pacman1.png') no-repeat;
+    background-size: cover;
+    cursor: pointer;
+    border: none;
+}
+
+/* Optional: Custom handle on hover */
+#rangeInput::-webkit-slider-thumb:hover {
+    background-size: cover;
+    filter: brightness(0.7);
+}
+
+#rangeInput::-moz-range-thumb:hover {
+    background-size: cover;
+	filter: brightness(0.7);
+}
+
+
 
 // ------------------------------- Custom Keyframes -------------------------------
 
