@@ -213,6 +213,11 @@ $blending: hard-light;
 	// animation: fadeIn 0.5s ease-out;
 }
 
+.glass-modal-bg {
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+}
+
 .return-btn {
 	animation: waitFadeIn 1s ease-out;
 }
@@ -308,6 +313,11 @@ $blending: hard-light;
 	width: 100px;
 	height: 100px;
 }
+
+// PACMAN MENU PAGE
+// .modal-content {
+//     background-color: #f8f9fa;
+// }
 
 // ------------------------------- Custom Keyframes -------------------------------
 

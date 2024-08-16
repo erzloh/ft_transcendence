@@ -12141,6 +12141,12 @@ button {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
+.glass-modal-bg {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+
 .return-btn {
   animation: waitFadeIn 1s ease-out;
 }
