@@ -64,18 +64,7 @@ class logout(views.APIView):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
 
-class UpdateBio(views.APIView):
-    authentication_classes = [CookieTokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    def put(self, request):
-        user = request.user
-        serializer = CustomUserSerializer(user, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class UpdateAvatar(views.APIView):
+class UpdateUser(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
     def put(self, request):
