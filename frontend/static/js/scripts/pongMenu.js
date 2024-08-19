@@ -62,8 +62,8 @@ export class PongMenu {
 			</div>
 		`;
 
-		var rangeInput = document.getElementById('rangeInput');
-		var rangeLabel = document.getElementById('rangeLabel');
+		let rangeInput = document.getElementById('rangeInput');
+		let rangeLabel = document.getElementById('rangeLabel');
 
 		rangeLabel.innerHTML = "points to win: " + this.objective;
 		localStorage.setItem('pongObjective', JSON.stringify(this.objective));
@@ -166,10 +166,10 @@ export class PongMenu {
 			</div>
 		`;
 
-		var btnLUp = document.getElementById('lUp');
-		var btnLDown = document.getElementById('lDown');
-		var btnRUp = document.getElementById('rUp');
-		var btnRDown = document.getElementById('rDown');
+		let btnLUp = document.getElementById('lUp');
+		let btnLDown = document.getElementById('lDown');
+		let btnRUp = document.getElementById('rUp');
+		let btnRDown = document.getElementById('rDown');
 
 		btnLUp.addEventListener("click", (event) => this.changeKeybind(event, "lUp", btnLUp));
 		btnLDown.addEventListener("click", (event) => this.changeKeybind(event, "lDown", btnLDown))
@@ -209,11 +209,11 @@ export class PongMenu {
 		`;
 
 
-        var btnPvp = document.getElementById('btnPvp');
-		var btnAI = document.getElementById('btnAI');
-		var btnTournament = document.getElementById('btnTournament');
-		var labelDescription = document.getElementById('gamemodeDescription');
-		var AiDifficulties = document.getElementById('AiDifficulties');
+        let btnPvp = document.getElementById('btnPvp');
+		let btnAI = document.getElementById('btnAI');
+		let btnTournament = document.getElementById('btnTournament');
+		let labelDescription = document.getElementById('gamemodeDescription');
+		let AiDifficulties = document.getElementById('AiDifficulties');
 
 		btnPvp.addEventListener("click", (event) => this.selectGamemode(event, "pvp"));
 		btnAI.addEventListener("click", (event) => this.selectGamemode(event, "AI"));
@@ -277,10 +277,10 @@ export class PongMenu {
 			</div>
 		`;
 
-		var btnObsidian = document.getElementById('pObsidian');
-        var btnAutumn = document.getElementById('pAutumn');
-		var btnGarden = document.getElementById('pGarden');
-        var btnSpacial = document.getElementById('pSpacial');
+		let btnObsidian = document.getElementById('pObsidian');
+        let btnAutumn = document.getElementById('pAutumn');
+		let btnGarden = document.getElementById('pGarden');
+        let btnSpacial = document.getElementById('pSpacial');
 
 		btnObsidian.addEventListener("click", (event) => this.selectTheme(event, "obsidian"));
 		btnAutumn.addEventListener("click", (event) => this.selectTheme(event, "autumn"));
