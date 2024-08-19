@@ -9,6 +9,10 @@
 // Import Google Font
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
+// Variables
+$cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
+$cursor-pointer: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
+
 // Basic CSS Reset
 html, body {
 	font-family: 'Space Mono', monospace;
@@ -16,7 +20,7 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
-	cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
+	cursor: $cursor;
 }
 
 button {
@@ -32,11 +36,11 @@ button {
 // }
 
 input, select, a, .clickable {
-	cursor: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, text;
+	cursor: $cursor-pointer;
 }
 
 label {
-	cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, pointer;
+	cursor: $cursor;
 }
 
 // ------------------------------- BACKGROUND ANIMATION -------------------------------
@@ -349,7 +353,7 @@ $blending: hard-light;
 #rangeInput::-webkit-slider-runnable-track {
     width: 100%;
     height: 20px; /* Adjust the height for the dots */
-    cursor: pointer;
+    cursor: $cursor-pointer;
     background: url('/static/assets/pacman/images/food2.png') repeat-x; /* Dots as background */
     border: none;
 }
@@ -357,7 +361,7 @@ $blending: hard-light;
 #rangeInput::-moz-range-track {
     width: 100%;
     height: 20px;
-    cursor: pointer;
+	cursor: $cursor-pointer;
     background: url('/static/assets/pacman/images/food2.png') repeat-x;
     border: none;
 }
@@ -370,7 +374,7 @@ $blending: hard-light;
     height: 40px;
     background: url('/static/assets/pacman/images/pacman1.png') no-repeat;
     background-size: cover;
-    cursor: pointer;
+	cursor: $cursor-pointer;
     border: none;
     margin-top: -10px; /* Adjust to center the thumb over the track */
 }
@@ -380,7 +384,7 @@ $blending: hard-light;
     height: 40px;
     background: url('/static/assets/pacman/images/pacman1.png') no-repeat;
     background-size: cover;
-    cursor: pointer;
+	cursor: $cursor-pointer;
     border: none;
 }
 

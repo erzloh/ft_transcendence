@@ -11984,11 +11984,11 @@ button {
 }
 
 input, select, a, .clickable {
-  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, text;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
 }
 
 label {
-  cursor: url("/static/assets/UI/icons/cursor.svg") 10 10, pointer;
+  cursor: url("/static/assets/UI/icons/cursor.svg") 10 10, auto;
 }
 
 @keyframes moveInCircle {
@@ -12270,7 +12270,7 @@ label {
 #rangeInput::-webkit-slider-runnable-track {
   width: 100%;
   height: 20px; /* Adjust the height for the dots */
-  cursor: pointer;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
   background: url("/static/assets/pacman/images/food2.png") repeat-x; /* Dots as background */
   border: none;
 }
@@ -12278,7 +12278,7 @@ label {
 #rangeInput::-moz-range-track {
   width: 100%;
   height: 20px;
-  cursor: pointer;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
   background: url("/static/assets/pacman/images/food2.png") repeat-x;
   border: none;
 }
@@ -12291,7 +12291,7 @@ label {
   height: 40px;
   background: url("/static/assets/pacman/images/pacman1.png") no-repeat;
   background-size: cover;
-  cursor: pointer;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
   border: none;
   margin-top: -10px; /* Adjust to center the thumb over the track */
 }
@@ -12301,7 +12301,7 @@ label {
   height: 40px;
   background: url("/static/assets/pacman/images/pacman1.png") no-repeat;
   background-size: cover;
-  cursor: pointer;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
   border: none;
 }
 
