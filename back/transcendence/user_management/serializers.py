@@ -12,12 +12,18 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 	def to_internal_value(self, data):
 		if 'email' in data and not data['email']:
-			raise serializers.ValidationError({'email': 'e-mail-empty-error'})
+			raise serializers.ValidationError({'email': ['e-mail-empty-error']})
 		if 'username' in data and not data['username']:
-			raise serializers.ValidationError({'username': 'username-empty-error'})
+			raise serializers.ValidationError({'username': ['username-empty-error']})
 		if 'password' in data and not data['password']:
-			raise serializers.ValidationError({'password': 'password-empty-error'})
+			raise serializers.ValidationError({'password': ['password-empty-error']})
 		return super().to_internal_value(data)
 		
 	def create(self, validated_data):
 		return CustomUser.objects.create_user(**validated_data)
+
+	def update(self, instance, validated_data):
+		instance.bio = validated_data.get('bio', instance.bio)
+		instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+		instance.save()
+		return instance

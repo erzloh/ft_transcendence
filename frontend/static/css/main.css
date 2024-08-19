@@ -11972,6 +11972,7 @@ html, body {
   padding: 0;
   font-variant-ligatures: no-common-ligatures;
   overflow-x: hidden;
+  cursor: url("/static/assets/UI/icons/cursor.svg") 10 10, auto;
 }
 
 button {
@@ -11980,6 +11981,14 @@ button {
 
 .full-height {
   height: 100vh;
+}
+
+input, select, a, .clickable {
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+}
+
+label {
+  cursor: url("/static/assets/UI/icons/cursor.svg") 10 10, auto;
 }
 
 @keyframes moveInCircle {
@@ -12130,6 +12139,13 @@ button {
 .btn:hover {
   border: 1px solid white;
   cursor: pointer;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+}
+
+.btn-filled {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
 }
 
 .glass {
@@ -12139,6 +12155,12 @@ button {
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.glass-modal-bg {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
 }
 
 .return-btn {
@@ -12231,6 +12253,67 @@ button {
   border-radius: 50%;
   width: 100px;
   height: 100px;
+}
+
+/* Remove default appearance */
+#rangeInput {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  width: 100%;
+  height: 8px;
+  background: transparent; /* Make the background of the slider transparent */
+  outline: none;
+}
+
+/* Custom track (background of the slider) */
+#rangeInput::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 20px; /* Adjust the height for the dots */
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+  background: url("/static/assets/pacman/images/food2.png") repeat-x; /* Dots as background */
+  border: none;
+}
+
+#rangeInput::-moz-range-track {
+  width: 100%;
+  height: 20px;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+  background: url("/static/assets/pacman/images/food2.png") repeat-x;
+  border: none;
+}
+
+/* Custom handle (thumb) with Pac-Man image */
+#rangeInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px; /* Adjust size based on your Pac-Man icon */
+  height: 40px;
+  background: url("/static/assets/pacman/images/pacman1.png") no-repeat;
+  background-size: cover;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+  border: none;
+  margin-top: -10px; /* Adjust to center the thumb over the track */
+}
+
+#rangeInput::-moz-range-thumb {
+  width: 40px;
+  height: 40px;
+  background: url("/static/assets/pacman/images/pacman1.png") no-repeat;
+  background-size: cover;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+  border: none;
+}
+
+/* Optional: Custom handle on hover */
+#rangeInput::-webkit-slider-thumb:hover {
+  background-size: cover;
+  filter: brightness(0.7);
+}
+
+#rangeInput::-moz-range-thumb:hover {
+  background-size: cover;
+  filter: brightness(0.7);
 }
 
 @keyframes waitFadeIn {

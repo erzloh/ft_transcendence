@@ -9,6 +9,10 @@
 // Import Google Font
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
+// Variables
+$cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
+$cursor-pointer: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
+
 // Basic CSS Reset
 html, body {
 	font-family: 'Space Mono', monospace;
@@ -16,14 +20,27 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
+	cursor: $cursor;
 }
 
 button {
-	font-variant-ligatures: no-common-ligatures;
+    font-variant-ligatures: no-common-ligatures;
 }
 
 .full-height {
 	height: 100vh;
+}
+
+// label {
+// 	cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, pointer;
+// }
+
+input, select, a, .clickable {
+	cursor: $cursor-pointer;
+}
+
+label {
+	cursor: $cursor;
 }
 
 // ------------------------------- BACKGROUND ANIMATION -------------------------------
@@ -199,7 +216,14 @@ $blending: hard-light;
 	&:hover {
 		border: 1px solid white;
 		cursor: pointer;
+		cursor: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
 	}
+}
+
+.btn-filled {
+	background: rgba(255, 255, 255, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	color: white;
 }
 
 // ------------------------------- Custom Classes -------------------------------
@@ -211,6 +235,11 @@ $blending: hard-light;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 	// animation: fadeIn 0.5s ease-out;
+}
+
+.glass-modal-bg {
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
 }
 
 .return-btn {
@@ -308,6 +337,69 @@ $blending: hard-light;
 	width: 100px;
 	height: 100px;
 }
+
+// PACMAN MENU PAGE
+/* Remove default appearance */
+#rangeInput {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: transparent; /* Make the background of the slider transparent */
+    outline: none;
+}
+
+/* Custom track (background of the slider) */
+#rangeInput::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 20px; /* Adjust the height for the dots */
+    cursor: $cursor-pointer;
+    background: url('/static/assets/pacman/images/food2.png') repeat-x; /* Dots as background */
+    border: none;
+}
+
+#rangeInput::-moz-range-track {
+    width: 100%;
+    height: 20px;
+	cursor: $cursor-pointer;
+    background: url('/static/assets/pacman/images/food2.png') repeat-x;
+    border: none;
+}
+
+/* Custom handle (thumb) with Pac-Man image */
+#rangeInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 40px; /* Adjust size based on your Pac-Man icon */
+    height: 40px;
+    background: url('/static/assets/pacman/images/pacman1.png') no-repeat;
+    background-size: cover;
+	cursor: $cursor-pointer;
+    border: none;
+    margin-top: -10px; /* Adjust to center the thumb over the track */
+}
+
+#rangeInput::-moz-range-thumb {
+    width: 40px;
+    height: 40px;
+    background: url('/static/assets/pacman/images/pacman1.png') no-repeat;
+    background-size: cover;
+	cursor: $cursor-pointer;
+    border: none;
+}
+
+/* Optional: Custom handle on hover */
+#rangeInput::-webkit-slider-thumb:hover {
+    background-size: cover;
+    filter: brightness(0.7);
+}
+
+#rangeInput::-moz-range-thumb:hover {
+    background-size: cover;
+	filter: brightness(0.7);
+}
+
+
 
 // ------------------------------- Custom Keyframes -------------------------------
 
