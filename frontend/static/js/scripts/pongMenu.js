@@ -3,6 +3,7 @@ export let eventListeners = { }
 export class PongMenu {
 	constructor () {
 		this.keysButton = document.getElementById('btnKeys');
+		this.gamemodeButton = document.getElementById('btnGamemode');
 		this.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 		this.settingsModalContent = document.getElementById('settingsModalContent');
 		this.leftPaddleUsernameLabel = document.getElementById('leftPaddleName');
@@ -38,6 +39,9 @@ export class PongMenu {
 			lUp : 'KeyW', lDown : 'KeyS', rUp : 'ArrowUp', rDown : 'ArrowDown'
 		};
 
+		const gamemodeString = localStorage.getItem('pongGamemode');
+		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
+
 		this.leftPaddleInput.addEventListener('keypress', (event) => this.leftPaddleInputHandle(event));
 		this.leftPaddleInput.addEventListener('blur', (event) => this.leftPaddleInputHandle(event));
 		this.rightPaddleInput.addEventListener('keypress', (event) => this.rightPaddleInputHandle(event));
@@ -71,6 +75,7 @@ export class PongMenu {
 	Initialize() {
 		// Add Event Listener to the Start Button
 		this.keysButton.addEventListener("click", () => this.showKeysConfig());
+		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
 
 		document.addEventListener("keydown", this.boundKeyDownSettings);
 		eventListeners["keydown"] = this.boundKeyDownSettings;
@@ -147,6 +152,68 @@ export class PongMenu {
 		this.settingsModal.show();
 	}
 
+	showGamemodeConfig() {
+		this.settingsModalContent.innerHTML = `
+			<div class="row justify-content-center glass">
+				<div class="modal-header">
+					<h2 class="modal-title text-white w-100 text-center">Gamemodes</h2>
+				</div>
+				<div class="modal-body">
+					<div class="row justify-content-center">
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-light" id="btnPvp">PvP</button>
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white" id="btnAI">vs AI</button>
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white" id="btnTournament">Tournament</button>
+						</div>
+						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
+							<div class="col-10" id="AIDifficulties">
+							<label class="text-white text-center" id="gamemodeDescription"></label>
+						</div>
+					</div>
+					<div class="col-12 d-flex justify-content-center mt-4">
+						<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
+					</div>
+				</div>
+			</div>
+		`;
+
+
+        var btnPvp = document.getElementById('btnPvp');
+		var btnAI = document.getElementById('btnAI');
+		var btnTournament = document.getElementById('btnTournament');
+		var labelDescription = document.getElementById('gamemodeDescription');
+		var AiDifficulties = document.getElementById('AiDifficulties');
+
+		btnPvp.addEventListener("click", (event) => this.selectGamemode(event, "pvp"));
+		btnAI.addEventListener("click", (event) => this.selectGamemode(event, "AI"));
+		btnTournament.addEventListener("click", (event) => this.selectGamemode(event, "Tournament"));
+		
+		switch (this.gamemode) {
+			case "pvp":
+				btnPvp.disabled = true;
+				labelDescription.innerHTML = "Two players play against each other, one playing the left paddle, the other playing the right paddle.";
+				break;
+			case "AI":
+				btnAI.disabled = true;
+				labelDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
+				break;
+			case "Tournament":
+				btnTournament.disabled = true;
+				labelDescription.innerHTML = "Multiple players compete against each other in a tournament.";
+				break;
+			default:
+				break;
+		}
+
+		localStorage.setItem('pongGamemode', JSON.stringify(this.gamemode));
+
+		this.settingsModal.show();
+	}
+
 	showColorSchemeConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
@@ -197,6 +264,15 @@ export class PongMenu {
 	}
 
 	//#region EVENT LISTENERS HANDLERS
+
+	selectGamemode(event, gamemode) {
+		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
+		this.toastBootstrap.show();
+		this.gamemode = gamemode;
+		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
+
+		this.showGamemodeConfig();
+	}
 
 	// selectTheme(event, theme) {
 	// 	this.toastBody.innerHTML = "Chosen theme: " + theme;

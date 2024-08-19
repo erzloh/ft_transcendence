@@ -4,29 +4,23 @@ function basePong() {
 	const canvas = document.getElementById('canvas');
 	const context = canvas.getContext('2d');
 	const startButton= document.getElementById('startButton');
-	const twoButton = document.getElementById('but1');
-	const easyButton = document.getElementById('but2');
-	const tournamentButton = document.getElementById('but3');
 
 	const leftPaddleName = document.getElementById('leftPaddleName');
 	const rightPaddleName = document.getElementById('rightPaddleName');
 
 	let endgameModalWinner = document.getElementById('endgameModalWinner');
-	// let endgameModalScore = document.getElementById('endgameModalScore');
+	let endgameModalScore = document.getElementById('endgameModalScore');
 	// let endgameModalTime = document.getElementById('endgameModalTime');
 	// let endgameModalPlayAgain = document.getElementById('playAgainButton');
 	let pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
 	let endgameModal = new bootstrap.Modal(document.getElementById('endgameModal'));
 
-	const paddleWidth = 10, paddleHeight = 100;
-	const ballSize = 10;
+	const paddleWidth = 10, paddleHeight = 100, ballSize = 10;
 	let upLeftPressed = false, downLeftPressed = false;
 	let upRightPressed = false, downRightPressed = false;
 	let paused = false;
-	let selectedMode = 0;
 
-	let scoreLeft = 0;
-	let	scoreRight = 0;
+	let scoreLeft = 0, scoreRight = 0;
 
 	const usernamesString = localStorage.getItem('pongUsernames');
 	let usernames = usernamesString ? JSON.parse(usernamesString) : {
@@ -40,6 +34,9 @@ function basePong() {
 	let keybinds = keybindsString ? JSON.parse(keybindsString) : {
 		lUp : 'KeyW', lDown : 'KeyS', rUp : 'ArrowUp', rDown : 'ArrowDown'
 	};
+
+	const gamemodeString = localStorage.getItem('pongGamemode');
+	let gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
 
 	const leftPad = {
 		x: 0,
@@ -74,7 +71,7 @@ function basePong() {
 		// this.timer.stop();
 
 		endgameModalWinner.textContent = winner + " won the game !";
-		// endgameModalScore.textContent = "Pacman's score: " + pacman.points;
+		endgameModalScore.textContent = "Final score: " + scoreLeft + "-" + scoreRight;
 		// endgameModalTime.textContent = "Time elapsed: " + this.timer.min.toString().padStart(2, '0') + ":" + this.timer.sec.toString().padStart(2, '0');
 
 		// Show the modal
@@ -180,28 +177,22 @@ function basePong() {
 		}
 	}
 
-	function movePaddles(selectedMode) {
-		//console.log(selectedMode);
-		if (selectedMode == 1) {
-			if (upLeftPressed && leftPad.y > 0) {
-				leftPad.y -= leftPad.dy;
-			} else if (downLeftPressed && leftPad.y < canvas.height - leftPad.height) {
-				leftPad.y += leftPad.dy;
-			}
-
+	function movePaddles() {
+		
+		if (upLeftPressed && leftPad.y > 0) {
+			leftPad.y -= leftPad.dy;
+		} else if (downLeftPressed && leftPad.y < canvas.height - leftPad.height) {
+			leftPad.y += leftPad.dy;
+		}
+		
+		if (gamemode == "AI") {
 			if (rightPad.y + rightPad.height / 2 < ball.y) {
 				rightPad.y += rightPad.dy;
 			} else {
 				rightPad.y -= rightPad.dy;
 			}
 		}
-		else if (selectedMode == 2) {
-			if (upLeftPressed && leftPad.y > 0) {
-				leftPad.y -= leftPad.dy;
-			} else if (downLeftPressed && leftPad.y < canvas.height - leftPad.height) {
-				leftPad.y += leftPad.dy;
-			}
-			
+		else {
 			if (upRightPressed && rightPad.y > 0) {
 				rightPad.y -= rightPad.dy;
 			} else if (downRightPressed && rightPad.y < canvas.height - rightPad.height) {
@@ -241,7 +232,7 @@ function basePong() {
 
 	function update() {
 		if (!paused) {
-			movePaddles(selectedMode);
+			movePaddles();
 			moveBall();
 			//draw();
 		}
@@ -254,37 +245,7 @@ function basePong() {
 	}
 
 	startButton.addEventListener("click", function() {
-		if (selectedMode == 1) {
-			startButton.style.display = "none";
-			gameLoop();
-		}
-		else if (selectedMode == 2) {
-			startButton.style.display = "none";
-			gameLoop();
-		}
-		else if (selectedMode == 3) {
-			startButton.style.display = "none";
-			console.log("tournament mode")
-//			startTournament();
-		}
-		else
-			alert("no game mode selected");
-		//canvas.style.display = "block";
-	});
-
-	twoButton.addEventListener("click", function() {
-		selectedMode = 2;
-		console.log("game mode is 1v1");
-		//canvas.style.display = "block";
-	});
-
-	easyButton.addEventListener("click", function() {
-		selectedMode = 1;
-		console.log("game mode is single player and easy");
-	});
-	tournamentButton.addEventListener("click", function() {
-		selectedMode = 3;
-		console.log("tournament mode")
+		gameLoop();
 	});
 
 	document.addEventListener("keydown", function(event) {

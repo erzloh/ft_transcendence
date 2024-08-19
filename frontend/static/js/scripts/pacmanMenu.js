@@ -368,7 +368,6 @@ export class PacmanMenu {
 					rangeLabel.textContent = "Objective: " + event.target.value;
 					this.objective = event.target.value;
 					localStorage.setItem('objective', JSON.stringify(this.objective));
-
 				});
 
 				break;
@@ -491,7 +490,7 @@ export class PacmanMenu {
 
 	}
 
-	selectGamemode(event, gamemode, btnObjective, btnInfinite) {
+	selectGamemode(event, gamemode) {
 		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
