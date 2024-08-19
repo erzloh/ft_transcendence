@@ -14,6 +14,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ValidationError
+from django.http import FileResponse
 
 class CookieTokenAuthentication(TokenAuthentication):
     def authenticate(self, request):
@@ -64,7 +65,7 @@ class logout(views.APIView):
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
 
-class UpdateBio(views.APIView):
+class UpdateUser(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
     def put(self, request):
@@ -74,14 +75,13 @@ class UpdateBio(views.APIView):
             serializer.save()
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class UpdateAvatar(views.APIView):
+    
+class UserAvatar(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
-    def put(self, request):
+    def get(self, request):
         user = request.user
-        serializer = CustomUserSerializer(user, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if user.profile_picture:
+            return FileResponse(open(user.profile_picture.path, 'rb'), content_type='image/jpeg')
+        else:
+            return Response({"error": "No profile photo found"}, status=status.HTTP_404_NOT_FOUND)

@@ -21,3 +21,9 @@ class CustomUserSerializer(serializers.ModelSerializer):
 		
 	def create(self, validated_data):
 		return CustomUser.objects.create_user(**validated_data)
+
+	def update(self, instance, validated_data):
+		instance.bio = validated_data.get('bio', instance.bio)
+		instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+		instance.save()
+		return instance
