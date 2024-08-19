@@ -16,14 +16,20 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
+	cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
 }
 
 button {
-	font-variant-ligatures: no-common-ligatures;
+    font-variant-ligatures: no-common-ligatures;
 }
 
 .full-height {
 	height: 100vh;
+}
+
+// cursor for input, select
+input, select, a {
+	cursor: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, text;
 }
 
 // ------------------------------- BACKGROUND ANIMATION -------------------------------
@@ -199,7 +205,14 @@ $blending: hard-light;
 	&:hover {
 		border: 1px solid white;
 		cursor: pointer;
+		cursor: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
 	}
+}
+
+.btn-filled {
+	background: rgba(255, 255, 255, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	color: white;
 }
 
 // ------------------------------- Custom Classes -------------------------------
