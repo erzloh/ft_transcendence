@@ -1,5 +1,5 @@
 import AbstractView from "./AbstractView.js";
-import { basePong }  from "../scripts/pong/basicPong.js";
+import { PongGame }  from "../scripts/pong/pong.js";
 
 export default class Pong extends AbstractView {
     constructor() {
@@ -19,7 +19,8 @@ export default class Pong extends AbstractView {
 	// }
 
 	loadJS() {
-		basePong();
+		let pongGame = new PongGame();
+		pongGame.initialize();
 	}
 
 	cleanUpEventListeners() {
