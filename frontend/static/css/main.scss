@@ -27,9 +27,16 @@ button {
 	height: 100vh;
 }
 
-// cursor for input, select
-input, select, a {
+// label {
+// 	cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, pointer;
+// }
+
+input, select, a, .clickable {
 	cursor: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, text;
+}
+
+label {
+	cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, pointer;
 }
 
 // ------------------------------- BACKGROUND ANIMATION -------------------------------

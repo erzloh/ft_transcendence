@@ -11983,8 +11983,12 @@ button {
   height: 100vh;
 }
 
-input, select, a {
+input, select, a, .clickable {
   cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, text;
+}
+
+label {
+  cursor: url("/static/assets/UI/icons/cursor.svg") 10 10, pointer;
 }
 
 @keyframes moveInCircle {
