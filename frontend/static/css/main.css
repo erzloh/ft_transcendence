@@ -12289,7 +12289,7 @@ label {
   appearance: none;
   width: 40px; /* Adjust size based on your Pac-Man icon */
   height: 40px;
-  background: url("/static/assets/pacman/images/pacman1.png") no-repeat;
+  background: url("/static/assets/pacman/images/pacman_high_res.png") no-repeat;
   background-size: cover;
   cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
   border: none;
@@ -12299,7 +12299,7 @@ label {
 #rangeInput::-moz-range-thumb {
   width: 40px;
   height: 40px;
-  background: url("/static/assets/pacman/images/pacman1.png") no-repeat;
+  background: url("/static/assets/pacman/images/pacman_high_res.png") no-repeat;
   background-size: cover;
   cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
   border: none;
@@ -12314,6 +12314,10 @@ label {
 #rangeInput::-moz-range-thumb:hover {
   background-size: cover;
   filter: brightness(0.7);
+}
+
+.selected {
+  border: 3px solid rgb(255, 255, 255) !important;
 }
 
 @keyframes waitFadeIn {

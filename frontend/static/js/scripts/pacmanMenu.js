@@ -127,7 +127,7 @@ export class PacmanMenu {
 					<div class="col-12 d-flex justify-content-center">
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="h3 text-white">pacman keys</h3>
+								<h3 class="h3 text-white m-3">pacman keys</h3>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
@@ -172,7 +172,7 @@ export class PacmanMenu {
 						</div>
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="text-white">ghost keys</h3>
+								<h3 class="text-white m-3">ghost keys</h3>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
@@ -270,6 +270,21 @@ export class PacmanMenu {
 		btnPacmanSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacman"));
 		btnPacgirlSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacgirl"));
 
+		// const selectedSkin = localStorage.getItem('pacmanSkin');
+		// if (selectedSkin === '"pacman"') {
+		// 	btnPacmanSkin.classList.add("selected");
+		// 	btnPacgirlSkin.classList.remove("selected");
+		// } else if (selectedSkin === '"pacgirl"') {
+		// 	btnPacgirlSkin.classList.add("selected");
+		// 	btnPacmanSkin.classList.remove("selected");
+		// }
+
+		const pacmanSkins = {
+			pacman: btnPacmanSkin,
+			pacgirl: btnPacgirlSkin
+		}
+		this.applySelectedSetting("pacmanSkin", pacmanSkins);
+
 		this.settingsModal.show();
 	}
 
@@ -309,6 +324,15 @@ export class PacmanMenu {
 		btnOrangeSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "orangeGhost"));
 		btnPinkSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "pinkGhost"));
 		btnGreenSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "greenGhost"));
+
+		// Get element that is selected from the local storage and apply the border
+		const ghostSkins = {
+			blueGhost: btnBlueSkin,
+			orangeGhost: btnOrangeSkin,
+			pinkGhost: btnPinkSkin,
+			greenGhost: btnGreenSkin
+		}
+		this.applySelectedSetting("ghostSkin", ghostSkins);
 
 		this.settingsModal.show();
 	}
@@ -420,6 +444,13 @@ export class PacmanMenu {
 		btnSpiral.addEventListener("click", (event) => this.selectMap(event, "spiral"));
 		btnButterfly.addEventListener("click", (event) => this.selectMap(event, "butterfly"));
 
+		const maps = {
+			maze: btnMaze,
+			spiral: btnSpiral,
+			butterfly: btnButterfly
+		}
+		this.applySelectedSetting("mapName", maps);
+
 		this.settingsModal.show();
 	}
 
@@ -466,6 +497,14 @@ export class PacmanMenu {
 		btnGarden.addEventListener("click", (event) => this.selectTheme(event, "garden"));
 		btnSpacial.addEventListener("click", (event) => this.selectTheme(event, "spacial"));
 
+		const themes = {
+			obsidian: btnObsidian,
+			autumn: btnAutumn,
+			garden: btnGarden,
+			spacial: btnSpacial
+		}
+		this.applySelectedSetting("themeName", themes);
+
 		this.settingsModal.show();
 	}
 
@@ -476,6 +515,12 @@ export class PacmanMenu {
 		this.toastBootstrap.show();
 		this.pacmanSkin = skin;
 		localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
+
+		const pacmanSkins = {
+			pacman: document.getElementById('pPacmanSkin'),
+			pacgirl: document.getElementById('pPacgirlSkin')
+		}
+		this.applySelectedSetting("pacmanSkin", pacmanSkins);
 	}
 
 	selectGhostSkin(event, skin) {
@@ -484,6 +529,14 @@ export class PacmanMenu {
 		this.ghostSkin = skin;
 		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
 
+		// Get element that is selected from the local storage and apply the border
+		const ghostSkins = {
+			blueGhost: document.getElementById('pBlueGhostSkin'),
+			orangeGhost: document.getElementById('pOrangeGhostSkin'),
+			pinkGhost: document.getElementById('pPinkGhostSkin'),
+			greenGhost: document.getElementById('pGreenGhostSkin')
+		}
+		this.applySelectedSetting("ghostSkin", ghostSkins);
 	}
 
 	selectGamemode(event, gamemode, btnObjective, btnInfinite) {
@@ -501,6 +554,13 @@ export class PacmanMenu {
 		this.mapName = map;
 
 		localStorage.setItem('mapName', JSON.stringify(this.mapName));
+
+		const maps = {
+			maze: document.getElementById('pMaze'),
+			spiral: document.getElementById('pSpiral'),
+			butterfly: document.getElementById('pButterfly')
+		}
+		this.applySelectedSetting("mapName", maps);
 	}
 
 	selectTheme(event, theme) {
@@ -536,7 +596,15 @@ export class PacmanMenu {
 		}
 
 		localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
+		localStorage.setItem('themeName', theme);
 
+		const themes = {
+			obsidian: document.getElementById('pObsidian'),
+			autumn: document.getElementById('pAutumn'),
+			garden: document.getElementById('pGarden'),
+			spacial: document.getElementById('pSpacial')
+		}
+		this.applySelectedSetting("themeName", themes);
 	}
 
 	changeKeybind(event, key, btn) {
@@ -603,6 +671,22 @@ export class PacmanMenu {
 			localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 			this.showKeysConfig();
 		}
+	}
+
+	// Add the "selected" class to to correct element based on the setting in the local storage
+	// settingType is for example "pacmanSkin", "ghostSkin", "gamemode", "mapName", "pacmanTheme"
+	// elementMapping is an object with the settings as keys and the elements as values
+	// for example { "pacman": btnPacmanSkin, "pacgirl": btnPacgirlSkin }
+	applySelectedSetting(settingType, elementMapping) {
+		const selectedSetting = localStorage.getItem(settingType)?.replace(/"/g, '');
+	
+		Object.keys(elementMapping).forEach(setting => {
+			if (setting === selectedSetting) {
+				elementMapping[setting].classList.add("selected");
+			} else {
+				elementMapping[setting].classList.remove("selected");
+			}
+		});
 	}
 
 	//#endregion
