@@ -121,17 +121,17 @@ export class PacmanMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Keybinds settings</h2>
+					<h2 class="modal-title text-white w-100 text-center">keybinds settings</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 d-flex justify-content-center">
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="h3 text-white">Pacman keys</h3>
+								<h3 class="h3 text-white">pacman keys</h3>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move up</label>
+									<label class="text-white" style="padding: 3px 0px;">move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</label>
@@ -139,7 +139,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move left</label>
+									<label class="text-white" style="padding: 3px 0px;">move left</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</label>
@@ -147,7 +147,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move down</label>
+									<label class="text-white" style="padding: 3px 0px;">move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</label>
@@ -155,7 +155,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move right</label>
+									<label class="text-white" style="padding: 3px 0px;">move right</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</label>
@@ -163,7 +163,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Use spell</label>
+									<label class="text-white" style="padding: 3px 0px;">use spell</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</label>
@@ -172,11 +172,11 @@ export class PacmanMenu {
 						</div>
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="text-white">Ghost keys</h3>
+								<h3 class="text-white">ghost keys</h3>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move up</label>
+									<label class="text-white" style="padding: 3px 0px;">move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</label>
@@ -184,7 +184,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move left</label>
+									<label class="text-white" style="padding: 3px 0px;">move left</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</label>
@@ -192,7 +192,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move down</label>
+									<label class="text-white" style="padding: 3px 0px;">move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</label>
@@ -200,7 +200,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move right</label>
+									<label class="text-white" style="padding: 3px 0px;">move right</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</label>
@@ -208,7 +208,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Use spell</label>
+									<label class="text-white" style="padding: 3px 0px;">use spell</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</label>
@@ -248,7 +248,7 @@ export class PacmanMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Pacman skins</h2>
+					<h2 class="modal-title text-white w-100 text-center">pacman skins</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 justify-content-center">
@@ -277,7 +277,7 @@ export class PacmanMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Ghost skins</h2>
+					<h2 class="modal-title text-white w-100 text-center">ghost skins</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 justify-content-center">
@@ -317,16 +317,16 @@ export class PacmanMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Gamemodes</h2>
+					<h2 class="modal-title text-white w-100 text-center">gamemodes</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-auto mr-2 ml-3">
 						<div class="row justify-content-center text-center mt-2 mb-1">
 							<div class="col-4 d-flex justify-content-center mb-3">
-								<button role="button" class="btn btn-lg text-light" id="btnObjective">Objective</button>
+								<button role="button" class="btn btn-lg text-light" id="btnObjective">objective</button>
 							</div>
 							<div class="col-4 d-flex justify-content-center">
-								<button role="button" class="btn btn-lg text-white" id="btnInfinite">Endless</button>
+								<button role="button" class="btn btn-lg text-white" id="btnInfinite">endless</button>
 							</div>
 							<div class="col-10 m-5">
 								<label class="text-white" id="gamemodeDescription"></label>
@@ -352,7 +352,7 @@ export class PacmanMenu {
 			case "objective":
 				btnObjective.disabled = true;
 				btnInfinite.disabled = false;
-				labelDescription.innerHTML = "The game ends once Pacman's score reaches the objective or the Ghost catches Pacman.";
+				labelDescription.innerHTML = "the game ends once Pacman's score reaches the objective or the Ghost catches Pacman.";
 				rangeContainer.innerHTML = `
 							<div class="col-12 justify-content-center mb-2">
 									<label class="text-white h5" id="rangeLabel"></label>
@@ -366,7 +366,7 @@ export class PacmanMenu {
 				localStorage.setItem('objective', JSON.stringify(this.objective));
 
 				rangeInput.addEventListener('input', (event) => {
-					rangeLabel.textContent = "Objective: " + event.target.value;
+					rangeLabel.textContent = "objective: " + event.target.value;
 					this.objective = event.target.value;
 					localStorage.setItem('objective', JSON.stringify(this.objective));
 
@@ -376,7 +376,7 @@ export class PacmanMenu {
 			case "infinite":
 				btnObjective.disabled = false;
 				btnInfinite.disabled = true;
-				labelDescription.innerHTML = "The game ends once the Ghost catches Pacman.";
+				labelDescription.innerHTML = "the game ends once the Ghost catches Pacman.";
 				break;
 			default:
 				break;
@@ -389,21 +389,21 @@ export class PacmanMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Maps</h2>
+					<h2 class="modal-title text-white w-100 text-center">maps</h2>
 				</div>
 				<div class="modal-body p-5">
 					<div class="col-auto mr-2 ml-2">
 						<div class="row justify-content-center text-center mt-2">
 							<div class="col-4 d-flex flex-column align-items-center">
-								<label class="h4 text-white">Maze</label>
+								<label class="h4 text-white">maze</label>
 								<img class="img-fluid" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze"/>
 							</div>
 							<div class="col-4 d-flex flex-column align-items-center">
-								<label class="h4 text-white">Spiral</label>
+								<label class="h4 text-white">spiral</label>
 								<img class="img-fluid" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral"/>
 							</div>
 							<div class="col-4 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Butterfly</label>
+									<label class="h4 text-white">butterfly</label>
 								<img class="img-fluid" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly"/>
 							</div>
 						</div>
@@ -427,26 +427,26 @@ export class PacmanMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Themes</h2>
+					<h2 class="modal-title text-white w-100 text-center">themes</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 justify-content-center">
 						<div class="row justify-content-center text-center mt-2 mb-3">
 							<div class="row justify-content-center text-center">
 								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Obsidian</label>
+									<label class="h4 text-white">obsidian</label>
 									<img class="img-fluid" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian"/>
 								</div>
 								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Autumn</label>
+									<label class="h4 text-white">autumn</label>
 									<img class="img-fluid" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn"/>
 								</div>
 								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Garden</label>
+									<label class="h4 text-white">garden</label>
 									<img class="img-fluid" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden"/>
 								</div>
 								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Retro</label>
+									<label class="h4 text-white">retro</label>
 									<img class="img-fluid" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial"/>
 								</div>
 							</div>
