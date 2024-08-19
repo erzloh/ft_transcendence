@@ -365,9 +365,7 @@ export class PacmanMenu {
 				localStorage.setItem('objective', JSON.stringify(this.objective));
 
 				rangeInput.addEventListener('input', (event) => {
-					rangeLabel.textContent = "Objective: " + event.target.value;
 					this.objective = event.target.value;
-					localStorage.setItem('objective', JSON.stringify(this.objective));
 				});
 
 				break;
@@ -487,7 +485,6 @@ export class PacmanMenu {
 		this.toastBootstrap.show();
 		this.ghostSkin = skin;
 		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
-
 	}
 
 	selectGamemode(event, gamemode) {

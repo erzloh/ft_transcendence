@@ -5,6 +5,7 @@ function basePong() {
 	const context = canvas.getContext('2d');
 	const startButton= document.getElementById('startButton');
 
+	const objectiveLabel = document.getElementById('objectiveLabel');
 	const leftPaddleName = document.getElementById('leftPaddleName');
 	const rightPaddleName = document.getElementById('rightPaddleName');
 
@@ -24,7 +25,7 @@ function basePong() {
 
 	const usernamesString = localStorage.getItem('pongUsernames');
 	let usernames = usernamesString ? JSON.parse(usernamesString) : {
-		left: "Player1", right: "Player2"
+		left: "player1", right: "player2"
 	};
 
 	leftPaddleName.innerHTML = usernames.left;
@@ -37,6 +38,11 @@ function basePong() {
 
 	const gamemodeString = localStorage.getItem('pongGamemode');
 	let gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
+
+	const objectiveString = localStorage.getItem('pongObjective');
+	let objective = objectiveString ? JSON.parse(objectiveString) : 3;
+	objectiveLabel.innerHTML = "points to win: " + objective;
+
 
 	const leftPad = {
 		x: 0,
@@ -145,7 +151,7 @@ function basePong() {
 			scoreLeft++;
 			document.getElementById("leftScore").innerHTML = scoreLeft;
 			//playerSc
-            if (scoreLeft === 3) {
+            if (scoreLeft >= objective) {
                 endGame(usernames.left);
             }
 			resetBall();
@@ -153,7 +159,7 @@ function basePong() {
 			scoreRight++;
 			document.getElementById("rightScore").innerHTML = scoreRight;
 		
-            if (scoreRight === 3) {
+            if (scoreRight >= objective) {
                 endGame(usernames.right);
             }	
 			//computerScore++;

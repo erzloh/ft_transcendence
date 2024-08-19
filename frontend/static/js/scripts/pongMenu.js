@@ -4,6 +4,7 @@ export class PongMenu {
 	constructor () {
 		this.keysButton = document.getElementById('btnKeys');
 		this.gamemodeButton = document.getElementById('btnGamemode');
+		this.pointsRangeContainer = document.getElementById('pointsRangeContainer');
 		this.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 		this.settingsModalContent = document.getElementById('settingsModalContent');
 		this.leftPaddleUsernameLabel = document.getElementById('leftPaddleName');
@@ -22,7 +23,7 @@ export class PongMenu {
 
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
-			left: "Player1", right: "Player2"
+			left: "player1", right: "player2"
 		};
 
 		this.leftPaddleUsernameLabel.innerHTML = this.usernames.left;
@@ -42,10 +43,36 @@ export class PongMenu {
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
 
+		const objectiveString = localStorage.getItem('pongObjective');
+		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
+
 		this.leftPaddleInput.addEventListener('keypress', (event) => this.leftPaddleInputHandle(event));
 		this.leftPaddleInput.addEventListener('blur', (event) => this.leftPaddleInputHandle(event));
 		this.rightPaddleInput.addEventListener('keypress', (event) => this.rightPaddleInputHandle(event));
 		this.rightPaddleInput.addEventListener('blur', (event) => this.rightPaddleInputHandle(event));
+		
+		this.setScoreRange();
+	}
+
+	setScoreRange() {
+		this.pointsRangeContainer.innerHTML = `
+			<div class="col-6 flex-column align-items-center d-flex mb-2">
+				<label class="text-white h5 text-center" id="rangeLabel">points to win: 3</label>
+				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1" max="10" value="${this.objective}" step="1" id="rangeInput">
+			</div>
+		`;
+
+		var rangeInput = document.getElementById('rangeInput');
+		var rangeLabel = document.getElementById('rangeLabel');
+
+		rangeLabel.innerHTML = "points to win: " + this.objective;
+		localStorage.setItem('pongObjective', JSON.stringify(this.objective));
+
+		rangeInput.addEventListener('input', (event) => {
+			this.objective = event.target.value;
+			rangeLabel.textContent = "points to win: " + this.objective;
+			localStorage.setItem('pongObjective', JSON.stringify(this.objective));
+		});
 	}
 
 	leftPaddleInputHandle(event) {
@@ -206,7 +233,7 @@ export class PongMenu {
 				labelDescription.innerHTML = "Multiple players compete against each other in a tournament.";
 				break;
 			default:
-				break;
+				break; 
 		}
 
 		localStorage.setItem('pongGamemode', JSON.stringify(this.gamemode));
