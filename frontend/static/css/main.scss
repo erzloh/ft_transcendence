@@ -372,7 +372,7 @@ $blending: hard-light;
     appearance: none;
     width: 40px; /* Adjust size based on your Pac-Man icon */
     height: 40px;
-    background: url('/static/assets/pacman/images/pacman1.png') no-repeat;
+    background: url('/static/assets/pacman/images/pacman_high_res.png') no-repeat;
     background-size: cover;
 	cursor: $cursor-pointer;
     border: none;
@@ -382,7 +382,7 @@ $blending: hard-light;
 #rangeInput::-moz-range-thumb {
     width: 40px;
     height: 40px;
-    background: url('/static/assets/pacman/images/pacman1.png') no-repeat;
+    background: url('/static/assets/pacman/images/pacman_high_res.png') no-repeat;
     background-size: cover;
 	cursor: $cursor-pointer;
     border: none;
@@ -397,6 +397,12 @@ $blending: hard-light;
 #rangeInput::-moz-range-thumb:hover {
     background-size: cover;
 	filter: brightness(0.7);
+}
+
+// Selected element
+.selected {
+	// background: rgba(255, 255, 255, 0.2);
+	border: 3px solid rgba(255, 255, 255, 1) !important;
 }
 
 
