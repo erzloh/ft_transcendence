@@ -178,8 +178,7 @@ export class PongGame {
 	}
 
 	//TODO: Move this to paddle
-	movePaddles() {
-		
+	movePaddles() {		
 		if (this.upLeftPressed && this.leftPad.y > 0) {
 			this.leftPad.y -= this.leftPad.dy;
 		} else if (this.downLeftPressed && this.leftPad.y < this.cvs.height - this.leftPad.height) {

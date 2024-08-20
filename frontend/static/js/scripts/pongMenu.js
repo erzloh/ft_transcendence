@@ -58,11 +58,11 @@ export class PongMenu {
 		this.pointsRangeContainer.innerHTML = `
 			<div class="col-6 flex-column align-items-center d-flex mb-2">
 				<label class="text-white h5 text-center" id="rangeLabel">points to win: 3</label>
-				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1" max="10" value="${this.objective}" step="1" id="rangeInput">
+				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1" max="10" value="${this.objective}" step="1" id="pongRangeInput">
 			</div>
 		`;
 
-		let rangeInput = document.getElementById('rangeInput');
+		let rangeInput = document.getElementById('pongRangeInput');
 		let rangeLabel = document.getElementById('rangeLabel');
 
 		rangeLabel.innerHTML = "points to win: " + this.objective;
@@ -125,7 +125,7 @@ export class PongMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -133,7 +133,7 @@ export class PongMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -146,7 +146,7 @@ export class PongMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -154,7 +154,7 @@ export class PongMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -188,13 +188,13 @@ export class PongMenu {
 				<div class="modal-body">
 					<div class="row justify-content-center">
 						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-light" id="btnPvp">PvP</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnPvp">PvP</button>
 						</div>
 						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white" id="btnAI">vs AI</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnAI">vs AI</button>
 						</div>
 						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white" id="btnTournament">Tournament</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">Tournament</button>
 						</div>
 						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
 							<div class="col-10" id="AIDifficulties">
@@ -202,7 +202,7 @@ export class PongMenu {
 						</div>
 					</div>
 					<div class="col-12 d-flex justify-content-center mt-4">
-						<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
+						<button type="button" class="btn btn-lg text-white btn-filled" data-bs-dismiss="modal" aria-label="Close">Close</button>
 					</div>
 				</div>
 			</div>

@@ -16,28 +16,26 @@
 		<div class="row justify-content-center mb-2" style="width: 75vw;">
 			<div class="col d-flex flex-column">
 				<div class="row justify-content-between gap-5">
-					<div class="col d-flex flex-column align-items-center glass mt-2">
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
 							<label class="h3 text-white text-center">left paddle</label>
 							<label class="h5 text-white text-center" id="leftPaddleName">player 1</label>
-							<input type="text" id="leftPaddleInput" class="form-control form-control-sm" placeholder="Enter username">
+							<input type="text" id="leftPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
 					</div>		
-					<div class="col d-flex flex-column align-items-center glass mt-1">
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
 							<label class="h3 text-white text-center">right paddle</label>
 							<label class="h5 text-white text-center" id="rightPaddleName">player 2</label>
-							<input type="text" id="rightPaddleInput" class="form-control form-control-sm" placeholder="Enter username">
+							<input type="text" id="rightPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		<p></p>
-		<div style="width: 75vw;" class="col-12 text-center mb-1">
-			<p role="button" class="btn btn-lg text-white" id="btnKeys">keys</p>
-			<p role="button" class="btn btn-lg text-white" id="btnGamemode">gamemode</p>
+		<div style="width: 75vw;" class="col-12 text-center mt-5 mb-5 p-5 glass">
+			<button role="button" class="btn btn-lg text-white btn-filled" id="btnKeys">keys</button>
+			<button role="button" class="btn btn-lg text-white btn-filled" id="btnGamemode">gamemode</button>
 		</div>
 		<div class="modal fade glass" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
@@ -47,7 +45,7 @@
 		</div>
 		<div class="row justify-content-center" id="pointsRangeContainer"></div>
 		<div class="col-12 text-center mt-3">
-			<a role="button" class="btn btn-lg text-light" href="/pong" data-link>start game</a>
+			<a role="button" class="btn btn-lg text-white btn-filled" href="/pong" data-link>start game</a>
 		</div>
 		<div class="col-12 text-center mt-4 d-flex justify-content-center">
 			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
