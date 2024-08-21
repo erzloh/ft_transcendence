@@ -60,6 +60,8 @@ export class PongGame {
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
 			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
 
+		this.rightPad.ball = this.ball;
+
 		this.gameLoop = this.gameLoop.bind(this);
 	}
 
@@ -88,6 +90,8 @@ export class PongGame {
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
 			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
 		
+		this.rightPad.ball = this.ball;
+
 		this.leftScore.innerHTML = "0";
 		this.rightScore.innerHTML = "0";
 		

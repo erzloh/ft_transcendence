@@ -57,7 +57,7 @@ export class Ball {
 		this.x = this.maxX / 2;
 		this.y = this.maxY / 2;
 		this.speed = 4;
-		
+
 		if (Math.random() > 0.5) {
 			this.dx = this.speed;
 		} 
@@ -83,6 +83,7 @@ export class Pad {
 		this.dy = dy;
 		this.maxY = maxY;
 		this.isAI = isAI;
+		this.ball;
 		this.score = 0;
 		this.direction = "";
     }
@@ -97,10 +98,10 @@ export class Pad {
 			}
 		}
 		else {
-			if (this.rightPad.y + this.rightPad.height / 2 < this.ball.y) {
-				this.rightPad.y += this.rightPad.dy;
+			if (this.y + this.height / 2 < this.ball.y) {
+				this.y += this.dy;
 			} else {
-				this.rightPad.y -= this.rightPad.dy;
+				this.y -= this.dy;
 			}
 		}
 	}
