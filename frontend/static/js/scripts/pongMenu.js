@@ -95,6 +95,56 @@ export class PongMenu {
 				playerPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
 				break;
 			case "Tournament":
+				this.playersContainer.innerHTML = `
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+							<label class="h4 text-white text-center mb-3" id="player1Name">player 1</label>
+							<input type="text" id="player1Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+					</div>
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+							<label class="h4 text-white text-center mb-3" id="player2Name">player 2</label>
+							<input type="text" id="player2Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+					</div>
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+							<label class="h4 text-white text-center mb-3" id="player3Name">player 3</label>
+							<input type="text" id="player3Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+					</div>
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+							<label class="h4 text-white text-center mb-3" id="player4Name">...</label>
+							<input type="text" id="player4Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+					</div>
+				`;
+
+
+				const player1Name = document.getElementById('player1Name');
+				const player1Input = document.getElementById('player1Input');
+				const player2Name = document.getElementById('player2Name');
+				const player2Input = document.getElementById('player2Input');
+				const player3Name = document.getElementById('player3Name');
+				const player3Input = document.getElementById('player3Input');
+				const player4Name = document.getElementById('player4Name');
+				const player4Input = document.getElementById('player4Input');
+
+				player1Name.innerHTML = this.usernames.p1;
+				player2Name.innerHTML = this.usernames.p2;
+				player3Name.innerHTML = this.usernames.p3;
+				player4Name.innerHTML = this.usernames.p4;
+
+				player1Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
+				player1Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
+				player2Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player2Input, player2Name, "player 2", "p2"));
+				player2Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player2Input, player2Name, "player 2", "p2"));
+				player3Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player3Input, player3Name, "player 3", "p3"));
+				player3Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player3Input, player3Name, "player 3", "p3"));
+				player4Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player4Input, player4Name, "player 4", "p4"));
+				player4Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player4Input, player4Name, "player 4", "p4"));
 				break;
 			default:
 				break;
@@ -231,16 +281,16 @@ export class PongMenu {
 				<div class="modal-body">
 					<div class="row justify-content-center">
 						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnPvp">PvP</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnPvp">pvp</button>
 						</div>
 						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnAI">vs AI</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnAI">vs ai</button>
 						</div>
 						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">Tournament</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">tournament</button>
 						</div>
 						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
-							<div class="col-10" id="AIDifficulties">
+							<div class="col-10 justify-content-center d-flex" id="AIDifficulties">
 								<label class="text-white text-center" id="gamemodeDescription"></label>
 							</div>
 						</div>
