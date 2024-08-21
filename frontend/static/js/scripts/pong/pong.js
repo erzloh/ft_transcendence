@@ -7,28 +7,31 @@ export class PongGame {
 		this.cvs = document.getElementById('canvas');
 		this.ctx = this.cvs.getContext('2d');
 		this.startButton= document.getElementById('startButton');
-
 		this.objectiveLabel = document.getElementById('objectiveLabel');
-		this.leftPaddleName = document.getElementById('leftPaddleName');
-		this.rightPaddleName = document.getElementById('rightPaddleName');
 
 		this.endgameModalWinner = document.getElementById('endgameModalWinner');
 		this.endgameModalScore = document.getElementById('endgameModalScore');
 		// let endgameModalTime = document.getElementById('endgameModalTime');
-		// let endgameModalPlayAgain = document.getElementById('playAgainButton');
+		this.endgameModalPlayAgain = document.getElementById('playAgainButton');
 		this.pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
 		this.endgameModal = new bootstrap.Modal(document.getElementById('endgameModal'));
 
+		this.leftScore = document.getElementById("leftScore");
+		this.rightScore = document.getElementById("rightScore");
+
 		this.pWidth = 10, this.pHeight = 100, this.bSize = 10;
 		this.paused = false;
+		this.gameOver = false;
 
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
 			left: "player1", right: "player2"
 		};
 
-		this.leftPaddleName.innerHTML = this.usernames.left;
-		this.rightPaddleName.innerHTML = this.usernames.right;
+		const leftPaddleName = document.getElementById('leftPaddleName');
+		const rightPaddleName = document.getElementById('rightPaddleName');
+		leftPaddleName.innerHTML = this.usernames.left;
+		rightPaddleName.innerHTML = this.usernames.right;
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
@@ -62,6 +65,7 @@ export class PongGame {
 
 	initialize() {
 		this.startButton.addEventListener("click", () => this.startGame());
+		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
 
 		document.addEventListener("keydown", this.boundPongHandleKeyDown);
 		eventListeners["keydown"] = this.boundPongHandleKeyDown;
@@ -70,12 +74,34 @@ export class PongGame {
 		eventListeners["keyup"] = this.boundPongHandleKeyUp;
 	}
 
+	resetGame() {
+		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
+		
+		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
+			this.pWidth, this.pHeight, "#FFF", 5, this.cvs.height -  this.pHeight, 
+			false);
+
+		this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
+			this.pWidth, this.pHeight, "#FFF", 5, this.cvs.height -  this.pHeight,
+			this.gamemode == "AI" ? true : false);	
+		
+		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
+			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
+		
+		this.leftScore.innerHTML = "0";
+		this.rightScore.innerHTML = "0";
+		
+		this.startButton.disabled = false;
+		this.gameOver = false;
+	}
+
 	startGame() {
+		this.startButton.disabled = true;
 		this.gameLoop();
 	}
 
 	endGame(winner) {
-		// this.gameOver = true;
+		this.gameOver = true;
 		// this.timer.stop();
 
 		this.endgameModalWinner.textContent = winner + " won the game !";
@@ -105,14 +131,14 @@ export class PongGame {
 	scorePoint = (pad) => {
 		if (pad == "left") {
 			this.leftPad.score++;
-			document.getElementById("leftScore").innerHTML = this.leftPad.score;
+			this.leftScore.innerHTML = this.leftPad.score;
 			if (this.leftPad.score >= this.objective) {
 				this.endGame(this.usernames.left);
 			}
 		}
 		else if (pad == "right") {
 			this.rightPad.score++;
-			document.getElementById("rightScore").innerHTML = this.rightPad.score;
+			this.rightScore.innerHTML = this.rightPad.score;
             if (this.rightPad.score >= this.objective) {
                 this.endGame(this.usernames.right);
             }
@@ -120,7 +146,7 @@ export class PongGame {
 		this.ball.resetPosition();
 	}	
 
-	draw() {
+	drawObjects() {
 		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 
 		this.drawNet();
@@ -136,19 +162,6 @@ export class PongGame {
 		}
 	}
 
-	/*function initGame(mode, context, canvas) {
-	
-		if (mode === 'cpu') {
-			console.log("test-its cpu this time");
-		} else {
-			console.log("its 1v1 this time");
-		}
-	
-		// Commencez la boucle du jeu
-		gameLoop(context, canvas, player1, player2);
-	}
-		*/
-
 	update() {
 		if (!this.paused) {
 			this.leftPad.move();
@@ -158,8 +171,12 @@ export class PongGame {
 	}
 
 	gameLoop() {
+		if (this.gameOver) {			
+			return ;
+		}
+
 		this.update();
-		this.draw();
+		this.drawObjects();
 		requestAnimationFrame(this.gameLoop);
 	}
 
