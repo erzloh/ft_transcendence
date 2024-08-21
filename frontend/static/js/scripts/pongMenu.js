@@ -15,13 +15,14 @@ export class PongMenu {
 		this.toastBody = document.getElementById('toastBody');
 
 		this.boundKeyDownSettings = this.keyDownSettings.bind(this);
+		this.updatePlayersContainer = this.updatePlayersContainer.bind(this);
 
 		this.waitForKey = false;
 		this.waitingKey = "";
 
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
-			left: "player1", right: "player2"
+			p1: "player1", p2: "player2", p3: "player3", p4: "player4"
 		};
 
 		const colorsString = localStorage.getItem('pongColors');
@@ -39,12 +40,9 @@ export class PongMenu {
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
-		
-		this.updatePlayersContainer();
-		this.setScoreRange();
 	}
 
-	updatePlayersContainer() {
+	updatePlayersContainer = () => {
 		switch (this.gamemode) {
 			case "pvp":
 				this.playersContainer.innerHTML = `
@@ -69,13 +67,13 @@ export class PongMenu {
 				const rightPaddleUsernameLabel = document.getElementById('rightPaddleName');
 				const rightPaddleInput = document.getElementById('rightPaddleInput');
 
-				leftPaddleUsernameLabel.innerHTML = this.usernames.left;
-				rightPaddleUsernameLabel.innerHTML = this.usernames.right;
+				leftPaddleUsernameLabel.innerHTML = this.usernames.p1;
+				rightPaddleUsernameLabel.innerHTML = this.usernames.p2;
 
-				leftPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, leftPaddleInput, leftPaddleUsernameLabel, "left paddle", this.usernames.left));
-				leftPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, leftPaddleInput, leftPaddleUsernameLabel, "left paddle", this.usernames.left));
-				rightPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", this.usernames.right));
-				rightPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", this.usernames.right));
+				leftPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, leftPaddleInput, leftPaddleUsernameLabel, "left paddle",  "p1"));
+				leftPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, leftPaddleInput, leftPaddleUsernameLabel, "left paddle",  "p1"));
+				rightPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", "p2"));
+				rightPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", "p2"));
 				break;
 			case "AI":
 				this.playersContainer.innerHTML = `
@@ -91,13 +89,32 @@ export class PongMenu {
 				const playerPaddleName = document.getElementById('playerPaddleName');
 				const playerPaddleInput = document.getElementById('playerPaddleInput');
 
-				playerPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", this.usernames.left));
-				playerPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", this.usernames.left));
+				playerPaddleName.innerHTML = this.usernames.p1;
+
+				playerPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
+				playerPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
 				break;
 			case "Tournament":
 				break;
 			default:
 				break;
+		}
+	}
+
+	paddleInputHandle(event, playerInput, playerLabel, playerName, playerUsername) {
+		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && playerInput.value != "") {
+			this.usernames[playerUsername] = playerInput.value;
+			playerInput.value = ""; // Clear the input box
+			playerLabel.innerHTML =   this.usernames[playerUsername];
+
+			this.toastBody.innerHTML = "Changed " + playerName + " paddle username to: " +   this.usernames[playerUsername];
+			this.toastBootstrap.show();
+
+			localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
+			const usernamesString = localStorage.getItem('pongUsernames');
+			this.usernames = usernamesString ? JSON.parse(usernamesString) : {
+				p1: "player1", p2: "player2", p3: "player3", p4: "player4"
+			};
 		}
 	}
 
@@ -122,23 +139,6 @@ export class PongMenu {
 		});
 	}
 
-	paddleInputHandle(event, playerInput, playerLabel, playerName, playerUsername) {
-		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && playerInput.value != "") {
-			playerUsername = playerInput.value;
-			playerInput.value = ""; // Clear the input box
-			playerLabel.innerHTML = playerUsername;
-
-			this.toastBody.innerHTML = "Changed " + playerName + " paddle username to: " + playerUsername;
-			this.toastBootstrap.show();
-
-			localStorage.setItem('pongUsernames', JSON.stringify(playerUsername));
-			const usernamesString = localStorage.getItem('pongUsernames');
-			this.usernames = usernamesString ? JSON.parse(usernamesString) : {
-				left: "player1", right: "player2"
-			};
-		}
-	}
-
 	Initialize() {
 		// Add Event Listener to the Start Button
 		this.keysButton.addEventListener("click", () => this.showKeysConfig());
@@ -146,6 +146,9 @@ export class PongMenu {
 
 		document.addEventListener("keydown", this.boundKeyDownSettings);
 		eventListeners["keydown"] = this.boundKeyDownSettings;
+
+		this.updatePlayersContainer();
+		this.setScoreRange();
 	}
 
 	showKeysConfig() {
@@ -238,7 +241,8 @@ export class PongMenu {
 						</div>
 						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
 							<div class="col-10" id="AIDifficulties">
-							<label class="text-white text-center" id="gamemodeDescription"></label>
+								<label class="text-white text-center" id="gamemodeDescription"></label>
+							</div>
 						</div>
 					</div>
 					<div class="col-12 d-flex justify-content-center mt-4">

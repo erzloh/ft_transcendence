@@ -25,13 +25,13 @@ export class PongGame {
 
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
-			left: "player1", right: "player2"
+			p1: "player1", p2: "player2", p3: "player3", p4: "player4"
 		};
 
 		const leftPaddleName = document.getElementById('leftPaddleName');
 		const rightPaddleName = document.getElementById('rightPaddleName');
-		leftPaddleName.innerHTML = this.usernames.left;
-		rightPaddleName.innerHTML = this.usernames.right;
+		leftPaddleName.innerHTML = this.usernames.p1;
+		rightPaddleName.innerHTML = this.usernames.p2;
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
@@ -137,14 +137,14 @@ export class PongGame {
 			this.leftPad.score++;
 			this.leftScore.innerHTML = this.leftPad.score;
 			if (this.leftPad.score >= this.objective) {
-				this.endGame(this.usernames.left);
+				this.endGame(this.usernames.p1);
 			}
 		}
 		else if (pad == "right") {
 			this.rightPad.score++;
 			this.rightScore.innerHTML = this.rightPad.score;
             if (this.rightPad.score >= this.objective) {
-                this.endGame(this.usernames.right);
+                this.endGame(this.usernames.p2);
             }
 		}
 		this.ball.resetPosition();
