@@ -7,10 +7,8 @@ export class PongMenu {
 		this.pointsRangeContainer = document.getElementById('pointsRangeContainer');
 		this.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 		this.settingsModalContent = document.getElementById('settingsModalContent');
-		this.leftPaddleUsernameLabel = document.getElementById('leftPaddleName');
-		this.leftPaddleInput = document.getElementById('leftPaddleInput');
-		this.rightPaddleUsernameLabel = document.getElementById('rightPaddleName');
-		this.rightPaddleInput = document.getElementById('rightPaddleInput');
+
+		this.playersContainer = document.getElementById('playersContainer');
 
 		this.toastNotification = document.getElementById('liveToast');
 		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
@@ -26,14 +24,10 @@ export class PongMenu {
 			left: "player1", right: "player2"
 		};
 
-		this.leftPaddleUsernameLabel.innerHTML = this.usernames.left;
-		this.rightPaddleUsernameLabel.innerHTML = this.usernames.right;
-
-		// const themeString = localStorage.getItem('pongTheme');
-		// this.theme = themeString ? JSON.parse(themeString) : {
-		// 	backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
-		// 	wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
-		// };
+		const colorsString = localStorage.getItem('pongColors');
+		this.colors = colorsString ? JSON.parse(colorsString) : {
+			1 : 'rgb(200, 0, 0)', 2 : 'rgb(0, 30, 200)', 3 : 'rgb(0, 200, 0)', 4 : 'rgb(200, 100, 0)'
+		};
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
@@ -45,13 +39,66 @@ export class PongMenu {
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
-
-		this.leftPaddleInput.addEventListener('keypress', (event) => this.leftPaddleInputHandle(event));
-		this.leftPaddleInput.addEventListener('blur', (event) => this.leftPaddleInputHandle(event));
-		this.rightPaddleInput.addEventListener('keypress', (event) => this.rightPaddleInputHandle(event));
-		this.rightPaddleInput.addEventListener('blur', (event) => this.rightPaddleInputHandle(event));
 		
+		this.updatePlayersContainer();
 		this.setScoreRange();
+	}
+
+	updatePlayersContainer() {
+		switch (this.gamemode) {
+			case "pvp":
+				this.playersContainer.innerHTML = `
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+							<label class="h3 text-white text-center">left paddle</label>
+							<label class="h5 text-white text-center" id="leftPaddleName">player 1</label>
+							<input type="text" id="leftPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+					</div>
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+							<label class="h3 text-white text-center">right paddle</label>
+							<label class="h5 text-white text-center" id="rightPaddleName">player 2</label>
+							<input type="text" id="rightPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+					</div>
+				`;
+
+				const leftPaddleUsernameLabel = document.getElementById('leftPaddleName');
+				const leftPaddleInput = document.getElementById('leftPaddleInput');
+				const rightPaddleUsernameLabel = document.getElementById('rightPaddleName');
+				const rightPaddleInput = document.getElementById('rightPaddleInput');
+
+				leftPaddleUsernameLabel.innerHTML = this.usernames.left;
+				rightPaddleUsernameLabel.innerHTML = this.usernames.right;
+
+				leftPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, leftPaddleInput, leftPaddleUsernameLabel, "left paddle", this.usernames.left));
+				leftPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, leftPaddleInput, leftPaddleUsernameLabel, "left paddle", this.usernames.left));
+				rightPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", this.usernames.right));
+				rightPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", this.usernames.right));
+				break;
+			case "AI":
+				this.playersContainer.innerHTML = `
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+							<label class="h3 text-white text-center">left paddle</label>
+							<label class="h5 text-white text-center" id="playerPaddleName">player 1</label>
+							<input type="text" id="playerPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+					</div>
+				`;
+
+				const playerPaddleName = document.getElementById('playerPaddleName');
+				const playerPaddleInput = document.getElementById('playerPaddleInput');
+
+				playerPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", this.usernames.left));
+				playerPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", this.usernames.left));
+				break;
+			case "Tournament":
+				break;
+			default:
+				break;
+		}
 	}
 
 	setScoreRange() {
@@ -75,27 +122,20 @@ export class PongMenu {
 		});
 	}
 
-	leftPaddleInputHandle(event) {
-		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && this.leftPaddleInput.value != "") {
-			this.usernames.left = this.leftPaddleInput.value;
-			this.leftPaddleInput.value = ""; // Clear the input box
-			this.leftPaddleUsernameLabel.innerHTML = this.usernames.left;
+	paddleInputHandle(event, playerInput, playerLabel, playerName, playerUsername) {
+		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && playerInput.value != "") {
+			playerUsername = playerInput.value;
+			playerInput.value = ""; // Clear the input box
+			playerLabel.innerHTML = playerUsername;
 
-			this.toastBody.innerHTML = "Changed Left paddle username to: " + this.usernames.left;
+			this.toastBody.innerHTML = "Changed " + playerName + " paddle username to: " + playerUsername;
 			this.toastBootstrap.show();
-			localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
-		}
-	}
 
-	rightPaddleInputHandle(event) {
-		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && this.rightPaddleInput.value != "") {
-			this.usernames.right = this.rightPaddleInput.value;
-			this.rightPaddleInput.value = ""; // Clear the input box
-			this.rightPaddleUsernameLabel.innerHTML = this.usernames.right;
-
-			this.toastBody.innerHTML = "Changed Right paddle username to: " + this.usernames.right;
-			this.toastBootstrap.show();
-			localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
+			localStorage.setItem('pongUsernames', JSON.stringify(playerUsername));
+			const usernamesString = localStorage.getItem('pongUsernames');
+			this.usernames = usernamesString ? JSON.parse(usernamesString) : {
+				left: "player1", right: "player2"
+			};
 		}
 	}
 
@@ -241,7 +281,7 @@ export class PongMenu {
 		this.settingsModal.show();
 	}
 
-	showColorSchemeConfig() {
+	showColorsConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
@@ -299,6 +339,7 @@ export class PongMenu {
 		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
 
 		this.showGamemodeConfig();
+		this.updatePlayersContainer();
 	}
 
 	// selectTheme(event, theme) {

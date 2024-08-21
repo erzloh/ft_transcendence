@@ -92,7 +92,7 @@ export class Pad {
 		if (!this.isAI) {
 			if (this.direction == "up" && this.y > 0) {
 				this.y -= this.dy;
-			} 
+			}
 			else if (this.direction == "down" && this.y < this.maxY) {
 				this.y += this.dy;
 			}
@@ -100,7 +100,8 @@ export class Pad {
 		else {
 			if (this.y + this.height / 2 < this.ball.y) {
 				this.y += this.dy;
-			} else {
+			} 
+			else {
 				this.y -= this.dy;
 			}
 		}
