@@ -3,6 +3,8 @@ export let eventListeners = { }
 export class PongMenu {
 	constructor () {
 		this.keysButton = document.getElementById('btnKeys');
+		this.gamemodeButton = document.getElementById('btnGamemode');
+		this.pointsRangeContainer = document.getElementById('pointsRangeContainer');
 		this.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 		this.settingsModalContent = document.getElementById('settingsModalContent');
 		this.leftPaddleUsernameLabel = document.getElementById('leftPaddleName');
@@ -21,7 +23,7 @@ export class PongMenu {
 
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
-			left: "Player1", right: "Player2"
+			left: "player1", right: "player2"
 		};
 
 		this.leftPaddleUsernameLabel.innerHTML = this.usernames.left;
@@ -38,10 +40,39 @@ export class PongMenu {
 			lUp : 'KeyW', lDown : 'KeyS', rUp : 'ArrowUp', rDown : 'ArrowDown'
 		};
 
+		const gamemodeString = localStorage.getItem('pongGamemode');
+		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
+
+		const objectiveString = localStorage.getItem('pongObjective');
+		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
+
 		this.leftPaddleInput.addEventListener('keypress', (event) => this.leftPaddleInputHandle(event));
 		this.leftPaddleInput.addEventListener('blur', (event) => this.leftPaddleInputHandle(event));
 		this.rightPaddleInput.addEventListener('keypress', (event) => this.rightPaddleInputHandle(event));
 		this.rightPaddleInput.addEventListener('blur', (event) => this.rightPaddleInputHandle(event));
+		
+		this.setScoreRange();
+	}
+
+	setScoreRange() {
+		this.pointsRangeContainer.innerHTML = `
+			<div class="col-6 flex-column align-items-center d-flex mb-2">
+				<label class="text-white h5 text-center" id="rangeLabel">points to win: 3</label>
+				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1" max="10" value="${this.objective}" step="1" id="pongRangeInput">
+			</div>
+		`;
+
+		let rangeInput = document.getElementById('pongRangeInput');
+		let rangeLabel = document.getElementById('rangeLabel');
+
+		rangeLabel.innerHTML = "points to win: " + this.objective;
+		localStorage.setItem('pongObjective', JSON.stringify(this.objective));
+
+		rangeInput.addEventListener('input', (event) => {
+			this.objective = event.target.value;
+			rangeLabel.textContent = "points to win: " + this.objective;
+			localStorage.setItem('pongObjective', JSON.stringify(this.objective));
+		});
 	}
 
 	leftPaddleInputHandle(event) {
@@ -71,6 +102,7 @@ export class PongMenu {
 	Initialize() {
 		// Add Event Listener to the Start Button
 		this.keysButton.addEventListener("click", () => this.showKeysConfig());
+		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
 
 		document.addEventListener("keydown", this.boundKeyDownSettings);
 		eventListeners["keydown"] = this.boundKeyDownSettings;
@@ -93,7 +125,7 @@ export class PongMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -101,7 +133,7 @@ export class PongMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -114,7 +146,7 @@ export class PongMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
 								</div>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
@@ -122,7 +154,7 @@ export class PongMenu {
 									<label class="text-white" style="padding: 3px 0px;">Move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -134,15 +166,77 @@ export class PongMenu {
 			</div>
 		`;
 
-		var btnLUp = document.getElementById('lUp');
-		var btnLDown = document.getElementById('lDown');
-		var btnRUp = document.getElementById('rUp');
-		var btnRDown = document.getElementById('rDown');
+		let btnLUp = document.getElementById('lUp');
+		let btnLDown = document.getElementById('lDown');
+		let btnRUp = document.getElementById('rUp');
+		let btnRDown = document.getElementById('rDown');
 
 		btnLUp.addEventListener("click", (event) => this.changeKeybind(event, "lUp", btnLUp));
 		btnLDown.addEventListener("click", (event) => this.changeKeybind(event, "lDown", btnLDown))
 		btnRUp.addEventListener("click", (event) => this.changeKeybind(event, "rUp", btnRUp));
 		btnRDown.addEventListener("click", (event) => this.changeKeybind(event, "rDown", btnRDown));
+
+		this.settingsModal.show();
+	}
+
+	showGamemodeConfig() {
+		this.settingsModalContent.innerHTML = `
+			<div class="row justify-content-center glass">
+				<div class="modal-header">
+					<h2 class="modal-title text-white w-100 text-center">Gamemodes</h2>
+				</div>
+				<div class="modal-body">
+					<div class="row justify-content-center">
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnPvp">PvP</button>
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnAI">vs AI</button>
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">Tournament</button>
+						</div>
+						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
+							<div class="col-10" id="AIDifficulties">
+							<label class="text-white text-center" id="gamemodeDescription"></label>
+						</div>
+					</div>
+					<div class="col-12 d-flex justify-content-center mt-4">
+						<button type="button" class="btn btn-lg text-white btn-filled" data-bs-dismiss="modal" aria-label="Close">Close</button>
+					</div>
+				</div>
+			</div>
+		`;
+
+
+        let btnPvp = document.getElementById('btnPvp');
+		let btnAI = document.getElementById('btnAI');
+		let btnTournament = document.getElementById('btnTournament');
+		let labelDescription = document.getElementById('gamemodeDescription');
+		let AiDifficulties = document.getElementById('AiDifficulties');
+
+		btnPvp.addEventListener("click", (event) => this.selectGamemode(event, "pvp"));
+		btnAI.addEventListener("click", (event) => this.selectGamemode(event, "AI"));
+		btnTournament.addEventListener("click", (event) => this.selectGamemode(event, "Tournament"));
+		
+		switch (this.gamemode) {
+			case "pvp":
+				btnPvp.disabled = true;
+				labelDescription.innerHTML = "Two players play against each other, one playing the left paddle, the other playing the right paddle.";
+				break;
+			case "AI":
+				btnAI.disabled = true;
+				labelDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
+				break;
+			case "Tournament":
+				btnTournament.disabled = true;
+				labelDescription.innerHTML = "Multiple players compete against each other in a tournament.";
+				break;
+			default:
+				break; 
+		}
+
+		localStorage.setItem('pongGamemode', JSON.stringify(this.gamemode));
 
 		this.settingsModal.show();
 	}
@@ -183,10 +277,10 @@ export class PongMenu {
 			</div>
 		`;
 
-		var btnObsidian = document.getElementById('pObsidian');
-        var btnAutumn = document.getElementById('pAutumn');
-		var btnGarden = document.getElementById('pGarden');
-        var btnSpacial = document.getElementById('pSpacial');
+		let btnObsidian = document.getElementById('pObsidian');
+        let btnAutumn = document.getElementById('pAutumn');
+		let btnGarden = document.getElementById('pGarden');
+        let btnSpacial = document.getElementById('pSpacial');
 
 		btnObsidian.addEventListener("click", (event) => this.selectTheme(event, "obsidian"));
 		btnAutumn.addEventListener("click", (event) => this.selectTheme(event, "autumn"));
@@ -197,6 +291,15 @@ export class PongMenu {
 	}
 
 	//#region EVENT LISTENERS HANDLERS
+
+	selectGamemode(event, gamemode) {
+		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
+		this.toastBootstrap.show();
+		this.gamemode = gamemode;
+		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
+
+		this.showGamemodeConfig();
+	}
 
 	// selectTheme(event, theme) {
 	// 	this.toastBody.innerHTML = "Chosen theme: " + theme;
