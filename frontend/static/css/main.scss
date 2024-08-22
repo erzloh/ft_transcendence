@@ -36,7 +36,7 @@ button {
 // }
 
 input, select, a, .clickable {
-	cursor: $cursor-pointer;
+	cursor: $cursor-pointer !important;
 }
 
 label {

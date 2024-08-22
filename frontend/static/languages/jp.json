@@ -6,6 +6,30 @@
 	"pong": "ポン",
 	"pac-man": "パックマン",
 
+	"pacman-menu": "パックマンメニュー",
+	"enter-username": "ユーザー名を入力",
+
+	"keys": "キー",
+	"keybinds-settings": "キーバインド設定",
+	"pacman-keys": "パックマンキー",
+	"ghost-keys": "ゴーストキー",
+	"move-up": "上に移動",
+	"move-down": "下に移動",
+	"move-left": "左に移動",
+	"move-right": "右に移動",
+	"use-spell": "スペルを使用",
+
+	"pacman-skin": "パックマンスキン",
+	"ghost-skin": "ゴーストスキン",
+
+	"gamemode": "ゲームモード",
+	"objective": "目的",
+	"objective-description": "パックマンのスコアが目標に達するか、ゴーストがパックマンを捕まえるとゲームが終了します。",
+	"endless": "エンドレス",
+	"endless-description": "ゴーストがパックマンを捕まえるとゲームが終了します。",
+	
+	"map": "マップ",
+	"theme": "テーマ",
 	"start game": "ゲーム開始",
 
 	"username": "ユーザー名",

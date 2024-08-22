@@ -11,6 +11,9 @@
 	<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
 </div> */}
 
+import { updateTexts } from "../utils/languages.js";
+import { updateTextForElem } from "../utils/languages.js";
+
 export let eventListeners = { }
 
 export class PacmanMenu {
@@ -121,17 +124,17 @@ export class PacmanMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">keybinds settings</h2>
+					<h2 class="modal-title text-white w-100 text-center" data-translate="keybinds-settings">keybinds settings</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 d-flex justify-content-center">
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="h3 text-white m-3">pacman keys</h3>
+								<h3 class="h3 text-white m-3" data-translate="pacman-keys">pacman keys</h3>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move up</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="move-up">move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</label>
@@ -139,7 +142,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move left</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="move-left">move left</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</label>
@@ -147,7 +150,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move down</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="move-down">move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</label>
@@ -155,7 +158,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move right</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="move-right">move right</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</label>
@@ -163,7 +166,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">use spell</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="use-spell">use spell</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</label>
@@ -172,11 +175,11 @@ export class PacmanMenu {
 						</div>
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="text-white m-3">ghost keys</h3>
+								<h3 class="text-white m-3" data-translate="ghost-keys">ghost keys</h3>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move up</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="move-up">move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</label>
@@ -184,7 +187,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move left</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="move-left">move left</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</label>
@@ -192,7 +195,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move down</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="move-down">move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</label>
@@ -200,7 +203,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move right</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="move-right">move right</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</label>
@@ -208,7 +211,7 @@ export class PacmanMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">use spell</label>
+									<label class="text-white" style="padding: 3px 0px;" data-translate="use-spell">use spell</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</label>
@@ -242,13 +245,14 @@ export class PacmanMenu {
 		btnGSpell.addEventListener("click", (event) => this.changeKeybind(event, "gSpell", btnGSpell));
 
 		this.settingsModal.show();
+		updateTexts();
 	}
 
 	showPacmanSkinConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">pacman skins</h2>
+					<h2 class="modal-title text-white w-100 text-center" data-translate="pacman-skin">pacman skins</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 justify-content-center">
@@ -270,15 +274,6 @@ export class PacmanMenu {
 		btnPacmanSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacman"));
 		btnPacgirlSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacgirl"));
 
-		// const selectedSkin = localStorage.getItem('pacmanSkin');
-		// if (selectedSkin === '"pacman"') {
-		// 	btnPacmanSkin.classList.add("selected");
-		// 	btnPacgirlSkin.classList.remove("selected");
-		// } else if (selectedSkin === '"pacgirl"') {
-		// 	btnPacgirlSkin.classList.add("selected");
-		// 	btnPacmanSkin.classList.remove("selected");
-		// }
-
 		const pacmanSkins = {
 			pacman: btnPacmanSkin,
 			pacgirl: btnPacgirlSkin
@@ -286,13 +281,15 @@ export class PacmanMenu {
 		this.applySelectedSetting("pacmanSkin", pacmanSkins);
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	showGhostSkinConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">ghost skins</h2>
+					<h2 class="modal-title text-white w-100 text-center" data-translate="ghost-skin">ghost skins</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 justify-content-center">
@@ -335,22 +332,24 @@ export class PacmanMenu {
 		this.applySelectedSetting("ghostSkin", ghostSkins);
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	showGamemodeConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">gamemodes</h2>
+					<h2 class="modal-title text-white w-100 text-center" data-translate="gamemode">gamemodes</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-auto mr-2 ml-3">
 						<div class="row justify-content-center text-center mt-2 mb-1">
 							<div class="col-4 d-flex justify-content-center">
-								<button role="button" class="btn btn-lg text-light" id="btnObjective">objective</button>
+								<button role="button" class="btn btn-lg text-light" id="btnObjective" data-translate="objective">objective</button>
 							</div>
 							<div class="col-4 d-flex justify-content-center">
-								<button role="button" class="btn btn-lg text-white" id="btnInfinite">endless</button>
+								<button role="button" class="btn btn-lg text-white" id="btnInfinite" data-translate="endless">endless</button>
 							</div>
 							<div class="col-10 m-5">
 								<label class="text-white" id="gamemodeDescription"></label>
@@ -377,6 +376,7 @@ export class PacmanMenu {
 				btnObjective.disabled = true;
 				btnInfinite.disabled = false;
 				labelDescription.innerHTML = "the game ends once Pacman's score reaches the objective or the Ghost catches Pacman.";
+				updateTextForElem(labelDescription, "objective-description");
 				rangeContainer.innerHTML = `
 							<div class="col-12 justify-content-center mb-2">
 									<label class="text-white h5" id="rangeLabel"></label>
@@ -386,11 +386,11 @@ export class PacmanMenu {
 				var rangeInput = document.getElementById('rangeInput');
 				var rangeLabel = document.getElementById('rangeLabel');
 
-				rangeLabel.innerHTML = "Objective: " + this.objective;
+				rangeLabel.innerHTML = this.objective;
 				localStorage.setItem('objective', JSON.stringify(this.objective));
 
 				rangeInput.addEventListener('input', (event) => {
-					rangeLabel.textContent = "objective: " + event.target.value;
+					rangeLabel.textContent = event.target.value;
 					this.objective = event.target.value;
 				});
 
@@ -399,19 +399,22 @@ export class PacmanMenu {
 				btnObjective.disabled = false;
 				btnInfinite.disabled = true;
 				labelDescription.innerHTML = "the game ends once the Ghost catches Pacman.";
+				updateTextForElem(labelDescription, "endless-description");
 				break;
 			default:
 				break;
 		}
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	showMapConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">maps</h2>
+					<h2 class="modal-title text-white w-100 text-center" data-translate="map">maps</h2>
 				</div>
 				<div class="modal-body p-5">
 					<div class="col-auto mr-2 ml-2">
@@ -450,13 +453,15 @@ export class PacmanMenu {
 		this.applySelectedSetting("mapName", maps);
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	showColorSchemeConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">themes</h2>
+					<h2 class="modal-title text-white w-100 text-center" data-translate="theme">themes</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 justify-content-center">
@@ -504,6 +509,8 @@ export class PacmanMenu {
 		this.applySelectedSetting("themeName", themes);
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	//#region EVENT LISTENERS HANDLERS

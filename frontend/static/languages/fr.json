@@ -6,6 +6,30 @@
 	"pong": "pong",
 	"pac-man": "pac-man",
 
+	"pacman-menu": "menu pac-man",
+	"enter-username": "entrer nom d'utilisateur",
+
+	"keys": "touches",
+	"keybinds-settings": "paramètres de touches",
+	"pacman-keys": "touches de pac-man",
+	"ghost-keys": "touches du fantôme",
+	"move-up": "monter",
+	"move-down": "descendre",
+	"move-left": "gauche",
+	"move-right": "droite",
+	"use-spell": "spécial",
+
+	"pacman-skin": "skin du pac-man",
+	"ghost-skin": "skin du fantôme",
+
+	"gamemode": "mode de jeu",
+	"objective": "objectif",
+	"objective-description": "le jeu se termine une fois que le score de Pacman atteint l'objectif ou que le fantôme attrape Pacman.",
+	"endless": "sans fin",
+	"endless-description": "le jeu se termine une fois que le fantôme attrape Pacman.",
+
+	"map": "carte",
+	"theme": "thème",
 	"start game": "démarrer le jeu",
 
 	"username": "nom d'utilisateur",
