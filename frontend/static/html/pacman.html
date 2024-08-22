@@ -3,9 +3,21 @@
 		<div class="col-12 text-center mb-3">
 			<p class="text-white h1" animated-letters data-translate="pac-man">pac-man</p>
 			<br>
-			<p class="text-white h3 text-center" id="pGamemode"></p>
-			<p class="text-white h5 text-center" id="pScore">Pacman's score: 0</p>
-			<p class="text-white h5 text-center" id="timer">Time elapsed: 00:00</p>
+			<div class="container">
+				<div class="row text-white d-flex justify-content-center">
+					<div class="col-4">
+						<img class="mb-3" src="/static/assets/pacman/images/pacman_high_res.png" width="32px" style="display: inline;"/>
+						<p id="pScore" style="display: inline;" class="h3">00</p>
+						<p style="display: inline;" class="h3 total-score">/</p>
+						<p style="display: inline;" class="h3 total-score" id="pGamemode">10000</p>
+					</div>
+					<div class="col-4">
+						<img class="mb-3" src="/static/assets/UI/icons/time.svg" width="32px" style="display: inline;"/>
+						<p id="timer" style="display: inline;" class="h3">00:00</p>
+					</div>
+				</div>
+
+			</div>
 		</div>
 		<div class="col">
 			<div class="row-12">
@@ -15,19 +27,18 @@
 			</div>
 			<div class="row justify-content-center">
 				<div class="col-3 d-flex flex-column align-items-center mb-3">
-					<label class="h4 text-white" id="pacmanPlayerLabel"></label>
-					<img id="imgPacmanSkin"/>
-					<br>
-					<label class="text-white h5 text-center">Freeze</label>
-					<label class="text-white h5" id="pCD">Ready</label>	
+					<p class="text-white h5 text-center">Freeze</p>
+					<p class="text-white h5" id="pCD">Ready</p>	
+					<img class="m-3" id="imgPacmanSkin"/>
+					<p class="h4 text-white m-0" id="pacmanPlayerLabel"></p>
+					
 				</div>
 				
 				<div class="col-3 d-flex flex-column align-items-center mb-3">
-					<label class="h4 text-white" id="ghostPlayerLabel"></label>
-					<img id="imgGhostSkin"/>
-					<br>
-					<label class="text-white h5 text-center">Ghost block</label>
-					<label class="text-white h5" id="gCD">Ready</label>	
+					<p class="text-white h5 text-center">Ghost block</p>
+					<p class="text-white h5" id="gCD">Ready</p>	
+					<img class="m-3" id="imgGhostSkin"/>
+					<p class="h4 text-white m-0" id="ghostPlayerLabel"></p>
 				</div>
 			</div>
 		</div>
@@ -36,12 +47,12 @@
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center">
 						<div class="modal-header">
-							<label class="h3 modal-title text-white w-100 text-center">Game Paused</label>
+							<label class="h3 modal-title text-white w-100 text-center" data-translate="game paused">Game Paused</label>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
 								<div class="col-10 d-flex justify-content-center mt-2">
-									<label class="h5 text-white">Press escape to continue</label>
+									<label class="h5 text-white" data-translate="press escape">Press escape to continue</label>
 								</div>
 							</div>
 						</div>

@@ -33,6 +33,9 @@
 	"theme": "theme",
 	"start game": "start game",
 
+	"game paused": "game paused",
+	"press escape": "press escape to resume",
+
 	"username": "username",
 	"e-mail": "e-mail",
 	"password": "password",

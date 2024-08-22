@@ -1,3 +1,4 @@
+import { updateTexts } from "../utils/languages.js";
 import { Pacman, Ghost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
 
@@ -89,10 +90,12 @@ class PacmanGame {
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
 		switch (this.gamemode) {
 			case "objective":
-				this.pGamemode.innerHTML = "Objective: " + this.objective;
+				this.pGamemode.innerHTML = this.objective;
 				break;
 			case "infinite":
-				this.pGamemode.innerHTML = "Endless";
+				document.querySelectorAll('.total-score').forEach(elem => {
+					elem.style.display = 'none';
+				});
 				break;
 			default:
 				break;
@@ -139,6 +142,7 @@ class PacmanGame {
 				this.c.fillStyle = "rgba(0, 0, 0, 0.5)";
 				this.c.fillRect(0, 0, this.canvas.width, this.canvas.height);
 				this.pauseModal.show();
+				updateTexts();
 			}
 			else
 				this.timer.start();
@@ -220,7 +224,7 @@ class PacmanGame {
 		this.height = tmpHeight;
 
 		// Set score to 0
-		this.pScore.textContent = "Pacman's score: 0";
+		this.pScore.textContent = "00";
 
 		document.addEventListener("keydown", this.boundPacmanHandleKeyDown);
 		eventListeners["keydown"] = this.boundPacmanHandleKeyDown;

@@ -32,6 +32,9 @@
 	"theme": "テーマ",
 	"start game": "ゲーム開始",
 
+	"game paused": "ゲームが一時停止しました",
+	"press escape": "再開するにはエスケープキーを押してください",
+
 	"username": "ユーザー名",
 	"e-mail": "メール",
 	"password": "パスワード",
