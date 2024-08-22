@@ -68,7 +68,13 @@
 	"login-failure": "an error occured while logging in",
 
 	"see-friends": "see friends",
+
 	"edit-profile": "edit profile",
+	"profile-picture": "profile picture",
+	"save": "save",
+	"save-success": "save successful!",
+	"save-failure": "an error occured while saving",
+
 
 	"graphics": "graphics", 
 	"ultra": "ultra",

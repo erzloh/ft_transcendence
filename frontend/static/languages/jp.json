@@ -65,7 +65,13 @@
 	"login-failure": "ログイン中にエラーが発生しました",
 
 	"see-friends": "友達を見る",
+
 	"edit-profile": "プロフィールを編集",
+	"profile-picture": "プロフィール写真",
+	"save": "保存",
+	"save-success": "保存成功！",
+	"save-failure": "保存中にエラーが発生しました",
+
 	"logout": "ログアウト",
 
 	"graphics": "グラフィックス",

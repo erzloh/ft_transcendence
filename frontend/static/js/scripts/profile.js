@@ -25,20 +25,21 @@ export async function profile() {
 			const emailElem = document.getElementById('username-email');
 			emailElem.innerText = user.email;
 
+			const avatarElem = document.getElementById('avatar');
+			try {
+				const responseAvatar = await fetch(`${BASE_URL}/api/user_avatar`);
+
+				const blob = await responseAvatar.blob();
+				const url = URL.createObjectURL(blob);
+				avatarElem.src = url;
+			} catch (error) {
+				avatarElem.src = 'static/assets/images/profile_pic_2.png';
+			}
+
+			// Show the profile page
 			const profilePage = document.getElementById('profile-page');
 			profilePage.style.display = 'flex';
 		}
-		
-		// if (response.ok) {
-		// 	console.log('user is logged in');
-		// 	const profilePage = document.getElementById('profile-page');
-		// 	profilePage.style.display = 'flex';
-		// } else {
-		// 	console.log('user is not logged in');
-		// 	const profilePage = document.getElementById('profile-page');
-		// 	profilePage.style.display = 'none !important';
-		// 	navigateTo('/signin');
-		// }
 	}
 
 	// Log out button
