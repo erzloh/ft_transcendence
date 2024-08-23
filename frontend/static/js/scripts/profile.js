@@ -15,8 +15,6 @@ export async function profile() {
 		// If the user is logged in, show the profile page
 		if (response.status === 200) {
 			const responseData = await response.json();
-			console.log(responseData);
-
 			const user = responseData.user;
 
 			const usernameElem = document.getElementById('username-name');
@@ -25,15 +23,16 @@ export async function profile() {
 			const emailElem = document.getElementById('username-email');
 			emailElem.innerText = user.email;
 
+			// Get the user's avatar
 			const avatarElem = document.getElementById('avatar');
-			try {
-				const responseAvatar = await fetch(`${BASE_URL}/api/user_avatar`);
+			const responseAvatar = await fetch(`${BASE_URL}/api/user_avatar`);
 
+			if (responseAvatar.status !== 200) {
+				avatarElem.src = 'static/assets/images/profile_pic_2.png';
+			} else {
 				const blob = await responseAvatar.blob();
 				const url = URL.createObjectURL(blob);
 				avatarElem.src = url;
-			} catch (error) {
-				avatarElem.src = 'static/assets/images/profile_pic_2.png';
 			}
 
 			// Show the profile page

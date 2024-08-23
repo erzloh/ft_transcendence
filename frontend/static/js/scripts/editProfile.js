@@ -1,10 +1,20 @@
 import { updateTextForElem } from "../utils/languages.js";
 import { navigateTo } from '../index.js';
+import { BASE_URL } from '../index.js';
 
 // Function that will be called when the view is loaded
-export function editProfile () {
-	console.log('hello from editProfile')
+export async function editProfile () {
+	// State of all forms
+	const changes = {
+		profilePicture: false,
+		username: false,
+		email: false,
+		password: false
+	};
+
     // Get the form elements from the HTML
+	const avatarElem = document.getElementById('avatar');
+	const avatarInputElem = document.getElementById('avatar-input');
 	const usernameElem = document.getElementById('username');
 	const emailElem = document.getElementById('email');
 	const passwordElem = document.getElementById('password');
@@ -12,15 +22,74 @@ export function editProfile () {
 	const usernameErrorElem = document.getElementById('username-error');
 	const emailErrorElem = document.getElementById('email-error');
 	const passwordErrorElem = document.getElementById('password-error');
+	const avatarErrorElem = document.getElementById('avatar-error');
 	
 	// Add event listeners for when the user leaves the input fields
 	usernameElem.addEventListener('blur', validateUsername);
 	emailElem.addEventListener('blur', validateEmail);
 	passwordElem.addEventListener('blur', validatePassword);
+
+
+	avatarInputElem.addEventListener('change', () => {
+		changes.profilePicture = true;
+		// change the image if its valid
+		const avatar = avatarInputElem.files[0];
+		if (validateAvatar()) {
+			const url = URL.createObjectURL(avatar);
+			avatarElem.src = url;
+		}
+	});
+	usernameElem.addEventListener('change', () => {
+		changes.username = true;
+	});
+	emailElem.addEventListener('change', () => {
+		changes.email = true;
+	});
+	passwordElem.addEventListener('change', () => {
+		changes.password = true;
+	});
 	
 	// Add event listener for the submit button
 	const saveButtonElem = document.getElementById('save-button');
 	saveButtonElem.addEventListener('click', submitForm);
+
+	// Get the user's avatar
+	const responseAvatar = await fetch(`${BASE_URL}/api/user_avatar`);
+
+	if (responseAvatar.status !== 200) {
+		avatarElem.src = 'static/assets/images/profile_pic_2.png';
+	} else {
+		const blob = await responseAvatar.blob();
+		const url = URL.createObjectURL(blob);
+		avatarElem.src = url;
+	}
+
+	// Get the user's data
+	const response = await fetch(`${BASE_URL}/api/profile`);
+
+	if (response.status === 200) {
+		const responseData = await response.json();
+		const user = responseData.user;
+
+		usernameElem.value = user.username;
+		emailElem.value = user.email;
+	}
+
+	// Validates profile picture
+	function validateAvatar() {
+		const avatar = avatarInputElem.files[0];
+		const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+		if (!avatar) {
+			updateTextForElem(avatarErrorElem, 'avatar-empty-error');
+			return false;
+		}
+		if (!allowedExtensions.exec(avatar.name)) {
+			updateTextForElem(avatarErrorElem, 'avatar-invalid-error');
+			return false;
+		}
+		avatarErrorElem.textContent = '\u00A0';
+		return true;
+	}
 
 	// Validates the username, returns true if it is valid
 	function validateUsername() {
@@ -79,35 +148,48 @@ export function editProfile () {
 	}
 
 	async function submitForm(e) {
-		console.log('submitting form');
 		// Prevent the default behavior of the form
 		e.preventDefault();
 
-		// Make sure that all the fields are valid (at least front-end-wise)
-		const usernameValid = validateUsername();
-		const emailValid = validateEmail();
-		const passwordValid = validatePassword();
+		// Data to be sent to the server
+		const formData = new FormData();
 
-		// If all the fields are valid, send the data to the server
-		if (usernameValid && emailValid && passwordValid) {
-			// Prepare the data to be sent
-			const username = usernameElem.value;
-			const email = emailElem.value;
-			const password = passwordElem.value;
+		// Validate the profile picture
+		if (changes.profilePicture) {
+			validateAvatar();
+			formData.append('avatar', avatarInputElem.files[0]);
+		}
 
-			const data = {
-				username,
-				email,
-				password
-			};
+		// Validate only the fields that have been changed
+		let formValid = true;
+		if (changes.username) {
+			if (!validateUsername()) {
+				formValid = false;
+			}
+			formData.append('username', usernameElem.value);
+		}
+		if (changes.email) {
+			if (!validateEmail()) {
+				formValid = false;
+			}
+			formData.append('email', emailElem.value);
+		}
+		if (changes.password) {
+			if (!validatePassword()) {
+				formValid = false;
+			}
+			formData.append('password', passwordElem.value);
+		}
 
+		if (formValid) {
+			console.log(formData);
 			// Send the data to the server
 			const response = await fetch(`${BASE_URL}/api/update_user`, {
 				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify(data)
+				body: formData
 			})
 
 			// If the status is an error, show the error message in the correct fields
@@ -156,6 +238,8 @@ export function editProfile () {
 				`;
 				updateTextForElem(document.getElementById('failure-message'), 'save-failure');
 			}
+		} else {
+			console.log('Form is not valid');
 		}
 	};
 }
