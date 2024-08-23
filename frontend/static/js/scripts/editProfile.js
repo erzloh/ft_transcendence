@@ -87,6 +87,11 @@ export async function editProfile () {
 			updateTextForElem(avatarErrorElem, 'avatar-invalid-error');
 			return false;
 		}
+		// check if the file is less than 2MB
+		if (avatar.size > 2 * 1024 * 1024) {
+			updateTextForElem(avatarErrorElem, 'avatar-size-error');
+			return false;
+		}
 		avatarErrorElem.textContent = '\u00A0';
 		return true;
 	}
@@ -154,14 +159,14 @@ export async function editProfile () {
 		// Data to be sent to the server
 		const formData = new FormData();
 
-		// Validate the profile picture
-		if (changes.profilePicture) {
-			validateAvatar();
-			formData.append('avatar', avatarInputElem.files[0]);
-		}
-
 		// Validate only the fields that have been changed
 		let formValid = true;
+		if (changes.profilePicture) {
+			if (!validateAvatar()) {
+				formValid = false;
+			}
+			formData.append('avatar', avatarInputElem.files[0]);
+		}
 		if (changes.username) {
 			if (!validateUsername()) {
 				formValid = false;
