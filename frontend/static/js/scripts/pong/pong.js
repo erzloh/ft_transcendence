@@ -1,4 +1,4 @@
-import { Ball, Pad }  from "./objects.js";
+import { Ball, Pad, Tournament }  from "./objects.js";
 
 export let eventListeners = { }
 
@@ -13,8 +13,10 @@ export class PongGame {
 		this.endgameModalScore = document.getElementById('endgameModalScore');
 		// let endgameModalTime = document.getElementById('endgameModalTime');
 		this.endgameModalPlayAgain = document.getElementById('playAgainButton');
+		this.tournamentModalNextMatch = document.getElementById('nextMatchButton');
 		this.pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
 		this.endgameModal = new bootstrap.Modal(document.getElementById('endgameModal'));
+		this.matchScore =  document.getElementById('matchScore');
 
 		this.leftScore = document.getElementById("leftScore");
 		this.rightScore = document.getElementById("rightScore");
@@ -22,6 +24,9 @@ export class PongGame {
 		this.pWidth = 10, this.pHeight = 100, this.bSize = 10;
 		this.paused = false;
 		this.gameOver = false;
+
+		const gamemodeString = localStorage.getItem('pongGamemode');
+		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
 
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
@@ -31,15 +36,15 @@ export class PongGame {
 		const leftPaddleName = document.getElementById('leftPaddleName');
 		const rightPaddleName = document.getElementById('rightPaddleName');
 		leftPaddleName.innerHTML = this.usernames.p1;
-		rightPaddleName.innerHTML = this.usernames.p2;
+		if (this.gamemode != "AI")
+			rightPaddleName.innerHTML = this.usernames.p2;
+		else
+			rightPaddleName.innerHTML = "AI";
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			lUp : 'KeyW', lDown : 'KeyS', rUp : 'ArrowUp', rDown : 'ArrowDown'
 		};
-
-		const gamemodeString = localStorage.getItem('pongGamemode');
-		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
@@ -60,6 +65,9 @@ export class PongGame {
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
 			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
 
+		this.tournament;
+		this.currentMatch;
+
 		this.rightPad.ball = this.ball;
 
 		this.gameLoop = this.gameLoop.bind(this);
@@ -68,12 +76,37 @@ export class PongGame {
 	initialize() {
 		this.startButton.addEventListener("click", () => this.startGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
+		this.tournamentModalNextMatch.addEventListener("click", () => this.nextMatch());
 
 		document.addEventListener("keydown", this.boundPongHandleKeyDown);
 		eventListeners["keydown"] = this.boundPongHandleKeyDown;
 
 		document.addEventListener("keyup", this.boundPongHandleKeyUp);
 		eventListeners["keyup"] = this.boundPongHandleKeyUp;
+
+		if (this.gamemode == "tournament") {
+			this.tournament = new Tournament(4, this.usernames);
+			this.currentMatch = this.tournament.getCurrentPlayers();
+			leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
+			rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
+		}
+	}
+
+	winMatch(side) {
+		this.gameOver = true;
+		this.matchScore.innerHTML = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.tournament.setCurrentMatchWinner(side);
+		if (this.tournament.tournamentOver) {
+			this.endTournament(side);
+		}
+	}
+	
+	nextMatch() {
+		this.currentMatch = this.tournament.getCurrentPlayers();
+		leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
+		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
+
+		this.resetGame();
 	}
 
 	resetGame() {
@@ -104,15 +137,19 @@ export class PongGame {
 		this.gameLoop();
 	}
 
+	endTournament(side) {
+		this.endgameModalWinner.textContent = this.usernames[this.currentMatch[side]] + " won the tournament !";
+		this.endgameModalScore.textContent = "Final score: " + this.leftPad.score + "-" + this.rightPad.score;
+
+		this.endgameModal.show();
+	}
+
 	endGame(winner) {
 		this.gameOver = true;
-		// this.timer.stop();
 
 		this.endgameModalWinner.textContent = winner + " won the game !";
 		this.endgameModalScore.textContent = "Final score: " + this.leftPad.score + "-" + this.rightPad.score;
-		// endgameModalTime.textContent = "Time elapsed: " + this.timer.min.toString().padStart(2, '0') + ":" + this.timer.sec.toString().padStart(2, '0');
 
-		// Show the modal
 		this.endgameModal.show();
 	}
 
@@ -137,14 +174,20 @@ export class PongGame {
 			this.leftPad.score++;
 			this.leftScore.innerHTML = this.leftPad.score;
 			if (this.leftPad.score >= this.objective) {
-				this.endGame(this.usernames.p1);
+				if (this.gamemode == "tournament")
+					this.winMatch(pad);
+				else
+					this.endGame(this.usernames.p1);
 			}
 		}
 		else if (pad == "right") {
 			this.rightPad.score++;
 			this.rightScore.innerHTML = this.rightPad.score;
             if (this.rightPad.score >= this.objective) {
-                this.endGame(this.usernames.p2);
+				if (this.gamemode == "tournament")
+					this.winMatch(pad);
+				else
+                	this.endGame(this.usernames.p2);
             }
 		}
 		this.ball.resetPosition();

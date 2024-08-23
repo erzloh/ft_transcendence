@@ -9,6 +9,7 @@ export class PongMenu {
 		this.settingsModalContent = document.getElementById('settingsModalContent');
 
 		this.playersContainer = document.getElementById('playersContainer');
+		this.currentGamemodeLabel = document.getElementById('currentGamemodeLabel');
 
 		this.toastNotification = document.getElementById('liveToast');
 		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
@@ -37,6 +38,8 @@ export class PongMenu {
 
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
+
+		this.currentGamemodeLabel.innerHTML  = "current gamemode: " + this.gamemode;
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
@@ -94,7 +97,7 @@ export class PongMenu {
 				playerPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
 				playerPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
 				break;
-			case "Tournament":
+			case "tournament":
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
@@ -205,13 +208,13 @@ export class PongMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Keybinds settings</h2>
+					<h2 class="modal-title text-white w-100 text-center">keybinds settings</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 d-flex justify-content-center">
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<label class="h3 text-white">Left paddle</label>
+								<label class="h3 text-white">left paddle</label>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
@@ -232,7 +235,7 @@ export class PongMenu {
 						</div>
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="text-white">Right paddle</h3>
+								<h3 class="text-white">right paddle</h3>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
@@ -251,9 +254,6 @@ export class PongMenu {
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-12 d-flex justify-content-center mt-4">
-						<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
 					</div>
 				</div>
 			</div>
@@ -276,7 +276,7 @@ export class PongMenu {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Gamemodes</h2>
+					<h2 class="modal-title text-white w-100 text-center">gamemodes</h2>
 				</div>
 				<div class="modal-body">
 					<div class="row justify-content-center">
@@ -295,9 +295,6 @@ export class PongMenu {
 							</div>
 						</div>
 					</div>
-					<div class="col-12 d-flex justify-content-center mt-4">
-						<button type="button" class="btn btn-lg text-white btn-filled" data-bs-dismiss="modal" aria-label="Close">Close</button>
-					</div>
 				</div>
 			</div>
 		`;
@@ -311,7 +308,7 @@ export class PongMenu {
 
 		btnPvp.addEventListener("click", (event) => this.selectGamemode(event, "pvp"));
 		btnAI.addEventListener("click", (event) => this.selectGamemode(event, "AI"));
-		btnTournament.addEventListener("click", (event) => this.selectGamemode(event, "Tournament"));
+		btnTournament.addEventListener("click", (event) => this.selectGamemode(event, "tournament"));
 		
 		switch (this.gamemode) {
 			case "pvp":
@@ -322,7 +319,7 @@ export class PongMenu {
 				btnAI.disabled = true;
 				labelDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
 				break;
-			case "Tournament":
+			case "tournament":
 				btnTournament.disabled = true;
 				labelDescription.innerHTML = "Multiple players compete against each other in a tournament.";
 				break;
@@ -387,10 +384,11 @@ export class PongMenu {
 	//#region EVENT LISTENERS HANDLERS
 
 	selectGamemode(event, gamemode) {
-		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
+		this.toastBody.innerHTML = "chosen gamemode: " + gamemode;
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
 		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
+		this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
 
 		this.showGamemodeConfig();
 		this.updatePlayersContainer();
