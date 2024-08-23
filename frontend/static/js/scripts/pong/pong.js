@@ -33,6 +33,11 @@ export class PongGame {
 			p1: "player1", p2: "player2", p3: "player3", p4: "player4"
 		};
 
+		const colorsString = localStorage.getItem('pongColors');
+		this.colors = colorsString ? JSON.parse(colorsString) : {
+			p1: "#ff0000", p2: "#00ff00", p3: "#0000ff", p4: "#ff00ff"
+		};
+
 		const leftPaddleName = document.getElementById('leftPaddleName');
 		const rightPaddleName = document.getElementById('rightPaddleName');
 		leftPaddleName.innerHTML = this.usernames.p1;
@@ -55,11 +60,11 @@ export class PongGame {
 		this.boundScorePoint = this.scorePoint.bind(this);
 
 		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, "#FFF", 5, this.cvs.height -  this.pHeight, 
+			this.pWidth, this.pHeight, this.colors.p1, 5, this.cvs.height -  this.pHeight, 
 			false);
 
 		this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, "#FFF", 5, this.cvs.height -  this.pHeight,
+			this.pWidth, this.pHeight, this.gamemode == "AI" ? "#FFF" : this.colors.p2, 5, this.cvs.height -  this.pHeight,
 			this.gamemode == "AI" ? true : false);
 
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
@@ -89,6 +94,8 @@ export class PongGame {
 			this.currentMatch = this.tournament.getCurrentPlayers();
 			leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
 			rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
+			this.leftPad.color = this.colors[this.currentMatch.left];
+			this.rightPad.color = this.colors[this.currentMatch.right];
 		}
 	}
 
@@ -105,6 +112,8 @@ export class PongGame {
 		this.currentMatch = this.tournament.getCurrentPlayers();
 		leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
 		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
+		this.leftPad.color = this.colors[this.currentMatch.left];
+		this.rightPad.color = this.colors[this.currentMatch.right];
 
 		this.resetGame();
 	}
@@ -113,11 +122,11 @@ export class PongGame {
 		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 		
 		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, "#FFF", 5, this.cvs.height -  this.pHeight, 
+			this.pWidth, this.pHeight, this.colors.p1, 5, this.cvs.height -  this.pHeight, 
 			false);
 
 		this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, "#FFF", 5, this.cvs.height -  this.pHeight,
+			this.pWidth, this.pHeight, this.gamemode == "AI" ? "#FFF" : this.colors.p2, 5, this.cvs.height -  this.pHeight,
 			this.gamemode == "AI" ? true : false);	
 		
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,

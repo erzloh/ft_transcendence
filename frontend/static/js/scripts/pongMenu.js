@@ -21,14 +21,14 @@ export class PongMenu {
 		this.waitForKey = false;
 		this.waitingKey = "";
 
+		const colorsString = localStorage.getItem('pongColors');
+		this.colors = colorsString ? JSON.parse(colorsString) : {
+			p1: "#ff0000", p2: "#00ff00", p3: "#0000ff", p4: "#ff00ff"
+		};
+
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
 			p1: "player1", p2: "player2", p3: "player3", p4: "player4"
-		};
-
-		const colorsString = localStorage.getItem('pongColors');
-		this.colors = colorsString ? JSON.parse(colorsString) : {
-			1 : 'rgb(200, 0, 0)', 2 : 'rgb(0, 30, 200)', 3 : 'rgb(0, 200, 0)', 4 : 'rgb(200, 100, 0)'
 		};
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
@@ -55,6 +55,9 @@ export class PongMenu {
 							<label class="h5 text-white text-center" id="leftPaddleName">player 1</label>
 							<input type="text" id="leftPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
+						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
+						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
@@ -62,21 +65,31 @@ export class PongMenu {
 							<label class="h5 text-white text-center" id="rightPaddleName">player 2</label>
 							<input type="text" id="rightPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
+						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 glass" value="#00ff00">
+						</div>
 					</div>
 				`;
 
 				const leftPaddleUsernameLabel = document.getElementById('leftPaddleName');
 				const leftPaddleInput = document.getElementById('leftPaddleInput');
+				const leftPaddleColor = document.getElementById('leftPaddleColor');
 				const rightPaddleUsernameLabel = document.getElementById('rightPaddleName');
 				const rightPaddleInput = document.getElementById('rightPaddleInput');
+				const rightPaddleColor = document.getElementById('rightPaddleColor');
 
 				leftPaddleUsernameLabel.innerHTML = this.usernames.p1;
 				rightPaddleUsernameLabel.innerHTML = this.usernames.p2;
+				leftPaddleColor.value = this.colors.p1;
+				rightPaddleColor.value = this.colors.p2;
 
 				leftPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, leftPaddleInput, leftPaddleUsernameLabel, "left paddle",  "p1"));
 				leftPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, leftPaddleInput, leftPaddleUsernameLabel, "left paddle",  "p1"));
 				rightPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", "p2"));
 				rightPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", "p2"));
+
+				leftPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, "left paddle", "p1"));
+				rightPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, "right paddle", "p2"));
 				break;
 			case "AI":
 				this.playersContainer.innerHTML = `
@@ -84,18 +97,24 @@ export class PongMenu {
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
 							<label class="h3 text-white text-center">left paddle</label>
 							<label class="h5 text-white text-center" id="playerPaddleName">player 1</label>
-							<input type="text" id="playerPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<input type="text" id="playerPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">	
+						</div>
+						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
 						</div>
 					</div>
 				`;
 
 				const playerPaddleName = document.getElementById('playerPaddleName');
 				const playerPaddleInput = document.getElementById('playerPaddleInput');
+				const playerPaddleColor = document.getElementById('playerPaddleColor');
 
 				playerPaddleName.innerHTML = this.usernames.p1;
+				playerPaddleColor.value = this.colors.p1;
 
 				playerPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
 				playerPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
+				playerPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, "player", "p1"));
 				break;
 			case "tournament":
 				this.playersContainer.innerHTML = `
@@ -104,11 +123,17 @@ export class PongMenu {
 							<label class="h4 text-white text-center mb-3" id="player1Name">player 1</label>
 							<input type="text" id="player1Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
+						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+							<input type="color" id="player1Color" class="form-control form-control-sm mt-3 glass" value="#ff0000">
+						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
 							<label class="h4 text-white text-center mb-3" id="player2Name">player 2</label>
 							<input type="text" id="player2Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+							<input type="color" id="player2Color" class="form-control form-control-sm mt-3 glass" value="#00ff00">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
@@ -116,11 +141,17 @@ export class PongMenu {
 							<label class="h4 text-white text-center mb-3" id="player3Name">player 3</label>
 							<input type="text" id="player3Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
+						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+							<input type="color" id="player3Color" class="form-control form-control-sm mt-3 glass" value="#0000ff">
+						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
 							<label class="h4 text-white text-center mb-3" id="player4Name">...</label>
 							<input type="text" id="player4Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						</div>
+						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+							<input type="color" id="player4Color" class="form-control form-control-sm mt-3 glass" value="#ff00ff">
 						</div>
 					</div>
 				`;
@@ -128,17 +159,26 @@ export class PongMenu {
 
 				const player1Name = document.getElementById('player1Name');
 				const player1Input = document.getElementById('player1Input');
+				const player1Color = document.getElementById('player1Color');
 				const player2Name = document.getElementById('player2Name');
 				const player2Input = document.getElementById('player2Input');
+				const player2Color = document.getElementById('player2Color');
 				const player3Name = document.getElementById('player3Name');
 				const player3Input = document.getElementById('player3Input');
+				const player3Color = document.getElementById('player3Color');
 				const player4Name = document.getElementById('player4Name');
 				const player4Input = document.getElementById('player4Input');
+				const player4Color = document.getElementById('player4Color');
 
 				player1Name.innerHTML = this.usernames.p1;
 				player2Name.innerHTML = this.usernames.p2;
 				player3Name.innerHTML = this.usernames.p3;
 				player4Name.innerHTML = this.usernames.p4;
+				player1Color.value = this.colors.p1;
+				player2Color.value = this.colors.p2;
+				player3Color.value = this.colors.p3;
+				player4Color.value = this.colors.p4;
+
 
 				player1Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
 				player1Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
@@ -148,6 +188,11 @@ export class PongMenu {
 				player3Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player3Input, player3Name, "player 3", "p3"));
 				player4Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player4Input, player4Name, "player 4", "p4"));
 				player4Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player4Input, player4Name, "player 4", "p4"));
+
+				player1Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 1", "p1"));
+				player2Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 2", "p2"));
+				player3Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 3", "p3"));
+				player4Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 4", "p4"));
 				break;
 			default:
 				break;
@@ -169,6 +214,19 @@ export class PongMenu {
 				p1: "player1", p2: "player2", p3: "player3", p4: "player4"
 			};
 		}
+	}
+
+	colorInputHandle(event, name, player) {
+		this.colors[player] = event.target.value;
+
+		this.toastBody.innerHTML = "Changed " + name + " color.";
+		this.toastBootstrap.show();
+
+		localStorage.setItem('pongColors', JSON.stringify(this.colors));
+		const colorsString = localStorage.getItem('pongColors');
+		this.colors = colorsString ? JSON.parse(colorsString) : {
+			p1: "#ff0000", p2: "#00ff00", p3: "#0000ff", p4: "#ff00ff"
+		};
 	}
 
 	setScoreRange() {
@@ -332,55 +390,6 @@ export class PongMenu {
 		this.settingsModal.show();
 	}
 
-	showColorsConfig() {
-		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Themes</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-12 justify-content-center">
-						<div class="row justify-content-center text-center mt-2 mb-3">
-							<div class="row justify-content-center text-center">
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Obsidian</label>
-									<img class="img-fluid"style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Autumn</label>
-									<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Garden</label>
-									<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Retro</label>
-									<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial"/>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-12 d-flex justify-content-center mt-2">
-							<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
-					</div>
-				</div>
-			</div>
-		`;
-
-		let btnObsidian = document.getElementById('pObsidian');
-        let btnAutumn = document.getElementById('pAutumn');
-		let btnGarden = document.getElementById('pGarden');
-        let btnSpacial = document.getElementById('pSpacial');
-
-		btnObsidian.addEventListener("click", (event) => this.selectTheme(event, "obsidian"));
-		btnAutumn.addEventListener("click", (event) => this.selectTheme(event, "autumn"));
-		btnGarden.addEventListener("click", (event) => this.selectTheme(event, "garden"));
-		btnSpacial.addEventListener("click", (event) => this.selectTheme(event, "spacial"));
-
-		this.settingsModal.show();
-	}
-
 	//#region EVENT LISTENERS HANDLERS
 
 	selectGamemode(event, gamemode) {
@@ -393,41 +402,6 @@ export class PongMenu {
 		this.showGamemodeConfig();
 		this.updatePlayersContainer();
 	}
-
-	// selectTheme(event, theme) {
-	// 	this.toastBody.innerHTML = "Chosen theme: " + theme;
-	// 	this.toastBootstrap.show();
-	// 	switch (theme) {
-	// 		case "obsidian":
-	// 			this.theme = {
-	// 				backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
-	// 				wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
-	// 			};
-	// 			break;
-	// 		case "autumn":
-	// 			this.theme = {
-	// 				backgroundColor : 'rgb(15, 0, 0)', ghostWallColor1 : 'rgb(138, 22, 1)', ghostWallColor2 : 'rgb(181, 32, 2)',
-	// 				wallColor : 'rgb(143, 34, 1)', dotColor : 'rgb(145, 67, 3)', glowColor : 'rgb(194, 90, 6)'
-	// 			};
-	// 			break;
-	// 		case "garden":
-	// 			this.theme = {
-	// 				backgroundColor : 'rgb(0, 8, 2)', ghostWallColor1 : 'rgb(38, 82, 0)', ghostWallColor2 : 'rgb(58, 125, 0)',
-	// 				wallColor : 'rgb(0, 54, 12)', dotColor : 'rgb(2, 56, 173)', glowColor : 'rgb(0, 66, 209)'
-	// 			};
-	// 			break;
-	// 		case "spacial":
-	// 			this.theme = {
-	// 				backgroundColor : 'rgb(1, 1, 26)', ghostWallColor1 : 'rgb(14, 58, 179)', ghostWallColor2 : 'rgb(18, 71, 219)',
-	// 				wallColor : 'rgb(0, 0, 176)', dotColor : 'rgb(145, 135, 19)', glowColor : 'rgb(186, 173, 20)'
-	// 			};
-	// 			break;
-	// 		default:
-	// 			break;
-	// 	}
-	//localStorage.setItem('pongTheme', JSON.stringify(this.theme));
-	//
-	// }
 
 	changeKeybind(event, key, btn) {
 		btn.innerHTML = "...";
