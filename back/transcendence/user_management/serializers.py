@@ -7,7 +7,7 @@ from django.core.exceptions import ValidationError
 class CustomUserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = CustomUser
-		fields = ('id', 'username', 'email', 'password', 'bio', 'profile_picture')	
+		fields = ('id', 'username', 'email', 'password', 'profile_picture')	
 		extra_kwargs = {'password': {'write_only': True}}
 
 	def to_internal_value(self, data):
@@ -23,7 +23,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
 		return CustomUser.objects.create_user(**validated_data)
 
 	def update(self, instance, validated_data):
-		instance.bio = validated_data.get('bio', instance.bio)
 		instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
 		instance.save()
 		return instance
