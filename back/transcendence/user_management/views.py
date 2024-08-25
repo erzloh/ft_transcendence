@@ -72,8 +72,11 @@ class UpdateUser(views.APIView):
         user = request.user
         serializer = CustomUserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_200_OK)
+            try:
+                serializer.save()
+            except ValidationError as e:
+                return Response({'password': e.messages}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 class UserAvatar(views.APIView):

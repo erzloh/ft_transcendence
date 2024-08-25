@@ -29,17 +29,18 @@ Cookie: jwt=5f5d0e8ea7c0a112d8a767f289a5e3f659cfc7aa
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=4a420bd33d3f42499306413a5a9b1c0e3516abf3
+Cookie: jwt=21cb4ac75ce59478cb675b1c27dd68738dac1ed5
 
 ###
 
 PUT https://localhost/api/update_user
 Content-Type: application/json
-Cookie: jwt=4a420bd33d3f42499306413a5a9b1c0e3516abf3
+Cookie: jwt=21cb4ac75ce59478cb675b1c27dd68738dac1ed5
 
 {
-    "username": "pascal22",
-    "email": "pascal22@gmail.com"
+    "password": "Pascal333@@@!",
+    "username": "big noob",
+    "email": "pascalobispo@gmail.com"
 }
 
 ###
