@@ -12,9 +12,9 @@ POST https://localhost/api/signup
 Content-Type: application/json
 
 {
-    "username": "pascal", 
+    "username": "pascal2", 
     "password": "Pascal1234!",
-    "email": "pascal@gmail.com"
+    "email": "pascal2@gmail.com"
 }
 
 ###
@@ -29,16 +29,16 @@ Cookie: jwt=5f5d0e8ea7c0a112d8a767f289a5e3f659cfc7aa
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=aba9f2419c32ef4f1fe151f3ed8cbc95843d598f
+Cookie: jwt=33b556fbdf9da774e9b9abbcefc79fafc00a11fb
 
 ###
 
 PUT https://localhost/api/update_user
 Content-Type: application/json
-Cookie: jwt=aba9f2419c32ef4f1fe151f3ed8cbc95843d598f
+Cookie: jwt=33b556fbdf9da774e9b9abbcefc79fafc00a11fb
 
 {
-    "bio": "coucou"
+    "email": "pascal2@gmail.com"
 }
 
 ###

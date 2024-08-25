@@ -24,5 +24,18 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
 	def update(self, instance, validated_data):
 		instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+		if not validated_data['email']:
+			raise serializers.ValidationError({'email': ['e-mail-empty-error']})
+		email = CustomUser.objects.normalize_email(validated_data['email'])
+		try:
+			validate_email_func(email)
+		except ValidationError:
+			raise serializers.ValidationError({'email': ['Saississez une adresse e-mail valide.']})
+		if CustomUser.objects.filter(email=email).exclude(id=instance.id).exists():
+			raise serializers.ValidationError({'email': ['email-exists-error']})
+		instance.email = email
+
+
+
 		instance.save()
 		return instance
