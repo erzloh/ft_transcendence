@@ -7,7 +7,34 @@
 	"pac-man": "pac-man",
 
 	"pacman-menu": "pac-man menu",
+	"enter-username": "enter username",
+
+	"keys": "keys",
+	"keybinds-settings": "keybind settings",
+	"pacman-keys": "pac-man keys",
+	"ghost-keys": "ghost keys",
+	"move-up": "move up",
+	"move-down": "move down",
+	"move-left": "move left",
+	"move-right": "move right",
+	"use-spell": "use spell",
+
+	"pacman-skin": "pac-man skin",
+	"ghost-skin": "ghost skin",
+
+	"gamemode": "gamemode",
+	"objective": "objective",
+	"objective-description": "the game ends once Pacman's score reaches the objective or the Ghost catches Pacman.",
+	"endless": "endless",
+	"endless-description": "the game ends once the Ghost catches Pacman.",
+
+
+	"map": "map",
+	"theme": "theme",
 	"start game": "start game",
+
+	"game paused": "game paused",
+	"press escape": "press escape to resume",
 
 	"username": "username",
 	"e-mail": "e-mail",
@@ -41,8 +68,15 @@
 	"login-failure": "an error occured while logging in",
 
 	"see-friends": "see friends",
+
 	"edit-profile": "edit profile",
-	"logout": "logout",
+	"profile-picture": "profile picture",
+	"save": "save",
+	"save-success": "save successful!",
+	"save-failure": "an error occured while saving",
+	"avatar-invalid-error": "avatar must be a valid image file",
+	"avatar-size-error": "avatar must be at most 1MB",
+	"avatar-empty-error": "avatar cannot be empty",
 
 	"graphics": "graphics", 
 	"ultra": "ultra",

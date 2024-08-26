@@ -3,11 +3,12 @@ from .models import CustomUser
 from django.conf import settings
 from django.core.validators import validate_email as validate_email_func
 from django.core.exceptions import ValidationError
+from django.contrib.auth.password_validation import validate_password
 
 class CustomUserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = CustomUser
-		fields = ('id', 'username', 'email', 'password', 'bio', 'profile_picture')	
+		fields = ('id', 'username', 'email', 'password', 'profile_picture')	
 		extra_kwargs = {'password': {'write_only': True}}
 
 	def to_internal_value(self, data):
@@ -23,7 +24,24 @@ class CustomUserSerializer(serializers.ModelSerializer):
 		return CustomUser.objects.create_user(**validated_data)
 
 	def update(self, instance, validated_data):
-		instance.bio = validated_data.get('bio', instance.bio)
 		instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+		if 'email' in validated_data:
+			email = CustomUser.objects.normalize_email(validated_data['email'])
+			try:
+				validate_email_func(email)
+			except ValidationError:
+				raise serializers.ValidationError({'email': ['Saississez une adresse e-mail valide.']})
+			if CustomUser.objects.filter(email=email).exclude(id=instance.id).exists():
+				raise serializers.ValidationError({'email': ['email-exists-error']})
+			instance.email = email
+		if 'username' in validated_data:
+			username = validated_data['username']
+			if CustomUser.objects.filter(username=username).exclude(id=instance.id).exists():
+				raise serializers.ValidationError({'username': ['username-exists-error']})
+			instance.username = username
+		if 'password' in validated_data:
+			password = validated_data['password']
+			validate_password(password, user=instance)
+			instance.set_password(password)
 		instance.save()
 		return instance

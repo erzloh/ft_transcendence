@@ -62,7 +62,7 @@ export class Pacman extends Character {
 					this.pcG.cells[this.y][this.x].value = 8;
 					this.points += 150;
 				}
-				this.pcG.pScore.textContent = "Pacman's score: " + this.points;
+				this.pcG.pScore.textContent = this.points;
 			}
 			else if (this.pcG.cells[this.y][this.x].value >= 2 &&
 						this.pcG.cells[this.y][this.x].value <=  4) {
@@ -104,7 +104,7 @@ export class Pacman extends Character {
 
 	eatFruit(fruit) {
 		this.points += fruit.points;
-		this.pcG.pScore.textContent = "Pacman's score: " + this.points;
+		this.pcG.pScore.textContent = this.points;
 	}
 
 	// Render the character's sprite

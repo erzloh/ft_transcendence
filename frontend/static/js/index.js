@@ -11,6 +11,7 @@ import Games from "./views/Games.js";
 import Profile from "./views/Profile.js";
 import SignIn from "./views/SignIn.js";
 import SignUp from "./views/SignUp.js";
+import EditProfile from "./views/EditProfile.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
@@ -43,7 +44,8 @@ const routes = [
 	{ path: "/games", view: Games },
 	{ path: "/profile", view: Profile },
 	{ path: "/signin", view: SignIn },
-	{ path: "/signup", view: SignUp }
+	{ path: "/signup", view: SignUp },
+	{ path: "/edit-profile", view: EditProfile }
 ];
 
 // Store the current view
@@ -112,12 +114,6 @@ const loadScript = async (view) => {
 	// This is needed to load the new JS content
 	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
 }
-
-// ------------------------------- THE APP STARTS HERE -------------------------------
-// When the DOM is loaded, call the router function
-document.addEventListener("DOMContentLoaded", () => {
-	router();
-});
 
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view

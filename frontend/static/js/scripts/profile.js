@@ -15,8 +15,6 @@ export async function profile() {
 		// If the user is logged in, show the profile page
 		if (response.status === 200) {
 			const responseData = await response.json();
-			console.log(responseData);
-
 			const user = responseData.user;
 
 			const usernameElem = document.getElementById('username-name');
@@ -25,20 +23,22 @@ export async function profile() {
 			const emailElem = document.getElementById('username-email');
 			emailElem.innerText = user.email;
 
+			// Get the user's avatar
+			const avatarElem = document.getElementById('avatar');
+			const responseAvatar = await fetch(`${BASE_URL}/api/user_avatar`);
+
+			if (responseAvatar.status !== 200) {
+				avatarElem.src = 'static/assets/images/profile_pic_2.png';
+			} else {
+				const blob = await responseAvatar.blob();
+				const url = URL.createObjectURL(blob);
+				avatarElem.src = url;
+			}
+
+			// Show the profile page
 			const profilePage = document.getElementById('profile-page');
 			profilePage.style.display = 'flex';
 		}
-		
-		// if (response.ok) {
-		// 	console.log('user is logged in');
-		// 	const profilePage = document.getElementById('profile-page');
-		// 	profilePage.style.display = 'flex';
-		// } else {
-		// 	console.log('user is not logged in');
-		// 	const profilePage = document.getElementById('profile-page');
-		// 	profilePage.style.display = 'none !important';
-		// 	navigateTo('/signin');
-		// }
 	}
 
 	// Log out button

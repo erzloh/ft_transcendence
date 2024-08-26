@@ -1,3 +1,4 @@
+import { updateTexts } from "../utils/languages.js";
 import { Pacman, Ghost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
 
@@ -89,10 +90,12 @@ class PacmanGame {
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
 		switch (this.gamemode) {
 			case "objective":
-				this.pGamemode.innerHTML = "Objective: " + this.objective;
+				this.pGamemode.innerHTML = this.objective;
 				break;
 			case "infinite":
-				this.pGamemode.innerHTML = "Endless";
+				document.querySelectorAll('.total-score').forEach(elem => {
+					elem.style.display = 'none';
+				});
 				break;
 			default:
 				break;
@@ -138,6 +141,7 @@ class PacmanGame {
 				this.c.fillStyle = "rgba(0, 0, 0, 0.5)";
 				this.c.fillRect(0, 0, this.canvas.width, this.canvas.height);
 				this.pauseModal.show();
+				updateTexts();
 			}
 			else
 				this.timer.start();
@@ -183,7 +187,7 @@ class PacmanGame {
 			}
 		}
 
-		var imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
+		let imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
 						this.frame % 40 < 20 ? this.images.imgPacman2 :
 						this.frame % 40 < 30 ? this.images.imgPacman3 : this.images.imgPacman2;
 
@@ -219,7 +223,7 @@ class PacmanGame {
 		this.height = tmpHeight;
 
 		// Set score to 0
-		this.pScore.textContent = "Pacman's score: 0";
+		this.pScore.textContent = "00";
 
 		document.addEventListener("keydown", this.boundPacmanHandleKeyDown);
 		eventListeners["keydown"] = this.boundPacmanHandleKeyDown;
@@ -246,9 +250,9 @@ class PacmanGame {
 
 	// Create the cells array
 	createCellArray(data) {
-		var tmp = [];
+		let tmp = [];
 		for (let y = 0; y < this.height; y++) {
-			var row = [];
+			let row = [];
 			for (let x = 0; x < this.width; x++) {
 				if (data[y][x] === "p") {
 					this.pacman = new Pacman(x, y, "none", this);
