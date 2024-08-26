@@ -99,6 +99,17 @@ export class PongGame {
 		}
 	}
 
+	restartTournament() {
+		this.tournament = new Tournament(4, this.usernames);
+		this.currentMatch = this.tournament.getCurrentPlayers();
+		leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
+		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
+		this.leftPad.color = this.colors[this.currentMatch.left];
+		this.rightPad.color = this.colors[this.currentMatch.right];
+
+		this.resetTournamentMatch();
+	}
+
 	winMatch(side) {
 		this.gameOver = true;
 		this.matchScore.innerHTML = "score: " + this.leftPad.score + "-" + this.rightPad.score;
@@ -115,6 +126,10 @@ export class PongGame {
 		this.leftPad.color = this.colors[this.currentMatch.left];
 		this.rightPad.color = this.colors[this.currentMatch.right];
 
+		this.resetTournamentMatch();
+	}
+
+	resetTournamentMatch() {
 		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 		
 		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
@@ -136,26 +151,31 @@ export class PongGame {
 	}
 
 	resetGame() {
-		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
+		if (this.gamemode == "tournament") {
+			this.restartTournament();
+		}
+		else {
+			this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 		
-		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, this.colors.p1, 5, this.cvs.height -  this.pHeight, 
-			false);
-
-		this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, this.gamemode == "AI" ? "#FFF" : this.colors.p2, 5, this.cvs.height -  this.pHeight,
-			this.gamemode == "AI" ? true : false);	
-		
-		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
-		
-		this.rightPad.ball = this.ball;
-
-		this.leftScore.innerHTML = "0";
-		this.rightScore.innerHTML = "0";
-		
-		this.startButton.disabled = false;
-		this.gameOver = false;
+			this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
+				this.pWidth, this.pHeight, this.colors.p1, 5, this.cvs.height -  this.pHeight, 
+				false);
+	
+			this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
+				this.pWidth, this.pHeight, this.gamemode == "AI" ? "#FFF" : this.colors.p2, 5, this.cvs.height -  this.pHeight,
+				this.gamemode == "AI" ? true : false);	
+			
+			this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
+				this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
+			
+			this.rightPad.ball = this.ball;
+	
+			this.leftScore.innerHTML = "0";
+			this.rightScore.innerHTML = "0";
+			
+			this.startButton.disabled = false;
+			this.gameOver = false;
+		}
 	}
 
 	startGame() {
