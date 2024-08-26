@@ -12155,7 +12155,6 @@ label {
           backdrop-filter: blur(10px);
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .glass-modal-bg {

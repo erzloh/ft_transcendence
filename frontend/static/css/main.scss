@@ -234,7 +234,7 @@ $blending: hard-light;
 	backdrop-filter: blur(10px);
 	border-radius: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
-	box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+	// box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 	// animation: fadeIn 0.5s ease-out;
 }
 
@@ -242,6 +242,10 @@ $blending: hard-light;
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
 }
+
+// hr {
+// 	border: 1px solid rgba(255, 255, 255, 0.8);
+// }
 
 .return-btn {
 	animation: waitFadeIn 1s ease-out;
