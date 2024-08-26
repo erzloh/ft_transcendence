@@ -116,7 +116,7 @@ export class PongGame {
 		this.rightPad.color = this.colors[this.currentMatch.right];
 
 		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
-
+		
 		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
 			this.pWidth, this.pHeight, this.colors[this.currentMatch.left], 5, this.cvs.height -  this.pHeight, 
 			false);
@@ -221,6 +221,10 @@ export class PongGame {
 
 	drawObjects() {
 		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
+
+		// Make the canvas background more opaque
+		this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+		this.ctx.fillRect(0, 0, this.cvs.width, this.cvs.height);
 
 		this.drawNet();
 
