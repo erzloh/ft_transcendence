@@ -17,6 +17,8 @@ export class PongGame {
 		this.pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
 		this.endgameModal = new bootstrap.Modal(document.getElementById('endgameModal'));
 		this.matchScore =  document.getElementById('matchScore');
+		this.colorBox1 = document.getElementById('colorBox1');
+		this.colorBox2 = document.getElementById('colorBox2');
 
 		this.leftScore = document.getElementById("leftScore");
 		this.rightScore = document.getElementById("rightScore");
@@ -96,6 +98,8 @@ export class PongGame {
 			rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 			this.leftPad.color = this.colors[this.currentMatch.left];
 			this.rightPad.color = this.colors[this.currentMatch.right];
+			this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+			this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 		}
 	}
 
@@ -106,6 +110,8 @@ export class PongGame {
 		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 		this.leftPad.color = this.colors[this.currentMatch.left];
 		this.rightPad.color = this.colors[this.currentMatch.right];
+		this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+		this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 
 		this.resetTournamentMatch();
 	}
@@ -125,6 +131,8 @@ export class PongGame {
 		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 		this.leftPad.color = this.colors[this.currentMatch.left];
 		this.rightPad.color = this.colors[this.currentMatch.right];
+		this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+		this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 
 		this.resetTournamentMatch();
 	}
@@ -184,8 +192,8 @@ export class PongGame {
 	}
 
 	endTournament(side) {
-		this.endgameModalWinner.textContent = this.usernames[this.currentMatch[side]] + " won the tournament !";
-		this.endgameModalScore.textContent = "Final score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalWinner.textContent = this.usernames[this.currentMatch[side]] + " won the tournament";
+		this.endgameModalScore.textContent = "final score: " + this.leftPad.score + "-" + this.rightPad.score;
 
 		this.endgameModal.show();
 	}
@@ -193,7 +201,7 @@ export class PongGame {
 	endGame(winner) {
 		this.gameOver = true;
 
-		this.endgameModalWinner.textContent = winner + " won the game !";
+		this.endgameModalWinner.textContent = winner + " won the game";
 		this.endgameModalScore.textContent = "Final score: " + this.leftPad.score + "-" + this.rightPad.score;
 
 		this.endgameModal.show();

@@ -34,7 +34,7 @@ export class Tournament {
 				default:
 					break;
 			}
-			this.matchTournament.innerHTML = this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1);
+			this.matchTournament.innerHTML = "tournament " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
 			this.playersTournament.innerHTML = this.usernames[this.currentMatch.left] + " VS " + this.usernames[this.currentMatch.right];
 			this.tournamentModal.show();
 			return this.currentMatch;
@@ -58,8 +58,8 @@ export class Tournament {
 			}
 		}
 		if (!this.tournamentOver) {
-			this.matchIdModal.innerHTML = this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1);
-			this.winner.innerHTML = this.usernames[this.currentMatch[side]] + " won the match !";
+			this.matchIdModal.innerHTML = "tournament " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
+			this.winner.innerHTML = this.usernames[this.currentMatch[side]] + " won the match";
 			this.tournamentMatchEndModal.show();
 
 			this.matchId++;
