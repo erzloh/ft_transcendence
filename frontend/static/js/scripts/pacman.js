@@ -188,7 +188,7 @@ class PacmanGame {
 			}
 		}
 
-		var imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
+		let imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
 						this.frame % 40 < 20 ? this.images.imgPacman2 :
 						this.frame % 40 < 30 ? this.images.imgPacman3 : this.images.imgPacman2;
 
@@ -251,9 +251,9 @@ class PacmanGame {
 
 	// Create the cells array
 	createCellArray(data) {
-		var tmp = [];
+		let tmp = [];
 		for (let y = 0; y < this.height; y++) {
-			var row = [];
+			let row = [];
 			for (let x = 0; x < this.width; x++) {
 				if (data[y][x] === "p") {
 					this.pacman = new Pacman(x, y, "none", this);

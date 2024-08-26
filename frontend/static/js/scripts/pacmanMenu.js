@@ -223,16 +223,16 @@ export class PacmanMenu {
 			</div>
 		`;
 
-		var btnPUp = document.getElementById('pUp');
-        var btnPLeft = document.getElementById('pLeft');
-		var btnPDown = document.getElementById('pDown');
-		var btnPRight = document.getElementById('pRight');
-		var btnPSpell = document.getElementById('pSpell');
-		var btnGUp = document.getElementById('gUp');
-        var btnGLeft = document.getElementById('gLeft');
-		var btnGDown = document.getElementById('gDown');
-		var btnGRight = document.getElementById('gRight');
-		var btnGSpell = document.getElementById('gSpell');
+		let btnPUp = document.getElementById('pUp');
+        let btnPLeft = document.getElementById('pLeft');
+		let btnPDown = document.getElementById('pDown');
+		let btnPRight = document.getElementById('pRight');
+		let btnPSpell = document.getElementById('pSpell');
+		let btnGUp = document.getElementById('gUp');
+        let btnGLeft = document.getElementById('gLeft');
+		let btnGDown = document.getElementById('gDown');
+		let btnGRight = document.getElementById('gRight');
+		let btnGSpell = document.getElementById('gSpell');
 		btnPUp.addEventListener("click", (event) => this.changeKeybind(event, "pUp", btnPUp));
 		btnPLeft.addEventListener("click", (event) => this.changeKeybind(event, "pLeft", btnPLeft));
 		btnPDown.addEventListener("click", (event) => this.changeKeybind(event, "pDown", btnPDown));
@@ -269,8 +269,8 @@ export class PacmanMenu {
 			</div>
 		`;
 
-		var btnPacmanSkin = document.getElementById('pPacmanSkin');
-        var btnPacgirlSkin = document.getElementById('pPacgirlSkin');
+		let btnPacmanSkin = document.getElementById('pPacmanSkin');
+        let btnPacgirlSkin = document.getElementById('pPacgirlSkin');
 		btnPacmanSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacman"));
 		btnPacgirlSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacgirl"));
 
@@ -312,10 +312,10 @@ export class PacmanMenu {
 			</div>
 		`;
 
-		var btnBlueSkin = document.getElementById('pBlueGhostSkin');
-        var btnOrangeSkin = document.getElementById('pOrangeGhostSkin');
-		var btnPinkSkin = document.getElementById('pPinkGhostSkin');
-        var btnGreenSkin = document.getElementById('pGreenGhostSkin');
+		let btnBlueSkin = document.getElementById('pBlueGhostSkin');
+        let btnOrangeSkin = document.getElementById('pOrangeGhostSkin');
+		let btnPinkSkin = document.getElementById('pPinkGhostSkin');
+        let btnGreenSkin = document.getElementById('pGreenGhostSkin');
 
 		btnBlueSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "blueGhost"));
 		btnOrangeSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "orangeGhost"));
@@ -363,10 +363,10 @@ export class PacmanMenu {
 		`;
 
 
-        var btnObjective = document.getElementById('btnObjective');
-		var btnInfinite = document.getElementById('btnInfinite');
-		var labelDescription = document.getElementById('gamemodeDescription');
-		var rangeContainer = document.getElementById('rangeContainer');
+        let btnObjective = document.getElementById('btnObjective');
+		let btnInfinite = document.getElementById('btnInfinite');
+		let labelDescription = document.getElementById('gamemodeDescription');
+		let rangeContainer = document.getElementById('rangeContainer');
 
 		btnObjective.addEventListener("click", (event) => this.selectGamemode(event, "objective"));
 		btnInfinite.addEventListener("click", (event) => this.selectGamemode(event, "infinite"));
@@ -383,8 +383,8 @@ export class PacmanMenu {
 									<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range clickable" min="1000" max="30000" value="${this.objective}" step="1000" id="rangeInput">
 							</div>
 							`;
-				var rangeInput = document.getElementById('rangeInput');
-				var rangeLabel = document.getElementById('rangeLabel');
+				let rangeInput = document.getElementById('rangeInput');
+				let rangeLabel = document.getElementById('rangeLabel');
 
 				rangeLabel.innerHTML = this.objective;
 				localStorage.setItem('objective', JSON.stringify(this.objective));
@@ -437,9 +437,9 @@ export class PacmanMenu {
 			</div>
 		`;
 
-		var btnMaze = document.getElementById('pMaze');
-        var btnSpiral = document.getElementById('pSpiral');
-		var btnButterfly = document.getElementById('pButterfly');
+		let btnMaze = document.getElementById('pMaze');
+        let btnSpiral = document.getElementById('pSpiral');
+		let btnButterfly = document.getElementById('pButterfly');
 
 		btnMaze.addEventListener("click", (event) => this.selectMap(event, "maze"));
 		btnSpiral.addEventListener("click", (event) => this.selectMap(event, "spiral"));
@@ -490,10 +490,10 @@ export class PacmanMenu {
 			</div>
 		`;
 
-		var btnObsidian = document.getElementById('pObsidian');
-        var btnAutumn = document.getElementById('pAutumn');
-		var btnGarden = document.getElementById('pGarden');
-        var btnSpacial = document.getElementById('pSpacial');
+		let btnObsidian = document.getElementById('pObsidian');
+        let btnAutumn = document.getElementById('pAutumn');
+		let btnGarden = document.getElementById('pGarden');
+        let btnSpacial = document.getElementById('pSpacial');
 
 		btnObsidian.addEventListener("click", (event) => this.selectTheme(event, "obsidian"));
 		btnAutumn.addEventListener("click", (event) => this.selectTheme(event, "autumn"));
