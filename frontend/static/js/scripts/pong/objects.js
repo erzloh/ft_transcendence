@@ -42,6 +42,7 @@ export class Tournament {
 	}
 
 	setCurrentMatchWinner(side) {
+		console.log(this.matchId);
 		if (this.playerNumber == 4) {
 			switch (this.matchId) {
 				case 0:
@@ -49,7 +50,9 @@ export class Tournament {
 					break;
 				case 1:
 					this.playerArray2.right = this.currentMatch[side];
+					break;
 				case 2:
+					console.log(this.matchId);
 					this.tournamentOver = true;
 					break;
 				default:

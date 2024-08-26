@@ -115,7 +115,24 @@ export class PongGame {
 		this.leftPad.color = this.colors[this.currentMatch.left];
 		this.rightPad.color = this.colors[this.currentMatch.right];
 
-		this.resetGame();
+		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
+
+		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
+			this.pWidth, this.pHeight, this.colors[this.currentMatch.left], 5, this.cvs.height -  this.pHeight, 
+			false);
+
+		this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
+			this.pWidth, this.pHeight, this.colors[this.currentMatch.right], 5, this.cvs.height -  this.pHeight,
+			false);	
+		
+		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
+			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
+
+		this.leftScore.innerHTML = "0";
+		this.rightScore.innerHTML = "0";
+		
+		this.startButton.disabled = false;
+		this.gameOver = false;
 	}
 
 	resetGame() {
