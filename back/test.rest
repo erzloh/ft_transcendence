@@ -29,16 +29,18 @@ Cookie: jwt=5f5d0e8ea7c0a112d8a767f289a5e3f659cfc7aa
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=329ed5f82a39d6a8d5305d37f658107e9185cfb1
+Cookie: jwt=21cb4ac75ce59478cb675b1c27dd68738dac1ed5
 
 ###
 
 PUT https://localhost/api/update_user
 Content-Type: application/json
-Cookie: jwt=efcebb4e9c52af9cbc2de13976c7d6d9f95a1387
+Cookie: jwt=21cb4ac75ce59478cb675b1c27dd68738dac1ed5
 
 {
-    "bio": "coucou"
+    "password": "Pascal333@@@!",
+    "username": "big noob",
+    "email": "pascalobispo@gmail.com"
 }
 
 ###
