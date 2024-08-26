@@ -9,4 +9,7 @@ urlpatterns = [
 	re_path('profile', profile.as_view()),
 	re_path('update_user', UpdateUser.as_view()),
 	re_path('user_avatar', UserAvatar.as_view()),
+	re_path('add_friend', AddFriend.as_view()),
+	re_path('remove_friend', RemoveFriend.as_view()),
+	re_path('friends_list', FriendsList.as_view()),
 ]

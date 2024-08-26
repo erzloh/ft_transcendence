@@ -88,3 +88,38 @@ class UserAvatar(views.APIView):
             return FileResponse(open(user.profile_picture.path, 'rb'), content_type='image/jpeg')
         else:
             return Response({"error": "No profile photo found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class AddFriend(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        friend_username = request.data.get('username')
+        if friend_username == request.user.username:
+            return Response({"error": "You cannot add yourself as a friend"}, status=status.HTTP_400_BAD_REQUEST)
+        friend = get_object_or_404(CustomUser, username=friend_username)
+        if friend in request.user.friends.all():
+            return Response({"error": "This user is already your friend"}, status=status.HTTP_400_BAD_REQUEST)
+        request.user.friends.add(friend)
+        return Response(status=status.HTTP_200_OK)
+
+class RemoveFriend(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        friend_username = request.data.get('username')
+        if friend_username == request.user.username:
+            return Response({"error": "You cannot remove yourself from friends"}, status=status.HTTP_400_BAD_REQUEST)
+        friend = get_object_or_404(CustomUser, username=friend_username)
+        if friend not in request.user.friends.all():
+            return Response({"error": "This user is not your friend"}, status=status.HTTP_400_BAD_REQUEST)
+        request.user.friends.remove(friend)
+        return Response(status=status.HTTP_200_OK)
+
+class FriendsList(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        friends = request.user.friends.all()
+        friends_usernames = [friend.username for friend in friends]
+        return Response({"friends": friends_usernames}, status=status.HTTP_200_OK)
