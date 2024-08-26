@@ -132,7 +132,6 @@ class PacmanGame {
 		this.images.imgBluePortal3.src = 'static/assets/pacman/images/portalBlue3.png';
 		this.images.imgBluePortal4.src = 'static/assets/pacman/images/portalBlue4.png';
 		this.images.imgStar.src = 'static/assets/pacman/images/star.png';
-
 	}
 
 	pauseGame() {

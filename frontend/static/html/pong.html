@@ -43,12 +43,57 @@
 			  	</div>
 			</div>
 		</div>
+		<div class="modal fade" id="tournamentModal" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
+					<div class="row justify-content-center glass">
+						<div class="modal-header">
+							<label class="h1 modal-title text-white w-100 text-center mb-2" id="matchTournament">tournament</label>
+						</div>
+						<div class="modal-body">
+							<div class="col-12 d-flex flex-column align-items-center">
+								<div class="col-10 d-flex justify-content-center align-items-center mt-2 mb-2">
+									<div id="colorBox1" class="border border-white" style="width: 50px; height: 20px; margin-right: 10px;"></div>
+									<label class="h3 text-white text-center" id="playersTournament">player1 VS player2</label>
+									<div id="colorBox2" class="border border-white" style="width: 50px; height: 20px; margin-left: 10px;"></div>
+								</div>								
+								<div class="col-3 d-flex flex-column justify-content-center mt-2"></div>
+									<button type="button" class="btn btn-lg text-white btn-filled" data-bs-dismiss="modal">start match</button>
+								</div>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
+		<div class="modal fade" id="tournamentMatchEndModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
+			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
+					<div class="row justify-content-center glass">
+						<div class="modal-header">
+							<label class="h1 modal-title text-white w-100 text-center"  id="matchId">tournament match end</label>
+						</div>
+						<div class="modal-body">
+							<div class="col-12 d-flex flex-column align-items-center">
+								<div class="col-10 d-flex flex-column justify-content-center mt-2">
+									<label class="h3 text-white text-center" id="winner">winner</label>
+									<label class="h5 text-white text-center" id="matchScore">score</label>
+								</div>
+								<div class="col-3 d-flex flex-column justify-content-center mt-2"></div>
+									<button type="button" class="btn btn-lg text-white btn-filled" id="nextMatchButton" data-bs-dismiss="modal">next match</button>
+								</div>
+							</div>
+						</div>
+					</div>
+			  	</div>
+			</div>
+		</div>
 		<div class="modal fade glass" id="endgameModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<label class="h3 modal-title text-white w-100 text-center" id="endgameModalWinner">Keys settings</label>
+							<label class="h1 modal-title text-white w-100 text-center" id="endgameModalWinner">winner</label>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
@@ -58,10 +103,10 @@
 								<div class="col-10 d-flex justify-content-center mt-3">
 									<label class="h5 text-white" id="endgameModalTime"></label>
 								</div>
-								<div class="col-12 d-flex justify-content-center mt-3 mb-2">
-									<button type="button" class="btn btn-lg text-white mx-2" id="playAgainButton" data-bs-dismiss="modal">Play Again</button>
-									<a type="button" class="btn btn-lg text-white mx-2" href="/pongMenu">Menu</a>
-									<a type="button" class="btn btn-lg text-white mx-2" href="/">Home page</a>
+								<div class="col-12 d-flex justify-content-center mt-1 mb-2">
+									<button type="button" class="btn btn-lg text-white btn-filled mx-2" id="playAgainButton" data-bs-dismiss="modal">play again</button>
+									<a type="button" class="btn btn-lg text-white btn-filled mx-2" href="/pongMenu">menu</a>
+									<a type="button" class="btn btn-lg text-white btn-filled mx-2" href="/">home page</a>
 								</div>
 							</div>
 						</div>
