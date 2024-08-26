@@ -296,9 +296,11 @@ export class PongGame {
 				this.rightPad.direction = "down";
 				break;
 			case 'Escape':
-				if (!this.paused)
-					this.pauseModal.show();
-				this.paused = !this.paused;
+				if (!this.gameOver) {
+					if (!this.paused)
+						this.pauseModal.show();
+					this.paused = !this.paused;
+				}				
 				break;
 			default:
 				break;
