@@ -85,5 +85,7 @@
 	"other": "その他",
 	"select language": "言語",
 
-	"404-message": "お探しのページが見つかりませんでした。"
+	"404-message": "お探しのページが見つかりませんでした。",
+
+	"games-not-available-mobile": "ゲームはモバイルで利用できません。"
 }

@@ -85,5 +85,7 @@
 	"other": "autre",
 	"select language": "langue",
 
-	"404-message": "la page que vous recherchez est introuvable."
+	"404-message": "la page que vous recherchez est introuvable.",
+
+	"games-not-available-mobile": "les jeux ne sont pas disponibles sur mobile."
 }

@@ -20,6 +20,7 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
+	overflow-y: hidden;
 	cursor: $cursor;
 }
 
@@ -406,11 +407,59 @@ $blending: hard-light;
 	border: 3px solid rgba(255, 255, 255, 1) !important;
 }
 
+// PACMAN GAME PAGE
+#gameContainer {
+	position: relative;
+}
+
+#cvsPacman {
+	// 
+}
+
+#btnStart {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
 // EDIT PROFILE PAGE
 .container-edit {
 	max-width: 450px;
 }
 
+// ------------------------------- Responsive -------------------------------
+// Mobile
+@media screen and (max-width: 768px) {
+    .games-page, .pacman-menu-page, .pacman-page, .pong-page {
+        display: none !important;
+    }
+
+	.games-page-mobile {
+		display: flex !important;
+	}
+
+	.glass {
+		// remove glass effect
+		background: transparent;
+		backdrop-filter: none;
+		border: none;
+		box-shadow: none;
+
+	}
+}
+
+// Desktop
+@media screen and (min-width: 768px) {
+	.games-page, .pacman-menu-page, .pacman-page, .pong-page {
+		display: flex !important;
+	}
+
+	.games-page-mobile {
+		display: none !important;
+	}
+}
 
 // ------------------------------- Custom Keyframes -------------------------------
 

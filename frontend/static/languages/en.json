@@ -86,5 +86,7 @@
 	"other": "other",
 	"select language": "language",
 
-	"404-message": "the page you are looking for cannot be found."
+	"404-message": "the page you are looking for cannot be found.",
+
+	"games-not-available-mobile": "games are not available on mobile."
 }
