@@ -12354,6 +12354,7 @@ label {
 .user-elements, .friend-elements {
   height: calc(100% - 80px);
   overflow-y: auto;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
 
 .user-element {

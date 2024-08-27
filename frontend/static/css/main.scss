@@ -445,11 +445,13 @@ $blending: hard-light;
 
 .users-list, .friends-list {
 	height: 100%;
+
 }
 
 .user-elements, .friend-elements {
 	height: calc(100% - 80px);
 	overflow-y: auto;
+	scrollbar-color: rgba(255,255,255, 0.5) transparent;
 }
 
 .user-element {
