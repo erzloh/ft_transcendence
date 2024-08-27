@@ -123,3 +123,11 @@ class FriendsList(views.APIView):
         friends = request.user.friends.all()
         friends_usernames = [friend.username for friend in friends]
         return Response({"friends": friends_usernames}, status=status.HTTP_200_OK)
+
+class UsersList(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        users = CustomUser.objects.all()
+        users_usernames = [user.username for user in users]
+        return Response({"users": users_usernames}, status=status.HTTP_200_OK)

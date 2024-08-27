@@ -12,4 +12,5 @@ urlpatterns = [
 	re_path('add_friend', AddFriend.as_view()),
 	re_path('remove_friend', RemoveFriend.as_view()),
 	re_path('friends_list', FriendsList.as_view()),
+	re_path('users_list', UsersList.as_view()),
 ]

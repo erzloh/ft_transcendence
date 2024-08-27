@@ -12,9 +12,9 @@ POST https://localhost/api/signup
 Content-Type: application/json
 
 {
-    "username": "pascal", 
+    "username": "pascal3", 
     "password": "Pascal1234!",
-    "email": "pascal@gmail.com"
+    "email": "pascal3@gmail.com"
 }
 
 ###
@@ -68,3 +68,11 @@ Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
 GET https://localhost/api/friends_list
 Content-Type: application/json
 Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
+
+###
+
+GET https://localhost/api/users_list
+Content-Type: application/json
+Cookie: jwt=7b35cdf4eeb703ad124957721b7b79a74aea1c35
+
+###
