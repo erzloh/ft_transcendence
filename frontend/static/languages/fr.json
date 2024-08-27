@@ -76,6 +76,9 @@
 	"avatar-size-error": "l'avatar doit être inférieur à 1 Mo",
 	"avatar-empty-error": "l'avatar ne peut pas être vide",
 
+	"friends": "amis",
+	"all users": "tous les utilisateurs",
+
 	"graphics": "graphiques",
 	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",
 	"ultra": "ultra",

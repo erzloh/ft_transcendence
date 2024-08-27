@@ -12,6 +12,7 @@ import Profile from "./views/Profile.js";
 import SignIn from "./views/SignIn.js";
 import SignUp from "./views/SignUp.js";
 import EditProfile from "./views/EditProfile.js";
+import Friends from "./views/Friends.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
@@ -45,7 +46,8 @@ const routes = [
 	{ path: "/profile", view: Profile },
 	{ path: "/signin", view: SignIn },
 	{ path: "/signup", view: SignUp },
-	{ path: "/edit-profile", view: EditProfile }
+	{ path: "/edit-profile", view: EditProfile },
+	{ path: "/friends", view: Friends }
 ];
 
 // Store the current view

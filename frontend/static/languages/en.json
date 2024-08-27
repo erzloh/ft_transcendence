@@ -78,6 +78,9 @@
 	"avatar-size-error": "avatar must be at most 1MB",
 	"avatar-empty-error": "avatar cannot be empty",
 
+	"friends": "friends",
+	"all users": "all users",
+
 	"graphics": "graphics", 
 	"ultra": "ultra",
 	"medium": "medium",
