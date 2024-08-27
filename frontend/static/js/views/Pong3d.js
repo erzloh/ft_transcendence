@@ -1,6 +1,6 @@
 import AbstractView from "./AbstractView.js";
 //import { basePong }  from "../scripts/pong/basicPong.js";
-import { pongThree } from "../scripts/pong/pong3d.js";
+import { pongThree } from "../scripts/pong/pong3d/main.js";
 
 export default class Pong extends AbstractView {
     constructor() {

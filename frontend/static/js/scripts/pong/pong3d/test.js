@@ -4,40 +4,6 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
-/*export function pongThree() {
-
-
-	const canvasRef = document.getElementById('canvas');
-	const scene = new THREE.Scene();
-	const camera = new THREE.PerspectiveCamera( 75, canvasRef.width / canvasRef.height, 0.1, 1000 );
-
-	const renderer = new THREE.WebGLRenderer({
-		antialias:true,
-		canvas:canvasRef
-
-	});
-	renderer.setSize( canvasRef.width, canvas.height);
-	document.body.appendChild( renderer.domElement );
-
-	const loader = new GLTFLoader();
-	loader.load( './static/assets/pong/lastetest.gltf', function ( gltf ) {
-
-	scene.add( gltf.scene );
-	}
-
-	, undefined, function ( error ) {
-
-	console.error( error );
-	}
-
- );
- */
-
- /* coordonnée plus ou moins au centre :
-
-
- */
-
 
 export function pongThree() {
     // Set up the scene, camera, and renderer
@@ -64,16 +30,6 @@ export function pongThree() {
 
 	let ball, paddleLeft, paddleRight;
 
-
-    // Add lighting
-   /* const light = new THREE.DirectionalLight(0xffffff, 1);
-    light.position.set(0, 1, 1).normalize();
-    scene.add(light);
-
-    const ambientLight = new THREE.AmbientLight(0x404040); // Soft light
-    scene.add(ambientLight);
-	*/
-
     // Load the GLTF model
     const loader = new GLTFLoader();
 
@@ -90,7 +46,7 @@ export function pongThree() {
 		if (plane) {
 			// Set the plane material to be transparent
 			plane.material.transparent = true;
-			plane.material.opacity = 0.5; // Adjust this value to control transparency (0.0 - fully transparent, 1.0 - fully opaque)
+			plane.material.opacity = 0.1; // Adjust this value to control transparency (0.0 - fully transparent, 1.0 - fully opaque)
 			plane.material.depthWrite = false; // Optional: prevents depth issues with other transparent objects
 		}
 	}, undefined, function (error) {
@@ -186,8 +142,8 @@ export function pongThree() {
             height: 0.5,  // Thickness of the text
             curveSegments: 12,  // Number of segments for text curves
             bevelEnabled: true,  // Enables bevel
-            bevelThickness: 0.5,  // Thickness of the bevel
-            bevelSize: 0.2,  // Distance from the text outline to bevel start
+            bevelThickness: 0.1,  // Thickness of the bevel
+            bevelSize: 0.1,  // Distance from the text outline to bevel start
             bevelOffset: 0,
             bevelSegments: 5  // Number of bevel segments
         });
@@ -198,12 +154,18 @@ export function pongThree() {
             emissiveIntensity: 1.0 // Increase the intensity for more glow
         });
 
-        const scoreText = new THREE.Mesh(textGeometry, textMaterial);
+        const scoreLeft = new THREE.Mesh(textGeometry, textMaterial);
+        const scoreRight = new THREE.Mesh(textGeometry, textMaterial);
 
         // Position the score above the paddles
-        scoreText.position.set(-10, 5, 0);  // Adjust position as needed
+        scoreLeft.position.set(-9.5, 2, -12.5);  // Adjust position as needed
+        scoreRight.position.set(7.5, 2, -12.5);
 
-        scene.add(scoreText);
+		scoreLeft.rotation.x = Math.PI / 1.5;
+		scoreRight.rotation.x = Math.PI / 1.5;
+
+        scene.add(scoreLeft);
+        scene.add(scoreRight);
     });
 
 	const ambientLight = new THREE.AmbientLight(0x404040, 2);  // Soft white light
