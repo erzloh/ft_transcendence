@@ -1,4 +1,4 @@
-<div class="full-height d-flex align-items-center justify-content-center">
+<div class="full-height d-flex align-items-center justify-content-center pong-page">
 	<div class="row justify-content-center">
 		<div class="toast-container position-fixed top-0 end-0 p-3">
 			<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none; max-width: none; width: auto;" role="alert" aria-live="assertive" aria-atomic="true">
@@ -10,27 +10,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 text-center mb-5">
+		<div class="col-12 text-center d-flex flex-column mb-4">
 			<label class="text-white h1" animated-letters>pong menu</label>
+			<label class="text-white h4 mt-3" id="currentGamemodeLabel">Current gamemode : pvp</label>
 		</div>
-		<div class="row justify-content-center mb-2" style="width: 75vw;">
+		<div class="row justify-content-center" style="width: 75vw;">
 			<div class="col d-flex flex-column">
-				<div class="row justify-content-between gap-5">
-					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h3 text-white text-center">left paddle</label>
-							<label class="h5 text-white text-center" id="leftPaddleName">player 1</label>
-							<input type="text" id="leftPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
-						</div>
-					</div>		
-					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h3 text-white text-center">right paddle</label>
-							<label class="h5 text-white text-center" id="rightPaddleName">player 2</label>
-							<input type="text" id="rightPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
-						</div>
-					</div>
-				</div>
+				<div class="row justify-content-between gap-5" id="playersContainer"></div>
 			</div>
 		</div>
 		<div style="width: 75vw;" class="col-12 text-center mt-5 mb-5 p-5 glass">
@@ -48,6 +34,16 @@
 			<a role="button" class="btn btn-lg text-white btn-filled" href="/pong" data-link>start game</a>
 		</div>
 		<div class="col-12 text-center mt-4 d-flex justify-content-center">
+			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
+		</div>
+	</div>
+</div>
+<div class="container full-height d-flex flex-column align-items-center justify-content-center games-page-mobile" style="display: none;">
+	<div class="container p-5 glass">
+		<p class="text-white text-center p-0 m-0" data-translate="games-not-available-mobile">games are not available on mobile.</p>
+	</div>
+	<div class="row justify-content-center mb-3">
+		<div class="col-12 text-center mt-5 d-flex justify-content-center">
 			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
 		</div>
 	</div>

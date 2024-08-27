@@ -11972,6 +11972,7 @@ html, body {
   padding: 0;
   font-variant-ligatures: no-common-ligatures;
   overflow-x: hidden;
+  overflow-y: hidden;
   cursor: url("/static/assets/UI/icons/cursor.svg") 10 10, auto;
 }
 
@@ -11984,7 +11985,7 @@ button {
 }
 
 input, select, a, .clickable {
-  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer !important;
 }
 
 label {
@@ -12154,7 +12155,6 @@ label {
           backdrop-filter: blur(10px);
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .glass-modal-bg {
@@ -12255,21 +12255,20 @@ label {
   height: 100px;
 }
 
-/* Remove default appearance */
 #rangeInput {
   -webkit-appearance: none;
   -moz-appearance: none;
        appearance: none;
   width: 100%;
   height: 8px;
-  background: transparent; /* Make the background of the slider transparent */
+  background: transparent;
   outline: none;
 }
 
 /* Custom track (background of the slider) */
 #rangeInput::-webkit-slider-runnable-track {
   width: 100%;
-  height: 20px; /* Adjust the height for the dots */
+  height: 20px;
   cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
   background: url("/static/assets/pacman/images/food2.png") repeat-x; /* Dots as background */
   border: none;
@@ -12279,7 +12278,7 @@ label {
   width: 100%;
   height: 20px;
   cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
-  background: url("/static/assets/pacman/images/food2.png") repeat-x;
+  background: url("/static/assets/pacman/images/food2.png") repeat-x; /* Dots as background */
   border: none;
 }
 
@@ -12287,13 +12286,13 @@ label {
 #rangeInput::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 40px; /* Adjust size based on your Pac-Man icon */
+  width: 40px;
   height: 40px;
   background: url("/static/assets/pacman/images/pacman_high_res.png") no-repeat;
   background-size: cover;
   cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
   border: none;
-  margin-top: -10px; /* Adjust to center the thumb over the track */
+  margin-top: -10px;
 }
 
 #rangeInput::-moz-range-thumb {
@@ -12305,7 +12304,6 @@ label {
   border: none;
 }
 
-/* Optional: Custom handle on hover */
 #rangeInput::-webkit-slider-thumb:hover {
   background-size: cover;
   filter: brightness(0.7);
@@ -12320,6 +12318,45 @@ label {
   border: 3px solid rgb(255, 255, 255) !important;
 }
 
+#gameContainer {
+  position: relative;
+}
+
+#btnStart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.container-edit {
+  max-width: 450px;
+}
+
+@media screen and (max-width: 768px) {
+  .games-page, .pacman-menu-page, .pacman-page, .pong-page {
+    display: none !important;
+  }
+  .games-page-mobile {
+    display: flex !important;
+  }
+  .glass {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+  }
+}
+@media screen and (min-width: 768px) {
+  .games-page, .pacman-menu-page, .pacman-page, .pong-page {
+    display: flex !important;
+  }
+  .games-page-mobile {
+    display: none !important;
+  }
+}
 @keyframes waitFadeIn {
   0% {
     opacity: 0;

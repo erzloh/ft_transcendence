@@ -20,6 +20,7 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
+	overflow-y: hidden;
 	cursor: $cursor;
 }
 
@@ -36,7 +37,7 @@ button {
 // }
 
 input, select, a, .clickable {
-	cursor: $cursor-pointer;
+	cursor: $cursor-pointer !important;
 }
 
 label {
@@ -233,7 +234,7 @@ $blending: hard-light;
 	backdrop-filter: blur(10px);
 	border-radius: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
-	box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+	// box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 	// animation: fadeIn 0.5s ease-out;
 }
 
@@ -241,6 +242,10 @@ $blending: hard-light;
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
 }
+
+// hr {
+// 	border: 1px solid rgba(255, 255, 255, 0.8);
+// }
 
 .return-btn {
 	animation: waitFadeIn 1s ease-out;
@@ -339,64 +344,65 @@ $blending: hard-light;
 }
 
 // PACMAN MENU PAGE
-/* Remove default appearance */
 #rangeInput {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
     height: 8px;
-    background: transparent; /* Make the background of the slider transparent */
+    background: transparent;
     outline: none;
 }
 
 /* Custom track (background of the slider) */
+@mixin custom-track {
+	width: 100%;
+	height: 20px;
+	cursor: $cursor-pointer;
+	background: url('/static/assets/pacman/images/food2.png') repeat-x; /* Dots as background */
+	border: none;
+}
+
 #rangeInput::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 20px; /* Adjust the height for the dots */
-    cursor: $cursor-pointer;
-    background: url('/static/assets/pacman/images/food2.png') repeat-x; /* Dots as background */
-    border: none;
+    @include custom-track;
 }
 
 #rangeInput::-moz-range-track {
-    width: 100%;
-    height: 20px;
-	cursor: $cursor-pointer;
-    background: url('/static/assets/pacman/images/food2.png') repeat-x;
-    border: none;
+	@include custom-track;
 }
 
 /* Custom handle (thumb) with Pac-Man image */
+@mixin custom-thumb {
+	width: 40px;
+	height: 40px;
+	background: url('/static/assets/pacman/images/pacman_high_res.png') no-repeat;
+	background-size: cover;
+	cursor: $cursor-pointer;
+	border: none;
+}
+
 #rangeInput::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 40px; /* Adjust size based on your Pac-Man icon */
-    height: 40px;
-    background: url('/static/assets/pacman/images/pacman_high_res.png') no-repeat;
-    background-size: cover;
-	cursor: $cursor-pointer;
-    border: none;
-    margin-top: -10px; /* Adjust to center the thumb over the track */
+    @include custom-thumb;
+    margin-top: -10px;
 }
 
 #rangeInput::-moz-range-thumb {
-    width: 40px;
-    height: 40px;
-    background: url('/static/assets/pacman/images/pacman_high_res.png') no-repeat;
-    background-size: cover;
-	cursor: $cursor-pointer;
-    border: none;
+	@include custom-thumb;
 }
 
-/* Optional: Custom handle on hover */
+// Hover effect for thumb
+@mixin custom-thumb-hover {
+	background-size: cover;
+	filter: brightness(0.7);
+}
+
 #rangeInput::-webkit-slider-thumb:hover {
-    background-size: cover;
-    filter: brightness(0.7);
+    @include custom-thumb-hover;
 }
 
 #rangeInput::-moz-range-thumb:hover {
-    background-size: cover;
-	filter: brightness(0.7);
+	@include custom-thumb-hover;
 }
 
 // Selected element
@@ -405,7 +411,59 @@ $blending: hard-light;
 	border: 3px solid rgba(255, 255, 255, 1) !important;
 }
 
+// PACMAN GAME PAGE
+#gameContainer {
+	position: relative;
+}
 
+#cvsPacman {
+	// 
+}
+
+#btnStart {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+// EDIT PROFILE PAGE
+.container-edit {
+	max-width: 450px;
+}
+
+// ------------------------------- Responsive -------------------------------
+// Mobile
+@media screen and (max-width: 768px) {
+    .games-page, .pacman-menu-page, .pacman-page, .pong-page {
+        display: none !important;
+    }
+
+	.games-page-mobile {
+		display: flex !important;
+	}
+
+	.glass {
+		// remove glass effect
+		background: transparent;
+		backdrop-filter: none;
+		border: none;
+		box-shadow: none;
+
+	}
+}
+
+// Desktop
+@media screen and (min-width: 768px) {
+	.games-page, .pacman-menu-page, .pacman-page, .pong-page {
+		display: flex !important;
+	}
+
+	.games-page-mobile {
+		display: none !important;
+	}
+}
 
 // ------------------------------- Custom Keyframes -------------------------------
 

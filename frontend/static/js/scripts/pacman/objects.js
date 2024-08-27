@@ -173,7 +173,7 @@ export class Timer {
 	}
 	updateDisplay() {
 		this.timer.innerHTML = 
-			"Time elapsed: " + this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
+			this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
 	}
 
 	pacmanStartCD() {

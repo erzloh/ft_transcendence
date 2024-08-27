@@ -6,7 +6,34 @@
 	"pong": "pong",
 	"pac-man": "pac-man",
 
+	"pacman-menu": "menu pac-man",
+	"enter-username": "entrer nom d'utilisateur",
+
+	"keys": "touches",
+	"keybinds-settings": "paramètres de touches",
+	"pacman-keys": "touches de pac-man",
+	"ghost-keys": "touches du fantôme",
+	"move-up": "monter",
+	"move-down": "descendre",
+	"move-left": "gauche",
+	"move-right": "droite",
+	"use-spell": "spécial",
+
+	"pacman-skin": "skin du pac-man",
+	"ghost-skin": "skin du fantôme",
+
+	"gamemode": "mode de jeu",
+	"objective": "objectif",
+	"objective-description": "le jeu se termine une fois que le score de Pacman atteint l'objectif ou que le fantôme attrape Pacman.",
+	"endless": "sans fin",
+	"endless-description": "le jeu se termine une fois que le fantôme attrape Pacman.",
+
+	"map": "carte",
+	"theme": "thème",
 	"start game": "démarrer le jeu",
+
+	"game paused": "jeu en pause",
+	"press escape": "appuyez sur échap pour reprendre",
 
 	"username": "nom d'utilisateur",
 	"e-mail": "e-mail",
@@ -39,7 +66,15 @@
 	"login-failure": "une erreur s'est produite lors de la connexion",
 
 	"see-friends": "voir les amis",
+
 	"edit-profile": "modifier le profil",
+	"profile-picture": "photo de profil",
+	"save": "sauvegarder",
+	"save-success": "sauvegarde réussie!",
+	"save-failure": "une erreur s'est produite lors de la sauvegarde",
+	"avatar-invalid-error": "avatar invalide",
+	"avatar-size-error": "l'avatar doit être inférieur à 1 Mo",
+	"avatar-empty-error": "l'avatar ne peut pas être vide",
 
 	"graphics": "graphiques",
 	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",
@@ -50,5 +85,7 @@
 	"other": "autre",
 	"select language": "langue",
 
-	"404-message": "la page que vous recherchez est introuvable."
+	"404-message": "la page que vous recherchez est introuvable.",
+
+	"games-not-available-mobile": "les jeux ne sont pas disponibles sur mobile."
 }
