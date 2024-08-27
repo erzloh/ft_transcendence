@@ -39,7 +39,7 @@ export async function loadFonts(scene) {
         });
 
         const createScoreText = (position) => {
-            const textGeometry = new TextGeometry('0', {
+            const textGeometry = new TextGeometry('1', {
                 font: font,
                 size: 2,
                 height: 0.5,
@@ -52,7 +52,7 @@ export async function loadFonts(scene) {
 
             const scoreMesh = new THREE.Mesh(textGeometry, textMaterial);
             scoreMesh.position.copy(position);
-            scoreMesh.rotation.x = Math.PI / 1.5;
+            scoreMesh.rotation.x = -Math.PI * 0.25;
             scene.add(scoreMesh);
             return scoreMesh;
         };

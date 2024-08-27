@@ -40,7 +40,6 @@ export function pongThree() {
 		paddleLeft = gltf.scene.getObjectByName('PaddleLeft');
 		paddleRight = gltf.scene.getObjectByName('PaddleRight');
 		
-		// Find the plane in the scene by its name (assuming it's named "Plane")
 		const plane = gltf.scene.getObjectByName('Plane');
 		
 		if (plane) {

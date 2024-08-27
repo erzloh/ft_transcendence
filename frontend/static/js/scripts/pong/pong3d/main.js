@@ -24,5 +24,5 @@ export async function pongThree() {
         renderer.render(scene, camera);
     }
 
-    animate();  // Start the animation loop
+    animate();
 }
