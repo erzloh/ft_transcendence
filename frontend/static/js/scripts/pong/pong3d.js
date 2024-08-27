@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 /*export function pongThree() {
 
@@ -74,16 +76,32 @@ export function pongThree() {
 
     // Load the GLTF model
     const loader = new GLTFLoader();
-    loader.load('/static/assets/pong/lastetest.gltf', function (gltf) {
-        scene.add(gltf.scene);
 
+	loader.load('/static/assets/pong/scene.gltf', function (gltf) {
+		scene.add(gltf.scene);
+	
 		ball = gltf.scene.getObjectByName('Ball');
-    	paddleLeft = gltf.scene.getObjectByName('PaddleLeft');
-    	paddleRight = gltf.scene.getObjectByName('PaddleRight');
+		paddleLeft = gltf.scene.getObjectByName('PaddleLeft');
+		paddleRight = gltf.scene.getObjectByName('PaddleRight');
+		
+		// Find the plane in the scene by its name (assuming it's named "Plane")
+		const plane = gltf.scene.getObjectByName('Plane');
+		
+		if (plane) {
+			// Set the plane material to be transparent
+			plane.material.transparent = true;
+			plane.material.opacity = 0.5; // Adjust this value to control transparency (0.0 - fully transparent, 1.0 - fully opaque)
+			plane.material.depthWrite = false; // Optional: prevents depth issues with other transparent objects
+		}
+	}, undefined, function (error) {
+		console.error('Error loading GLTF:', error);
+	});
 
-    }, undefined, function (error) {
-        console.error('giga merde le gltf il est ou', error);
-    });
+	/*const helper1 = new THREE.BoxHelper(paddleLeft, 0xff0000);
+	const helper2 = new THREE.BoxHelper(paddleRight, 0x00ff00);
+	const helper3 = new THREE.BoxHelper(ball, 0x0000ff);
+	scene.add(helper1, helper2, helper3);
+	*/
 
 	const keys = {
 		ArrowUp: false,
@@ -115,25 +133,27 @@ export function pongThree() {
 			paddleLeft.position.z += paddleSpeed;
 		
 		// Prevent paddles from moving out of bounds (assuming -8.3 to 8.3 based on the walls)
-		const zBound = 8.3 - 2.5;
+		const zBound = 8.5 - 2.5;
 		paddleLeft.position.z = Math.max(-zBound, Math.min(zBound, paddleLeft.position.z)); 
 		paddleRight.position.z = Math.max(-zBound, Math.min(zBound, paddleRight.position.z));
 	}
 
-	let ballSpeed = new THREE.Vector3(0.15, 0, 0.15);  // Adjust speed
+	let originalSpeed = new THREE.Vector3(0.15, 0, 0.15);
+	let ballSpeed = originalSpeed.clone();
 
 	function moveBall() {
 		ball.position.x += ballSpeed.x;
 		ball.position.z += ballSpeed.z;
 
 		// Ball collision with top and bottom walls (walls are at z = ±8.3229)
-		if (ball.position.z >= 8.3 || ball.position.z <= -8.3) {
+		if (ball.position.z >= 8.35 || ball.position.z <= -8.35) {
 			ballSpeed.z = -ballSpeed.z;  // Reverse Z direction
 		}
 
 		// Ball collision with paddles
 		if (collisionDetect(paddleLeft, ball) || collisionDetect(paddleRight, ball)) {
 			ballSpeed.x = -ballSpeed.x;  // Reverse X direction
+			increaseBallSpeed();
 		}
 
 		// Ball out of bounds (scoring)
@@ -142,29 +162,58 @@ export function pongThree() {
 		}
 	}
 
+	function increaseBallSpeed() {
+		const speedMultiplier = 1.05;  // Increase speed by 5% with each paddle hit
+		ballSpeed.multiplyScalar(speedMultiplier);
+	}
+
 	function resetBall() {
 		ball.position.set(0, 0, 0);  // Reset ball position on XZ plane
-		ballSpeed.set(0.15, 0, 0.15);  // Reset speed and direction
+		ballSpeed.copy(originalSpeed);  // Reset speed and direction to the original speed
 	}
 
 	function collisionDetect(paddle, ball) {
-		// Define paddle boundaries
-		const paddleTop = paddle.position.z + 1.25;  // Half of scale.z for paddle
-		const paddleBottom = paddle.position.z - 1.25;
-		const paddleLeft = paddle.position.x - 0.1;
-		const paddleRight = paddle.position.x + 0.1;
-	
-		// Define ball boundaries
-		const ballTop = ball.position.z + 0.15;  // Half of scale.z for ball
-		const ballBottom = ball.position.z - 0.15;
-		const ballLeft = ball.position.x - 0.15;
-		const ballRight = ball.position.x + 0.15;
-	
-		return paddleLeft < ballRight &&
-			   paddleRight > ballLeft &&
-			   paddleTop > ballBottom &&
-			   paddleBottom < ballTop;
+		const paddleBox = new THREE.Box3().setFromObject(paddle);
+		const ballBox = new THREE.Box3().setFromObject(ball);
+		return paddleBox.intersectsBox(ballBox);
 	}
+
+	const fontLoader = new FontLoader();
+    fontLoader.load('/static/assets/pong/Orbitron_Regular.json', function (font) {
+        const textGeometry = new TextGeometry('0', {
+            font: font,
+            size: 2,  // Size of the text
+            height: 0.5,  // Thickness of the text
+            curveSegments: 12,  // Number of segments for text curves
+            bevelEnabled: true,  // Enables bevel
+            bevelThickness: 0.5,  // Thickness of the bevel
+            bevelSize: 0.2,  // Distance from the text outline to bevel start
+            bevelOffset: 0,
+            bevelSegments: 5  // Number of bevel segments
+        });
+
+		const textMaterial = new THREE.MeshStandardMaterial({
+            color: 0xffffff,
+            emissive: 0xffffff,  // Emissive color (glow)
+            emissiveIntensity: 1.0 // Increase the intensity for more glow
+        });
+
+        const scoreText = new THREE.Mesh(textGeometry, textMaterial);
+
+        // Position the score above the paddles
+        scoreText.position.set(-10, 5, 0);  // Adjust position as needed
+
+        scene.add(scoreText);
+    });
+
+	const ambientLight = new THREE.AmbientLight(0x404040, 2);  // Soft white light
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+    pointLight.position.set(10, 10, 10);
+    scene.add(pointLight);
+
+
 
     // Animation loop
     function animate() {
