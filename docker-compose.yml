@@ -9,6 +9,7 @@ services:
       - "443:443"
     volumes:
       - ./frontend:/usr/share/nginx/html
+      - media_volume:/usr/share/nginx/html/media
     depends_on:
       - web
 
@@ -30,6 +31,7 @@ services:
     restart: always
     volumes:
       - ./back:/back
+      - media_volume:/back/transcendence/media
     ports:
       - "8000:8000"
     depends_on:
@@ -46,3 +48,6 @@ services:
     restart: always
     ports:
       - 8080:8080
+
+volumes:
+  media_volume:

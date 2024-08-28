@@ -15,6 +15,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ValidationError
 from django.http import FileResponse
+from rest_framework.exceptions import APIException
 
 class CookieTokenAuthentication(TokenAuthentication):
     def authenticate(self, request):
@@ -127,7 +128,18 @@ class FriendsList(views.APIView):
 class UsersList(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
-        users = CustomUser.objects.all()
-        users_usernames = [user.username for user in users]
-        return Response({"users": users_usernames}, status=status.HTTP_200_OK)
+        try:
+            users = CustomUser.objects.all()
+            users_data = []
+            for user in users:
+                serializer = CustomUserSerializer(user)
+                user_data = {
+                    'username': serializer.data['username'],
+                    'profile_picture_url': serializer.data['profile_picture_url']
+                }
+                users_data.append(user_data)
+            return Response(users_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            raise APIException(str(e))
