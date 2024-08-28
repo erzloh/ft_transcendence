@@ -77,8 +77,8 @@ export function signIn() {
 		if (response.status === 400) {
 			const responseData = await response.json();
 			// If the response status is an error, show the error message in the correct fields
-			updateTextForElem(usernameErrorElem, responseData.username[0]);
-			updateTextForElem(passwordErrorElem, responseData.password[0]);
+			updateTextForElem(usernameErrorElem, responseData.error[0]);
+			updateTextForElem(passwordErrorElem, responseData.error[0]);
 
 		} else if (response.status === 200) {
 			// If the response status is success, navigate to the profile page

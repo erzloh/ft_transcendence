@@ -255,10 +255,6 @@ $blending: hard-light;
 	animation: waitFadeIn 1s ease-out;
 }
 
-.title {
-	// user-select: none;
-}
-
 .fixed-width-btn {
     width: 150px;
 }
@@ -420,10 +416,6 @@ $blending: hard-light;
 	position: relative;
 }
 
-#cvsPacman {
-	// 
-}
-
 #btnStart {
 	position: absolute;
 	top: 50%;
@@ -452,7 +444,7 @@ $blending: hard-light;
 
 }
 
-.user-elements, .friend-elements {
+#user-elements, #friend-elements {
 	height: calc(100% - 80px);
 	overflow-y: auto;
 	scrollbar-color: rgba(255,255,255, 0.5) transparent;
