@@ -12,16 +12,16 @@ POST https://localhost/api/signup
 Content-Type: application/json
 
 {
-    "username": "pascal3", 
+    "username": "pascal", 
     "password": "Pascal1234!",
-    "email": "pascal3@gmail.com"
+    "email": "pascal@gmail.com"
 }
 
 ###
 
 POST https://localhost/api/logout
 Content-Type: application/json
-Cookie: jwt=5f5d0e8ea7c0a112d8a767f289a5e3f659cfc7aa
+Cookie: jwt=553cface1f9311a16878b1c9c4cfdf7ffc9a88cf
 
 {}
 
@@ -29,7 +29,7 @@ Cookie: jwt=5f5d0e8ea7c0a112d8a767f289a5e3f659cfc7aa
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
+Cookie: jwt=a1d155741ccdac75ec1fd8f3f303ae67c80c9189
 
 ###
 
@@ -67,12 +67,12 @@ Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
 
 GET https://localhost/api/friends_list
 Content-Type: application/json
-Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
+Cookie: jwt=a1d155741ccdac75ec1fd8f3f303ae67c80c9189
 
 ###
 
-GET https://localhost/api/users_list
+GET https://localhost/api/users_list/
 Content-Type: application/json
-Cookie: jwt=7b35cdf4eeb703ad124957721b7b79a74aea1c35
+Cookie: jwt=e39b493e181c827d20faa60bb1322ab180b2f5cb
 
 ###
