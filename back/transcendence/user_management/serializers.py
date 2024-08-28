@@ -6,10 +6,18 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 
 class CustomUserSerializer(serializers.ModelSerializer):
+	profile_picture_url = serializers.SerializerMethodField()
+
 	class Meta:
 		model = CustomUser
-		fields = ('id', 'username', 'email', 'password', 'profile_picture')	
+		fields = ('id', 'username', 'email', 'password', 'profile_picture', 'profile_picture_url')	
 		extra_kwargs = {'password': {'write_only': True}}
+
+	def get_profile_picture_url(self, obj):
+		if obj.profile_picture:
+			return settings.HOST_NAME + obj.profile_picture.url
+		else:
+			return None
 
 	def to_internal_value(self, data):
 		if 'email' in data and not data['email']:
