@@ -12,6 +12,7 @@ export default class extends AbstractView {
     }
 
 	loadJS() {
+		console.log("log");
 		const game = new PacmanGame();
 		game.Initialize();
 	}

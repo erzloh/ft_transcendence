@@ -1,3 +1,80 @@
+export class Tournament {
+	constructor(pNumber, usernames) {
+		this.playerNumber = pNumber;
+		this.usernames = usernames;
+		this.tournamentOver = false;
+		this.tournamentModal = new bootstrap.Modal(document.getElementById('tournamentModal'));
+		this.tournamentMatchEndModal = new bootstrap.Modal(document.getElementById('tournamentMatchEndModal'));
+		this.playersTournament =  document.getElementById('playersTournament');
+		this.matchTournament =  document.getElementById('matchTournament');
+		this.winner =  document.getElementById('winner');
+		this.matchIdModal =  document.getElementById('matchId');
+
+		this.matchId = 0;
+		this.maxMatchNb = this.playerNumber - 1;
+		this.playerArray1 = this.playerNumber == 4 ? 
+			["p1", "p2", "p3", "p4"] : ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8"] ;
+		this.playerArray1 = this.shuffleArray(this.playerArray1);
+		this.currentMatch;
+		this.playerArray2 = [];
+    }
+
+	getCurrentPlayers() {
+		if (this.playerNumber == 4) {
+			switch (this.matchId) {
+				case 0:
+					this.currentMatch = {left: this.playerArray1[0], right: this.playerArray1[1]};
+					break;
+				case 1:
+					this.currentMatch = {left: this.playerArray1[2], right: this.playerArray1[3]};
+					break;
+				case 2:
+					this.currentMatch = {left: this.playerArray2.left, right: this.playerArray2.right};
+					break;
+				default:
+					break;
+			}
+			this.matchTournament.innerHTML = "tournament " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
+			this.playersTournament.innerHTML = this.usernames[this.currentMatch.left] + " VS " + this.usernames[this.currentMatch.right];
+			this.tournamentModal.show();
+			return this.currentMatch;
+		}
+	}
+
+	setCurrentMatchWinner(side) {
+		if (this.playerNumber == 4) {
+			switch (this.matchId) {
+				case 0:
+					this.playerArray2.left = this.currentMatch[side];
+					break;
+				case 1:
+					this.playerArray2.right = this.currentMatch[side];
+					break;
+				case 2:
+					this.tournamentOver = true;
+					break;
+				default:
+					break;
+			}
+		}
+		if (!this.tournamentOver) {
+			this.matchIdModal.innerHTML = "tournament " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
+			this.winner.innerHTML = this.usernames[this.currentMatch[side]] + " won the match";
+			this.tournamentMatchEndModal.show();
+
+			this.matchId++;
+		}
+	}
+
+	shuffleArray(array) {
+		for (let i = array.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[array[i], array[j]] = [array[j], array[i]];
+		}
+		return array;
+	}
+}
+
 export class Ball {
     constructor(x, y, size, color, speed, dx, dy, maxY, maxX, leftPad, rightPad, scorePoint) {
         this.x = x;
@@ -92,7 +169,7 @@ export class Pad {
 		if (!this.isAI) {
 			if (this.direction == "up" && this.y > 0) {
 				this.y -= this.dy;
-			} 
+			}
 			else if (this.direction == "down" && this.y < this.maxY) {
 				this.y += this.dy;
 			}
@@ -100,7 +177,8 @@ export class Pad {
 		else {
 			if (this.y + this.height / 2 < this.ball.y) {
 				this.y += this.dy;
-			} else {
+			} 
+			else {
 				this.y -= this.dy;
 			}
 		}
