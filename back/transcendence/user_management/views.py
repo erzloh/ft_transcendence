@@ -30,6 +30,8 @@ class login(views.APIView):
         password = request.data['password']
         user = authenticate(username=username, password=password)
         if user:
+            user.online_status = True
+            user.save()
             token, created = Token.objects.get_or_create(user=user)
             serializer = CustomUserSerializer(instance=user)
             response = Response(status=status.HTTP_200_OK)
@@ -63,6 +65,8 @@ class logout(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
     def post(self, request):
+        request.user.online_status = False
+        request.user.save()
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
 
@@ -137,7 +141,8 @@ class UsersList(views.APIView):
                 serializer = CustomUserSerializer(user)
                 user_data = {
                     'username': serializer.data['username'],
-                    'profile_picture_url': serializer.data['profile_picture_url']
+                    'profile_picture_url': serializer.data['profile_picture_url'],
+                    'online_status': serializer.data['online_status']
                 }
                 users_data.append(user_data)
             return Response(users_data, status=status.HTTP_200_OK)
