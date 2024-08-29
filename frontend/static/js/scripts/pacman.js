@@ -160,6 +160,7 @@ class PacmanGame {
 		this.timer.reset();
 
 		this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.startButton.style.display = "block";
 		this.startButton.disabled = false;
 	}
 
