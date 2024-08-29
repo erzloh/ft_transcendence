@@ -47,10 +47,10 @@ Cookie: jwt=21cb4ac75ce59478cb675b1c27dd68738dac1ed5
 
 POST https://localhost/api/add_friend
 Content-Type: application/json
-Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
+Cookie: jwt=81df7ab78c409d78b2610e77c517551c572c7f4d
 
 {
-    "username": "pascal34"
+    "username": "pascal3"
 }
 
 ###
@@ -67,7 +67,7 @@ Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
 
 GET https://localhost/api/friends_list
 Content-Type: application/json
-Cookie: jwt=a1d155741ccdac75ec1fd8f3f303ae67c80c9189
+Cookie: jwt=81df7ab78c409d78b2610e77c517551c572c7f4d
 
 ###
 
