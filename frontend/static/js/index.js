@@ -62,6 +62,12 @@ const router = async () => {
     if (!match) {
 		match = { path: "", view: NotFound };
     }
+
+	// If there's an old view, clean it up
+    if (view) {
+        view.cleanUpEventListeners();
+        view.stopJS();
+    }
 	
 	// Create a new instance of the view
     view = new match.view();
@@ -82,6 +88,22 @@ const router = async () => {
 	animateLetters();
 };
 
+// Load script
+const loadScript = async (view) => {
+	// Get the dynamic script element
+	const dynamicScript = document.getElementById('dynamic-script');
+
+	// Create a new script element
+	const newScript = document.createElement('script');
+    //newScript.type = 'module'; // Ensure the script is treated as an ES module
+	newScript.textContent = await view.getJS();
+	newScript.id = 'dynamic-script';
+
+	// Replace the dynamic script element with the new script element
+	// This is needed to load the new JS content
+	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
+}
+
 // Function to attach event listeners to the links
 // Overwrite the default behavior of the links (<a> tags)
 // When a link is clicked, the navigateTo function is called
@@ -100,29 +122,9 @@ const attachEventListenersToLinks = () => {
 	});
 }
 
-
-// Load script
-const loadScript = async (view) => {
-	// Get the dynamic script element
-	const dynamicScript = document.getElementById('dynamic-script');
-
-	// Create a new script element
-	const newScript = document.createElement('script');
-    //newScript.type = 'module'; // Ensure the script is treated as an ES module
-	newScript.textContent = await view.getJS();
-	newScript.id = 'dynamic-script';
-
-	// Replace the dynamic script element with the new script element
-	// This is needed to load the new JS content
-	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
-}
-
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view
 export const navigateTo = url => {
-	// Clean up event listeners (that are attached to the document)
-	view.cleanUpEventListeners();
-
 	// Change the URL to the new URL and add a state to the history stack
     history.pushState(null, null, url);
 

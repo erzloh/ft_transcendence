@@ -160,6 +160,7 @@ class PacmanGame {
 		this.timer.reset();
 
 		this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.startButton.style.display = "block";
 		this.startButton.disabled = false;
 	}
 
@@ -277,7 +278,6 @@ class PacmanGame {
 		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
-		console.log(event.code);
 		if (event.code == "Escape")
 			this.pauseGame();
 		if (!this.gamePaused) {
@@ -315,6 +315,13 @@ class PacmanGame {
 				default:
 					break;
 			}
+		}
+	}
+
+	stopGameLoop() {
+		console.log("stop pacman loop");
+		if (this.gameStart) {
+			this.timer.stop();
 		}
 	}
 }

@@ -16,6 +16,11 @@ export default class extends AbstractView {
         editProfile();
     }
 
+    stopJS(){
+		// No loop in this view
+	}
+
+
     // cleanUpEventListeners() {
     //  for (const [event, listener] of Object.entries(eventListeners)) {
     //      document.removeEventListener(event, listener);

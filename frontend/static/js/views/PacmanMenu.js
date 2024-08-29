@@ -15,6 +15,11 @@ export default class extends AbstractView {
 		var pacmanMenu = new PacmanMenu();
 		pacmanMenu.Initialize();
 	}
+	
+	stopJS(){
+		// No loop in this view
+	}
+
 
 	cleanUpEventListeners() {
 		for (const [event, listener] of Object.entries(eventListeners)) {
