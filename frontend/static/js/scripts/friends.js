@@ -25,7 +25,6 @@ export async function friends () {
 			const responseUsers = await fetch(`${BASE_URL}/api/users_list`)
 			if (responseUsers.status === 200) {
 				const users = await responseUsers.json();
-				console.log(users);
 
 				// If the user list is empty
 				if (users.length === 1) {
@@ -46,21 +45,19 @@ export async function friends () {
 					// Check that the user is not already a friend
 					const responseFriends = await fetch(`${BASE_URL}/api/friends_list`)
 					const friendList = await responseFriends.json();
-					console.log('friendlist:', friendList);
-					if (friendList.find(friend => friend === user)) {
+					if (friendList.find(friend => friend.username === user.username)) {
 						return;
 					}
 
 					// Event Listener to add a friend
 					const addFriend = async () => {
-						console.log('calling addFriend');
 						const response = await fetch(`${BASE_URL}/api/add_friend`, {
 							method: 'POST',
 							headers: {
 								'Content-Type': 'application/json'
 							},
 							body: JSON.stringify({
-								username: user
+								username: user.username
 							})
 						});
 						if (!response.ok) {
@@ -87,7 +84,7 @@ export async function friends () {
 					// Create the user name paragraph element
 					const userName = document.createElement('p');
 					userName.className = 'm-0 ms-2';
-					userName.textContent = user;
+					userName.textContent = user.username;
 
 					// Append the profile picture and username
 					userDiv.appendChild(profilePic);
@@ -113,6 +110,8 @@ export async function friends () {
 
 				});
 			}
+		} else {
+			navigateTo('/signin');
 		}
 	}
 	
@@ -122,14 +121,13 @@ export async function friends () {
 	const fillFriendsContainter = async () => {
 		const responseFriends = await fetch(`${BASE_URL}/api/friends_list`)
 		if (responseFriends.status === 200) {
-			const responseData = await responseFriends.json();
-			const friends = responseData.friends;
+			const friends = await responseFriends.json();
 
 			// If the friend list is empty
 			if (friends.length === 0) {
 				friendElementsContainer.innerHTML = `<div class="text-white friend-error" data-translate="no friends"></div>`
 				updateTextForElem(document.querySelector('.friend-error'), 'no friends');
-
+				return;
 			}
 
 			// Empty the container
@@ -139,14 +137,13 @@ export async function friends () {
 
 				// Event Listener to remove a friend
 				const removeFriend = async () => {
-					console.log('calling removeFriend');
 					const response = await fetch(`${BASE_URL}/api/remove_friend`, {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
 						},
 						body: JSON.stringify({
-							username: friend
+							username: friend.username
 						})
 					});
 					if (!response.ok) {
@@ -156,10 +153,6 @@ export async function friends () {
 					await fillFriendsContainter();
 				}
 
-				// Request the friend's profile picture
-				// const responseImage = await fetch(`${BASE_URL}/api/user`)
-				const url = 'static/assets/images/profile_pic_transparent.png';
-
 				// Create the friend element
 				// Create the container that contains the profile pic and the friend name
 				const friendDiv = document.createElement('div');
@@ -167,13 +160,13 @@ export async function friends () {
 
 				// Create the profile picture img element
 				const profilePic = document.createElement('img');
-				profilePic.src = url;
+				profilePic.src = friend.profile_picture_url;
 				profilePic.alt = 'profile picture';
 				profilePic.className = 'profile-pic-list';
 
 				// Create the online status
 				const onlineStatus = document.createElement('img');
-				const onlineBool = true;
+				const onlineBool = friend.online_status;
 				onlineStatus.src = onlineBool ? 'static/assets/UI/icons/connected.svg' : 'static/assets/UI/icons/disconnected.svg';
 				onlineStatus.alt = 'online status';
 				onlineStatus.className = 'online-icon-list ms-2';
@@ -181,7 +174,7 @@ export async function friends () {
 				// Create the friend name paragraph element
 				const userName = document.createElement('p');
 				userName.className = 'm-0 ms-2';
-				userName.textContent = friend;
+				userName.textContent = friend.username;
 
 				// Append everything to the parent container
 				friendDiv.appendChild(profilePic);
