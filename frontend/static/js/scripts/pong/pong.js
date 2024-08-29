@@ -11,7 +11,6 @@ export class PongGame {
 
 		this.endgameModalWinner = document.getElementById('endgameModalWinner');
 		this.endgameModalScore = document.getElementById('endgameModalScore');
-		// let endgameModalTime = document.getElementById('endgameModalTime');
 		this.endgameModalPlayAgain = document.getElementById('playAgainButton');
 		this.tournamentModalNextMatch = document.getElementById('nextMatchButton');
 		this.pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
@@ -24,8 +23,10 @@ export class PongGame {
 		this.rightScore = document.getElementById("rightScore");
 
 		this.pWidth = 10, this.pHeight = 100, this.bSize = 10;
+		this.gameStarted = false;
 		this.paused = false;
 		this.gameOver = false;
+		this.gameStop = false;
 
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
@@ -154,6 +155,7 @@ export class PongGame {
 		this.leftScore.innerHTML = "0";
 		this.rightScore.innerHTML = "0";
 		
+		this.gameStarted = false;
 		this.startButton.disabled = false;
 		this.gameOver = false;
 	}
@@ -181,6 +183,7 @@ export class PongGame {
 			this.leftScore.innerHTML = "0";
 			this.rightScore.innerHTML = "0";
 			
+			this.gameStarted = false;
 			this.startButton.disabled = false;
 			this.gameOver = false;
 		}
@@ -188,6 +191,7 @@ export class PongGame {
 
 	startGame() {
 		this.startButton.disabled = true;
+		this.gameStarted = true;
 		this.gameLoop();
 	}
 
@@ -260,28 +264,30 @@ export class PongGame {
 		this.drawRect(this.rightPad.x, this.rightPad.y, this.rightPad.width, this.rightPad.height, this.rightPad.color);
 
 		this.drawSquare(this.ball.x, this.ball.y, this.ball.size, this.ball.color);
-
-		if (this.paused) {
-			this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-			this.ctx.fillRect(0, 0, this.cvs.width, this.cvs.height);
-		}
 	}
 
 	update() {
-		if (!this.paused) {
-			this.leftPad.move();
-			this.rightPad.move();
-			this.ball.move();
-		}
+		this.leftPad.move();
+		this.rightPad.move();
+		this.ball.move();
 	}
 
 	gameLoop() {
-		if (this.gameOver) {			
+		if (this.gameOver || this.gameStop) {	
+			this.gameStop = false;
 			return ;
 		}
 
-		this.update();
-		this.drawObjects();
+		console.log("pong loop");
+
+		if (!this.paused) {
+			this.update();
+			this.drawObjects();
+		}		
+		else {
+			this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+			this.ctx.fillRect(0, 0, this.cvs.width, this.cvs.height);
+		}
 		requestAnimationFrame(this.gameLoop);
 	}
 
@@ -304,7 +310,7 @@ export class PongGame {
 				this.rightPad.direction = "down";
 				break;
 			case 'Escape':
-				if (!this.gameOver) {
+				if (this.gameStarted && !this.gameOver) {
 					if (!this.paused)
 						this.pauseModal.show();
 					this.paused = !this.paused;
@@ -337,4 +343,11 @@ export class PongGame {
 				break;
 		}
 	};
+
+	stopGameLoop() {
+		console.log("stop pong loop");
+		if (this.gameStarted) {
+			this.gameStop = true;
+		}
+	}
 }

@@ -138,8 +138,8 @@ export class Pacman extends Character {
 export class Ghost extends Character {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.lastX;
-		this.lastY;
+		this.lastX = x;
+		this.lastY = y;
 		this.gBlockX;
 		this.gBlockY;
 		this.cellValue = "";
@@ -157,10 +157,6 @@ export class Ghost extends Character {
 			this.pcG.cells[this.gBlockX][this.gBlockY].value = 9;
 		}   
 	}
-
-	// stopSpell() {
-	// 	this.pcG.cells[this.lastY][this.lastX].value = this.cellValue;
-	// }
 
 	// Makes the character move until it reaches its destination
 	move() {

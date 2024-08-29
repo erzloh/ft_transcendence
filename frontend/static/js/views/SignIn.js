@@ -14,4 +14,9 @@ export default class extends AbstractView {
 	loadJS() {
 		signIn();
 	}
+
+  stopJS(){
+		// No loop in this view
+	}
+
 }

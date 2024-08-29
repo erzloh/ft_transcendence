@@ -14,4 +14,9 @@ export default class extends AbstractView {
 	async loadJS() {
 		await profile();
 	}
+
+  stopJS(){
+		// No loop in this view
+	}
+
 }

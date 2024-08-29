@@ -101,6 +101,8 @@ export class Timer {
 		this.pcG.updateGame();
 		this.pcG.renderGame();
 
+		console.log("pacman loop");
+
 		if (this.dsec == 100) {
 			this.dsec = 0;
 			this.sec++;

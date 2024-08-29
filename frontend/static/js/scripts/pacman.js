@@ -274,7 +274,6 @@ class PacmanGame {
 		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
-		console.log(event.code);
 		if (event.code == "Escape")
 			this.pauseGame();
 		if (!this.gamePaused) {
@@ -312,6 +311,13 @@ class PacmanGame {
 				default:
 					break;
 			}
+		}
+	}
+
+	stopGameLoop() {
+		console.log("stop pacman loop");
+		if (this.gameStart) {
+			this.timer.stop();
 		}
 	}
 }

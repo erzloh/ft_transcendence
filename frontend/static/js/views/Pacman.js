@@ -5,6 +5,7 @@ export default class extends AbstractView {
     constructor() {
         super();
         this.setTitle("satori - pacman");
+		this.pacmanGame;
     }
 
     async getHtml() {
@@ -12,10 +13,14 @@ export default class extends AbstractView {
     }
 
 	loadJS() {
-		console.log("log");
-		const game = new PacmanGame();
-		game.Initialize();
+		this.pacmanGame = new PacmanGame();
+		this.pacmanGame.Initialize();
 	}
+
+	stopJS(){
+		this.pacmanGame.stopGameLoop();
+	}
+
 
 	cleanUpEventListeners() {
 		for (const [event, listener] of Object.entries(eventListeners)) {
