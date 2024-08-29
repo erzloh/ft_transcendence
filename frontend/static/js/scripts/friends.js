@@ -24,8 +24,8 @@ export async function friends () {
 			// Get the list of all users
 			const responseUsers = await fetch(`${BASE_URL}/api/users_list`)
 			if (responseUsers.status === 200) {
-				const responseData = await responseUsers.json();
-				const users = responseData.users;
+				const users = await responseUsers.json();
+				console.log(users);
 
 				// If the user list is empty
 				if (users.length === 1) {
@@ -39,15 +39,15 @@ export async function friends () {
 
 				users.map(async user => {
 					// Check that the user is not the current user
-					if (user === current_username) {
+					if (user.username === current_username) {
 						return;
 					}
 
 					// Check that the user is not already a friend
 					const responseFriends = await fetch(`${BASE_URL}/api/friends_list`)
-					const responseFriendsJSON = await responseFriends.json();
-					const friends = responseFriendsJSON.friends;
-					if (friends.find(friend => friend === user)) {
+					const friendList = await responseFriends.json();
+					console.log('friendlist:', friendList);
+					if (friendList.find(friend => friend === user)) {
 						return;
 					}
 
@@ -70,9 +70,7 @@ export async function friends () {
 						await fillFriendsContainter();
 					}
 
-					// Request the user's profile picture
-					// const responseImage = await fetch(`${BASE_URL}/api/user`)
-					const url = 'static/assets/images/profile_pic_transparent.png';
+					// const url = 'static/assets/images/profile_pic_transparent.png';
 
 					// Create the user element
 					// Create the container that contains the profile pic and the username
@@ -81,7 +79,7 @@ export async function friends () {
 
 					// Create the profile picture img element
 					const profilePic = document.createElement('img');
-					profilePic.src = url;
+					profilePic.src = user.profile_picture_url;
 					profilePic.alt = 'profile picture';
 					profilePic.className = 'profile-pic-list';
 					profilePic.id = 'avatar';
