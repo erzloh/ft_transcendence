@@ -126,8 +126,16 @@ class FriendsList(views.APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         friends = request.user.friends.all()
-        friends_usernames = [friend.username for friend in friends]
-        return Response({"friends": friends_usernames}, status=status.HTTP_200_OK)
+        friends_data = []
+        for friend in friends:
+            serializer = CustomUserSerializer(friend)
+            friend_data = {
+                'username': serializer.data['username'],
+                'profile_picture_url': serializer.data['profile_picture_url'],
+                'online_status': serializer.data['online_status']
+            }
+            friends_data.append(friend_data)
+        return Response(friends_data, status=status.HTTP_200_OK)
 
 class UsersList(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
