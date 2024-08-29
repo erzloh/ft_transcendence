@@ -27,7 +27,8 @@ class CustomUser(AbstractUser):
 		}
 	)
 	profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default.jpg')
-	#friends = models.ManyToManyField('self', blank=True)
+	friends = models.ManyToManyField('self', blank=True)
+	online_status = models.BooleanField(default=False)
 	objects = CustomUserManager()
 
 	def __str__(self):

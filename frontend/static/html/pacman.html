@@ -1,8 +1,10 @@
-<div class="full-height d-flex align-items-center justify-content-center">
+<div class="full-height d-flex align-items-center justify-content-center pacman-page">
 	<div class="row justify-content-center">
 		<div class="col-12 text-center mb-3">
 			<p class="text-white h1" animated-letters data-translate="pac-man">pac-man</p>
-			<br>
+			<div class=" d-flex justify-content-center m-3">
+				<hr class="text-white" style="width: 400px;">
+			</div>
 			<div class="container">
 				<div class="row text-white d-flex justify-content-center">
 					<div class="col-4">
@@ -21,8 +23,9 @@
 		</div>
 		<div class="col">
 			<div class="row-12">
-				<div class="col-12 d-flex flex-column align-items-center mb-3">
+				<div class="col-12 d-flex flex-column align-items-center mb-3" id="gameContainer">
 					<canvas class="glass" id="cvsPacman" width="500" height="500"></canvas>
+					<button id="btnStart" class="btn btn-lg text-light btn-filled" data-translate="start game">start game</button>
 				</div>
 			</div>
 			<div class="row justify-content-center">
@@ -86,9 +89,16 @@
 			  	</div>
 			</div>
 		</div>
-		<div class="col-12 text-center mt-4 mb-2">
-			<button id="btnStart" class="btn btn-lg text-light btn-filled" data-translate="start game">start game</button>
+		<div class="col-12 text-center mt-3 d-flex justify-content-center">
+			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
 		</div>
+	</div>
+</div>
+<div class="container full-height d-flex flex-column align-items-center justify-content-center games-page-mobile" style="display: none;">
+	<div class="container p-5 glass">
+		<p class="text-white text-center p-0 m-0" data-translate="games-not-available-mobile">games are not available on mobile.</p>
+	</div>
+	<div class="row justify-content-center mb-3">
 		<div class="col-12 text-center mt-5 d-flex justify-content-center">
 			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
 		</div>

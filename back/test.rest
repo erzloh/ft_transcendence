@@ -21,7 +21,7 @@ Content-Type: application/json
 
 POST https://localhost/api/logout
 Content-Type: application/json
-Cookie: jwt=5f5d0e8ea7c0a112d8a767f289a5e3f659cfc7aa
+Cookie: jwt=553cface1f9311a16878b1c9c4cfdf7ffc9a88cf
 
 {}
 
@@ -29,7 +29,7 @@ Cookie: jwt=5f5d0e8ea7c0a112d8a767f289a5e3f659cfc7aa
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=21cb4ac75ce59478cb675b1c27dd68738dac1ed5
+Cookie: jwt=a1d155741ccdac75ec1fd8f3f303ae67c80c9189
 
 ###
 
@@ -42,5 +42,37 @@ Cookie: jwt=21cb4ac75ce59478cb675b1c27dd68738dac1ed5
     "username": "big noob",
     "email": "pascalobispo@gmail.com"
 }
+
+###
+
+POST https://localhost/api/add_friend
+Content-Type: application/json
+Cookie: jwt=81df7ab78c409d78b2610e77c517551c572c7f4d
+
+{
+    "username": "pascal3"
+}
+
+###
+
+POST https://localhost/api/remove_friend
+Content-Type: application/json
+Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
+
+{
+    "username": "pascal2"
+}
+
+###
+
+GET https://localhost/api/friends_list
+Content-Type: application/json
+Cookie: jwt=81df7ab78c409d78b2610e77c517551c572c7f4d
+
+###
+
+GET https://localhost/api/users_list/
+Content-Type: application/json
+Cookie: jwt=e39b493e181c827d20faa60bb1322ab180b2f5cb
 
 ###

@@ -78,6 +78,11 @@
 	"avatar-size-error": "avatar must be at most 1MB",
 	"avatar-empty-error": "avatar cannot be empty",
 
+	"friends": "friends",
+	"all users": "all users",
+	"no users": "no users found.",
+	"no friends": "no friends found.",
+
 	"graphics": "graphics", 
 	"ultra": "ultra",
 	"medium": "medium",
@@ -86,5 +91,7 @@
 	"other": "other",
 	"select language": "language",
 
-	"404-message": "the page you are looking for cannot be found."
+	"404-message": "the page you are looking for cannot be found.",
+
+	"games-not-available-mobile": "games are not available on mobile."
 }

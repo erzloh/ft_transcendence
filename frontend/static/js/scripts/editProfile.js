@@ -165,7 +165,7 @@ export async function editProfile () {
 			if (!validateAvatar()) {
 				formValid = false;
 			}
-			formData.append('avatar', avatarInputElem.files[0]);
+			formData.append('profile_picture', avatarInputElem.files[0]);
 		}
 		if (changes.username) {
 			if (!validateUsername()) {
@@ -186,14 +186,21 @@ export async function editProfile () {
 			formData.append('password', passwordElem.value);
 		}
 
-		if (formValid) {
+		// Check if at least one inpout has changed
+		let changesAvailable = false;
+
+		for (let value of Object.values(changes)) {
+			if (value === true) {
+				changesAvailable = true;
+				break;
+			}
+		}
+
+		if (formValid && changesAvailable) {
 			console.log(formData);
 			// Send the data to the server
 			const response = await fetch(`${BASE_URL}/api/update_user`, {
 				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json'
-				},
 				body: formData
 			})
 
@@ -213,8 +220,8 @@ export async function editProfile () {
 				}
 			} else if (response.status === 200) {
 				// If the response status is success, show success message and navigate to the login page
-				const containerLogin = document.querySelector('.container-login');
-				containerLogin.innerHTML = `
+				const containerEdit = document.querySelector('.container-edit');
+				containerEdit.innerHTML = `
 					<div class="success">
 						<h1 id="success-message" class="text-white" data-translate"save-success">Sign up successful!</h1>
 						<div class="d-flex align-items-center justify-content-center p-5">

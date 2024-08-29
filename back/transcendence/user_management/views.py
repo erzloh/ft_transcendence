@@ -15,6 +15,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ValidationError
 from django.http import FileResponse
+from rest_framework.exceptions import APIException
 
 class CookieTokenAuthentication(TokenAuthentication):
     def authenticate(self, request):
@@ -29,6 +30,8 @@ class login(views.APIView):
         password = request.data['password']
         user = authenticate(username=username, password=password)
         if user:
+            user.online_status = True
+            user.save()
             token, created = Token.objects.get_or_create(user=user)
             serializer = CustomUserSerializer(instance=user)
             response = Response(status=status.HTTP_200_OK)
@@ -62,6 +65,8 @@ class logout(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
     def post(self, request):
+        request.user.online_status = False
+        request.user.save()
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
 
@@ -88,3 +93,66 @@ class UserAvatar(views.APIView):
             return FileResponse(open(user.profile_picture.path, 'rb'), content_type='image/jpeg')
         else:
             return Response({"error": "No profile photo found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+class AddFriend(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        friend_username = request.data.get('username')
+        if friend_username == request.user.username:
+            return Response({"error": "You cannot add yourself as a friend"}, status=status.HTTP_400_BAD_REQUEST)
+        friend = get_object_or_404(CustomUser, username=friend_username)
+        if friend in request.user.friends.all():
+            return Response({"error": "This user is already your friend"}, status=status.HTTP_400_BAD_REQUEST)
+        request.user.friends.add(friend)
+        return Response(status=status.HTTP_200_OK)
+
+class RemoveFriend(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        friend_username = request.data.get('username')
+        if friend_username == request.user.username:
+            return Response({"error": "You cannot remove yourself from friends"}, status=status.HTTP_400_BAD_REQUEST)
+        friend = get_object_or_404(CustomUser, username=friend_username)
+        if friend not in request.user.friends.all():
+            return Response({"error": "This user is not your friend"}, status=status.HTTP_400_BAD_REQUEST)
+        request.user.friends.remove(friend)
+        return Response(status=status.HTTP_200_OK)
+
+class FriendsList(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        friends = request.user.friends.all()
+        friends_data = []
+        for friend in friends:
+            serializer = CustomUserSerializer(friend)
+            friend_data = {
+                'username': serializer.data['username'],
+                'profile_picture_url': serializer.data['profile_picture_url'],
+                'online_status': serializer.data['online_status']
+            }
+            friends_data.append(friend_data)
+        return Response(friends_data, status=status.HTTP_200_OK)
+
+class UsersList(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        try:
+            users = CustomUser.objects.all()
+            users_data = []
+            for user in users:
+                serializer = CustomUserSerializer(user)
+                user_data = {
+                    'username': serializer.data['username'],
+                    'profile_picture_url': serializer.data['profile_picture_url'],
+                    'online_status': serializer.data['online_status']
+                }
+                users_data.append(user_data)
+            return Response(users_data, status=status.HTTP_200_OK)
+        except Exception as e:
+            raise APIException(str(e))

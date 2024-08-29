@@ -11972,6 +11972,7 @@ html, body {
   padding: 0;
   font-variant-ligatures: no-common-ligatures;
   overflow-x: hidden;
+  overflow-y: hidden;
   cursor: url("/static/assets/UI/icons/cursor.svg") 10 10, auto;
 }
 
@@ -12154,7 +12155,10 @@ label {
           backdrop-filter: blur(10px);
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.hr {
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .glass-modal-bg {
@@ -12318,10 +12322,141 @@ label {
   border: 3px solid rgb(255, 255, 255) !important;
 }
 
+#gameContainer {
+  position: relative;
+}
+
+#btnStart {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
 .container-edit {
   max-width: 450px;
 }
 
+.container-friends {
+  max-width: 800px;
+  height: 700px;
+}
+
+.list-container {
+  height: 100%;
+}
+
+.users-list, .friends-list {
+  height: 100%;
+}
+
+#user-elements, #friend-elements {
+  height: calc(100% - 80px);
+  overflow-y: auto;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+.user-element {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  display: block;
+  text-align: start;
+}
+.user-element .profile-pic-list {
+  width: 30px;
+  height: 30px;
+  display: inline;
+  margin-right: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+.user-element .plus-icon-list {
+  width: 20px;
+  height: 20px;
+  display: inline;
+  margin-left: auto;
+  transition: 0.3s;
+}
+.user-element .plus-icon-list:hover {
+  filter: brightness(0.7);
+  rotate: 90deg;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+}
+.user-element p {
+  display: inline;
+}
+
+.friend-element {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  display: block;
+  text-align: start;
+  position: relative;
+}
+.friend-element .profile-pic-list {
+  width: 30px;
+  height: 30px;
+  display: inline;
+  margin-right: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+.friend-element .minus-icon-list {
+  width: 20px;
+  height: 20px;
+  display: inline;
+  margin-left: auto;
+  transition: 0.3s;
+}
+.friend-element .minus-icon-list:hover {
+  filter: brightness(0.7);
+  rotate: 180deg;
+  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+}
+.friend-element p {
+  display: inline;
+}
+.friend-element .online-icon-list {
+  width: 15px;
+  height: 15px;
+  display: inline;
+  position: absolute;
+  top: 26px;
+  left: 19px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .games-page, .pacman-menu-page, .pacman-page, .pong-page {
+    display: none !important;
+  }
+  .games-page-mobile {
+    display: flex !important;
+  }
+  .glass {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+  }
+}
+@media screen and (min-width: 768px) {
+  .games-page, .pacman-menu-page, .pacman-page, .pong-page {
+    display: flex !important;
+  }
+  .games-page-mobile {
+    display: none !important;
+  }
+}
 @keyframes waitFadeIn {
   0% {
     opacity: 0;

@@ -1,4 +1,4 @@
-<div class="full-height d-flex align-items-center justify-content-center">
+<div class="full-height d-flex align-items-center justify-content-center pacman-menu-page">
 	<div class="row justify-content-center">
 		<div class="toast-container position-fixed top-0 end-0 p-3">
 			<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none; max-width: none; width: auto;" role="alert" aria-live="assertive" aria-atomic="true">
@@ -10,8 +10,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-12 text-center mb-5">
-			<label class="text-white h1" data-translate="pacman-menu" animated-letters>pac-man menu</label>
+		<div class="col-12 text-center">
+			<p class="text-white h1" data-translate="pacman-menu" animated-letters>pac-man menu</p>
+		</div>
+		<div class=" d-flex justify-content-center m-3 mb-4">
+			<hr class="text-white" style="width: 400px;">
 		</div>
 		<div class="row justify-content-center mb-2" style="width: 75vw;">
 			<div class="col d-flex flex-column">
@@ -54,6 +57,16 @@
 		</div>
 		<div class="col-12 text-center mt-5 d-flex justify-content-center">
 			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/games" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
+		</div>
+	</div>
+</div>
+<div class="container full-height d-flex flex-column align-items-center justify-content-center games-page-mobile" style="display: none;">
+	<div class="container p-5 glass">
+		<p class="text-white text-center p-0 m-0" data-translate="games-not-available-mobile">games are not available on mobile.</p>
+	</div>
+	<div class="row justify-content-center mb-3">
+		<div class="col-12 text-center mt-5 d-flex justify-content-center">
+			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
 		</div>
 	</div>
 </div>

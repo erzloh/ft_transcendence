@@ -20,6 +20,7 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
+	overflow-y: hidden;
 	cursor: $cursor;
 }
 
@@ -233,8 +234,12 @@ $blending: hard-light;
 	backdrop-filter: blur(10px);
 	border-radius: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
-	box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+	// box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 	// animation: fadeIn 0.5s ease-out;
+}
+
+.hr {
+	border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .glass-modal-bg {
@@ -242,12 +247,12 @@ $blending: hard-light;
 	backdrop-filter: blur(10px);
 }
 
+// hr {
+// 	border: 1px solid rgba(255, 255, 255, 0.8);
+// }
+
 .return-btn {
 	animation: waitFadeIn 1s ease-out;
-}
-
-.title {
-	// user-select: none;
 }
 
 .fixed-width-btn {
@@ -406,11 +411,166 @@ $blending: hard-light;
 	border: 3px solid rgba(255, 255, 255, 1) !important;
 }
 
+// PACMAN GAME PAGE
+#gameContainer {
+	position: relative;
+}
+
+#btnStart {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
 // EDIT PROFILE PAGE
 .container-edit {
 	max-width: 450px;
 }
 
+// FRIENDS PAGE
+.container-friends {
+	max-width: 800px;
+	height: 700px;
+}
+
+.list-container {
+	height: 100%;
+}
+
+.users-list, .friends-list {
+	height: 100%;
+
+}
+
+#user-elements, #friend-elements {
+	height: calc(100% - 80px);
+	overflow-y: auto;
+	scrollbar-color: rgba(255,255,255, 0.5) transparent;
+}
+
+.user-element {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+	display: block;
+	text-align: start;
+
+	.profile-pic-list {
+		width: 30px;
+		height: 30px;
+		display: inline;
+		margin-right: 5px;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 50%;
+	}
+
+	.plus-icon-list {
+		width: 20px;
+		height: 20px;
+		display: inline;
+		margin-left: auto;
+		transition: 0.3s;
+
+		// on hover
+		&:hover {
+			filter: brightness(0.7);
+			rotate: 90deg;
+			cursor: $cursor-pointer;
+		}
+
+	}
+
+	p {
+		display: inline;
+	}
+}
+
+.friend-element {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+	display: block;
+	text-align: start;
+	position: relative;
+
+	.profile-pic-list {
+		width: 30px;
+		height: 30px;
+		display: inline;
+		margin-right: 5px;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 50%;
+	}
+
+	.minus-icon-list {
+		width: 20px;
+		height: 20px;
+		display: inline;
+		margin-left: auto;
+		transition: 0.3s;
+
+		// on hover
+		&:hover {
+			filter: brightness(0.7);
+			rotate: 180deg;
+			cursor: $cursor-pointer;
+		}
+
+	}
+
+	p {
+		display: inline;
+	}
+
+	.online-icon-list {
+		width: 15px;
+		height: 15px;
+		display: inline;
+		position: absolute;
+		top: 26px;
+		left: 19px;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 50%;
+	}
+}
+
+// ------------------------------- Responsive -------------------------------
+// Mobile
+@media screen and (max-width: 768px) {
+    .games-page, .pacman-menu-page, .pacman-page, .pong-page {
+        display: none !important;
+    }
+
+	.games-page-mobile {
+		display: flex !important;
+	}
+
+	.glass {
+		// remove glass effect
+		background: transparent;
+		backdrop-filter: none;
+		border: none;
+		box-shadow: none;
+
+	}
+}
+
+// Desktop
+@media screen and (min-width: 768px) {
+	.games-page, .pacman-menu-page, .pacman-page, .pong-page {
+		display: flex !important;
+	}
+
+	.games-page-mobile {
+		display: none !important;
+	}
+}
 
 // ------------------------------- Custom Keyframes -------------------------------
 

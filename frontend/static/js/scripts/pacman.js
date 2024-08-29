@@ -215,6 +215,9 @@ class PacmanGame {
 
 	// Initialize everything needed for the game
 	async StartGame() {
+		// Hide the button
+		this.startButton.style.display = "none";
+
 		// Get the map's JSON data
 		const mapData = await this.loadMap("static/assets/pacman/maps/" + this.mapName + ".json");
 		const { tileSize: tmpTileSize, width: tmpWidth, height: tmpHeight, data: tmpData } = mapData;
