@@ -73,10 +73,14 @@ const router = async () => {
     view = new match.view();
 	
 	// Load the HTML of the view in the app div
-    document.querySelector("#app").innerHTML = await view.getHtml();
+	const appDiv = document.querySelector("#app");
+    appDiv.innerHTML = await view.getHtml();
 
 	// Load the JS of the view
 	await view.loadJS();
+
+	// Focus on the main element
+	appDiv.focus();
 
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();
