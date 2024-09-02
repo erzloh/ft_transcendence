@@ -1,4 +1,4 @@
-import { Ball, Pad, Tournament }  from "./objects.js";
+import { Ball, Pad, Tournament, Timer }  from "./objects.js";
 
 export let eventListeners = { }
 
@@ -31,6 +31,9 @@ export class PongGame {
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
 
+		const gamestyleString = localStorage.getItem('pongGamestyle');
+		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "enhanced";
+
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
 			p1: "player1", p2: "player2", p3: "player3", p4: "player4"
@@ -51,7 +54,8 @@ export class PongGame {
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
-			lUp : 'KeyW', lDown : 'KeyS', rUp : 'ArrowUp', rDown : 'ArrowDown'
+			lUp : 'KeyW', lDown : 'KeyS', lAccelerate: 'KeyE',
+			rUp : 'ArrowUp', rDown : 'ArrowDown', rAccelerate: 'ArrowRight'
 		};
 
 		const objectiveString = localStorage.getItem('pongObjective');
@@ -61,22 +65,9 @@ export class PongGame {
 		this.boundPongHandleKeyDown = this.handleKeyDown.bind(this);
 		this.boundPongHandleKeyUp = this.handleKeyUp.bind(this);
 		this.boundScorePoint = this.scorePoint.bind(this);
-
-		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, this.colors.p1, 5, this.cvs.height -  this.pHeight, 
-			false);
-
-		this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, this.gamemode == "AI" ? "#FFF" : this.colors.p2, 5, this.cvs.height -  this.pHeight,
-			this.gamemode == "AI" ? true : false);
-
-		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
-
+		
 		this.tournament;
 		this.currentMatch;
-
-		this.rightPad.ball = this.ball;
 
 		this.gameLoop = this.gameLoop.bind(this);
 	}
@@ -92,6 +83,21 @@ export class PongGame {
 		document.addEventListener("keyup", this.boundPongHandleKeyUp);
 		eventListeners["keyup"] = this.boundPongHandleKeyUp;
 
+		this.timer = new Timer(this);
+
+		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
+			this.pWidth, this.pHeight, this.usernames.p1, this.colors.p1, 5, this.cvs.height -  this.pHeight, 
+			false, this.timer);
+
+		this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
+			this.pWidth, this.pHeight, this.gamemode == "AI" ? "AI" : this.usernames.p2, this.gamemode == "AI" ? "#FFF" : this.colors.p2, 5, this.cvs.height -  this.pHeight,
+			this.gamemode == "AI" ? true : false, this.timer);
+
+		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
+			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
+
+		this.rightPad.ball = this.ball;
+		
 		if (this.gamemode == "tournament") {
 			this.tournament = new Tournament(4, this.usernames);
 			this.currentMatch = this.tournament.getCurrentPlayers();
@@ -99,6 +105,8 @@ export class PongGame {
 			rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 			this.leftPad.color = this.colors[this.currentMatch.left];
 			this.rightPad.color = this.colors[this.currentMatch.right];
+			this.leftPad.name = this.usernames[this.currentMatch.left];
+			this.rightPad.name = this.usernames[this.currentMatch.right];
 			this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
 			this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 		}
@@ -119,6 +127,7 @@ export class PongGame {
 
 	winMatch(side) {
 		this.gameOver = true;
+		this.timer.stop();
 		this.matchScore.innerHTML = "score: " + this.leftPad.score + "-" + this.rightPad.score;
 		this.tournament.setCurrentMatchWinner(side);
 		if (this.tournament.tournamentOver) {
@@ -142,12 +151,12 @@ export class PongGame {
 		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 		
 		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, this.colors[this.currentMatch.left], 5, this.cvs.height -  this.pHeight, 
-			false);
+			this.pWidth, this.pHeight, this.usernames[this.currentMatch.left], this.colors[this.currentMatch.left], 5, this.cvs.height -  this.pHeight, 
+			false, this.timer);
 
 		this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
-			this.pWidth, this.pHeight, this.colors[this.currentMatch.right], 5, this.cvs.height -  this.pHeight,
-			false);	
+			this.pWidth, this.pHeight, this.usernames[this.currentMatch.right], this.colors[this.currentMatch.right], 5, this.cvs.height -  this.pHeight,
+			false, this.timer);	
 		
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
 			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
@@ -158,6 +167,7 @@ export class PongGame {
 		this.gameStarted = false;
 		this.startButton.disabled = false;
 		this.gameOver = false;
+		this.timer.reset();
 	}
 
 	resetGame() {
@@ -168,12 +178,12 @@ export class PongGame {
 			this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 		
 			this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
-				this.pWidth, this.pHeight, this.colors.p1, 5, this.cvs.height -  this.pHeight, 
-				false);
+				this.pWidth, this.pHeight, this.usernames.p1, this.colors.p1, 5, this.cvs.height -  this.pHeight, 
+				false, this.timer);
 	
 			this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
-				this.pWidth, this.pHeight, this.gamemode == "AI" ? "#FFF" : this.colors.p2, 5, this.cvs.height -  this.pHeight,
-				this.gamemode == "AI" ? true : false);	
+				this.pWidth, this.pHeight, this.gamemode == "AI" ? "AI" : this.usernames.p2, this.gamemode == "AI" ? "#FFF" : this.colors.p2, 5, this.cvs.height -  this.pHeight,
+				this.gamemode == "AI" ? true : false, this.timer);	
 			
 			this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
 				this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this.leftPad, this.rightPad, this.boundScorePoint);
@@ -186,12 +196,14 @@ export class PongGame {
 			this.gameStarted = false;
 			this.startButton.disabled = false;
 			this.gameOver = false;
+			this.timer.reset();
 		}
 	}
 
 	startGame() {
 		this.startButton.disabled = true;
 		this.gameStarted = true;
+		this.timer.start();
 		this.gameLoop();
 	}
 
@@ -204,6 +216,7 @@ export class PongGame {
 
 	endGame(winner) {
 		this.gameOver = true;
+		this.timer.stop();
 
 		this.endgameModalWinner.textContent = winner + " won the game";
 		this.endgameModalScore.textContent = "Final score: " + this.leftPad.score + "-" + this.rightPad.score;
@@ -303,11 +316,17 @@ export class PongGame {
 			case this.keybinds.lDown:
 				this.leftPad.direction = "down";
 				break;
+			case this.keybinds.lAccelerate:
+				this.leftPad.useAccelerate();
+				break;
 			case this.keybinds.rUp:
 				this.rightPad.direction = "up";
 				break;
 			case this.keybinds.rDown:
 				this.rightPad.direction = "down";
+				break;
+			case this.keybinds.rAccelerate:
+				this.rightPad.useAccelerate();
 				break;
 			case 'Escape':
 				if (this.gameStarted && !this.gameOver) {

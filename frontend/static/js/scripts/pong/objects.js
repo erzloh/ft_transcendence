@@ -75,6 +75,105 @@ export class Tournament {
 	}
 }
 
+export class Timer {
+	constructor(pongGame) {
+		this.pG = pongGame;
+		this.sec = 0;
+		this.min = 0;
+		this.interval = null;
+
+		this.timer = document.getElementById('timer');
+		this.lAccelerateLabel = document.getElementById('lAccelerateCD');
+		this.rAccelerateLabel = document.getElementById('rAccelerateCD');
+
+		// Spells
+		this.accelerateDuration = 5;
+		this.accelerateCooldown = 20;
+		this.leftAccelerateCD = 0;
+		this.rightAccelerateCD = 0;
+	}
+
+	start() {
+		if (!this.interval) {
+			this.interval = setInterval(() => {
+				this.updateTime();
+			}, 1000);
+		}
+	}
+
+	stop() {
+		clearInterval(this.interval);
+		this.interval = null;
+	}
+
+	reset() {
+		this.stop();
+		this.sec = 0;
+		this.min = 0;
+		this.leftAccelerateCD = 0;
+		this.rightAccelerateCD = 0;
+		this.updateDisplay();
+	}
+
+	updateTime() {
+		this.sec++;
+	
+		if (this.leftAccelerateCD > 0) {
+			this.leftAccelerateCD--;
+			if (this.leftAccelerateCD + this.accelerateDuration == this.accelerateCooldown) {
+				this.pG.leftPad.stopAccelerate();
+			}
+		}
+			
+		if (this.rightAccelerateCD > 0) {
+			this.rightAccelerateCD--;
+			if (this.rightAccelerateCD + this.accelerateDuration == this.accelerateCooldown) {
+				this.pG.rightPad.stopAccelerate();
+			}
+		}
+
+		// Update minutes if 60 seconds is reached
+		if (this.sec == 60) {
+			this.min++;
+			this.sec = 0;
+		}
+
+		this.updateDisplay();
+	}
+	updateDisplay() {
+		this.timer.innerHTML = 
+			this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
+
+		if (this.leftAccelerateCD > 0)
+			this.lAccelerateLabel.innerHTML = this.leftAccelerateCD.toString().padStart(2, '0');
+		else
+			this.lAccelerateLabel.innerHTML = "accelerate ready";
+
+		if (this.rightAccelerateCD > 0)
+			this.rAccelerateLabel.innerHTML = this.rightAccelerateCD.toString().padStart(2, '0');
+		else
+			this.rAccelerateLabel.innerHTML = "accelerate ready";
+	}
+
+	startAccelerateCD(name) {
+		if (name == this.pG.leftPad.name) {
+			if (this.leftAccelerateCD > 0)
+				return false;
+			this.leftAccelerateCD = this.accelerateCooldown;
+			this.lAccelerateLabel.innerHTML = this.leftAccelerateCD.toString().padStart(2, '0');
+			return true;
+		}
+		else if (name == this.pG.rightPad.name) {
+			if (this.rightAccelerateCD > 0)
+				return false;
+			this.rightAccelerateCD = this.accelerateCooldown;
+			this.rAccelerateLabel.innerHTML = this.rightAccelerateCD.toString().padStart(2, '0');
+			return true;
+		}
+		return false;
+	}
+}
+
 export class Ball {
     constructor(x, y, size, color, speed, dx, dy, maxY, maxX, leftPad, rightPad, scorePoint) {
         this.x = x;
@@ -117,7 +216,7 @@ export class Ball {
 
 		if (this.collisionDetect(currentPad)) {
 			this.dx *= -1;
-			this.speed += 0.2;
+			this.speed += 0.3;
 			this.dx = this.dx > 0 ? this.speed : -this.speed;
 			this.dy = this.dy > 0 ? this.speed : -this.speed;
 		}
@@ -151,11 +250,12 @@ export class Ball {
 }
 
 export class Pad {
-	constructor(x, y, width, height, color, dy, maxY, isAI) {
+	constructor(x, y, width, height, name, color, dy, maxY, isAI, timer) {
         this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.name = name;
 		this.color = color;
 		this.dy = dy;
 		this.maxY = maxY;
@@ -163,7 +263,19 @@ export class Pad {
 		this.ball;
 		this.score = 0;
 		this.direction = "";
+		this.timer = timer;
     }
+
+
+	useAccelerate() {
+		if (this.timer.startAccelerateCD(this.name)) {
+			this.dy *= 1.6;
+		}	
+	}
+
+	stopAccelerate() {
+		this.dy /= 1.6;
+	}
 
 	move() {		
 		if (!this.isAI) {

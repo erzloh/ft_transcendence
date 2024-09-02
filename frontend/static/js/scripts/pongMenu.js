@@ -5,6 +5,7 @@ export class PongMenu {
 		this.keysButton = document.getElementById('btnKeys');
 		this.gamemodeButton = document.getElementById('btnGamemode');
 		this.gamestyleButton = document.getElementById('btnGamestyle');
+		this.btnStartGame = document.getElementById('btnStartGame');
 		this.pointsRangeContainer = document.getElementById('pointsRangeContainer');
 		this.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 		this.settingsModalContent = document.getElementById('settingsModalContent');
@@ -35,7 +36,8 @@ export class PongMenu {
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
-			lUp : 'KeyW', lDown : 'KeyS', rUp : 'ArrowUp', rDown : 'ArrowDown'
+			lUp : 'KeyW', lDown : 'KeyS', lAccelerate: 'KeyE',
+			rUp : 'ArrowUp', rDown : 'ArrowDown', rAccelerate: 'ArrowRight'
 		};
 
 		const gamemodeString = localStorage.getItem('pongGamemode');
@@ -43,7 +45,9 @@ export class PongMenu {
 		this.lastGamemode = "pvp";
 
 		const gamestyleString = localStorage.getItem('pongGamestyle');
-		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "legacy";
+		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "enhanced";
+		// TODO: change this to /pong3d
+		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
 
 		this.currentGamemodeLabel.innerHTML  = "current gamemode: " + this.gamemode;
 		this.currentGamestyleLabel.innerHTML  = "current game style: " + this.gamestyle;
@@ -284,7 +288,7 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move up</label>
+									<label class="text-white" style="padding: 3px 0px;">move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
@@ -292,10 +296,18 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move down</label>
+									<label class="text-white" style="padding: 3px 0px;">move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
+								</div>
+							</div>
+							<div class="row justify-content-center text-center mt-2">
+								<div class="col-6 d-flex justify-content-end">
+									<label class="text-white" style="padding: 3px 0px;">accelerate</label>
+								</div>
+								<div class="col-6 d-flex justify-content-start">
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lAccelerate !== "" ? this.keybinds.lAccelerate : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -305,7 +317,7 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move up</label>
+									<label class="text-white" style="padding: 3px 0px;">move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
@@ -313,10 +325,18 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move down</label>
+									<label class="text-white" style="padding: 3px 0px;">move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
+								</div>
+							</div>
+							<div class="row justify-content-center text-center mt-2">
+								<div class="col-6 d-flex justify-content-end">
+									<label class="text-white" style="padding: 3px 0px;">accelerate</label>
+								</div>
+								<div class="col-6 d-flex justify-content-start">
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.rAccelerate !== "" ? this.keybinds.rAccelerate : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -490,14 +510,16 @@ export class PongMenu {
 		if (gamestyle == "3D") {
 			this.lastGamemode = this.gamemode;
 			this.gamemode = "pvp";
-			this.currentGamemodeLabel = "current gamemode: " + this.gamemode;
+			this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
 		} 
 		else if (this.gamestyle == "3D" && gamestyle != this.gamestyle) {
 			this.gamemode = this.lastGamemode;
-			this.currentGamemodeLabel = "current gamemode: " + this.gamemode;
+			this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
 		}
 		
 		this.gamestyle = gamestyle;
+		// TODO: change this to /pong3d
+		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
 		localStorage.setItem('gamestyle', JSON.stringify(this.gamestyle));
 		this.currentGamestyleLabel.innerHTML = "current game style: " + this.gamestyle;
 
