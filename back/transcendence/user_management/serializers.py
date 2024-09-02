@@ -62,6 +62,11 @@ class PacmanMatchSerializer(serializers.ModelSerializer):
 		model = PacmanMatch
 		fields = ['pacman_player', 'ghost_player', 'map_name', 'match_duration', 'winner', 'pacman_score']
 
+class UpdateMaxEndlessScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['max_endless_score']
+
 class UserPacmanStatsSerializer(serializers.ModelSerializer):
 	total_pacman_matches = serializers.IntegerField()
 	total_pacman_wins = serializers.IntegerField()
@@ -69,7 +74,8 @@ class UserPacmanStatsSerializer(serializers.ModelSerializer):
 	total_pacman_as_pacman_wins = serializers.IntegerField()
 	total_pacman_as_ghost_matches = serializers.IntegerField()
 	total_pacman_as_ghost_wins = serializers.IntegerField()
+	max_endless_score = serializers.IntegerField()
 
 	class Meta:
 		model = CustomUser
-		fields = ('total_pacman_matches', 'total_pacman_wins', 'total_pacman_as_pacman_matches', 'total_pacman_as_pacman_wins', 'total_pacman_as_ghost_matches', 'total_pacman_as_ghost_wins')
+		fields = ('total_pacman_matches', 'total_pacman_wins', 'total_pacman_as_pacman_matches', 'total_pacman_as_pacman_wins', 'total_pacman_as_ghost_matches', 'total_pacman_as_ghost_wins', 'max_endless_score')

@@ -12,9 +12,9 @@ POST https://localhost/api/signup
 Content-Type: application/json
 
 {
-    "username": "pascal", 
+    "username": "pascal2", 
     "password": "Pascal1234!",
-    "email": "pascal@gmail.com"
+    "email": "pascal2@gmail.com"
 }
 
 ###
@@ -29,7 +29,7 @@ Cookie: jwt=2122e1cf9af50899c5e0240c180cc1440c28e111
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=2122e1cf9af50899c5e0240c180cc1440c28e111
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
 
 ###
 
@@ -79,7 +79,7 @@ Cookie: jwt=e39b493e181c827d20faa60bb1322ab180b2f5cb
 
 POST https://localhost/api/record_pacman_match/
 Content-Type: application/json
-Cookie: jwt=f1519a7110c87f7458b2aeeb713bb3a2b5a1c49a
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
 
 {
     "pacman_player": 1,
@@ -94,10 +94,20 @@ Cookie: jwt=f1519a7110c87f7458b2aeeb713bb3a2b5a1c49a
 
 GET https://localhost/api/pacman_matches_history/
 Content-Type: application/json
-Cookie: jwt=f1519a7110c87f7458b2aeeb713bb3a2b5a1c49a
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
 
 ###
 
 GET https://localhost/api/pacman_stats/
 Content-Type: application/json
-Cookie: jwt=f1519a7110c87f7458b2aeeb713bb3a2b5a1c49a
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
+
+###
+
+PUT https://localhost/api/pacman_endless_update
+Content-Type: application/json
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
+
+{
+    "max_endless_score": 10000
+}

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import CustomUserSerializer, PacmanMatchSerializer, UserPacmanStatsSerializer
+from .serializers import CustomUserSerializer, PacmanMatchSerializer, UserPacmanStatsSerializer, UpdateMaxEndlessScoreSerializer
 from .models import CustomUser, PacmanMatch
 from rest_framework import status
 from rest_framework import serializers
@@ -182,3 +182,16 @@ class UserPacmanStats(views.APIView):
         serializer = UserPacmanStatsSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
    
+class UpdateMaxEndlessScore(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def put(self, request):
+        user = request.user
+        new_score = request.data.get('max_endless_score', None)
+        if new_score is not None and new_score < user.max_endless_score:
+            return Response({"error": "New score cannot be less than current score."}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = UpdateMaxEndlessScoreSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

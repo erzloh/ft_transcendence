@@ -16,4 +16,5 @@ urlpatterns = [
 	re_path('record_pacman_match', RecordPacmanMatch.as_view()),
 	re_path('pacman_matches_history', UserPacmanMatchesHistory.as_view()),
 	re_path('pacman_stats', UserPacmanStats.as_view()),
+	re_path('pacman_endless_update', UpdateMaxEndlessScore.as_view())
 ]
