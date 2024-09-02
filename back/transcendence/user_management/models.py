@@ -33,3 +33,33 @@ class CustomUser(AbstractUser):
 
 	def __str__(self):
 		return self.username
+	
+	def total_pacman_matches(self):
+		return self.pacman_matches_as_pacman.count() + self.pacman_matches_as_ghost.count()
+
+	def total_pacman_wins(self):
+		return self.pacman_matches_won.count()
+
+	def total_pacman_as_pacman_matches(self):
+		return self.pacman_matches_as_pacman.count()
+
+	def total_pacman_as_pacman_wins(self):
+		return self.pacman_matches_won.filter(pacman_player=self).count()
+
+	def total_pacman_as_ghost_matches(self):
+		return self.pacman_matches_as_ghost.count()
+
+	def total_pacman_as_ghost_wins(self):
+		return self.pacman_matches_won.filter(ghost_player=self).count()
+
+
+class PacmanMatch(models.Model):
+	pacman_player = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='pacman_matches_as_pacman')
+	ghost_player = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='pacman_matches_as_ghost')
+	map_name = models.CharField(max_length=255)
+	match_duration = models.DurationField()
+	winner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='pacman_matches_won')
+	pacman_score = models.IntegerField()
+
+	def __str__(self):
+		return f"Pacman: {self.pacman_player.username}, Ghost: {self.ghost_player.username}, Winner: {self.winner.username}"

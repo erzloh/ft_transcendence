@@ -13,4 +13,7 @@ urlpatterns = [
 	re_path('remove_friend', RemoveFriend.as_view()),
 	re_path('friends_list', FriendsList.as_view()),
 	re_path('users_list', UsersList.as_view()),
+	re_path('record_pacman_match', RecordPacmanMatch.as_view()),
+	re_path('pacman_matches_history', UserPacmanMatchesHistory.as_view()),
+	re_path('pacman_stats', UserPacmanStats.as_view()),
 ]

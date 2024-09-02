@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import CustomUserSerializer
-from .models import CustomUser
+from .serializers import CustomUserSerializer, PacmanMatchSerializer, UserPacmanStatsSerializer
+from .models import CustomUser, PacmanMatch
 from rest_framework import status
 from rest_framework import serializers
 from rest_framework import views
@@ -16,6 +16,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ValidationError
 from django.http import FileResponse
 from rest_framework.exceptions import APIException
+from rest_framework.generics import ListAPIView
+from django.db.models import Q
 
 class CookieTokenAuthentication(TokenAuthentication):
     def authenticate(self, request):
@@ -48,10 +50,7 @@ class signup(views.APIView):
             except ValidationError as e:
                 return Response({'password': e.messages}, status=status.HTTP_400_BAD_REQUEST)
             user = CustomUser.objects.get(username=serializer.data['username'])
-            token = Token.objects.create(user=user)
-            response = Response(status=status.HTTP_200_OK)
-            response.set_cookie(key='jwt', value=token.key, httponly=True, secure=True)
-            return response
+            return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class profile(views.APIView):
@@ -140,7 +139,6 @@ class FriendsList(views.APIView):
 class UsersList(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
-
     def get(self, request):
         try:
             users = CustomUser.objects.all()
@@ -156,3 +154,31 @@ class UsersList(views.APIView):
             return Response(users_data, status=status.HTTP_200_OK)
         except Exception as e:
             raise APIException(str(e))
+    
+class RecordPacmanMatch(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = PacmanMatchSerializer(data=request.data)
+        if serializer.is_valid():
+            match = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserPacmanMatchesHistory(ListAPIView):
+    serializer_class = PacmanMatchSerializer
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        user = self.request.user
+        return PacmanMatch.objects.filter(Q(pacman_player=user) | Q(ghost_player=user))
+
+class UserPacmanStats(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        serializer = UserPacmanStatsSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+   

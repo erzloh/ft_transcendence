@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser, PacmanMatch
 from django.conf import settings
 from django.core.validators import validate_email as validate_email_func
 from django.core.exceptions import ValidationError
@@ -53,3 +53,23 @@ class CustomUserSerializer(serializers.ModelSerializer):
 			instance.set_password(password)
 		instance.save()
 		return instance
+
+class PacmanMatchSerializer(serializers.ModelSerializer):
+	pacman_player = serializers.SlugRelatedField(slug_field='id', queryset=CustomUser.objects.all())
+	ghost_player = serializers.SlugRelatedField(slug_field='id', queryset=CustomUser.objects.all())
+
+	class Meta:
+		model = PacmanMatch
+		fields = ['pacman_player', 'ghost_player', 'map_name', 'match_duration', 'winner', 'pacman_score']
+
+class UserPacmanStatsSerializer(serializers.ModelSerializer):
+	total_pacman_matches = serializers.IntegerField()
+	total_pacman_wins = serializers.IntegerField()
+	total_pacman_as_pacman_matches = serializers.IntegerField()
+	total_pacman_as_pacman_wins = serializers.IntegerField()
+	total_pacman_as_ghost_matches = serializers.IntegerField()
+	total_pacman_as_ghost_wins = serializers.IntegerField()
+
+	class Meta:
+		model = CustomUser
+		fields = ('total_pacman_matches', 'total_pacman_wins', 'total_pacman_as_pacman_matches', 'total_pacman_as_pacman_wins', 'total_pacman_as_ghost_matches', 'total_pacman_as_ghost_wins')
