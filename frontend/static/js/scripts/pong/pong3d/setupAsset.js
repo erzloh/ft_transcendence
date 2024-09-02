@@ -31,33 +31,39 @@ export async function loadModels(scene) {
 export async function loadFonts(scene) {
     const fontLoader = new FontLoader();
 
-    fontLoader.load('/static/assets/pong/Orbitron_Regular.json', (font) => {
-        const textMaterial = new THREE.MeshStandardMaterial({
-            color: 0xffffff,
-            emissive: 0xffffff,
-            emissiveIntensity: 1.0
-        });
-
-        const createScoreText = (position) => {
-            const textGeometry = new TextGeometry('1', {
-                font: font,
-                size: 2,
-                height: 0.5,
-                curveSegments: 12,
-                bevelEnabled: true,
-                bevelThickness: 0.1,
-                bevelSize: 0.1,
-                bevelSegments: 5
+    return new Promise((resolve, reject) => {
+        fontLoader.load('/static/assets/pong/Orbitron_Regular.json', (font) => {
+            const textMaterial = new THREE.MeshStandardMaterial({
+                color: 0xffffff,
+                emissive: 0xffffff,
+                emissiveIntensity: 1.0
             });
 
-            const scoreMesh = new THREE.Mesh(textGeometry, textMaterial);
-            scoreMesh.position.copy(position);
-            scoreMesh.rotation.x = -Math.PI * 0.25;
-            scene.add(scoreMesh);
-            return scoreMesh;
-        };
+            const createScoreText = (position) => {
+                const textGeometry = new TextGeometry('0', {
+                    font: font,
+                    size: 2,
+                    height: 0.5,
+                    curveSegments: 12,
+                    bevelEnabled: true,
+                    bevelThickness: 0.1,
+                    bevelSize: 0.1,
+                    bevelSegments: 5
+                });
 
-        const scoreLeft = createScoreText(new THREE.Vector3(-9.5, 2, -12.5));
-        const scoreRight = createScoreText(new THREE.Vector3(7.5, 2, -12.5));
+                const scoreMesh = new THREE.Mesh(textGeometry, textMaterial);
+                scoreMesh.position.copy(position);
+                scoreMesh.rotation.x = -Math.PI * 0.25;
+                scene.add(scoreMesh);
+                return scoreMesh;
+            };
+
+            const scoreLeft = createScoreText(new THREE.Vector3(-9.5, 2, -12.5));
+            const scoreRight = createScoreText(new THREE.Vector3(7.5, 2, -12.5));
+
+            resolve({ scoreLeft, scoreRight, font });  // Return font along with score meshes
+        }, undefined, (error) => {
+            reject(error);
+        });
     });
 }

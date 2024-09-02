@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export function setupBallMovement(ball, paddleLeft, paddleRight) {
+export function setupBallMovement(ball, paddleLeft, paddleRight, updateScore) {
     const originalSpeed = new THREE.Vector3(0.15, 0, 0.15);
     let ballSpeed = originalSpeed.clone();
 
@@ -23,13 +23,17 @@ export function setupBallMovement(ball, paddleLeft, paddleRight) {
             increaseBallSpeed();
         }
 
-        if (ball.position.x > 17 || ball.position.x < -17) {
+        if (ball.position.x > 17) {
+            updateScore('left'); // Score for the left player
+            resetBall();
+        } else if (ball.position.x < -17) {
+            updateScore('right'); // Score for the right player
             resetBall();
         }
     }
 
     function increaseBallSpeed() {
-        const speedMultiplier = 1.05;
+        const speedMultiplier = 1.10;
         ballSpeed.multiplyScalar(speedMultiplier);
     }
 
