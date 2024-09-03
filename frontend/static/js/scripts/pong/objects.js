@@ -179,17 +179,23 @@ export class Timer {
 }
 
 export class Ball {
-    constructor(x, y, size, color, speed, dx, dy, maxY, maxX, pongGame) {
+    constructor(x, y, size, color, speed, dx, maxY, maxX, pongGame) {
         this.x = x;
 		this.y = y;
 		this.size = size;
 		this.color = color;
 		this.speed = speed;
 		this.dx = dx;
-		this.dy = dy;
 		this.maxY = maxY;
 		this.maxX = maxX;
 		this.pG = pongGame;
+
+		if (Math.random() > 0.5) {
+			this.dy = (Math.random() * 3 + 2.5);
+		} 
+		else {
+			this.dy = (Math.random() * 3 + 2.5);
+		}
     }
 
 	collisionDetect(pad) {
@@ -224,12 +230,17 @@ export class Ball {
 			this.dx = this.dx > 0 ? this.speed : -this.speed;
 
 			if (this.pG.gamestyle == "enhanced" && currentPad.direction != "") {
+				// Apply a velocity change 
 				this.dy *= 	((this.dy > 0 && currentPad.direction == "down") || 
 							(this.dy < 0 && currentPad.direction == "up")) ?
-							1.3 : -0.8;
-			}
-			else {
-				this.dy = this.dy > 0 ? this.speed : -this.speed;
+							1.2 : -0.8;
+
+				// Keep the values acceptable
+				if (this.dy > 0) {
+					this.dy = Math.max(2, Math.min(this.dy, 8));
+				} else {
+					this.dy = Math.min(-2, Math.max(this.dy, -7));
+				}
 			}
 		}
 
@@ -252,11 +263,12 @@ export class Ball {
 		else {
 			this.dx = -this.speed;
 		}
+
 		if (Math.random() > 0.5) {
-			this.dy = this.speed * (Math.random() * 1 + 0.5);
+			this.dy = (Math.random() * 3 + 2.5);
 		} 
 		else {
-			this.dy = this.speed * (Math.random() * 1 + 0.5);
+			this.dy = (Math.random() * 3 + 2.5);
 		}
 	}
 }
@@ -284,12 +296,10 @@ export class Pad {
 			if (this.placement == "left") {
 				this.pG.rightPad.height /= 2;
 				this.pG.rightPad.y += this.pG.rightPad.height / 2;
-				this.pG.rightPad.dy *= 1.1;
 			}				
 			else {
 				this.pG.leftPad.height /= 2;
 				this.pG.leftPad.y += this.pG.leftPad.height / 2;
-				this.pG.leftPad.dy *= 1.1;
 			}
 		}	
 	}
@@ -298,12 +308,10 @@ export class Pad {
 		if (this.placement == "left") {
 			this.pG.rightPad.y -= this.pG.rightPad.height / 2;
 			this.pG.rightPad.height *= 2;
-			this.pG.rightPad.dy /= 1.1;		
 		}				
 		else {
 			this.pG.leftPad.y -= this.pG.leftPad.height / 2;
 			this.pG.leftPad.height *= 2;
-			this.pG.leftPad.dy /= 1.1;
 		}
 	}
 

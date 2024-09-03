@@ -6,7 +6,7 @@ export class PongGame {
 	constructor() {
 		this.cvs = document.getElementById('canvas');
 		this.ctx = this.cvs.getContext('2d');
-		this.startButton= document.getElementById('startButton');
+		this.startButton= document.getElementById('btnStart');
 		this.objectiveLabel = document.getElementById('objectiveLabel');
 
 		this.endgameModalWinner = document.getElementById('endgameModalWinner');
@@ -16,13 +16,15 @@ export class PongGame {
 		this.pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
 		this.endgameModal = new bootstrap.Modal(document.getElementById('endgameModal'));
 		this.matchScore =  document.getElementById('matchScore');
-		this.colorBox1 = document.getElementById('colorBox1');
-		this.colorBox2 = document.getElementById('colorBox2');
+		this.modalColorBox1 = document.getElementById('colorBox1');
+		this.modalColorBox2 = document.getElementById('colorBox2');
+		this.colorBox1 = document.getElementById('colorBox11');
+		this.colorBox2 = document.getElementById('colorBox22');
 
 		this.leftScore = document.getElementById("leftScore");
 		this.rightScore = document.getElementById("rightScore");
 
-		this.pWidth = 15, this.pHeight = 100, this.bSize = 15, this.pSpeed = 5.5;
+		this.pWidth = 13, this.pHeight = 80, this.bSize = 13, this.pSpeed = 5.5;
 		this.gameStarted = false;
 		this.paused = false;
 		this.gameOver = false;
@@ -34,7 +36,7 @@ export class PongGame {
 		const gamestyleString = localStorage.getItem('pongGamestyle');
 		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "enhanced";
 
-		if (this.gamestyle == "legacy") {
+		if (this.gamestyle != "enhanced") {
 			document.getElementById("labelMinimize1").style.display = "none";
 			document.getElementById("labelMinimize2").style.display = "none";
 		}
@@ -46,7 +48,7 @@ export class PongGame {
 
 		const colorsString = localStorage.getItem('pongColors');
 		this.colors = colorsString ? JSON.parse(colorsString) : {
-			p1: "#ff0000", p2: "#00ff00", p3: "#0000ff", p4: "#ff00ff"
+			p1: "#ff0000", p2: "#00ff00", p3: "#266fff", p4: "#ff00ff"
 		};
 
 		const leftPaddleName = document.getElementById('leftPaddleName');
@@ -88,7 +90,6 @@ export class PongGame {
 		eventListeners["keyup"] = this.boundPongHandleKeyUp;
 
 		this.timer = new Timer(this);
-		this.rightPad;
 		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
 			this.pWidth, this.pHeight, "left", this.colors.p1, this.pSpeed, this.cvs.height, 
 			false, this);
@@ -98,18 +99,25 @@ export class PongGame {
 			this.gamemode == "AI" ? true : false, this);
 
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this);
+			this.bSize, "#FFF", 4, 4, this.cvs.height, this.cvs.width, this);
 
-		this.rightPad.ball = this.ball;
-		
-		if (this.gamemode == "tournament") {
+		this.colorBox1.style.backgroundColor = this.colors.p1;
+		this.colorBox2.style.backgroundColor = this.colors.p2;
+
+		if (this.gamemode == "AI") {
+			this.colorBox2.style.backgroundColor = "#FFF";
+			this.rightPad.ball = this.ball;
+		}
+		else if (this.gamemode == "tournament") {
 			this.tournament = new Tournament(4, this.usernames);
 			this.currentMatch = this.tournament.getCurrentPlayers();
 			leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
 			rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 			this.leftPad.color = this.colors[this.currentMatch.left];
 			this.rightPad.color = this.colors[this.currentMatch.right];
+			this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
 			this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+			this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 			this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 		}
 	}
@@ -121,7 +129,9 @@ export class PongGame {
 		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 		this.leftPad.color = this.colors[this.currentMatch.left];
 		this.rightPad.color = this.colors[this.currentMatch.right];
+		this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
 		this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+		this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 		this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 
 		this.resetTournamentMatch();
@@ -143,7 +153,9 @@ export class PongGame {
 		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 		this.leftPad.color = this.colors[this.currentMatch.left];
 		this.rightPad.color = this.colors[this.currentMatch.right];
+		this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
 		this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+		this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 		this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 
 		this.resetTournamentMatch();
@@ -161,12 +173,13 @@ export class PongGame {
 			false, this);	
 		
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-			this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this);
+			this.bSize, "#FFF", 4, 4, this.cvs.height, this.cvs.width, this);
 
 		this.leftScore.innerHTML = "0";
 		this.rightScore.innerHTML = "0";
 		
 		this.gameStarted = false;
+		this.startButton.style.display = "block";
 		this.startButton.disabled = false;
 		this.gameOver = false;
 		this.timer.reset();
@@ -188,7 +201,7 @@ export class PongGame {
 				this.gamemode == "AI" ? true : false, this);	
 			
 			this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-				this.bSize, "#FFF", 4, 4, 4, this.cvs.height, this.cvs.width, this);
+				this.bSize, "#FFF", 4, 4, this.cvs.height, this.cvs.width, this);
 			
 			this.rightPad.ball = this.ball;
 	
@@ -196,6 +209,7 @@ export class PongGame {
 			this.rightScore.innerHTML = "0";
 			
 			this.gameStarted = false;
+			this.startButton.style.display = "block";
 			this.startButton.disabled = false;
 			this.gameOver = false;
 			this.timer.reset();
@@ -204,6 +218,7 @@ export class PongGame {
 
 	startGame() {
 		this.startButton.disabled = true;
+		this.startButton.style.display = "none";
 		this.gameStarted = true;
 		this.timer.start();
 		this.gameLoop();
@@ -329,7 +344,7 @@ export class PongGame {
 				this.rightPad.direction = "down";
 				break;
 			case this.keybinds.rMinimize:
-				if (this.gamestyle == "enhanced")
+				if (this.gamestyle == "enhanced" && this.gamemode != "AI")
 					this.rightPad.useMinimize();
 				break;
 			case 'Escape':

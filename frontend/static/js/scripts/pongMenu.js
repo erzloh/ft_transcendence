@@ -26,7 +26,7 @@ export class PongMenu {
 
 		const colorsString = localStorage.getItem('pongColors');
 		this.colors = colorsString ? JSON.parse(colorsString) : {
-			p1: "#ff0000", p2: "#00ff00", p3: "#0000ff", p4: "#ff00ff"
+			p1: "#ff0000", p2: "#00ff00", p3: "#266fff", p4: "#ff00ff"
 		};
 
 		const usernamesString = localStorage.getItem('pongUsernames');
