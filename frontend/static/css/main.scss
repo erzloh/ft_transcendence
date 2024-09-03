@@ -227,6 +227,18 @@ $blending: hard-light;
 	color: white;
 }
 
+.return-btn {
+	animation: waitFadeIn 1s ease-out;
+}
+
+.fixed-width-btn {
+    min-width: 150px;
+}
+
+.fixed-width-btn-lg {
+	min-width: 180px;
+}
+
 // ------------------------------- Custom Classes -------------------------------
 
 .glass {
@@ -261,17 +273,7 @@ $blending: hard-light;
 // 	border: 1px solid rgba(255, 255, 255, 0.8);
 // }
 
-.return-btn {
-	animation: waitFadeIn 1s ease-out;
-}
 
-.fixed-width-btn {
-    width: 150px;
-}
-
-.fixed-width-btn-lg {
-	min-width: 180px;
-}
 
 // SETTINGS PAGE
 .container-settings {
@@ -345,12 +347,15 @@ $blending: hard-light;
 // PROFILE PAGE
 .container-profile {
 	max-width: 400px;
+	max-height: 1000px !important;
+	overflow-y: auto;
 }
 
 .profile-pic {
 	border-radius: 50%;
 	width: 100px;
 	height: 100px;
+	border: 3px solid rgba(255, 255, 255, 0.5);
 }
 
 // PACMAN MENU PAGE
@@ -618,7 +623,7 @@ $blending: hard-light;
 }
 
 // ------------------------------- Accessibility -------------------------------
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .tabbable:focus-visible {
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .tabbable:focus-visible, label:focus-visible, img:focus-visible {
     outline: 3px solid #ffcc00 !important;
     outline-offset: 4px !important;
 }
