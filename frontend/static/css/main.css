@@ -12496,7 +12496,7 @@ label {
     transform: rotate(360deg);
   }
 }
-a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .tabbable:focus-visible, label:focus-visible, img:focus-visible {
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .tabbable:focus-visible, label:focus-visible, img:focus-visible, .clickable:focus-visible {
   outline: 3px solid #ffcc00 !important;
   outline-offset: 4px !important;
 }

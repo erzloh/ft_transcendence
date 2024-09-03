@@ -394,7 +394,7 @@ export class PacmanMenu {
 				updateTextForElem(labelDescription, "objective-description");
 				rangeContainer.innerHTML = `
 							<div class="col-12 justify-content-center mb-2">
-									<label class="text-white h5" id="rangeLabel"></label>
+									<label for="rangeInput" class="text-white h5" id="rangeLabel"></label>
 									<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range clickable" min="1000" max="30000" value="${this.objective}" step="1000" id="rangeInput">
 							</div>
 							`;
