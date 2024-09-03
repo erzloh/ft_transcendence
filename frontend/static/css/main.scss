@@ -20,8 +20,9 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
-	overflow-y: hidden;
+	// overflow-y: hidden;
 	cursor: $cursor;
+	font-size: 1rem; // CHANGE
 }
 
 button {
@@ -280,7 +281,7 @@ $blending: hard-light;
 	max-width: 400px;
 }
 
-#languageSwitcher {
+select {
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	border-radius: 10px;
 	background: rgba(255, 255, 255, 0.1);
@@ -315,6 +316,8 @@ $blending: hard-light;
 // LOGIN PAGE
 .container-login {
 	max-width: 400px;
+	max-height: 1000px !important;
+	overflow-y: auto;
 }
 
 .text-input {
@@ -442,6 +445,8 @@ $blending: hard-light;
 // EDIT PROFILE PAGE
 .container-edit {
 	max-width: 450px;
+	max-height: 1000px !important;
+	overflow-y: auto;
 }
 
 // FRIENDS PAGE
