@@ -170,7 +170,7 @@ class PacmanGame {
 
 		this.endgameModalWinner.textContent = winner + " won the game !";
 		this.endgameModalScore.textContent = "Pacman's score: " + this.pacman.points;
-		this.endgameModalTime.textContent = "Time elapsed: " + this.timer.min.toString().padStart(2, '0') + ":" + this.timer.sec.toString().padStart(2, '0');
+		this.endgameModalTime.textContent = this.timer.getTime();
 
 		// Show the modal
 		this.endgameModal.show();

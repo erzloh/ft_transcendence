@@ -148,8 +148,7 @@ export class Timer {
 		this.updateDisplay();
 	}
 	updateDisplay() {
-		this.timer.innerHTML = 
-			this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
+		this.timer.innerHTML = this.getTime();
 
 		if (this.leftMinimizeCD > 0)
 			this.lMinimizeLabel.innerHTML = this.leftMinimizeCD.toString().padStart(2, '0');
@@ -249,8 +248,6 @@ export class Ball {
 				} else {
 					this.dy = Math.min(-2, Math.max(this.dy, -10));
 				}
-
-				console.log(this.dy);
 			}
 		}
 

@@ -38,8 +38,8 @@ export class PongGame {
 		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "enhanced";
 
 		if (this.gamestyle != "enhanced") {
-			document.getElementById("labelMinimize1").style.display = "none";
-			document.getElementById("labelMinimize2").style.display = "none";
+			document.getElementById("pMinimize1").style.display = "none";
+			document.getElementById("pMinimize2").style.display = "none";
 		}
 
 		const usernamesString = localStorage.getItem('pongUsernames');
@@ -311,8 +311,6 @@ export class PongGame {
 			return ;
 		}
 
-		console.log("pong loop");
-
 		if (!this.paused) {
 			this.update();
 			this.drawObjects();
@@ -385,7 +383,6 @@ export class PongGame {
 	};
 
 	stopGameLoop() {
-		console.log("stop pong loop");
 		this.timer.stop();
 		if (this.gameStarted) {
 			this.gameStop = true;

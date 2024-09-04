@@ -3,12 +3,12 @@
 
 // with an icon
 {/* <div class="col-12 d-flex justify-content-center mt-4 mb-3">
-	<button type="button" class="btn btn-lg text-white text-center d-flex align-items-center justify-content-center p-3" data-bs-dismiss="modal" aria-label="Close"><img src="static/assets/UI/icons/cross.svg" alt="close" id="close-button" width="16"></button>
+	<button type="button" class="btn btn-lg text-white text-center d-flex align-items-center justify-content-center p-3" data-bs-dismiss="modal" aria-p="Close"><img src="static/assets/UI/icons/cross.svg" alt="close" id="close-button" width="16"></button>
 </div> */}
 
 // with text
 {/* <div class="col-12 d-flex justify-content-center mt-1">
-	<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
+	<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-p="Close">Close</button>
 </div> */}
 
 import { updateTexts } from "../utils/languages.js";
@@ -138,91 +138,91 @@ export class PacmanMenu {
 					<div class="col-12 d-flex justify-content-center">
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="h3 text-white m-3" data-translate="pacman-keys">pacman keys</h3>
+								<p class="h2 text-white" data-translate="pacman-keys">left paddle</p>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="move-up">move up</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-up">move up</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="move-left">move left</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-left">move left</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="move-down">move down</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-down">move down</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="move-right">move right</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-right">move right</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="use-spell">use spell</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="use-spell">use spell</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</p>
 								</div>
 							</div>
 						</div>
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="text-white m-3" data-translate="ghost-keys">ghost keys</h3>
+								<p class="h2 text-white" data-translate="ghost-keys">ghost</p>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="move-up">move up</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-up">move up</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="move-left">move left</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-left">move left</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="move-down">move down</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-down">move down</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="move-right">move right</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-right">move right</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;" data-translate="use-spell">use spell</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="use-spell">use spell</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</p>
 								</div>
 							</div>
 						</div>
@@ -265,10 +265,7 @@ export class PacmanMenu {
 		addEventListeners(btnGRight, "gRight");
 		addEventListeners(btnGSpell, "gSpell");
 
-		if (!document.getElementById('settingsModal').classList.contains('show')) {
-			console.log("showAgain");
-			this.settingsModal.show();
-		}
+		this.settingsModal.show();
 		updateTexts();
 	}
 
@@ -371,8 +368,8 @@ export class PacmanMenu {
 						<div class="col-4 d-flex justify-content-center">
 							<button role="button" class="btn btn-lg text-white" id="btnInfinite" data-translate="endless">endless</button>
 						</div>
-						<div class="col-10 m-5">
-							<label class="text-white" id="gamemodeDescription"></label>
+						<div class="col-10 mt-4 mb-3">
+							<p class="text-white" id="gamemodeDescription"></p>
 						</div>
 						<div id="rangeContainer">
 						</div>
@@ -384,7 +381,7 @@ export class PacmanMenu {
 
         let btnObjective = document.getElementById('btnObjective');
 		let btnInfinite = document.getElementById('btnInfinite');
-		let labelDescription = document.getElementById('gamemodeDescription');
+		let pDescription = document.getElementById('gamemodeDescription');
 		let rangeContainer = document.getElementById('rangeContainer');
 
 		btnObjective.addEventListener("click", (event) => this.selectGamemode(event, "objective"));
@@ -394,14 +391,14 @@ export class PacmanMenu {
 			case "objective":
 				btnObjective.disabled = true;
 				btnInfinite.disabled = false;
-				labelDescription.innerHTML = "the game ends once Pacman's score reaches the objective or the Ghost catches Pacman.";
-				updateTextForElem(labelDescription, "objective-description");
+				pDescription.innerHTML = "the game ends once Pacman's score reaches the objective or the Ghost catches Pacman.";
+				updateTextForElem(pDescription, "objective-description");
 				rangeContainer.innerHTML = `
-							<div class="col-12 justify-content-center mb-2">
-									<label for="rangeInput" class="text-white h5" id="rangeLabel"></label>
-									<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range clickable" min="1000" max="30000" value="${this.objective}" step="1000" id="rangeInput">
-							</div>
-							`;
+					<div class="col-12 d-flex justify-content-center align-items-center mb-2">
+						<p for="rangeInput" class="text-white h5 mb-0" id="rangeLabel" style="margin-right: 10px;">Label</p>
+						<input type="range" class="form-range clickable" style="width: 70%;" min="1000" max="30000" value="15000" step="1000" id="rangeInput">
+					</div>
+				`;
 				let rangeInput = document.getElementById('rangeInput');
 				let rangeLabel = document.getElementById('rangeLabel');
 
@@ -417,8 +414,8 @@ export class PacmanMenu {
 			case "infinite":
 				btnObjective.disabled = false;
 				btnInfinite.disabled = true;
-				labelDescription.innerHTML = "the game ends once the Ghost catches Pacman.";
-				updateTextForElem(labelDescription, "endless-description");
+				pDescription.innerHTML = "the game ends once the Ghost catches Pacman.";
+				updateTextForElem(pDescription, "endless-description");
 				break;
 			default:
 				break;
@@ -434,19 +431,19 @@ export class PacmanMenu {
 			<div class="modal-header">
 				<h2 class="modal-title text-white w-100 text-center" data-translate="map">maps</h2>
 			</div>
-			<div class="modal-body p-5">
+			<div class="modal-body p-5 pt-4 pb-5">
 				<div class="col-auto mr-2 ml-2">
-					<div class="row justify-content-center text-center mt-2">
+					<div class="row justify-content-center text-center">
 						<div class="col-4 d-flex flex-column align-items-center">
-							<label class="h4 text-white">maze</label>
+							<p class="h4 text-white mb-2">maze</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
 						</div>
 						<div class="col-4 d-flex flex-column align-items-center">
-							<label class="h4 text-white">spiral</label>
+							<p class="h4 text-white mb-2">spiral</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
 						</div>
 						<div class="col-4 d-flex flex-column align-items-center">
-								<label class="h4 text-white">butterfly</label>
+								<p class="h4 text-white mb-2">butterfly</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
 						</div>
 					</div>
@@ -484,19 +481,19 @@ export class PacmanMenu {
 					<div class="row justify-content-center text-center mt-2 mb-3">
 						<div class="row justify-content-center text-center">
 							<div class="col-3 d-flex flex-column align-items-center">
-								<label class="h4 text-white">obsidian</label>
+								<p class="h4 text-white">obsidian</p>
 								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian" alt="A map that has the color of obsidian." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
-								<label class="h4 text-white">autumn</label>
+								<p class="h4 text-white">autumn</p>
 								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn" alt="A map that has the color of autumn." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
-								<label class="h4 text-white">garden</label>
+								<p class="h4 text-white">garden</p>
 								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden" alt="A map that has the color of a garden." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
-								<label class="h4 text-white">retro</label>
+								<p class="h4 text-white">retro</p>
 								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial" alt="A map that has the color of the retro pac-man." tabindex="0"/>
 							</div>
 						</div>

@@ -4,9 +4,9 @@
 			<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none; max-width: none; width: auto;" role="alert" aria-live="assertive" aria-atomic="true">
 				<div class="d-flex glass">
 					<div class="toast-body" >
-						<label class="text-white" id="toastBody">Hello, world! This is a toast message.</label>
+						<p class="text-white" id="toastBody">Hello, world! This is a toast message.</p>
 					</div>
-					<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+					<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-p="Close"></button>
 				</div>
 			</div>
 		</div>
@@ -21,18 +21,18 @@
 				<div class="row justify-content-between gap-5">
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<!-- <label class="h3 text-white mb-3">pacman</label> -->
+							<!-- <p class="h3 text-white mb-3">pacman</p> -->
 							<img class="mb-3" src="/static/assets/pacman/images/pacman_high_res.png" width="32px" alt="An image of pac-man."/>
-							<label class="h5 text-white mb-3" id="pacmanName">player 1</label>
-							<input type="text" id="pacmanInput" class="form-control form-control-sm text-input text-center" placeholder="enter username" data-translate="enter-username">
+							<p class="h5 text-white mb-3" id="pacmanName">player 1</p>
+							<input type="text" id="pacmanInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="enter username" data-translate="enter-username">
 						</div>
 					</div>		
 					<div class="col d-flex flex-column align-items-center glass mt-1 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<!-- <label class="h3 text-white">ghost</label> -->
+							<!-- <p class="h3 text-white">ghost</p> -->
 							<img class="mb-3" src="/static/assets/pacman/images/blueGhost_high_res.png" width="32px" alt="An image of a ghost."/>
-							<label class="h5 text-white mb-3" id="ghostName">player 2</label>
-							<input type="text" id="ghostInput" class="form-control form-control-sm text-input text-center" placeholder="enter username" data-translate="enter-username">
+							<p class="h5 text-white mb-3" id="ghostName">player 2</p>
+							<input type="text" id="ghostInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="enter username" data-translate="enter-username">
 						</div>
 					</div>
 				</div>
@@ -46,7 +46,7 @@
 			<button class="btn btn-lg text-white btn-filled m-2" id="btnMap" data-translate="map">map</button>
 			<button class="btn btn-lg text-white btn-filled m-2" id="btnColor" data-translate="theme">theme</button>
 		</div>
-		<div class="modal fade glass-modal-bg" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+		<div class="modal fade glass-modal-bg" id="settingsModal" tabindex="-1" aria-pledby="settingsModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass"  id="settingsModalContent">						

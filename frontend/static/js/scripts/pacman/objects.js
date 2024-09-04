@@ -174,8 +174,7 @@ export class Timer {
 		}
 	}
 	updateDisplay() {
-		this.timer.innerHTML = 
-			this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
+		this.timer.innerHTML = this.getTime();
 	}
 
 	pacmanStartCD() {
@@ -193,6 +192,10 @@ export class Timer {
 		this.gSpellCD = 5;
 		this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
 		return true;
+	}
+
+	getTime() {
+		return (this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0'));
 	}
 }
 
