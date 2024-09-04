@@ -4,12 +4,15 @@ export class PongMenu {
 	constructor () {
 		this.keysButton = document.getElementById('btnKeys');
 		this.gamemodeButton = document.getElementById('btnGamemode');
+		this.gamestyleButton = document.getElementById('btnGamestyle');
+		this.btnStartGame = document.getElementById('btnStartGame');
 		this.pointsRangeContainer = document.getElementById('pointsRangeContainer');
 		this.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 		this.settingsModalContent = document.getElementById('settingsModalContent');
 
 		this.playersContainer = document.getElementById('playersContainer');
 		this.currentGamemodeLabel = document.getElementById('currentGamemodeLabel');
+		this.currentGamestyleLabel = document.getElementById('currentGamestyleLabel');
 
 		this.toastNotification = document.getElementById('liveToast');
 		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
@@ -23,26 +26,52 @@ export class PongMenu {
 
 		const colorsString = localStorage.getItem('pongColors');
 		this.colors = colorsString ? JSON.parse(colorsString) : {
-			p1: "#ff0000", p2: "#00ff00", p3: "#0000ff", p4: "#ff00ff"
+			p1: "#ff0000", p2: "#00ff00", p3: "#266fff", p4: "#ff00ff"
 		};
+		localStorage.setItem('pongColors', JSON.stringify(this.colors));
 
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
 			p1: "player1", p2: "player2", p3: "player3", p4: "player4"
 		};
+		localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
-			lUp : 'KeyW', lDown : 'KeyS', rUp : 'ArrowUp', rDown : 'ArrowDown'
+			lUp : 'KeyW', lDown : 'KeyS', lMini: 'KeyE',
+			rUp : 'ArrowUp', rDown : 'ArrowDown', rMini: 'ArrowRight'
 		};
+		localStorage.setItem('pongKeybinds', JSON.stringify(this.keybinds));
 
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
+		this.lastGamemode = "pvp";
+		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
+
+		const gamestyleString = localStorage.getItem('pongGamestyle');
+		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "enhanced";
+		localStorage.setItem('pongGamestyle', JSON.stringify(this.gamestyle));
+		// TODO: change this to /pong3d
+		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
 
 		this.currentGamemodeLabel.innerHTML  = "current gamemode: " + this.gamemode;
+		this.currentGamestyleLabel.innerHTML  = "current game style: " + this.gamestyle;
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
+	}
+
+	Initialize() {
+		// Add Event Listener to the Start Button
+		this.keysButton.addEventListener("click", () => this.showKeysConfig());
+		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
+		this.gamestyleButton.addEventListener("click", () => this.showGamestyleConfig());
+
+		document.addEventListener("keydown", this.boundKeyDownSettings);
+		eventListeners["keydown"] = this.boundKeyDownSettings;
+
+		this.updatePlayersContainer();
+		this.setScoreRange();
 	}
 
 	updatePlayersContainer = () => {
@@ -250,18 +279,6 @@ export class PongMenu {
 		});
 	}
 
-	Initialize() {
-		// Add Event Listener to the Start Button
-		this.keysButton.addEventListener("click", () => this.showKeysConfig());
-		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
-
-		document.addEventListener("keydown", this.boundKeyDownSettings);
-		eventListeners["keydown"] = this.boundKeyDownSettings;
-
-		this.updatePlayersContainer();
-		this.setScoreRange();
-	}
-
 	showKeysConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="row justify-content-center glass">
@@ -276,7 +293,7 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move up</label>
+									<label class="text-white" style="padding: 3px 0px;">move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
@@ -284,10 +301,18 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move down</label>
+									<label class="text-white" style="padding: 3px 0px;">move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
+								</div>
+							</div>
+							<div class="row justify-content-center text-center mt-2">
+								<div class="col-6 d-flex justify-content-end">
+									<label class="text-white" style="padding: 3px 0px;">minimize</label>
+								</div>
+								<div class="col-6 d-flex justify-content-start">
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lMini">${this.keybinds.lMini !== "" ? this.keybinds.lMini : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -297,7 +322,7 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move up</label>
+									<label class="text-white" style="padding: 3px 0px;">move up</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
@@ -305,10 +330,18 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move down</label>
+									<label class="text-white" style="padding: 3px 0px;">move down</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
 									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
+								</div>
+							</div>
+							<div class="row justify-content-center text-center mt-2">
+								<div class="col-6 d-flex justify-content-end">
+									<label class="text-white" style="padding: 3px 0px;">minimize</label>
+								</div>
+								<div class="col-6 d-flex justify-content-start">
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rMini">${this.keybinds.rMini !== "" ? this.keybinds.rMini : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -319,13 +352,17 @@ export class PongMenu {
 
 		let btnLUp = document.getElementById('lUp');
 		let btnLDown = document.getElementById('lDown');
+		let btnLMini = document.getElementById('lMini');
 		let btnRUp = document.getElementById('rUp');
 		let btnRDown = document.getElementById('rDown');
+		let btnRMini = document.getElementById('rMini');
 
 		btnLUp.addEventListener("click", (event) => this.changeKeybind(event, "lUp", btnLUp));
-		btnLDown.addEventListener("click", (event) => this.changeKeybind(event, "lDown", btnLDown))
+		btnLDown.addEventListener("click", (event) => this.changeKeybind(event, "lDown", btnLDown));
+		btnLMini.addEventListener("click", (event) => this.changeKeybind(event, "lMini", btnLMini));
 		btnRUp.addEventListener("click", (event) => this.changeKeybind(event, "rUp", btnRUp));
 		btnRDown.addEventListener("click", (event) => this.changeKeybind(event, "rDown", btnRDown));
+		btnRMini.addEventListener("click", (event) => this.changeKeybind(event, "rMini", btnRMini));
 
 		this.settingsModal.show();
 	}
@@ -348,8 +385,9 @@ export class PongMenu {
 							<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">tournament</button>
 						</div>
 						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
-							<div class="col-10 justify-content-center d-flex" id="AIDifficulties">
+							<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
 								<label class="text-white text-center" id="gamemodeDescription"></label>
+								<label class="h5 mt-4 text-white text-center" id="disclaimer"></label>
 							</div>
 						</div>
 					</div>
@@ -370,24 +408,103 @@ export class PongMenu {
 		
 		switch (this.gamemode) {
 			case "pvp":
-				btnPvp.disabled = true;
 				labelDescription.innerHTML = "Two players play against each other, one playing the left paddle, the other playing the right paddle.";
 				break;
 			case "AI":
-				btnAI.disabled = true;
 				labelDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
 				break;
 			case "tournament":
-				btnTournament.disabled = true;
 				labelDescription.innerHTML = "Multiple players compete against each other in a tournament.";
 				break;
 			default:
 				break; 
 		}
 
+		if (this.gamestyle == "3D") {
+			btnAI.disabled = true;
+			btnTournament.disabled = true;
+			let disclaimer = document.getElementById('disclaimer');
+			disclaimer.innerHTML = "The only available gamemode for 3D game style is PvP.";
+		}
+
 		localStorage.setItem('pongGamemode', JSON.stringify(this.gamemode));
 
 		this.settingsModal.show();
+
+		const gamemodes = {
+			"pvp": document.getElementById('btnPvp'),
+			"AI": document.getElementById('btnAI'),
+			"tournament": document.getElementById('btnTournament')
+		}
+		this.applySelectedSetting("gamemode", gamemodes);
+	}
+
+	showGamestyleConfig() {
+		this.settingsModalContent.innerHTML = `
+			<div class="row justify-content-center glass">
+				<div class="modal-header">
+					<h2 class="modal-title text-white w-100 text-center">game styles</h2>
+				</div>
+				<div class="modal-body">
+					<div class="row justify-content-center">
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnLegacy">legacy</button>
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnEnhanced">enhanced</button>
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btn3D">3D</button>
+						</div>
+						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
+							<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
+								<label class="text-white text-center" id="gamestyleDescription"></label>
+								<label class="text-white text-center" id="availableGamemodes"></label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+
+		let btnLegacy = document.getElementById('btnLegacy');
+		let btnEnhanced = document.getElementById('btnEnhanced');
+		let btn3D = document.getElementById('btn3D');
+		let gamestyleDescription = document.getElementById('gamestyleDescription');
+		let availableGamemodes = document.getElementById('availableGamemodes');
+
+		btnLegacy.addEventListener("click", (event) => this.selectGamestyle(event, "legacy"));
+		btnEnhanced.addEventListener("click", (event) => this.selectGamestyle(event, "enhanced"));
+		btn3D.addEventListener("click", (event) => this.selectGamestyle(event, "3D"));
+
+		switch (this.gamestyle) {
+			case "legacy":
+				gamestyleDescription.innerHTML = "classic pong game.";
+				availableGamemodes.innerHTML = "available gamemodes: all";
+				break;
+			case "enhanced":
+				gamestyleDescription.innerHTML = "enhanced pong game with new physics and skills.";
+				availableGamemodes.innerHTML = "available gamemodes: all";
+				break;
+			case "3D":
+				gamestyleDescription.innerHTML = "3D pong game with classic rules.";
+				availableGamemodes.innerHTML = "available gamemodes: PvP";
+				break;
+			default:
+				break; 
+		}
+
+		localStorage.setItem('pongGamestyle', JSON.stringify(this.gamestyle));
+
+		this.playersContainer
+		this.settingsModal.show();
+
+		const gamestyles = {
+			"legacy": document.getElementById('btnLegacy'),
+			"enhanced": document.getElementById('btnEnhanced'),
+			"3D": document.getElementById('btn3D')
+		}
+		this.applySelectedSetting("pongGamestyle", gamestyles);
 	}
 
 	//#region EVENT LISTENERS HANDLERS
@@ -400,6 +517,36 @@ export class PongMenu {
 		this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
 
 		this.showGamemodeConfig();
+		this.updatePlayersContainer();
+
+		const gamestyles = {
+			"legacy": document.getElementById('btnLegacy'),
+			"enhanced": document.getElementById('btnEnhanced'),
+			"3D": document.getElementById('btn3D')
+		}
+		this.applySelectedSetting("gamestyle", gamestyles);
+	}
+
+	selectGamestyle(event, gamestyle) {
+		this.toastBody.innerHTML = "chosen game style: " + gamestyle;
+		this.toastBootstrap.show();
+		if (gamestyle == "3D") {
+			this.lastGamemode = this.gamemode;
+			this.gamemode = "pvp";
+			this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
+		} 
+		else if (this.gamestyle == "3D" && gamestyle != this.gamestyle) {
+			this.gamemode = this.lastGamemode;
+			this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
+		}
+		
+		this.gamestyle = gamestyle;
+		// TODO: change this to /pong3d
+		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
+		localStorage.setItem('gamestyle', JSON.stringify(this.gamestyle));
+		this.currentGamestyleLabel.innerHTML = "current game style: " + this.gamestyle;
+
+		this.showGamestyleConfig();
 		this.updatePlayersContainer();
 	}
 
@@ -427,6 +574,10 @@ export class PongMenu {
 					this.toastBody.innerHTML = "Changed Left Paddle Move Down keybind to: " + event.code;
 					this.keybinds.lDown = event.code;
 					break;
+				case "lMini":
+					this.toastBody.innerHTML = "Changed Left Paddle Minimize keybind to: " + event.code;
+					this.keybinds.lMini = event.code;
+					break;
 				case "rUp":
 					this.toastBody.innerHTML = "Changed Right Paddle Move Up keybind to: " + event.code;
 					this.keybinds.rUp = event.code;
@@ -434,6 +585,10 @@ export class PongMenu {
 				case "rDown":
 					this.toastBody.innerHTML = "Changed Right Paddle Move Down keybind to: " + event.code;
 					this.keybinds.rDown = event.code;
+					break;
+				case "rMini":
+					this.toastBody.innerHTML = "Changed Right Paddle Minimize keybind to: " + event.code;
+					this.keybinds.rMini = event.code;
 					break;
 				default:
 					return ;
@@ -446,6 +601,23 @@ export class PongMenu {
 	}
 
 	//#endregion
+
+	// Add the "selected" class to to correct element based on the setting in the local storage
+	// settingType is for example "pacmanSkin", "ghostSkin", "gamemode", "mapName", "pacmanTheme"
+	// elementMapping is an object with the settings as keys and the elements as values
+	// for example { "pacman": btnPacmanSkin, "pacgirl": btnPacgirlSkin }
+	applySelectedSetting(settingType, elementMapping) {
+		const selectedSetting = localStorage.getItem(settingType)?.replace(/"/g, '');
+	
+		Object.keys(elementMapping).forEach(setting => {
+			if (setting === selectedSetting) {
+				elementMapping[setting].classList.add("selected");
+			} else {
+				elementMapping[setting].classList.remove("selected");
+			}
+		});
+	}
+
 
 }
 
