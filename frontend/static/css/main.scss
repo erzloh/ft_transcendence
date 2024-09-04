@@ -459,6 +459,16 @@ select {
 	z-index: 1;
 }
 
+canvas {
+	// width: 100%;
+	// height: width;
+}
+
+.pacman-game-container {
+	width: 500px !important;
+	flex: none
+}
+
 // EDIT PROFILE PAGE
 .container-edit {
 	max-width: rem(450px);
@@ -577,6 +587,15 @@ select {
 		border: 1px solid rgba(255, 255, 255, 0.5);
 		border-radius: 50%;
 	}
+}
+
+// Pong page
+.squarer-glass {
+	border-radius: 15px;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	// blur
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
 }
 
 // ------------------------------- Responsive -------------------------------

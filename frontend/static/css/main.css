@@ -12356,6 +12356,11 @@ select {
   z-index: 1;
 }
 
+.pacman-game-container {
+  width: 500px !important;
+  flex: none;
+}
+
 .container-edit {
   max-width: 28.125rem;
   max-height: 1000px !important;
@@ -12457,6 +12462,14 @@ select {
   left: 19px;
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
+}
+
+.squarer-glass {
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
 }
 
 @media screen and (max-width: 768px) {
