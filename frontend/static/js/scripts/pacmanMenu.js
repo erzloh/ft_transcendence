@@ -64,7 +64,7 @@ export class PacmanMenu {
 		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
 
 		const themeString = localStorage.getItem('pacmanTheme');
-		this.theme = themeString ? JSON.parse(themeString) : {
+		this.theme = themeString ? JSON.parse(themeString) : { name: 'obsidian',
 			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
@@ -79,6 +79,13 @@ export class PacmanMenu {
 		this.pacmanInput.addEventListener('blur', (event) => this.pacmanPlayerInputHandle(event));
 		this.ghostInput.addEventListener('keypress', (event) => this.ghostPlayerInputHandle(event));
 		this.ghostInput.addEventListener('blur', (event) => this.ghostPlayerInputHandle(event));
+
+		localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
+		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
+		localStorage.setItem('mapName', JSON.stringify(this.mapName));
+		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
+		localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
+		localStorage.setItem('themeName', this.theme.name);
 	}
 
 	pacmanPlayerInputHandle(event) {
@@ -588,25 +595,25 @@ export class PacmanMenu {
 		this.toastBootstrap.show();
 		switch (theme) {
 			case "obsidian":
-				this.theme = {
+				this.theme = { name: 'obsidian',
 					backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 					wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 				};
 				break;
 			case "autumn":
-				this.theme = {
+				this.theme = { name: 'autumn',
 					backgroundColor : 'rgb(15, 0, 0)', ghostWallColor1 : 'rgb(138, 22, 1)', ghostWallColor2 : 'rgb(181, 32, 2)',
 					wallColor : 'rgb(143, 34, 1)', dotColor : 'rgb(145, 67, 3)', glowColor : 'rgb(194, 90, 6)'
 				};
 				break;
 			case "garden":
-				this.theme = {
+				this.theme = { name: 'garden',
 					backgroundColor : 'rgb(0, 8, 2)', ghostWallColor1 : 'rgb(38, 82, 0)', ghostWallColor2 : 'rgb(58, 125, 0)',
 					wallColor : 'rgb(0, 54, 12)', dotColor : 'rgb(2, 56, 173)', glowColor : 'rgb(0, 66, 209)'
 				};
 				break;
 			case "spacial":
-				this.theme = {
+				this.theme = { name: 'spacial',
 					backgroundColor : 'rgb(1, 1, 26)', ghostWallColor1 : 'rgb(14, 58, 179)', ghostWallColor2 : 'rgb(18, 71, 219)',
 					wallColor : 'rgb(0, 0, 176)', dotColor : 'rgb(145, 135, 19)', glowColor : 'rgb(186, 173, 20)'
 				};
