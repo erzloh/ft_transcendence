@@ -11,6 +11,7 @@ export class PongGame {
 
 		this.endgameModalWinner = document.getElementById('endgameModalWinner');
 		this.endgameModalScore = document.getElementById('endgameModalScore');
+		this.endgameModalTime = document.getElementById('endgameModalTime');
 		this.endgameModalPlayAgain = document.getElementById('playAgainButton');
 		this.tournamentModalNextMatch = document.getElementById('nextMatchButton');
 		this.pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
@@ -109,7 +110,7 @@ export class PongGame {
 			this.rightPad.ball = this.ball;
 		}
 		else if (this.gamemode == "tournament") {
-			this.tournament = new Tournament(4, this.usernames);
+			this.tournament = new Tournament(4, this.usernames, this);
 			this.currentMatch = this.tournament.getCurrentPlayers();
 			leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
 			rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
@@ -123,7 +124,7 @@ export class PongGame {
 	}
 
 	restartTournament() {
-		this.tournament = new Tournament(4, this.usernames);
+		this.tournament = new Tournament(4, this.usernames, this);
 		this.currentMatch = this.tournament.getCurrentPlayers();
 		leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
 		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
@@ -226,7 +227,8 @@ export class PongGame {
 
 	endTournament(side) {
 		this.endgameModalWinner.textContent = this.usernames[this.currentMatch[side]] + " won the tournament";
-		this.endgameModalScore.textContent = "final score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalTime.innerHTML = this.timer.getTime();
 
 		this.endgameModal.show();
 	}
@@ -236,7 +238,8 @@ export class PongGame {
 		this.timer.stop();
 
 		this.endgameModalWinner.textContent = winner + " won the game";
-		this.endgameModalScore.textContent = "Final score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalTime.innerHTML = this.timer.getTime();
 
 		this.endgameModal.show();
 	}

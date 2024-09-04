@@ -1,5 +1,5 @@
 export class Tournament {
-	constructor(pNumber, usernames) {
+	constructor(pNumber, usernames, pG) {
 		this.playerNumber = pNumber;
 		this.usernames = usernames;
 		this.tournamentOver = false;
@@ -7,8 +7,10 @@ export class Tournament {
 		this.tournamentMatchEndModal = new bootstrap.Modal(document.getElementById('tournamentMatchEndModal'));
 		this.playersTournament =  document.getElementById('playersTournament');
 		this.matchTournament =  document.getElementById('matchTournament');
-		this.winner =  document.getElementById('winner');
+		this.winner =  document.getElementById('matchWinner');
 		this.matchIdModal =  document.getElementById('matchId');
+		this.timeElapsed = document.getElementById('matchTimeElapsed')
+		this.pG = pG;
 
 		this.matchId = 0;
 		this.maxMatchNb = this.playerNumber - 1;
@@ -58,8 +60,9 @@ export class Tournament {
 			}
 		}
 		if (!this.tournamentOver) {
-			this.matchIdModal.innerHTML = "tournament " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
+			this.matchIdModal.innerHTML = "tournament: " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
 			this.winner.innerHTML = this.usernames[this.currentMatch[side]] + " won the match";
+			this.timeElapsed.innerHTML = this.pG.timer.getTime();
 			this.tournamentMatchEndModal.show();
 
 			this.matchId++;
@@ -175,6 +178,10 @@ export class Timer {
 			return true;
 		}
 		return false;
+	}
+
+	getTime() {
+		return (this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0'));
 	}
 }
 

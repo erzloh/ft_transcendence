@@ -62,7 +62,7 @@
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<label class="h1 modal-title text-white w-100 text-center mb-2" id="matchTournament">tournament</label>
+							<label class="h1 modal-title text-white w-100 text-center mb-1" id="matchTournament">tournament</label>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
@@ -85,14 +85,17 @@
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<label class="h1 modal-title text-white w-100 text-center"  id="matchId">tournament match end</label>
+							<label class="h1 modal-title text-white w-100 text-center mb-1"  id="matchId">tournament match end</label>
 						</div>
 						<div class="modal-body">
-							<div class="col-12 d-flex flex-column align-items-center">
+							<div class="col d-flex flex-column align-items-center">
 								<div class="col-10 d-flex flex-column justify-content-center mt-2">
-									<label class="h3 text-white text-center" id="winner">winner</label>
-									<label class="h5 text-white text-center" id="matchScore">score</label>
-									<label class="h5 text-white text-center" id="timeElapsed">time elapsed</label>
+									<label class="h3 text-white text-center" id="matchWinner">winner</label>
+									<label class="h4 text-white text-center" id="matchScore">score</label>
+									<div class="col d-flex justify-content-center align-items-center">
+										<img src="/static/assets/UI/icons/time.svg" width="28x"/>
+										<p class="h4 text-white text-center mb-0 ms-2" id="matchTimeElapsed" >time elapsed</label>
+									</div>
 								</div>
 								<div class="col-3 d-flex flex-column justify-content-center mt-2"></div>
 									<button type="button" class="btn btn-lg text-white btn-filled" id="nextMatchButton" data-bs-dismiss="modal">next match</button>
@@ -112,11 +115,12 @@
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
-								<div class="col-10 d-flex justify-content-center mt-2">
-									<label class="h5 text-white" id="endgameModalScore"></label>
+								<div class="col-10 d-flex justify-content-center mt-1">
+									<label class="h4 text-white" id="endgameModalScore"></label>
 								</div>
-								<div class="col-10 d-flex justify-content-center mt-3">
-									<label class="h5 text-white" id="endgameModalTime"></label>
+								<div class="col d-flex justify-content-center align-items-center mb-2">
+									<img src="/static/assets/UI/icons/time.svg" width="28x"/>
+									<p class="h4 text-white text-center mb-0 ms-2" id="endgameModalTime" >time elapsed</label>
 								</div>
 								<div class="col-12 d-flex justify-content-center mt-1 mb-2">
 									<button type="button" class="btn btn-lg text-white btn-filled mx-2" id="playAgainButton" data-bs-dismiss="modal">play again</button>
