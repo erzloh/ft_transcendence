@@ -24,6 +24,9 @@ import { setLanguage, updateTexts } from "./utils/languages.js";
 // ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
 // Set the base URL of the website
 export const BASE_URL = "https://localhost";
+export const BIG_TEXT = '18px';
+export const DEFAULT_TEXT = '16px';
+
 // Store interval IDs (to be able to clear them later)
 export const ids = {};
 
@@ -181,9 +184,7 @@ setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') 
 
 // Set text size
 if (localStorage.getItem('bigText') === 'on') {
-	document.documentElement.style.fontSize = '18px';
-	console.log('big size');
+	document.documentElement.style.fontSize = BIG_TEXT;
 } else {
-	document.documentElement.style.fontSize = '16px';
-	console.log('small size');
+	document.documentElement.style.fontSize = DEFAULT_TEXT;
 }

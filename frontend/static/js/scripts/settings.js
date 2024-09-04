@@ -1,6 +1,7 @@
 import { setLanguage } from '../utils/languages.js';
 import { moveNoise } from '../visual/effects.js';
 import { ids } from '../index.js';
+import { BIG_TEXT, DEFAULT_TEXT } from '../index.js';
 
 // Function that will be called when the view is loaded
 export function settings() {
@@ -90,10 +91,10 @@ export function settings() {
 	const bigTextCheckbox = document.getElementById('big-text-checkbox');
 	bigTextCheckbox.addEventListener('change', (event) => {
 		if (event.target.checked) {
-			document.documentElement.style.fontSize = '18px';
+			document.documentElement.style.fontSize = BIG_TEXT;
 			localStorage.setItem('bigText', 'on');
 		} else {
-			document.documentElement.style.fontSize = '16px';
+			document.documentElement.style.fontSize = DEFAULT_TEXT;
 			localStorage.setItem('bigText', 'off');
 		}
 	});
@@ -102,9 +103,9 @@ export function settings() {
 	const bigTextSetting = localStorage.getItem('bigText');
 	if (bigTextSetting === 'on') {
 		bigTextCheckbox.checked = true;
-		document.documentElement.style.fontSize = '18px';
+		document.documentElement.style.fontSize = BIG_TEXT;
 	} else {
 		bigTextCheckbox.checked = false;
-		document.documentElement.style.fontSize = '16px';
+		document.documentElement.style.fontSize = DEFAULT_TEXT;
 	}
 }
