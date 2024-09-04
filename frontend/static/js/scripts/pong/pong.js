@@ -61,8 +61,8 @@ export class PongGame {
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
-			lUp : 'KeyW', lDown : 'KeyS', lMinimize: 'KeyE',
-			rUp : 'ArrowUp', rDown : 'ArrowDown', rMinimize: 'ArrowRight'
+			lUp : 'KeyW', lDown : 'KeyS', lMini: 'KeyE',
+			rUp : 'ArrowUp', rDown : 'ArrowDown', rMini: 'ArrowRight'
 		};
 
 		const objectiveString = localStorage.getItem('pongObjective');
@@ -333,7 +333,7 @@ export class PongGame {
 			case this.keybinds.lDown:
 				this.leftPad.direction = "down";
 				break;
-			case this.keybinds.lMinimize:
+			case this.keybinds.lMini:
 				if (this.gamestyle == "enhanced")
 					this.leftPad.useMinimize();
 				break;
@@ -343,7 +343,7 @@ export class PongGame {
 			case this.keybinds.rDown:
 				this.rightPad.direction = "down";
 				break;
-			case this.keybinds.rMinimize:
+			case this.keybinds.rMini:
 				if (this.gamestyle == "enhanced" && this.gamemode != "AI")
 					this.rightPad.useMinimize();
 				break;

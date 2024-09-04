@@ -28,24 +28,29 @@ export class PongMenu {
 		this.colors = colorsString ? JSON.parse(colorsString) : {
 			p1: "#ff0000", p2: "#00ff00", p3: "#266fff", p4: "#ff00ff"
 		};
+		localStorage.setItem('pongColors', JSON.stringify(this.colors));
 
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
 			p1: "player1", p2: "player2", p3: "player3", p4: "player4"
 		};
+		localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
 
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
-			lUp : 'KeyW', lDown : 'KeyS', lAccelerate: 'KeyE',
-			rUp : 'ArrowUp', rDown : 'ArrowDown', rAccelerate: 'ArrowRight'
+			lUp : 'KeyW', lDown : 'KeyS', lMini: 'KeyE',
+			rUp : 'ArrowUp', rDown : 'ArrowDown', rMini: 'ArrowRight'
 		};
+		localStorage.setItem('pongKeybinds', JSON.stringify(this.keybinds));
 
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
 		this.lastGamemode = "pvp";
+		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
 
 		const gamestyleString = localStorage.getItem('pongGamestyle');
 		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "enhanced";
+		localStorage.setItem('pongGamestyle', JSON.stringify(this.gamestyle));
 		// TODO: change this to /pong3d
 		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
 
@@ -304,10 +309,10 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">accelerate</label>
+									<label class="text-white" style="padding: 3px 0px;">minimize</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lAccelerate !== "" ? this.keybinds.lAccelerate : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lMini">${this.keybinds.lMini !== "" ? this.keybinds.lMini : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -333,10 +338,10 @@ export class PongMenu {
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">accelerate</label>
+									<label class="text-white" style="padding: 3px 0px;">minimize</label>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.rAccelerate !== "" ? this.keybinds.rAccelerate : "none"}</label>
+									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rMini">${this.keybinds.rMini !== "" ? this.keybinds.rMini : "none"}</label>
 								</div>
 							</div>
 						</div>
@@ -347,13 +352,17 @@ export class PongMenu {
 
 		let btnLUp = document.getElementById('lUp');
 		let btnLDown = document.getElementById('lDown');
+		let btnLMini = document.getElementById('lMini');
 		let btnRUp = document.getElementById('rUp');
 		let btnRDown = document.getElementById('rDown');
+		let btnRMini = document.getElementById('rMini');
 
 		btnLUp.addEventListener("click", (event) => this.changeKeybind(event, "lUp", btnLUp));
-		btnLDown.addEventListener("click", (event) => this.changeKeybind(event, "lDown", btnLDown))
+		btnLDown.addEventListener("click", (event) => this.changeKeybind(event, "lDown", btnLDown));
+		btnLMini.addEventListener("click", (event) => this.changeKeybind(event, "lMini", btnLMini));
 		btnRUp.addEventListener("click", (event) => this.changeKeybind(event, "rUp", btnRUp));
 		btnRDown.addEventListener("click", (event) => this.changeKeybind(event, "rDown", btnRDown));
+		btnRMini.addEventListener("click", (event) => this.changeKeybind(event, "rMini", btnRMini));
 
 		this.settingsModal.show();
 	}
@@ -399,15 +408,12 @@ export class PongMenu {
 		
 		switch (this.gamemode) {
 			case "pvp":
-				btnPvp.disabled = true;
 				labelDescription.innerHTML = "Two players play against each other, one playing the left paddle, the other playing the right paddle.";
 				break;
 			case "AI":
-				btnAI.disabled = true;
 				labelDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
 				break;
 			case "tournament":
-				btnTournament.disabled = true;
 				labelDescription.innerHTML = "Multiple players compete against each other in a tournament.";
 				break;
 			default:
@@ -417,7 +423,6 @@ export class PongMenu {
 		if (this.gamestyle == "3D") {
 			btnAI.disabled = true;
 			btnTournament.disabled = true;
-			btnPvp.disabled = true;
 			let disclaimer = document.getElementById('disclaimer');
 			disclaimer.innerHTML = "The only available gamemode for 3D game style is PvP.";
 		}
@@ -425,6 +430,13 @@ export class PongMenu {
 		localStorage.setItem('pongGamemode', JSON.stringify(this.gamemode));
 
 		this.settingsModal.show();
+
+		const gamemodes = {
+			"pvp": document.getElementById('btnPvp'),
+			"AI": document.getElementById('btnAI'),
+			"tournament": document.getElementById('btnTournament')
+		}
+		this.applySelectedSetting("gamemode", gamemodes);
 	}
 
 	showGamestyleConfig() {
@@ -467,18 +479,15 @@ export class PongMenu {
 
 		switch (this.gamestyle) {
 			case "legacy":
-				btnLegacy.disabled = true;
 				gamestyleDescription.innerHTML = "classic pong game.";
 				availableGamemodes.innerHTML = "available gamemodes: all";
 				break;
 			case "enhanced":
-				btnEnhanced.disabled = true;
-				gamestyleDescription.innerHTML = "pong game with power ups.";
+				gamestyleDescription.innerHTML = "enhanced pong game with new physics and skills.";
 				availableGamemodes.innerHTML = "available gamemodes: all";
 				break;
 			case "3D":
-				btn3D.disabled = true;
-				gamestyleDescription.innerHTML = "3D classic pong game.";
+				gamestyleDescription.innerHTML = "3D pong game with classic rules.";
 				availableGamemodes.innerHTML = "available gamemodes: PvP";
 				break;
 			default:
@@ -489,6 +498,13 @@ export class PongMenu {
 
 		this.playersContainer
 		this.settingsModal.show();
+
+		const gamestyles = {
+			"legacy": document.getElementById('btnLegacy'),
+			"enhanced": document.getElementById('btnEnhanced'),
+			"3D": document.getElementById('btn3D')
+		}
+		this.applySelectedSetting("pongGamestyle", gamestyles);
 	}
 
 	//#region EVENT LISTENERS HANDLERS
@@ -502,6 +518,13 @@ export class PongMenu {
 
 		this.showGamemodeConfig();
 		this.updatePlayersContainer();
+
+		const gamestyles = {
+			"legacy": document.getElementById('btnLegacy'),
+			"enhanced": document.getElementById('btnEnhanced'),
+			"3D": document.getElementById('btn3D')
+		}
+		this.applySelectedSetting("gamestyle", gamestyles);
 	}
 
 	selectGamestyle(event, gamestyle) {
@@ -551,6 +574,10 @@ export class PongMenu {
 					this.toastBody.innerHTML = "Changed Left Paddle Move Down keybind to: " + event.code;
 					this.keybinds.lDown = event.code;
 					break;
+				case "lMini":
+					this.toastBody.innerHTML = "Changed Left Paddle Minimize keybind to: " + event.code;
+					this.keybinds.lMini = event.code;
+					break;
 				case "rUp":
 					this.toastBody.innerHTML = "Changed Right Paddle Move Up keybind to: " + event.code;
 					this.keybinds.rUp = event.code;
@@ -558,6 +585,10 @@ export class PongMenu {
 				case "rDown":
 					this.toastBody.innerHTML = "Changed Right Paddle Move Down keybind to: " + event.code;
 					this.keybinds.rDown = event.code;
+					break;
+				case "rMini":
+					this.toastBody.innerHTML = "Changed Right Paddle Minimize keybind to: " + event.code;
+					this.keybinds.rMini = event.code;
 					break;
 				default:
 					return ;
@@ -570,6 +601,23 @@ export class PongMenu {
 	}
 
 	//#endregion
+
+	// Add the "selected" class to to correct element based on the setting in the local storage
+	// settingType is for example "pacmanSkin", "ghostSkin", "gamemode", "mapName", "pacmanTheme"
+	// elementMapping is an object with the settings as keys and the elements as values
+	// for example { "pacman": btnPacmanSkin, "pacgirl": btnPacgirlSkin }
+	applySelectedSetting(settingType, elementMapping) {
+		const selectedSetting = localStorage.getItem(settingType)?.replace(/"/g, '');
+	
+		Object.keys(elementMapping).forEach(setting => {
+			if (setting === selectedSetting) {
+				elementMapping[setting].classList.add("selected");
+			} else {
+				elementMapping[setting].classList.remove("selected");
+			}
+		});
+	}
+
 
 }
 
