@@ -54,7 +54,7 @@ export class PacmanMenu {
 		const ghostSkinString = localStorage.getItem('ghostSkin');
 		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
 
-		const gamemodeString = localStorage.getItem('gamemode');
+		const gamemodeString = localStorage.getItem('pacmanGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
 
 		const objectiveString = localStorage.getItem('objective');
@@ -82,6 +82,7 @@ export class PacmanMenu {
 
 		localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
 		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
+		localStorage.setItem('pacmanGamemode', JSON.stringify(this.gamemode));
 		localStorage.setItem('mapName', JSON.stringify(this.mapName));
 		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 		localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
@@ -264,25 +265,26 @@ export class PacmanMenu {
 		addEventListeners(btnGRight, "gRight");
 		addEventListeners(btnGSpell, "gSpell");
 
-		this.settingsModal.show();
+		if (!document.getElementById('settingsModal').classList.contains('show')) {
+			console.log("showAgain");
+			this.settingsModal.show();
+		}
 		updateTexts();
 	}
 
 	showPacmanSkinConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center" data-translate="pacman-skin">pacman skins</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-12 justify-content-center">
-						<div class="row justify-content-center text-center mt-2 mb-3">					
-							<div class="col-3 d-flex justify-content-center">
-								<img class="clickable" role="button" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacman1.png" alt="An image of pac-man." tabindex="0">
-							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<img class="clickable" role="button" id="pPacgirlSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacgirl1.png" alt="An image of pac-girl." tabindex="0">
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="pacman-skin">pacman skins</h2>
+			</div>
+			<div class="modal-body">
+				<div class="col-12 justify-content-center">
+					<div class="row justify-content-center text-center mt-2 mb-3">					
+						<div class="col-3 d-flex justify-content-center">
+							<img class="clickable" role="button" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacman1.png" alt="An image of pac-man." tabindex="0">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img class="clickable" role="button" id="pPacgirlSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacgirl1.png" alt="An image of pac-girl." tabindex="0">
 						</div>
 					</div>
 				</div>
@@ -308,25 +310,23 @@ export class PacmanMenu {
 
 	showGhostSkinConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center" data-translate="ghost-skin">ghost skins</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-12 justify-content-center">
-						<div class="row justify-content-center text-center mt-2 mb-1">
-							<div class="col-3 d-flex justify-content-center">
-								<img class="clickable" role="button" tabindex="0" id="pBlueGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/blueGhost1.png" alt="An image of a blue ghost.">
-							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<img class="clickable" role="button" tabindex="0" id="pOrangeGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/orangeGhost1.png" alt="An image of an orange ghost.">
-							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<img class="clickable" role="button" tabindex="0" id="pPinkGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pinkGhost1.png" alt="An image of a pink ghost.">
-							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<img class="clickable" role="button" tabindex="0" id="pGreenGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/greenGhost1.png" alt="An image of a green ghost.">
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="ghost-skin">ghost skins</h2>
+			</div>
+			<div class="modal-body">
+				<div class="col-12 justify-content-center">
+					<div class="row justify-content-center text-center mt-2 mb-1">
+						<div class="col-3 d-flex justify-content-center">
+							<img class="clickable" role="button" tabindex="0" id="pBlueGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/blueGhost1.png" alt="An image of a blue ghost.">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img class="clickable" role="button" tabindex="0" id="pOrangeGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/orangeGhost1.png" alt="An image of an orange ghost.">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img class="clickable" role="button" tabindex="0" id="pPinkGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pinkGhost1.png" alt="An image of a pink ghost.">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img class="clickable" role="button" tabindex="0" id="pGreenGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/greenGhost1.png" alt="An image of a green ghost.">
 						</div>
 					</div>
 				</div>
@@ -359,24 +359,22 @@ export class PacmanMenu {
 
 	showGamemodeConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center" data-translate="gamemode">gamemodes</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-auto mr-2 ml-3">
-						<div class="row justify-content-center text-center mt-2 mb-1">
-							<div class="col-4 d-flex justify-content-center">
-								<button role="button" class="btn btn-lg text-light" id="btnObjective" data-translate="objective">objective</button>
-							</div>
-							<div class="col-4 d-flex justify-content-center">
-								<button role="button" class="btn btn-lg text-white" id="btnInfinite" data-translate="endless">endless</button>
-							</div>
-							<div class="col-10 m-5">
-								<label class="text-white" id="gamemodeDescription"></label>
-							</div>
-							<div id="rangeContainer">
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="gamemode">gamemodes</h2>
+			</div>
+			<div class="modal-body">
+				<div class="col-auto mr-2 ml-3">
+					<div class="row justify-content-center text-center mt-2 mb-1">
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-light" id="btnObjective" data-translate="objective">objective</button>
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white" id="btnInfinite" data-translate="endless">endless</button>
+						</div>
+						<div class="col-10 m-5">
+							<label class="text-white" id="gamemodeDescription"></label>
+						</div>
+						<div id="rangeContainer">
 						</div>
 					</div>
 				</div>
@@ -433,25 +431,23 @@ export class PacmanMenu {
 
 	showMapConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center" data-translate="map">maps</h2>
-				</div>
-				<div class="modal-body p-5">
-					<div class="col-auto mr-2 ml-2">
-						<div class="row justify-content-center text-center mt-2">
-							<div class="col-4 d-flex flex-column align-items-center">
-								<label class="h4 text-white">maze</label>
-								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
-							</div>
-							<div class="col-4 d-flex flex-column align-items-center">
-								<label class="h4 text-white">spiral</label>
-								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
-							</div>
-							<div class="col-4 d-flex flex-column align-items-center">
-									<label class="h4 text-white">butterfly</label>
-								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="map">maps</h2>
+			</div>
+			<div class="modal-body p-5">
+				<div class="col-auto mr-2 ml-2">
+					<div class="row justify-content-center text-center mt-2">
+						<div class="col-4 d-flex flex-column align-items-center">
+							<label class="h4 text-white">maze</label>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
+						</div>
+						<div class="col-4 d-flex flex-column align-items-center">
+							<label class="h4 text-white">spiral</label>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
+						</div>
+						<div class="col-4 d-flex flex-column align-items-center">
+								<label class="h4 text-white">butterfly</label>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
 						</div>
 					</div>
 				</div>
@@ -480,30 +476,28 @@ export class PacmanMenu {
 
 	showColorSchemeConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center" data-translate="theme">themes</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-12 justify-content-center">
-						<div class="row justify-content-center text-center mt-2 mb-3">
-							<div class="row justify-content-center text-center">
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">obsidian</label>
-									<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian" alt="A map that has the color of obsidian." tabindex="0"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">autumn</label>
-									<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn" alt="A map that has the color of autumn." tabindex="0"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">garden</label>
-									<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden" alt="A map that has the color of a garden." tabindex="0"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">retro</label>
-									<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial" alt="A map that has the color of the retro pac-man." tabindex="0"/>
-								</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="theme">themes</h2>
+			</div>
+			<div class="modal-body">
+				<div class="col-12 justify-content-center">
+					<div class="row justify-content-center text-center mt-2 mb-3">
+						<div class="row justify-content-center text-center">
+							<div class="col-3 d-flex flex-column align-items-center">
+								<label class="h4 text-white">obsidian</label>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian" alt="A map that has the color of obsidian." tabindex="0"/>
+							</div>
+							<div class="col-3 d-flex flex-column align-items-center">
+								<label class="h4 text-white">autumn</label>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn" alt="A map that has the color of autumn." tabindex="0"/>
+							</div>
+							<div class="col-3 d-flex flex-column align-items-center">
+								<label class="h4 text-white">garden</label>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden" alt="A map that has the color of a garden." tabindex="0"/>
+							</div>
+							<div class="col-3 d-flex flex-column align-items-center">
+								<label class="h4 text-white">retro</label>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial" alt="A map that has the color of the retro pac-man." tabindex="0"/>
 							</div>
 						</div>
 					</div>
@@ -569,7 +563,7 @@ export class PacmanMenu {
 		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
-		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
+		localStorage.setItem('pacmanGamemode', JSON.stringify(this.gamemode));
 
 		this.showGamemodeConfig();
 	}
@@ -640,7 +634,7 @@ export class PacmanMenu {
 	}
 
 	keyDownSettings = (event) => {
-		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
+		if(["Space","ArrowUp","ArrowDown"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
 		if (this.waitForKey) {
@@ -700,7 +694,7 @@ export class PacmanMenu {
 	}
 
 	// Add the "selected" class to to correct element based on the setting in the local storage
-	// settingType is for example "pacmanSkin", "ghostSkin", "gamemode", "mapName", "pacmanTheme"
+	// settingType is for example "pacmanSkin", "ghostSkin", "pacmanGamemode", "mapName", "pacmanTheme"
 	// elementMapping is an object with the settings as keys and the elements as values
 	// for example { "pacman": btnPacmanSkin, "pacgirl": btnPacgirlSkin }
 	applySelectedSetting(settingType, elementMapping) {
@@ -730,4 +724,3 @@ export class PacmanMenu {
 	//#endregion
 
 }
-

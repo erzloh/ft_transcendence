@@ -1,5 +1,5 @@
 export class Tournament {
-	constructor(pNumber, usernames) {
+	constructor(pNumber, usernames, pG) {
 		this.playerNumber = pNumber;
 		this.usernames = usernames;
 		this.tournamentOver = false;
@@ -7,8 +7,10 @@ export class Tournament {
 		this.tournamentMatchEndModal = new bootstrap.Modal(document.getElementById('tournamentMatchEndModal'));
 		this.playersTournament =  document.getElementById('playersTournament');
 		this.matchTournament =  document.getElementById('matchTournament');
-		this.winner =  document.getElementById('winner');
+		this.winner =  document.getElementById('matchWinner');
 		this.matchIdModal =  document.getElementById('matchId');
+		this.timeElapsed = document.getElementById('matchTimeElapsed')
+		this.pG = pG;
 
 		this.matchId = 0;
 		this.maxMatchNb = this.playerNumber - 1;
@@ -58,8 +60,9 @@ export class Tournament {
 			}
 		}
 		if (!this.tournamentOver) {
-			this.matchIdModal.innerHTML = "tournament " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
+			this.matchIdModal.innerHTML = "tournament: " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
 			this.winner.innerHTML = this.usernames[this.currentMatch[side]] + " won the match";
+			this.timeElapsed.innerHTML = this.pG.timer.getTime();
 			this.tournamentMatchEndModal.show();
 
 			this.matchId++;
@@ -176,16 +179,21 @@ export class Timer {
 		}
 		return false;
 	}
+
+	getTime() {
+		return (this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0'));
+	}
 }
 
 export class Ball {
-    constructor(x, y, size, color, speed, dx, maxY, maxX, pongGame) {
+    constructor(x, y, size, color, baseSpeed, maxY, maxX, pongGame) {
         this.x = x;
 		this.y = y;
 		this.size = size;
 		this.color = color;
-		this.speed = speed;
-		this.dx = dx;
+		this.speed = baseSpeed + 2.5;
+		this.baseSpeed = baseSpeed;
+		this.dx = baseSpeed;
 		this.maxY = maxY;
 		this.maxX = maxX;
 		this.pG = pongGame;
@@ -233,14 +241,16 @@ export class Ball {
 				// Apply a velocity change 
 				this.dy *= 	((this.dy > 0 && currentPad.direction == "down") || 
 							(this.dy < 0 && currentPad.direction == "up")) ?
-							1.2 : -0.8;
-
+							1.4 : -0.8;
+				
 				// Keep the values acceptable
 				if (this.dy > 0) {
-					this.dy = Math.max(2, Math.min(this.dy, 8));
+					this.dy = Math.max(2, Math.min(this.dy, 10));
 				} else {
-					this.dy = Math.min(-2, Math.max(this.dy, -7));
+					this.dy = Math.min(-2, Math.max(this.dy, -10));
 				}
+
+				console.log(this.dy);
 			}
 		}
 
@@ -255,13 +265,13 @@ export class Ball {
 	resetPosition() {
 		this.x = this.maxX / 2;
 		this.y = this.maxY / 2;
-		this.speed = 4;
+		this.speed = this.baseSpeed + 2.5;
 
 		if (Math.random() > 0.5) {
-			this.dx = this.speed;
+			this.dx = this.baseSpeed;
 		} 
 		else {
-			this.dx = -this.speed;
+			this.dx = -this.baseSpeed;
 		}
 
 		if (Math.random() > 0.5) {

@@ -11,6 +11,7 @@ export class PongGame {
 
 		this.endgameModalWinner = document.getElementById('endgameModalWinner');
 		this.endgameModalScore = document.getElementById('endgameModalScore');
+		this.endgameModalTime = document.getElementById('endgameModalTime');
 		this.endgameModalPlayAgain = document.getElementById('playAgainButton');
 		this.tournamentModalNextMatch = document.getElementById('nextMatchButton');
 		this.pauseModal = new bootstrap.Modal(document.getElementById('pauseModal'));
@@ -18,13 +19,13 @@ export class PongGame {
 		this.matchScore =  document.getElementById('matchScore');
 		this.modalColorBox1 = document.getElementById('colorBox1');
 		this.modalColorBox2 = document.getElementById('colorBox2');
-		this.colorBox1 = document.getElementById('colorBox11');
-		this.colorBox2 = document.getElementById('colorBox22');
+		this.colorBoxLeft = document.getElementById('colorBoxLeft');
+		this.colorBoxRight = document.getElementById('colorBoxRight');
 
 		this.leftScore = document.getElementById("leftScore");
 		this.rightScore = document.getElementById("rightScore");
 
-		this.pWidth = 13, this.pHeight = 80, this.bSize = 13, this.pSpeed = 5.5;
+		this.pWidth = 13, this.pHeight = 80, this.bSize = 13, this.pSpeed = 5.5, this.bSpeed = 3;
 		this.gameStarted = false;
 		this.paused = false;
 		this.gameOver = false;
@@ -99,40 +100,40 @@ export class PongGame {
 			this.gamemode == "AI" ? true : false, this);
 
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-			this.bSize, "#FFF", 4, 4, this.cvs.height, this.cvs.width, this);
+			this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
 
-		this.colorBox1.style.backgroundColor = this.colors.p1;
-		this.colorBox2.style.backgroundColor = this.colors.p2;
+		this.colorBoxLeft.style.backgroundColor = this.colors.p1;
+		this.colorBoxRight.style.backgroundColor = this.colors.p2;
 
 		if (this.gamemode == "AI") {
-			this.colorBox2.style.backgroundColor = "#FFF";
+			this.colorBoxRight.style.backgroundColor = "#FFF";
 			this.rightPad.ball = this.ball;
 		}
 		else if (this.gamemode == "tournament") {
-			this.tournament = new Tournament(4, this.usernames);
+			this.tournament = new Tournament(4, this.usernames, this);
 			this.currentMatch = this.tournament.getCurrentPlayers();
 			leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
 			rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 			this.leftPad.color = this.colors[this.currentMatch.left];
 			this.rightPad.color = this.colors[this.currentMatch.right];
 			this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
-			this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+			this.colorBoxLeft.style.backgroundColor = this.colors[this.currentMatch.left];
 			this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
-			this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
+			this.colorBoxRight.style.backgroundColor = this.colors[this.currentMatch.right];
 		}
 	}
 
 	restartTournament() {
-		this.tournament = new Tournament(4, this.usernames);
+		this.tournament = new Tournament(4, this.usernames, this);
 		this.currentMatch = this.tournament.getCurrentPlayers();
 		leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
 		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
 		this.leftPad.color = this.colors[this.currentMatch.left];
 		this.rightPad.color = this.colors[this.currentMatch.right];
 		this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
-		this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+		this.colorBoxLeft.style.backgroundColor = this.colors[this.currentMatch.left];
 		this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
-		this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
+		this.colorBoxRight.style.backgroundColor = this.colors[this.currentMatch.right];
 
 		this.resetTournamentMatch();
 	}
@@ -154,9 +155,9 @@ export class PongGame {
 		this.leftPad.color = this.colors[this.currentMatch.left];
 		this.rightPad.color = this.colors[this.currentMatch.right];
 		this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
-		this.colorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
+		this.colorBoxLeft.style.backgroundColor = this.colors[this.currentMatch.left];
 		this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
-		this.colorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
+		this.colorBoxRight.style.backgroundColor = this.colors[this.currentMatch.right];
 
 		this.resetTournamentMatch();
 	}
@@ -173,7 +174,7 @@ export class PongGame {
 			false, this);	
 		
 		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-			this.bSize, "#FFF", 4, 4, this.cvs.height, this.cvs.width, this);
+			this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
 
 		this.leftScore.innerHTML = "0";
 		this.rightScore.innerHTML = "0";
@@ -201,7 +202,7 @@ export class PongGame {
 				this.gamemode == "AI" ? true : false, this);	
 			
 			this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-				this.bSize, "#FFF", 4, 4, this.cvs.height, this.cvs.width, this);
+				this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
 			
 			this.rightPad.ball = this.ball;
 	
@@ -226,7 +227,8 @@ export class PongGame {
 
 	endTournament(side) {
 		this.endgameModalWinner.textContent = this.usernames[this.currentMatch[side]] + " won the tournament";
-		this.endgameModalScore.textContent = "final score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalTime.innerHTML = this.timer.getTime();
 
 		this.endgameModal.show();
 	}
@@ -236,7 +238,8 @@ export class PongGame {
 		this.timer.stop();
 
 		this.endgameModalWinner.textContent = winner + " won the game";
-		this.endgameModalScore.textContent = "Final score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.endgameModalTime.innerHTML = this.timer.getTime();
 
 		this.endgameModal.show();
 	}
@@ -315,8 +318,7 @@ export class PongGame {
 			this.drawObjects();
 		}		
 		else {
-			this.ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-			this.ctx.fillRect(0, 0, this.cvs.width, this.cvs.height);
+			this.drawObjects();
 		}
 		requestAnimationFrame(this.gameLoop);
 	}
