@@ -281,68 +281,66 @@ export class PongMenu {
 
 	showKeysConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">keybinds settings</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-12 d-flex justify-content-center">
-						<div class="col-6">
-							<div class="row justify-content-center text-center mt-2">
-								<label class="h3 text-white">left paddle</label>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center">keybinds settings</h2>
+			</div>
+			<div class="modal-body">
+				<div class="col-12 d-flex justify-content-center">
+					<div class="col-6">
+						<div class="row justify-content-center text-center mt-2">
+							<label class="h3 text-white">left paddle</label>
+						</div>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white" style="padding: 3px 0px;">move up</label>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
-								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move up</label>
-								</div>
-								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
-								</div>
-							</div>
-							<div class="row justify-content-center text-center mt-2">
-								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move down</label>
-								</div>
-								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
-								</div>
-							</div>
-							<div class="row justify-content-center text-center mt-2">
-								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">minimize</label>
-								</div>
-								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lMini">${this.keybinds.lMini !== "" ? this.keybinds.lMini : "none"}</label>
-								</div>
+							<div class="col-6 d-flex justify-content-start">
+								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
 							</div>
 						</div>
-						<div class="col-6">
-							<div class="row justify-content-center text-center mt-2">
-								<h3 class="text-white">right paddle</h3>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white" style="padding: 3px 0px;">move down</label>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
-								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move up</label>
-								</div>
-								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
-								</div>
+							<div class="col-6 d-flex justify-content-start">
+								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
-								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">move down</label>
-								</div>
-								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
-								</div>
+						</div>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white" style="padding: 3px 0px;">minimize</label>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
-								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">minimize</label>
-								</div>
-								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rMini">${this.keybinds.rMini !== "" ? this.keybinds.rMini : "none"}</label>
-								</div>
+							<div class="col-6 d-flex justify-content-start">
+								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lMini">${this.keybinds.lMini !== "" ? this.keybinds.lMini : "none"}</label>
+							</div>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="row justify-content-center text-center mt-2">
+							<h3 class="text-white">right paddle</h3>
+						</div>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white" style="padding: 3px 0px;">move up</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
+							</div>
+						</div>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white" style="padding: 3px 0px;">move down</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
+							</div>
+						</div>
+						<div class="row justify-content-center text-center mt-2">
+							<div class="col-6 d-flex justify-content-end">
+								<label class="text-white" style="padding: 3px 0px;">minimize</label>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rMini">${this.keybinds.rMini !== "" ? this.keybinds.rMini : "none"}</label>
 							</div>
 						</div>
 					</div>
@@ -357,38 +355,51 @@ export class PongMenu {
 		let btnRDown = document.getElementById('rDown');
 		let btnRMini = document.getElementById('rMini');
 
-		btnLUp.addEventListener("click", (event) => this.changeKeybind(event, "lUp", btnLUp));
-		btnLDown.addEventListener("click", (event) => this.changeKeybind(event, "lDown", btnLDown));
-		btnLMini.addEventListener("click", (event) => this.changeKeybind(event, "lMini", btnLMini));
-		btnRUp.addEventListener("click", (event) => this.changeKeybind(event, "rUp", btnRUp));
-		btnRDown.addEventListener("click", (event) => this.changeKeybind(event, "rDown", btnRDown));
-		btnRMini.addEventListener("click", (event) => this.changeKeybind(event, "rMini", btnRMini));
+		const addEventListeners = (button, action) => {
+			button.addEventListener("click", (event) => this.changeKeybind(event, action, button));
+			button.addEventListener("keydown", (event) => {
+				if (event.key === "Enter") {
+					// wait for the next key press using settimeout
+					setTimeout(() => {
+						this.changeKeybind(event, action, button);
+					}, 100);
+				}
+			});
+		}
+		
+		addEventListeners(btnLUp, "lUp");
+		addEventListeners(btnLDown, "lDown");
+		addEventListeners(btnLMini, "lMini");
+		addEventListeners(btnRUp, "rUp");
+		addEventListeners(btnRDown, "rDown");
+		addEventListeners(btnRMini, "rMini");
 
-		this.settingsModal.show();
+		if (!document.getElementById('settingsModal').classList.contains('show')) {
+			console.log("show settings modal");
+			this.settingsModal.show();
+		}
 	}
 
 	showGamemodeConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">gamemodes</h2>
-				</div>
-				<div class="modal-body">
-					<div class="row justify-content-center">
-						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnPvp">pvp</button>
-						</div>
-						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnAI">vs ai</button>
-						</div>
-						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">tournament</button>
-						</div>
-						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
-							<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
-								<label class="text-white text-center" id="gamemodeDescription"></label>
-								<label class="h5 mt-4 text-white text-center" id="disclaimer"></label>
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center">gamemodes</h2>
+			</div>
+			<div class="modal-body">
+				<div class="row justify-content-center">
+					<div class="col-4 d-flex justify-content-center">
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnPvp">pvp</button>
+					</div>
+					<div class="col-4 d-flex justify-content-center">
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnAI">vs ai</button>
+					</div>
+					<div class="col-4 d-flex justify-content-center">
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">tournament</button>
+					</div>
+					<div class="col-12 d-flex justify-content-center mb-2 mt-4">
+						<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
+							<label class="text-white text-center" id="gamemodeDescription"></label>
+							<label class="h5 mt-4 text-white text-center" id="disclaimer"></label>
 						</div>
 					</div>
 				</div>
@@ -436,31 +447,29 @@ export class PongMenu {
 			"AI": document.getElementById('btnAI'),
 			"tournament": document.getElementById('btnTournament')
 		}
-		this.applySelectedSetting("gamemode", gamemodes);
+		this.applySelectedSetting("pongGamemode", gamemodes);
 	}
 
 	showGamestyleConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">game styles</h2>
-				</div>
-				<div class="modal-body">
-					<div class="row justify-content-center">
-						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnLegacy">legacy</button>
-						</div>
-						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnEnhanced">enhanced</button>
-						</div>
-						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btn3D">3D</button>
-						</div>
-						<div class="col-12 d-flex justify-content-center mb-2 mt-4">
-							<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
-								<label class="text-white text-center" id="gamestyleDescription"></label>
-								<label class="text-white text-center" id="availableGamemodes"></label>
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center">game styles</h2>
+			</div>
+			<div class="modal-body">
+				<div class="row justify-content-cfenter">
+					<div class="col-4 d-flex justify-content-center">
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnLegacy">legacy</button>
+					</div>
+					<div class="col-4 d-flex justify-content-center">
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnEnhanced">enhanced</button>
+					</div>
+					<div class="col-4 d-flex justify-content-center">
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btn3D">3D</button>
+					</div>
+					<div class="col-12 d-flex justify-content-center mb-2 mt-4">
+						<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
+							<label class="text-white text-center" id="gamestyleDescription"></label>
+							<label class="text-white text-center" id="availableGamemodes"></label>
 						</div>
 					</div>
 				</div>
@@ -518,13 +527,6 @@ export class PongMenu {
 
 		this.showGamemodeConfig();
 		this.updatePlayersContainer();
-
-		const gamestyles = {
-			"legacy": document.getElementById('btnLegacy'),
-			"enhanced": document.getElementById('btnEnhanced'),
-			"3D": document.getElementById('btn3D')
-		}
-		this.applySelectedSetting("gamestyle", gamestyles);
 	}
 
 	selectGamestyle(event, gamestyle) {
@@ -557,7 +559,7 @@ export class PongMenu {
 	}
 
 	keyDownSettings = (event) => {
-		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
+		if(["Space","ArrowUp","ArrowDown"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
 		if (this.waitForKey) {

@@ -86,7 +86,7 @@ class PacmanGame {
 		const objectiveString = localStorage.getItem('objective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : "10000";
 
-		const gamemodeString = localStorage.getItem('gamemode');
+		const gamemodeString = localStorage.getItem('pacmanGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
 		switch (this.gamemode) {
 			case "objective":

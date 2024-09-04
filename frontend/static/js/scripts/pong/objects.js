@@ -179,13 +179,14 @@ export class Timer {
 }
 
 export class Ball {
-    constructor(x, y, size, color, speed, dx, maxY, maxX, pongGame) {
+    constructor(x, y, size, color, baseSpeed, maxY, maxX, pongGame) {
         this.x = x;
 		this.y = y;
 		this.size = size;
 		this.color = color;
-		this.speed = speed;
-		this.dx = dx;
+		this.speed = baseSpeed + 2.5;
+		this.baseSpeed = baseSpeed;
+		this.dx = baseSpeed;
 		this.maxY = maxY;
 		this.maxX = maxX;
 		this.pG = pongGame;
@@ -233,14 +234,16 @@ export class Ball {
 				// Apply a velocity change 
 				this.dy *= 	((this.dy > 0 && currentPad.direction == "down") || 
 							(this.dy < 0 && currentPad.direction == "up")) ?
-							1.2 : -0.8;
-
+							1.4 : -0.8;
+				
 				// Keep the values acceptable
 				if (this.dy > 0) {
-					this.dy = Math.max(2, Math.min(this.dy, 8));
+					this.dy = Math.max(2, Math.min(this.dy, 10));
 				} else {
-					this.dy = Math.min(-2, Math.max(this.dy, -7));
+					this.dy = Math.min(-2, Math.max(this.dy, -10));
 				}
+
+				console.log(this.dy);
 			}
 		}
 
@@ -255,13 +258,13 @@ export class Ball {
 	resetPosition() {
 		this.x = this.maxX / 2;
 		this.y = this.maxY / 2;
-		this.speed = 4;
+		this.speed = this.baseSpeed + 2.5;
 
 		if (Math.random() > 0.5) {
-			this.dx = this.speed;
+			this.dx = this.baseSpeed;
 		} 
 		else {
-			this.dx = -this.speed;
+			this.dx = -this.baseSpeed;
 		}
 
 		if (Math.random() > 0.5) {
