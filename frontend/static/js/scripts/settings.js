@@ -4,7 +4,6 @@ import { ids } from '../index.js';
 
 // Function that will be called when the view is loaded
 export function settings() {
-	console.log('hello from settings')
 	// Graphics settings
 	const ultraRadio = document.getElementById("graphics-ultra-radio");
 	const mediumRadio = document.getElementById("graphics-medium-radio");
@@ -86,4 +85,26 @@ export function settings() {
 	// Apply the language setting from the local storage
 	const languageSetting = localStorage.getItem('language');
 	document.getElementById('languageSwitcher').value = languageSetting ? languageSetting : 'en';
+
+	// Big text setting
+	const bigTextCheckbox = document.getElementById('big-text-checkbox');
+	bigTextCheckbox.addEventListener('change', (event) => {
+		if (event.target.checked) {
+			document.documentElement.style.fontSize = '18px';
+			localStorage.setItem('bigText', 'on');
+		} else {
+			document.documentElement.style.fontSize = '16px';
+			localStorage.setItem('bigText', 'off');
+		}
+	});
+
+	// Apply the big text setting from the local storage
+	const bigTextSetting = localStorage.getItem('bigText');
+	if (bigTextSetting === 'on') {
+		bigTextCheckbox.checked = true;
+		document.documentElement.style.fontSize = '18px';
+	} else {
+		bigTextCheckbox.checked = false;
+		document.documentElement.style.fontSize = '16px';
+	}
 }

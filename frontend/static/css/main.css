@@ -11984,6 +11984,10 @@ button {
   height: 100vh;
 }
 
+.big-text {
+  font-size: 1.5rem;
+}
+
 input, select, a, .clickable {
   cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer !important;
 }

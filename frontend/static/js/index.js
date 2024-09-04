@@ -178,3 +178,12 @@ if (noiseSetting === 'on') {
 
 // Set Language
 setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
+
+// Set text size
+if (localStorage.getItem('bigText') === 'on') {
+	document.documentElement.style.fontSize = '18px';
+	console.log('big size');
+} else {
+	document.documentElement.style.fontSize = '16px';
+	console.log('small size');
+}
