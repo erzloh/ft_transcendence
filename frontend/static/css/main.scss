@@ -474,11 +474,13 @@ select {
 
 .list-container {
 	height: 100%;
+	overflow-y: auto;
+	// background-color: red;
 }
 
 .users-list, .friends-list {
-	height: 100%;
-
+	height: 90%;
+	// overflow-y: auto;
 }
 
 #user-elements, #friend-elements {

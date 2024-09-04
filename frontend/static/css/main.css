@@ -12365,10 +12365,11 @@ select {
 
 .list-container {
   height: 100%;
+  overflow-y: auto;
 }
 
 .users-list, .friends-list {
-  height: 100%;
+  height: 90%;
 }
 
 #user-elements, #friend-elements {
