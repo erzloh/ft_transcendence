@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import CustomUserSerializer, PacmanMatchSerializer, UserPacmanStatsSerializer, UpdateMaxEndlessScoreSerializer
+from .serializers import *
 from .models import CustomUser, PacmanMatch
 from rest_framework import status
 from rest_framework import serializers
@@ -25,6 +25,8 @@ class CookieTokenAuthentication(TokenAuthentication):
         if not token:
             raise AuthenticationFailed('No jwt cookie found')
         return super().authenticate_credentials(token)
+
+### AUTHENTICATION ###
 
 class login(views.APIView):
     def post(self, request):
@@ -53,13 +55,6 @@ class signup(views.APIView):
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class profile(views.APIView):
-    authentication_classes = [CookieTokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        serializer = CustomUserSerializer(request.user)
-        return Response({"user": serializer.data}, status=status.HTTP_200_OK)
-
 class logout(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -68,6 +63,15 @@ class logout(views.APIView):
         request.user.save()
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+
+### USER PROFILE ###
+
+class profile(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        serializer = CustomUserSerializer(request.user)
+        return Response({"user": serializer.data}, status=status.HTTP_200_OK)
 
 class UpdateUser(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
@@ -93,6 +97,7 @@ class UserAvatar(views.APIView):
         else:
             return Response({"error": "No profile photo found"}, status=status.HTTP_404_NOT_FOUND)
 
+### FRIENDS ###
 
 class AddFriend(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
@@ -154,7 +159,9 @@ class UsersList(views.APIView):
             return Response(users_data, status=status.HTTP_200_OK)
         except Exception as e:
             raise APIException(str(e))
-    
+
+### PACMAN ###
+
 class RecordPacmanMatch(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -195,3 +202,13 @@ class UpdateMaxEndlessScore(views.APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+### PONG ###
+
+class UserPongStats(viewx.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        serializer = UserPongStatsSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

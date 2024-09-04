@@ -32,6 +32,15 @@ class CustomUser(AbstractUser):
 	max_endless_score = models.IntegerField(default=0)
 	objects = CustomUserManager()
 
+	total_pong_matches = models.IntegerField(default=0)
+    total_pong_wins = models.IntegerField(default=0)
+    total_pong_ai_matches = models.IntegerField(default=0)
+    total_pong_ai_wins = models.IntegerField(default=0)
+    total_pong_pvp_matches = models.IntegerField(default=0)
+    total_pong_pvp_wins = models.IntegerField(default=0)
+    total_tournament_played = models.IntegerField(default=0)
+    total_tournament_wins = models.IntegerField(default=0)
+
 	def __str__(self):
 		return self.username
 	
@@ -64,3 +73,61 @@ class PacmanMatch(models.Model):
 
 	def __str__(self):
 		return f"Pacman: {self.pacman_player.username}, Ghost: {self.ghost_player.username}, Winner: {self.winner.username}"
+
+
+class AIPongMatch(models.Model):
+	player_one = models.CharField(max_length=255)
+	player_won = models.BooleanField()
+	match_score = models.CharField(max_length=255)
+	match_duration = models.DurationField()
+	match_date = models.DateTimeField(auto_now_add=True)
+
+	def save(self, *args, **kwargs):
+		super().save(*args, **kwargs)
+		try:
+			user = CustomUser.objects.get(username=self.player_one)
+			user.total_pong_matches += 1
+			user.total_pong_ai_matches += 1
+			if self.player_won:
+				user.total_pong_wins += 1
+				user.total_pong_ai_wins += 1
+			user.save()
+		except CustomUser.DoesNotExist:
+		pass
+
+	def __str__(self):
+		return f"{self.player_one} ({'won' if self.player_won else 'lost'})"
+
+class PvPongMatch(AIPongMatch):
+	player_two = models.CharField(max_length=255)
+
+	def save(self, *args, **kwargs):
+		super().save(*args, **kwargs)
+		try:
+			user_one = CustomUser.objects.get(username=self.player_one)
+			user_one.total_pong_matches += 1
+			if self.player_won:
+				user_one.total_pong_wins += 1
+			user_one.save()
+		except CustomUser.DoesNotExist:
+		pass
+		try:
+			user_two = CustomUser.objects.get(username=self.player_two)
+			user_two.total_pong_matches += 1
+			if self.player_won:
+				user_two.total_pong_wins += 1
+			user_two.save()
+		except CustomUser.DoesNotExist:
+		pass
+
+	def __str__(self):
+		return f"{self.player_one} ({'won' if self.player_won else 'lost'})"
+
+
+class PongTournament(models.Model):
+	name = models.CharField(max_length=255)
+	matches = models.ManyToManyField(PvPongMatch)
+	ranking = models.TextField()
+
+	def __str__(self):
+		return self.name

@@ -5,6 +5,8 @@ from django.core.validators import validate_email as validate_email_func
 from django.core.exceptions import ValidationError
 from django.contrib.auth.password_validation import validate_password
 
+### USER MANAGEMENT ###
+
 class CustomUserSerializer(serializers.ModelSerializer):
 	profile_picture_url = serializers.SerializerMethodField()
 
@@ -54,10 +56,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
 		instance.save()
 		return instance
 
+### PACMAN ###
+
 class PacmanMatchSerializer(serializers.ModelSerializer):
 	pacman_player = serializers.SlugRelatedField(slug_field='id', queryset=CustomUser.objects.all())
 	ghost_player = serializers.SlugRelatedField(slug_field='id', queryset=CustomUser.objects.all())
-
 	class Meta:
 		model = PacmanMatch
 		fields = ['pacman_player', 'ghost_player', 'map_name', 'match_duration', 'winner', 'pacman_score']
@@ -75,7 +78,37 @@ class UserPacmanStatsSerializer(serializers.ModelSerializer):
 	total_pacman_as_ghost_matches = serializers.IntegerField()
 	total_pacman_as_ghost_wins = serializers.IntegerField()
 	max_endless_score = serializers.IntegerField()
-
 	class Meta:
 		model = CustomUser
 		fields = ('total_pacman_matches', 'total_pacman_wins', 'total_pacman_as_pacman_matches', 'total_pacman_as_pacman_wins', 'total_pacman_as_ghost_matches', 'total_pacman_as_ghost_wins', 'max_endless_score')
+
+### PONG ###
+
+class AIPongMatchSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = AIPongMatch
+		fields = ['player_one', 'player_won', 'match_score', 'match_duration', 'match_date']
+
+class PvPongMatchSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = PvPongMatch
+		fields = ['player_one', 'player_two', 'player_won', 'match_score', 'match_duration', 'match_date']
+
+class PongTournamentSerializer(serializers.ModelSerializer):
+	matches = PvPongMatchSerializer(many=True, read_only=True)
+	class Meta:
+		model = PongTournament
+		fields = ['name', 'matches', 'ranking']
+
+class UserPongStatsSerializer(serializers.ModelSerializer):
+	total_pong_matches = serializers.IntegerField()
+	total_pong_wins = serializers.IntegerField()
+	total_pong_ai_matches = serializers.IntegerField()
+	total_pong_ai_wins = serializers.IntegerField()
+	total_pong_pvp_matches = serializers.IntegerField()
+	total_pong_pvp_wins = serializers.IntegerField()
+	total_tournament_played = serializers.IntegerField()
+	total_tournament_wins = serializers.IntegerField()
+	class Meta:
+		model = CustomUser
+		fields = ('total_pong_matches', 'total_pong_wins', 'total_pong_ai_matches', 'total_pong_ai_wins', 'total_pong_pvp_matches', 'total_pong_pvp_wins', 'total_tournament_played', 'total_tournament_wins')
