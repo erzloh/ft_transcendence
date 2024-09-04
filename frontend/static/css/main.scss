@@ -23,8 +23,10 @@ $base-font-size: 16px;
 }
 
 // Variables
-$cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
-$cursor-pointer: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
+// $cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
+// $cursor-pointer: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
+$cursor: url('/static/assets/UI/icons/cursor_big.svg') 15 15, auto;
+$cursor-pointer: url('/static/assets/UI/icons/cursor_pointer_big.svg') 15 15, pointer;
 
 // Basic CSS Reset
 html, body {
@@ -44,6 +46,10 @@ button {
 
 .full-height {
 	height: 100vh;
+}
+
+.big-text {
+	font-size: 1.5rem;
 }
 
 // label {
@@ -283,12 +289,6 @@ $blending: hard-light;
 	backdrop-filter: blur(10px);
 }
 
-// hr {
-// 	border: 1px solid rgba(255, 255, 255, 0.8);
-// }
-
-
-
 // SETTINGS PAGE
 .container-settings {
 	max-width: rem(400px);
@@ -375,6 +375,10 @@ select {
 }
 
 // PACMAN MENU PAGE
+.container-menu {
+	max-width: rem(1000px);
+}
+
 #rangeInput {
     -webkit-appearance: none;
     appearance: none;
@@ -470,11 +474,13 @@ select {
 
 .list-container {
 	height: 100%;
+	overflow-y: auto;
+	// background-color: red;
 }
 
 .users-list, .friends-list {
-	height: 100%;
-
+	height: 90%;
+	// overflow-y: auto;
 }
 
 #user-elements, #friend-elements {
