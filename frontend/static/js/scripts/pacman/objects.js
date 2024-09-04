@@ -82,10 +82,10 @@ export class Timer {
 		}
 	}
 
-		stop() {
-			clearInterval(this.interval);
-			this.interval = null;
-		}
+	stop() {
+		clearInterval(this.interval);
+		this.interval = null;
+	}
 
 	reset() {
 		this.stop();
@@ -129,7 +129,7 @@ export class Timer {
 			if (this.gSpellCD > 0) {
 				this.gSpellCD--;
 				this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
-			}
+			} 
 			else
 				this.gCD.innerHTML = "Ready";
 	
@@ -139,7 +139,7 @@ export class Timer {
 				var xpos = Math.floor(Math.random() * (this.pcG.width - 1));
 				if (this.pcG.cells[ypos][xpos].value !== 1) {
 					var ran = Math.floor(Math.random() * 3);
-					switch (ran){
+					switch (ran) {
 						case 0:
 							this.pcG.fruitArray.push(new Fruit("Cherry", 750, xpos, ypos, this.images.imgCherry, this.pcG));
 							break;

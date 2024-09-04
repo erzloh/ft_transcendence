@@ -1,5 +1,5 @@
 export class Tournament {
-	constructor(pNumber, usernames) {
+	constructor(pNumber, usernames, pG) {
 		this.playerNumber = pNumber;
 		this.usernames = usernames;
 		this.tournamentOver = false;
@@ -7,8 +7,10 @@ export class Tournament {
 		this.tournamentMatchEndModal = new bootstrap.Modal(document.getElementById('tournamentMatchEndModal'));
 		this.playersTournament =  document.getElementById('playersTournament');
 		this.matchTournament =  document.getElementById('matchTournament');
-		this.winner =  document.getElementById('winner');
+		this.winner =  document.getElementById('matchWinner');
 		this.matchIdModal =  document.getElementById('matchId');
+		this.timeElapsed = document.getElementById('matchTimeElapsed')
+		this.pG = pG;
 
 		this.matchId = 0;
 		this.maxMatchNb = this.playerNumber - 1;
@@ -58,8 +60,9 @@ export class Tournament {
 			}
 		}
 		if (!this.tournamentOver) {
-			this.matchIdModal.innerHTML = "tournament " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
+			this.matchIdModal.innerHTML = "tournament: " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
 			this.winner.innerHTML = this.usernames[this.currentMatch[side]] + " won the match";
+			this.timeElapsed.innerHTML = this.pG.timer.getTime();
 			this.tournamentMatchEndModal.show();
 
 			this.matchId++;
@@ -75,20 +78,132 @@ export class Tournament {
 	}
 }
 
+export class Timer {
+	constructor(pongGame) {
+		this.pG = pongGame;
+		this.sec = 0;
+		this.min = 0;
+		this.interval = null;
+
+		this.timer = document.getElementById('timer');
+		this.lMinimizeLabel = document.getElementById('lMinimizeCD');
+		this.rMinimizeLabel = document.getElementById('rMinimizeCD');
+		if (this.pG.gamestyle != "enhanced") {
+			this.lMinimizeLabel.style.display = "none";
+			this.rMinimizeLabel.style.display = "none";
+		}
+
+		// Spells
+		this.minimizeDuration = 10;
+		this.minimizeCooldown = 20;
+		this.leftMinimizeCD = 0;
+		this.rightMinimizeCD = 0;
+	}
+
+	start() {
+		if (!this.interval) {
+			this.interval = setInterval(() => {
+				this.updateTime();
+			}, 1000);
+		}
+	}
+
+	stop() {
+		clearInterval(this.interval);
+		this.interval = null;
+	}
+
+	reset() {
+		this.stop();
+		this.sec = 0;
+		this.min = 0;
+		this.leftMinimizeCD = 0;
+		this.rightMinimizeCD = 0;
+		this.updateDisplay();
+	}
+
+	updateTime() {
+		this.sec++;
+	
+		if (this.leftMinimizeCD > 0) {
+			this.leftMinimizeCD--;
+			if (this.leftMinimizeCD + this.minimizeDuration == this.minimizeCooldown) {
+				this.pG.leftPad.stopMinimize();
+			}
+		}
+			
+		if (this.rightMinimizeCD > 0) {
+			this.rightMinimizeCD--;
+			if (this.rightMinimizeCD + this.minimizeDuration == this.minimizeCooldown) {
+				this.pG.rightPad.stopMinimize();
+			}
+		}
+
+		// Update minutes if 60 seconds is reached
+		if (this.sec == 60) {
+			this.min++;
+			this.sec = 0;
+		}
+
+		this.updateDisplay();
+	}
+	updateDisplay() {
+		this.timer.innerHTML = 
+			this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
+
+		if (this.leftMinimizeCD > 0)
+			this.lMinimizeLabel.innerHTML = this.leftMinimizeCD.toString().padStart(2, '0');
+		else
+			this.lMinimizeLabel.innerHTML = "ready";
+
+		if (this.rightMinimizeCD > 0)
+			this.rMinimizeLabel.innerHTML = this.rightMinimizeCD.toString().padStart(2, '0');
+		else
+			this.rMinimizeLabel.innerHTML = "ready";
+	}
+
+	startMinimizeCD(placement) {
+		if (placement == "left") {
+			if (this.leftMinimizeCD > 0)
+				return false;
+			this.leftMinimizeCD = this.minimizeCooldown;
+			this.lMinimizeLabel.innerHTML = this.leftMinimizeCD.toString().padStart(2, '0');
+			return true;
+		}
+		else if (placement =="right") {
+			if (this.rightMinimizeCD > 0)
+				return false;
+			this.rightMinimizeCD = this.minimizeCooldown;
+			this.rMinimizeLabel.innerHTML = this.rightMinimizeCD.toString().padStart(2, '0');
+			return true;
+		}
+		return false;
+	}
+
+	getTime() {
+		return (this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0'));
+	}
+}
+
 export class Ball {
-    constructor(x, y, size, color, speed, dx, dy, maxY, maxX, leftPad, rightPad, scorePoint) {
+    constructor(x, y, size, color, baseSpeed, maxY, maxX, pongGame) {
         this.x = x;
 		this.y = y;
 		this.size = size;
 		this.color = color;
-		this.speed = speed;
-		this.dx = dx;
-		this.dy = dy;
+		this.speed = baseSpeed + 2.5;
+		this.baseSpeed = baseSpeed;
+		this.dx = baseSpeed;
 		this.maxY = maxY;
 		this.maxX = maxX;
-		this.leftPad = leftPad;
-		this.rightPad = rightPad;
-		this.scorePoint = scorePoint;
+		this.pG = pongGame;
+
+		if (Math.random() > 0.5) {
+			this.dy = (Math.random() * 3 + 2.5);
+		} 
+		else {
+			this.dy = (Math.random() * 3 + 2.5);
+		}
     }
 
 	collisionDetect(pad) {
@@ -109,53 +224,72 @@ export class Ball {
 		this.x += this.dx;
 		this.y += this.dy;
 
+		let movesRight = this.dx > 0 ? true : false;
+
 		if (this.y + this.size > this.maxY || this.y < 0) {
 			this.dy *= -1;
 		}
 
-		let currentPad = (this.x < this.maxX / 2) ? this.leftPad : this.rightPad;
+		let currentPad = movesRight ? this.pG.rightPad : this.pG.leftPad;
 
 		if (this.collisionDetect(currentPad)) {
 			this.dx *= -1;
-			this.speed += 0.2;
+			this.speed += 0.3;
 			this.dx = this.dx > 0 ? this.speed : -this.speed;
-			this.dy = this.dy > 0 ? this.speed : -this.speed;
+
+			if (this.pG.gamestyle == "enhanced" && currentPad.direction != "") {
+				// Apply a velocity change 
+				this.dy *= 	((this.dy > 0 && currentPad.direction == "down") || 
+							(this.dy < 0 && currentPad.direction == "up")) ?
+							1.4 : -0.8;
+				
+				// Keep the values acceptable
+				if (this.dy > 0) {
+					this.dy = Math.max(2, Math.min(this.dy, 10));
+				} else {
+					this.dy = Math.min(-2, Math.max(this.dy, -10));
+				}
+
+				console.log(this.dy);
+			}
 		}
 
 		if (this.x + this.size > this.maxX) {
-			this.scorePoint("left");
+			this.pG.scorePoint("left");
 		} 
 		else if (this.x < 0) {
-			this.scorePoint("right");
+			this.pG.scorePoint("right");
 		}
 	}
 
 	resetPosition() {
 		this.x = this.maxX / 2;
 		this.y = this.maxY / 2;
-		this.speed = 4;
+		this.speed = this.baseSpeed + 2.5;
 
 		if (Math.random() > 0.5) {
-			this.dx = this.speed;
+			this.dx = this.baseSpeed;
 		} 
 		else {
-			this.dx = -this.speed;
+			this.dx = -this.baseSpeed;
 		}
+
 		if (Math.random() > 0.5) {
-			this.dy = this.speed;
+			this.dy = (Math.random() * 3 + 2.5);
 		} 
 		else {
-			this.dy = -this.speed;
+			this.dy = (Math.random() * 3 + 2.5);
 		}
 	}
 }
 
 export class Pad {
-	constructor(x, y, width, height, color, dy, maxY, isAI) {
+	constructor(x, y, width, height, placement, color, dy, maxY, isAI, pongGame) {
         this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		this.placement = placement;
 		this.color = color;
 		this.dy = dy;
 		this.maxY = maxY;
@@ -163,14 +297,40 @@ export class Pad {
 		this.ball;
 		this.score = 0;
 		this.direction = "";
+		this.pG = pongGame;
     }
+
+
+	useMinimize() {
+		if (this.pG.timer.startMinimizeCD(this.placement)) {
+			if (this.placement == "left") {
+				this.pG.rightPad.height /= 2;
+				this.pG.rightPad.y += this.pG.rightPad.height / 2;
+			}				
+			else {
+				this.pG.leftPad.height /= 2;
+				this.pG.leftPad.y += this.pG.leftPad.height / 2;
+			}
+		}	
+	}
+
+	stopMinimize() {
+		if (this.placement == "left") {
+			this.pG.rightPad.y -= this.pG.rightPad.height / 2;
+			this.pG.rightPad.height *= 2;
+		}				
+		else {
+			this.pG.leftPad.y -= this.pG.leftPad.height / 2;
+			this.pG.leftPad.height *= 2;
+		}
+	}
 
 	move() {		
 		if (!this.isAI) {
 			if (this.direction == "up" && this.y > 0) {
 				this.y -= this.dy;
 			}
-			else if (this.direction == "down" && this.y < this.maxY) {
+			else if (this.direction == "down" && this.y < this.maxY - this.height) {
 				this.y += this.dy;
 			}
 		}

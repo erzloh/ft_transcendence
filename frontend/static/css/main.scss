@@ -1,3 +1,6 @@
+// Import the math module
+@use "sass:math";
+
 // Bootstrap override variables here
 // $primary: #6c757d;
 
@@ -9,9 +12,21 @@
 // Import Google Font
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
+
+
+// Define the base font size (default is 16px)
+$base-font-size: 16px;
+
+// Function to convert px to rem
+@function rem($px, $base: $base-font-size) {
+    @return math.div($px, $base) * 1rem;
+}
+
 // Variables
-$cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
-$cursor-pointer: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
+// $cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
+// $cursor-pointer: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
+$cursor: url('/static/assets/UI/icons/cursor_big.svg') 15 15, auto;
+$cursor-pointer: url('/static/assets/UI/icons/cursor_pointer_big.svg') 15 15, pointer;
 
 // Basic CSS Reset
 html, body {
@@ -20,8 +35,9 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
-	overflow-y: hidden;
+	// overflow-y: hidden;
 	cursor: $cursor;
+	font-size: 1rem; // CHANGE
 }
 
 button {
@@ -30,6 +46,10 @@ button {
 
 .full-height {
 	height: 100vh;
+}
+
+.big-text {
+	font-size: 1.5rem;
 }
 
 // label {
@@ -227,6 +247,18 @@ $blending: hard-light;
 	color: white;
 }
 
+.return-btn {
+	animation: waitFadeIn 1s ease-out;
+}
+
+.fixed-width-btn {
+    min-width: 150px;
+}
+
+.fixed-width-btn-lg {
+	min-width: 180px;
+}
+
 // ------------------------------- Custom Classes -------------------------------
 
 .glass {
@@ -235,7 +267,17 @@ $blending: hard-light;
 	border-radius: 50px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	// box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-	// animation: fadeIn 0.5s ease-out;
+	animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }
 
 .hr {
@@ -247,28 +289,12 @@ $blending: hard-light;
 	backdrop-filter: blur(10px);
 }
 
-// hr {
-// 	border: 1px solid rgba(255, 255, 255, 0.8);
-// }
-
-.return-btn {
-	animation: waitFadeIn 1s ease-out;
-}
-
-.fixed-width-btn {
-    width: 150px;
-}
-
-.fixed-width-btn-lg {
-	min-width: 180px;
-}
-
 // SETTINGS PAGE
 .container-settings {
-	max-width: 400px;
+	max-width: rem(400px);
 }
 
-#languageSwitcher {
+select {
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	border-radius: 10px;
 	background: rgba(255, 255, 255, 0.1);
@@ -302,7 +328,9 @@ $blending: hard-light;
 
 // LOGIN PAGE
 .container-login {
-	max-width: 400px;
+	max-width: rem(400px);
+	max-height: 1000px !important;
+	overflow-y: auto;
 }
 
 .text-input {
@@ -334,16 +362,23 @@ $blending: hard-light;
 
 // PROFILE PAGE
 .container-profile {
-	max-width: 400px;
+	max-width: rem(400px);
+	max-height: 1000px !important;
+	overflow-y: auto;
 }
 
 .profile-pic {
 	border-radius: 50%;
 	width: 100px;
 	height: 100px;
+	border: 3px solid rgba(255, 255, 255, 0.5);
 }
 
 // PACMAN MENU PAGE
+.container-menu {
+	max-width: rem(1000px);
+}
+
 #rangeInput {
     -webkit-appearance: none;
     appearance: none;
@@ -426,22 +461,26 @@ $blending: hard-light;
 
 // EDIT PROFILE PAGE
 .container-edit {
-	max-width: 450px;
+	max-width: rem(450px);
+	max-height: 1000px !important;
+	overflow-y: auto;
 }
 
 // FRIENDS PAGE
 .container-friends {
-	max-width: 800px;
+	max-width: rem(800px);
 	height: 700px;
 }
 
 .list-container {
 	height: 100%;
+	overflow-y: auto;
+	// background-color: red;
 }
 
 .users-list, .friends-list {
-	height: 100%;
-
+	height: 90%;
+	// overflow-y: auto;
 }
 
 #user-elements, #friend-elements {
@@ -605,4 +644,17 @@ $blending: hard-light;
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+// ------------------------------- Accessibility -------------------------------
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .tabbable:focus-visible, label:focus-visible, img:focus-visible, .clickable:focus-visible {
+    outline: 3px solid #ffcc00 !important;
+    outline-offset: 4px !important;
+}
+
+button:focus,
+.btn:focus {
+    background-color: inherit;
+    border-color: inherit;
+    box-shadow: none;
 }

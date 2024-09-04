@@ -1,5 +1,5 @@
 <div class="full-height d-flex align-items-center justify-content-center pong-page">
-	<div class="row justify-content-center">
+	<div class="row justify-content-center container-menu">
 		<div class="toast-container position-fixed top-0 end-0 p-3">
 			<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none; max-width: none; width: auto;" role="alert" aria-live="assertive" aria-atomic="true">
 				<div class="d-flex glass">
@@ -13,6 +13,7 @@
 		<div class="col-12 text-center d-flex flex-column mb-4">
 			<label class="text-white h1" animated-letters>pong menu</label>
 			<label class="text-white h4 mt-3" id="currentGamemodeLabel">Current gamemode : pvp</label>
+			<label class="text-white h4 mt-1" id="currentGamestyleLabel">Current game style : legacy</label>
 		</div>
 		<div class="row justify-content-center" style="width: 75vw;">
 			<div class="col d-flex flex-column">
@@ -22,19 +23,22 @@
 		<div style="width: 75vw;" class="col-12 text-center mt-5 mb-5 p-5 glass">
 			<button role="button" class="btn btn-lg text-white btn-filled" id="btnKeys">keys</button>
 			<button role="button" class="btn btn-lg text-white btn-filled" id="btnGamemode">gamemode</button>
+			<button role="button" class="btn btn-lg text-white btn-filled" id="btnGamestyle">gamestyle</button>
 		</div>
-		<div class="modal fade glass" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+		<div class="modal fade glass-modal-bg" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
-			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;" id="settingsModalContent">
-			  	</div>
+			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
+					<div class="row justify-content-center glass" id="settingsModalContent">
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row justify-content-center" id="pointsRangeContainer"></div>
 		<div class="col-12 text-center mt-3">
-			<a role="button" class="btn btn-lg text-white btn-filled" href="/pong" data-link>start game</a>
+			<a role="button" id="btnStartGame" class="btn btn-lg text-white btn-filled" href="/pong" data-link>start game</a>
 		</div>
 		<div class="col-12 text-center mt-4 d-flex justify-content-center">
-			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
+			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/games" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
 		</div>
 	</div>
 </div>

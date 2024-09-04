@@ -2,7 +2,6 @@ import { navigateTo } from "../index.js";
 import { BASE_URL } from "../index.js";
 
 export async function profile() {
-	console.log('hello from profile')
 	async function renderLoggingInfo() {
 		// Check if the user is logged in or not
 		const response = await fetch(`${BASE_URL}/api/profile`);

@@ -162,10 +162,6 @@ export class Ghost extends Character {
 	move() {
 		if (this.direction == "none")
 			return;
-		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
-			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
-			this.pcG.partyOver(this.pcG.usernames.ghost);
-		}
 		if (this.y == this.py && this.x == this.px) {
 			if (this.pcG.cells[this.y][this.x].value >= 2 &&
 				this.pcG.cells[this.y][this.x].value <=  4) {
@@ -211,6 +207,10 @@ export class Ghost extends Character {
 	// Render the character's sprite
 	render() {
 		var img;
+		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
+			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
+			this.pcG.partyOver(this.pcG.usernames.ghost);
+		}
 		switch (this.direction){
 			case "right":
 				img = this.pcG.images.imgGhost1;

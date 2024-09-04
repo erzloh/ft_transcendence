@@ -101,9 +101,19 @@ export async function friends () {
 
 					// Append the plus icon to the main user element
 					const userElement = document.createElement('div');
-					userElement.className = 'd-flex justify-content-between align-items-center user-element';
+					userElement.className = 'd-flex justify-content-between align-items-center user-element tabbable';
 					userElement.appendChild(userDiv);
 					userElement.appendChild(minusIcon);
+
+					// Make the div tabbable
+					userElement.tabIndex = 0;
+
+					// Add keydown event listener for Enter key
+					userElement.addEventListener('keydown', (event) => {
+						if (event.key === 'Enter') {
+							addFriend();
+						}
+					});
 
 					// Append the whole user element to the user-elements container
 					userElementsContainer.appendChild(userElement);
@@ -192,9 +202,18 @@ export async function friends () {
 
 				// Append the plus icon to the main user element
 				const friendElement = document.createElement('div');
-				friendElement.className = 'd-flex justify-content-between align-items-center friend-element';
+				friendElement.className = 'd-flex justify-content-between align-items-center friend-element tabbable';
 				friendElement.appendChild(friendDiv);
 				friendElement.appendChild(minusIcon);
+
+				// Make the div tabbable
+				friendElement.tabIndex = 0;
+
+				friendElement.addEventListener('keydown', (event) => {
+					if (event.key === 'Enter') {
+						removeFriend();
+					}
+				});
 
 				// Append the whole user element to the user-elements container
 				friendElementsContainer.appendChild(friendElement);

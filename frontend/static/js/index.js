@@ -24,6 +24,9 @@ import { setLanguage, updateTexts } from "./utils/languages.js";
 // ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
 // Set the base URL of the website
 export const BASE_URL = "https://localhost";
+export const BIG_TEXT = '18px';
+export const DEFAULT_TEXT = '16px';
+
 // Store interval IDs (to be able to clear them later)
 export const ids = {};
 
@@ -73,10 +76,14 @@ const router = async () => {
     view = new match.view();
 	
 	// Load the HTML of the view in the app div
-    document.querySelector("#app").innerHTML = await view.getHtml();
+	const appDiv = document.querySelector("#app");
+    appDiv.innerHTML = await view.getHtml();
 
 	// Load the JS of the view
 	await view.loadJS();
+
+	// Focus on the main element
+	appDiv.focus();
 
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();
@@ -174,3 +181,10 @@ if (noiseSetting === 'on') {
 
 // Set Language
 setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
+
+// Set text size
+if (localStorage.getItem('bigText') === 'on') {
+	document.documentElement.style.fontSize = BIG_TEXT;
+} else {
+	document.documentElement.style.fontSize = DEFAULT_TEXT;
+}
