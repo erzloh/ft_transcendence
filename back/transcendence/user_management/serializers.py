@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CustomUser, PacmanMatch
+from .models import *
 from django.conf import settings
 from django.core.validators import validate_email as validate_email_func
 from django.core.exceptions import ValidationError
@@ -87,12 +87,12 @@ class UserPacmanStatsSerializer(serializers.ModelSerializer):
 class AIPongMatchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = AIPongMatch
-		fields = ['player_one', 'player_won', 'match_score', 'match_duration', 'match_date']
+		fields = ['player_one', 'winner', 'match_score', 'match_duration', 'match_date']
 
 class PvPongMatchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = PvPongMatch
-		fields = ['player_one', 'player_two', 'player_won', 'match_score', 'match_duration', 'match_date']
+		fields = ['player_one', 'winner', 'match_score', 'match_duration', 'match_date']
 
 class PongTournamentSerializer(serializers.ModelSerializer):
 	matches = PvPongMatchSerializer(many=True, read_only=True)

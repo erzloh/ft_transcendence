@@ -18,6 +18,7 @@ from django.http import FileResponse
 from rest_framework.exceptions import APIException
 from rest_framework.generics import ListAPIView
 from django.db.models import Q
+from django.contrib.contenttypes.models import ContentType
 
 class CookieTokenAuthentication(TokenAuthentication):
     def authenticate(self, request):
@@ -165,7 +166,6 @@ class UsersList(views.APIView):
 class RecordPacmanMatch(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
-
     def post(self, request):
         serializer = PacmanMatchSerializer(data=request.data)
         if serializer.is_valid():
@@ -205,10 +205,42 @@ class UpdateMaxEndlessScore(views.APIView):
 
 ### PONG ###
 
-class UserPongStats(viewx.APIView):
+class UserPongStats(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
     def get(self, request):
         user = request.user
         serializer = UserPongStatsSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class RecordAIPongMatch(views.APIView):
+    def post(self, request):
+        serializer = AIPongMatchSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class RecordPvPongMatch(views.APIView):
+    def post(self, request):
+        serializer = PvPongMatchSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserPvPongMatchHistory(ListAPIView):
+    serializer_class = PvPongMatchSerializer
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        user = self.request.user
+        return PvPongMatch.objects.filter(Q(player_one=user) | Q(player_two=user))
+
+class UserAIPongMatchHistory(ListAPIView):
+    serializer_class = AIPongMatchSerializer
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        user = self.request.user
+        return AIPongMatch.objects.filter(player_one=user).exclude(pvpongmatch__isnull=False)
