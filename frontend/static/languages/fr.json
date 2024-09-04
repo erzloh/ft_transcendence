@@ -67,7 +67,7 @@
 
 	"see-friends": "voir les amis",
 
-	"edit-profile": "modifier le profil",
+	"edit-profile": "modifier profil",
 	"profile-picture": "photo de profil",
 	"save": "sauvegarder",
 	"save-success": "sauvegarde réussie!",
@@ -77,7 +77,7 @@
 	"avatar-empty-error": "l'avatar ne peut pas être vide",
 
 	"friends": "amis",
-	"all users": "tous les utilisateurs",
+	"all users": "utilisateurs",
 
 	"graphics": "graphiques",
 	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",

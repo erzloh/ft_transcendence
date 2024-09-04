@@ -261,7 +261,7 @@ export class PongMenu {
 	setScoreRange() {
 		this.pointsRangeContainer.innerHTML = `
 			<div class="col-6 flex-column align-items-center d-flex mb-2">
-				<label class="text-white h5 text-center" id="rangeLabel">points to win: 3</label>
+				<label for="pongRangeInput" class="text-white h5 text-center" id="rangeLabel">points to win: 3</label>
 				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1" max="10" value="${this.objective}" step="1" id="pongRangeInput">
 			</div>
 		`;
