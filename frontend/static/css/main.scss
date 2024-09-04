@@ -1,3 +1,6 @@
+// Import the math module
+@use "sass:math";
+
 // Bootstrap override variables here
 // $primary: #6c757d;
 
@@ -8,6 +11,16 @@
 // ------------------------------- Global Custom SCSS -------------------------------
 // Import Google Font
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
+
+
+
+// Define the base font size (default is 16px)
+$base-font-size: 16px;
+
+// Function to convert px to rem
+@function rem($px, $base: $base-font-size) {
+    @return math.div($px, $base) * 1rem;
+}
 
 // Variables
 $cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
@@ -278,7 +291,7 @@ $blending: hard-light;
 
 // SETTINGS PAGE
 .container-settings {
-	max-width: 400px;
+	max-width: rem(400px);
 }
 
 select {
@@ -315,7 +328,7 @@ select {
 
 // LOGIN PAGE
 .container-login {
-	max-width: 400px;
+	max-width: rem(400px);
 	max-height: 1000px !important;
 	overflow-y: auto;
 }
@@ -349,7 +362,7 @@ select {
 
 // PROFILE PAGE
 .container-profile {
-	max-width: 400px;
+	max-width: rem(400px);
 	max-height: 1000px !important;
 	overflow-y: auto;
 }
@@ -444,14 +457,14 @@ select {
 
 // EDIT PROFILE PAGE
 .container-edit {
-	max-width: 450px;
+	max-width: rem(450px);
 	max-height: 1000px !important;
 	overflow-y: auto;
 }
 
 // FRIENDS PAGE
 .container-friends {
-	max-width: 800px;
+	max-width: rem(800px);
 	height: 700px;
 }
 

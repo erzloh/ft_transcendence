@@ -12189,7 +12189,7 @@ label {
 }
 
 .container-settings {
-  max-width: 400px;
+  max-width: 25rem;
 }
 
 select {
@@ -12225,7 +12225,7 @@ select {
 }
 
 .container-login {
-  max-width: 400px;
+  max-width: 25rem;
   max-height: 1000px !important;
   overflow-y: auto;
 }
@@ -12261,7 +12261,7 @@ select {
 }
 
 .container-profile {
-  max-width: 400px;
+  max-width: 25rem;
   max-height: 1000px !important;
   overflow-y: auto;
 }
@@ -12349,13 +12349,13 @@ select {
 }
 
 .container-edit {
-  max-width: 450px;
+  max-width: 28.125rem;
   max-height: 1000px !important;
   overflow-y: auto;
 }
 
 .container-friends {
-  max-width: 800px;
+  max-width: 50rem;
   height: 700px;
 }
 

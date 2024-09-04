@@ -240,7 +240,6 @@ export class PacmanMenu {
 				if (event.key === "Enter") {
 					// wait for the next key press using settimeout
 					setTimeout(() => {
-						
 						this.changeKeybind(event, action, button);
 					}, 100);
 				}
@@ -712,7 +711,6 @@ export class PacmanMenu {
 	// Function to add event listeners to the selections (click add enter key)
 	// button is the element to add the event listener to
 	// action is the function to call when the event listener is triggered
-	// args are the arguments to pass to
 	addEventListeners(button, action) {
 		button.addEventListener("click", (event) => action(event));
 		button.addEventListener("keydown", (event) => {
