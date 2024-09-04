@@ -13,4 +13,13 @@ urlpatterns = [
 	re_path('remove_friend', RemoveFriend.as_view()),
 	re_path('friends_list', FriendsList.as_view()),
 	re_path('users_list', UsersList.as_view()),
+	re_path('record_pacman_match', RecordPacmanMatch.as_view()),
+	re_path('pacman_matches_history', UserPacmanMatchesHistory.as_view()),
+	re_path('pacman_stats', UserPacmanStats.as_view()),
+	re_path('pacman_endless_update', UpdateMaxEndlessScore.as_view()),
+	re_path('pong_stats', UserPongStats.as_view()),
+	re_path('record_AIpong_match', RecordAIPongMatch.as_view()),
+	re_path('record_PvPong_match', RecordPvPongMatch.as_view()),
+	re_path('AIpong_match_history', UserAIPongMatchHistory.as_view()),
+	re_path('PvPong_match_history', UserPvPongMatchHistory.as_view()),
 ]
