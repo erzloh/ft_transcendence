@@ -222,7 +222,7 @@ export async function editProfile () {
 				// If the response status is success, show success message and navigate to the login page
 				const containerEdit = document.querySelector('.container-edit');
 				containerEdit.innerHTML = `
-					<div class="success">
+					<div class="success text-center">
 						<h1 id="success-message" class="text-white" data-translate"save-success">Sign up successful!</h1>
 						<div class="d-flex align-items-center justify-content-center p-5">
 							<svg class='loading-icon' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24" id="Timer-Zero--Streamline-Sharp">
@@ -237,7 +237,7 @@ export async function editProfile () {
 				updateTextForElem(document.getElementById('success-message'), 'save-success');
 				setTimeout(() => {
 					navigateTo('/profile');
-				}, 2000);
+				}, 1000);
 			} else {
 				const responseData = await response.json();
 				// If the response status is unknown, show an error message

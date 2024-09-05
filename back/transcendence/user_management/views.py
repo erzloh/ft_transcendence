@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import CustomUserSerializer
-from .models import CustomUser
+from .serializers import *
+from .models import CustomUser, PacmanMatch
 from rest_framework import status
 from rest_framework import serializers
 from rest_framework import views
@@ -16,6 +16,9 @@ from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ValidationError
 from django.http import FileResponse
 from rest_framework.exceptions import APIException
+from rest_framework.generics import ListAPIView
+from django.db.models import Q
+from django.contrib.contenttypes.models import ContentType
 
 class CookieTokenAuthentication(TokenAuthentication):
     def authenticate(self, request):
@@ -23,6 +26,8 @@ class CookieTokenAuthentication(TokenAuthentication):
         if not token:
             raise AuthenticationFailed('No jwt cookie found')
         return super().authenticate_credentials(token)
+
+### AUTHENTICATION ###
 
 class login(views.APIView):
     def post(self, request):
@@ -48,18 +53,8 @@ class signup(views.APIView):
             except ValidationError as e:
                 return Response({'password': e.messages}, status=status.HTTP_400_BAD_REQUEST)
             user = CustomUser.objects.get(username=serializer.data['username'])
-            token = Token.objects.create(user=user)
-            response = Response(status=status.HTTP_200_OK)
-            response.set_cookie(key='jwt', value=token.key, httponly=True, secure=True)
-            return response
+            return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-class profile(views.APIView):
-    authentication_classes = [CookieTokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        serializer = CustomUserSerializer(request.user)
-        return Response({"user": serializer.data}, status=status.HTTP_200_OK)
 
 class logout(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
@@ -69,6 +64,15 @@ class logout(views.APIView):
         request.user.save()
         request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+
+### USER PROFILE ###
+
+class profile(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        serializer = CustomUserSerializer(request.user)
+        return Response({"user": serializer.data}, status=status.HTTP_200_OK)
 
 class UpdateUser(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
@@ -94,6 +98,7 @@ class UserAvatar(views.APIView):
         else:
             return Response({"error": "No profile photo found"}, status=status.HTTP_404_NOT_FOUND)
 
+### FRIENDS ###
 
 class AddFriend(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
@@ -140,7 +145,6 @@ class FriendsList(views.APIView):
 class UsersList(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
     permission_classes = [IsAuthenticated]
-
     def get(self, request):
         try:
             users = CustomUser.objects.all()
@@ -156,3 +160,87 @@ class UsersList(views.APIView):
             return Response(users_data, status=status.HTTP_200_OK)
         except Exception as e:
             raise APIException(str(e))
+
+### PACMAN ###
+
+class RecordPacmanMatch(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        serializer = PacmanMatchSerializer(data=request.data)
+        if serializer.is_valid():
+            match = serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserPacmanMatchesHistory(ListAPIView):
+    serializer_class = PacmanMatchSerializer
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        user = self.request.user
+        return PacmanMatch.objects.filter(Q(pacman_player=user) | Q(ghost_player=user))
+
+class UserPacmanStats(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        serializer = UserPacmanStatsSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+   
+class UpdateMaxEndlessScore(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def put(self, request):
+        user = request.user
+        new_score = request.data.get('max_endless_score', None)
+        if new_score is not None and new_score < user.max_endless_score:
+            return Response({"error": "New score cannot be less than current score."}, status=status.HTTP_400_BAD_REQUEST)
+        serializer = UpdateMaxEndlessScoreSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+### PONG ###
+
+class UserPongStats(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        serializer = UserPongStatsSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+class RecordAIPongMatch(views.APIView):
+    def post(self, request):
+        serializer = AIPongMatchSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class RecordPvPongMatch(views.APIView):
+    def post(self, request):
+        serializer = PvPongMatchSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserPvPongMatchHistory(ListAPIView):
+    serializer_class = PvPongMatchSerializer
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        user = self.request.user
+        return PvPongMatch.objects.filter(Q(player_one=user) | Q(player_two=user))
+
+class UserAIPongMatchHistory(ListAPIView):
+    serializer_class = AIPongMatchSerializer
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get_queryset(self):
+        user = self.request.user
+        return AIPongMatch.objects.filter(player_one=user).exclude(pvpongmatch__isnull=False)
