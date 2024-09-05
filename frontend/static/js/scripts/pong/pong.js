@@ -1,4 +1,5 @@
 import { Ball, Pad, Tournament, Timer }  from "./objects.js";
+import { BASE_URL } from '../../index.js';
 
 export let eventListeners = { }
 
@@ -232,11 +233,63 @@ export class PongGame {
 		this.stopGameLoop();
 		this.gameOver = true;
 
+		this.sendMatchData(winner);
+
 		this.endgameModalWinner.textContent = winner + " won the game";
 		this.endgameModalScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
 		this.endgameModalTime.innerHTML = this.timer.getTime();
 
 		this.endgameModal.show();
+	}
+
+	async sendMatchData(winner) {
+		const date = new Date();
+		let matchData;
+		let response;
+		switch (this.gamemode) {
+			case "pvp":
+				matchData = {
+					"player_one": this.usernames.p1,
+					"player_two": this.usernames.p2,
+					"winner": winner,
+					"match_score": this.leftPad.score + "-" + this.rightPad.score,
+					"match_duration": this.timer.getTime(),
+					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()
+				};
+				console.log(matchData[player_two]);
+				response = await fetch(`${BASE_URL}/api/record_PvPong_match/`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(matchData)
+				})
+				break;
+			case "AI":
+				console.log("log");
+				matchData = {
+					"player_one": this.usernames.p1,
+					"winner": winner,
+					"match_score": this.leftPad.score + "-" + this.rightPad.score,
+					"match_duration": this.timer.getTime(),
+					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()
+				};
+				response = await fetch(`${BASE_URL}/api/record_AIpong_match/`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(matchData)
+				})
+				break;
+			default:
+				break;
+		}
+		if (response.status === 400) {
+			console.log("User isn't logged. Game history has not been saved.")
+		} else if (response.status === 200) {
+			console.log("Game saved.")
+		}
 	}
 	
 	pauseGame() {
@@ -286,8 +339,10 @@ export class PongGame {
             if (this.rightPad.score >= this.objective) {
 				if (this.gamemode == "tournament")
 					this.winMatch(pad);
+				else if (this.gamemode == "AI")
+                	this.endGame("AI");
 				else
-                	this.endGame(this.usernames.p2);
+					this.endGame(this.usernames.p2);
             }
 		}
 		this.ball.resetPosition();
