@@ -1,3 +1,5 @@
+import { BASE_URL } from "../index.js";
+
 export let eventListeners = { }
 
 export class PongMenu {
@@ -23,6 +25,7 @@ export class PongMenu {
 
 		this.waitForKey = false;
 		this.waitingKey = "";
+		this.displayName = "";
 
 		const colorsString = localStorage.getItem('pongColors');
 		this.colors = colorsString ? JSON.parse(colorsString) : {
@@ -54,14 +57,14 @@ export class PongMenu {
 		// TODO: change this to /pong3d
 		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
 
-		this.currentGamemodeLabel.innerHTML  = "current gamemode: " + this.gamemode;
-		this.currentGamestyleLabel.innerHTML  = "current game style: " + this.gamestyle;
+		this.currentGamemodeLabel.innerHTML  = this.gamemode;
+		this.currentGamestyleLabel.innerHTML  = this.gamestyle;
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
 	}
 
-	Initialize() {
+	async Initialize() {
 		// Add Event Listener to the Start Button
 		this.keysButton.addEventListener("click", () => this.showKeysConfig());
 		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
@@ -70,8 +73,22 @@ export class PongMenu {
 		document.addEventListener("keydown", this.boundKeyDownSettings);
 		eventListeners["keydown"] = this.boundKeyDownSettings;
 
+		await this.getLoggedUsername();
+
 		this.updatePlayersContainer();
 		this.setScoreRange();
+	}
+
+	async getLoggedUsername() {
+		// Check if the user is logged in or not
+		const response = await fetch(`${BASE_URL}/api/profile`);
+
+		// If the user is logged in, show the profile page
+		if (response.status === 200) {
+			const responseData = await response.json();
+			const user = responseData.user;
+			this.displayName = user.username;
+		}
 	}
 
 	updatePlayersContainer = () => {
@@ -79,22 +96,22 @@ export class PongMenu {
 			case "pvp":
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
 							<p class="h3 text-white text-center">left paddle</p>
 							<p class="h5 text-white text-center" id="leftPaddleName">player 1</p>
 							<input type="text" id="leftPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-6 d-flex flex-column align-items-center mt-1 mb-2">
 							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
 							<p class="h3 text-white text-center">right paddle</p>
 							<p class="h5 text-white text-center" id="rightPaddleName">player 2</p>
 							<input type="text" id="rightPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
 							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 glass" value="#00ff00">
 						</div>
 					</div>
@@ -123,12 +140,12 @@ export class PongMenu {
 			case "AI":
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-2">
 							<p class="h3 text-white text-center">left paddle</p>
 							<p class="h5 text-white text-center" id="playerPaddleName">player 1</p>
 							<input type="text" id="playerPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">	
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
 							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
 						</div>
 					</div>
@@ -148,43 +165,42 @@ export class PongMenu {
 			case "tournament":
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-1">
 							<p class="h4 text-white text-center mb-3" id="player1Name">player 1</p>
 							<input type="text" id="player1Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-1">
 							<input type="color" id="player1Color" class="form-control form-control-sm mt-3 glass" value="#ff0000">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-1">
 							<p class="h4 text-white text-center mb-3" id="player2Name">player 2</p>
 							<input type="text" id="player2Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-8  d-flex flex-column align-items-center mt-1 mb-1">
 							<input type="color" id="player2Color" class="form-control form-control-sm mt-3 glass" value="#00ff00">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-1">
 							<p class="h4 text-white text-center mb-3" id="player3Name">player 3</p>
 							<input type="text" id="player3Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-8  d-flex flex-column align-items-center mt-1 mb-1">
 							<input type="color" id="player3Color" class="form-control form-control-sm mt-3 glass" value="#0000ff">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-1">
 							<p class="h4 text-white text-center mb-3" id="player4Name">...</p>
 							<input type="text" id="player4Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-1">
 							<input type="color" id="player4Color" class="form-control form-control-sm mt-3 glass" value="#ff00ff">
 						</div>
 					</div>
 				`;
-
 
 				const player1Name = document.getElementById('player1Name');
 				const player1Input = document.getElementById('player1Input');
@@ -198,6 +214,7 @@ export class PongMenu {
 				const player4Name = document.getElementById('player4Name');
 				const player4Input = document.getElementById('player4Input');
 				const player4Color = document.getElementById('player4Color');
+				const usernameCheckbox = document.getElementById('usernameCheckbox');
 
 				player1Name.innerHTML = this.usernames.p1;
 				player2Name.innerHTML = this.usernames.p2;
@@ -208,9 +225,16 @@ export class PongMenu {
 				player3Color.value = this.colors.p3;
 				player4Color.value = this.colors.p4;
 
-
-				player1Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
-				player1Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
+				if (this.displayName != "") {
+					this.usernames.p1 = this.displayName;
+					player1Name.innerHTML = this.usernames.p1;
+					localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
+					player1Input.style.opacity = 0;
+				}
+				else {
+					player1Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
+					player1Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
+				}				
 				player2Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player2Input, player2Name, "player 2", "p2"));
 				player2Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player2Input, player2Name, "player 2", "p2"));
 				player3Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player3Input, player3Name, "player 3", "p3"));
@@ -222,6 +246,18 @@ export class PongMenu {
 				player2Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 2", "p2"));
 				player3Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 3", "p3"));
 				player4Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 4", "p4"));
+				
+				// usernameCheckbox.addEventListener("change", (event) => {
+				// 	if (event.target.checked) {
+						
+				// 		player1Name.innerHTML = this.usernames.p1;
+				// 		player1Input.style.opacity = 0;
+				// 	}
+				// 	else {
+				// 		player1Input.disabled = false;
+				// 		player1Input.style.opacity = 1;
+				// 	}
+				// });
 				break;
 			default:
 				break;
@@ -520,7 +556,7 @@ export class PongMenu {
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
 		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
-		this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
+		this.currentGamemodeLabel.innerHTML = this.gamemode;
 
 		this.showGamemodeConfig();
 		this.updatePlayersContainer();
@@ -536,14 +572,14 @@ export class PongMenu {
 		} 
 		else if (this.gamestyle == "3D" && gamestyle != this.gamestyle) {
 			this.gamemode = this.lastGamemode;
-			this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
+			this.currentGamemodeLabel.innerHTML = this.gamemode;
 		}
 		
 		this.gamestyle = gamestyle;
 		// TODO: change this to /pong3d
 		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
 		localStorage.setItem('gamestyle', JSON.stringify(this.gamestyle));
-		this.currentGamestyleLabel.innerHTML = "current game style: " + this.gamestyle;
+		this.currentGamestyleLabel.innerHTML = this.gamestyle;
 
 		this.showGamestyleConfig();
 		this.updatePlayersContainer();

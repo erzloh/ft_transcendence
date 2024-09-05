@@ -180,7 +180,7 @@ export class Timer {
 	pacmanStartCD() {
 		if (this.pSpellCD > 0)
 			return false;
-		this.pSpellDuration = 5;
+		this.pSpellDuration = 3;
 		this.pSpellCD = 20;
 		this.pCD.innerHTML = this.pSpellCD.toString().padStart(2, '0');
 		return true;

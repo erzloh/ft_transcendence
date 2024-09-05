@@ -36,15 +36,18 @@ export class Pacman extends Character {
 		this.speed = pacmanGame.pSpeed;
 		this.points = 0;
 		this.objective = -1;
+		this.ghostSpeed;
 	}
 
 	useSpell() {
-		if (this.pcG.timer.pacmanStartCD())
-			this.pcG.ghost.speed = this.pcG.ghost.speed / 2;
+		if (this.pcG.timer.pacmanStartCD()) {
+			this.ghostSpeed = this.pcG.ghost.speed;
+			this.pcG.ghost.speed = 0;
+		}			
 	}
 
 	stopSpell() {
-		this.pcG.ghost.speed = this.pcG.ghost.speed * 2;
+		this.pcG.ghost.speed = this.ghostSpeed;
 	}
 
 	// Makes the character move until it reaches its destination
@@ -142,14 +145,16 @@ export class Ghost extends Character {
 		this.lastY = y;
 		this.gBlockX;
 		this.gBlockY;
-		this.cellValue = "";
+		this.cellValue = "Nothing";
 		this.speed = pacmanGame.gSpeed;
 	}
 
 	useSpell() {
 		if (this.pcG.timer.ghostStartCD()) {
-			if (this.cellValue != "") {
+			console.log(this.cellValue);
+			if (this.cellValue != "Nothing")  {
 				this.pcG.cells[this.gBlockX][this.gBlockY].value = this.cellValue;
+				console.log(this.pcG.cells[this.gBlockX][this.gBlockY].value);
 			}
 			this.gBlockX = this.lastY;
 			this.gBlockY = this.lastX;

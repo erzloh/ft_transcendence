@@ -28,7 +28,7 @@ class PacmanGame {
 		this.c = this.canvas.getContext('2d');
 
 		// Map data
-		this.cells; // The cells array
+		this.cells;
 		this.fruitArray = [];
 		this.starArray = [];
 		this.width, this.height, this.tileSize;
@@ -50,8 +50,8 @@ class PacmanGame {
 
 		// Utils
 		this.timer;
-		this.pSpeed = 1 / 20;
-		this.gSpeed = 1 / 19;
+		this.pSpeed = 1 / 18;
+		this.gSpeed = 1 / 17;
 		this.frame = 0; // The frame number
 		this.gameOver = false;
 		this.gamePaused = false;
