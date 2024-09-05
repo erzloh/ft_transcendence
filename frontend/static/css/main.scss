@@ -599,6 +599,45 @@ canvas {
 }
 
 // Pong Statistics Page
+.table-container {
+	height: 500px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 15px;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	overflow-y: auto;
+	animation: fadeIn 0.5s ease-out;
+}
+
+#pong-stat-table {
+	border-collapse: separate;
+	max-height: 100%;
+	overflow-x: auto;
+
+	thead {
+		border-radius: inherit;
+		overflow: hidden;
+		position: sticky;
+        top: 0;
+        z-index: 1;
+		backdrop-filter: blur(10px);
+		
+		th {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+		}
+	}
+
+	tbody {
+		background: rgba(255, 255, 255, 0.2);
+		border-radius: inherit;
+	}
+
+	th, td {
+		border: none;
+		padding: 10px;
+		height: fit-content;
+	}
+}
+
 
 
 // ------------------------------- Responsive -------------------------------
@@ -630,6 +669,11 @@ canvas {
 
 	.games-page-mobile {
 		display: none !important;
+	}
+
+	#pong-stat-table {
+		width: 100%;
+		table-layout: fixed;
 	}
 }
 

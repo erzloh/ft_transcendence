@@ -83,7 +83,13 @@
 	"no users": "no users found.",
 	"no friends": "no friends found.",
 
-	"pong statistics": "pong statistics",
+ 	"pong statistics": "pong statistics",
+	"db date": "date",
+	"db player 1": "player 1",
+	"db player 2": "player 2",
+	"db score": "score",
+	"db winner": "winner",
+	"db duration": "duration",
 
 	"graphics": "graphics", 
 	"ultra": "ultra",

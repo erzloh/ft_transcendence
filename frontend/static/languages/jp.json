@@ -79,6 +79,16 @@
 
 	"friends": "友達",
 	"all users": "すべてのユーザー",
+	"no users": "ユーザーがいません",
+	"no friends": "友達がいません",
+
+	"pong statistics": "ポン統計",
+	"db date": "日付",
+	"db player 1": "プレイヤー1",
+	"db player 2": "プレイヤー2",
+	"db score": "スコア",
+	"db winner": "勝者",
+	"db duration": "期間",
 
 	"graphics": "グラフィックス",
 	"ultra": "ウルトラ",
