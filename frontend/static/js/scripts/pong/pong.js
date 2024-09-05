@@ -25,11 +25,9 @@ export class PongGame {
 		this.leftScore = document.getElementById("leftScore");
 		this.rightScore = document.getElementById("rightScore");
 
-		this.pWidth = 13, this.pHeight = 80, this.bSize = 13, this.pSpeed = 5.5, this.bSpeed = 3;
-		this.gameStarted = false;
+		this.pWidth = 12, this.pHeight = 80, this.bSize = 12, this.pSpeed = 1.6, this.bSpeed = 1;
+		this.gameStarted = false, this.gameOver = false;
 		this.paused = false;
-		this.gameOver = false;
-		this.gameStop = false;
 
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
@@ -76,13 +74,14 @@ export class PongGame {
 		this.tournament;
 		this.currentMatch;
 
-		this.gameLoop = this.gameLoop.bind(this);
+		this.drawObjects = this.drawObjects.bind(this);
 	}
 
 	initialize() {
 		this.startButton.addEventListener("click", () => this.startGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
 		this.tournamentModalNextMatch.addEventListener("click", () => this.nextMatch());
+		this.gameOver = false;
 
 		document.addEventListener("keydown", this.boundPongHandleKeyDown);
 		eventListeners["keydown"] = this.boundPongHandleKeyDown;
@@ -99,8 +98,7 @@ export class PongGame {
 			this.pWidth, this.pHeight,  "right", this.gamemode == "AI" ? "#FFF" : this.colors.p2, this.pSpeed, this.cvs.height,
 			this.gamemode == "AI" ? true : false, this);
 
-		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-			this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
+		this.ball = new Ball(this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
 
 		this.colorBoxLeft.style.backgroundColor = this.colors.p1;
 		this.colorBoxRight.style.backgroundColor = this.colors.p2;
@@ -139,8 +137,8 @@ export class PongGame {
 	}
 
 	winMatch(side) {
+		this.stopGameLoop();
 		this.gameOver = true;
-		this.timer.stop();
 		this.matchScore.innerHTML = "score: " + this.leftPad.score + "-" + this.rightPad.score;
 		this.tournament.setCurrentMatchWinner(side);
 		if (this.tournament.tournamentOver) {
@@ -173,8 +171,7 @@ export class PongGame {
 			this.pWidth, this.pHeight, "right", this.colors[this.currentMatch.right], this.pSpeed, this.cvs.height,
 			false, this);	
 		
-		this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-			this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
+		this.ball = new Ball(this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
 
 		this.leftScore.innerHTML = "0";
 		this.rightScore.innerHTML = "0";
@@ -182,7 +179,6 @@ export class PongGame {
 		this.gameStarted = false;
 		this.startButton.style.display = "block";
 		this.startButton.disabled = false;
-		this.gameOver = false;
 		this.timer.reset();
 	}
 
@@ -201,8 +197,7 @@ export class PongGame {
 				this.pWidth, this.pHeight, "right", this.gamemode == "AI" ? "#FFF" : this.colors.p2, this.pSpeed, this.cvs.height,
 				this.gamemode == "AI" ? true : false, this);	
 			
-			this.ball = new Ball(this.cvs.width / 2, this.cvs.height / 2,
-				this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
+			this.ball = new Ball(this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
 			
 			this.rightPad.ball = this.ball;
 	
@@ -212,7 +207,6 @@ export class PongGame {
 			this.gameStarted = false;
 			this.startButton.style.display = "block";
 			this.startButton.disabled = false;
-			this.gameOver = false;
 			this.timer.reset();
 		}
 	}
@@ -221,8 +215,9 @@ export class PongGame {
 		this.startButton.disabled = true;
 		this.startButton.style.display = "none";
 		this.gameStarted = true;
+		this.gameOver = false;
 		this.timer.start();
-		this.gameLoop();
+		this.startGameLoop();
 	}
 
 	endTournament(side) {
@@ -234,14 +229,28 @@ export class PongGame {
 	}
 
 	endGame(winner) {
+		this.stopGameLoop();
 		this.gameOver = true;
-		this.timer.stop();
 
 		this.endgameModalWinner.textContent = winner + " won the game";
 		this.endgameModalScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
 		this.endgameModalTime.innerHTML = this.timer.getTime();
 
 		this.endgameModal.show();
+	}
+	
+	pauseGame() {
+		if (this.gameStarted && !this.gameOver) {
+			if (!this.paused) {
+				this.stopInterval();
+				this.pauseModal.show();
+			} 
+			else {
+				this.startGameLoop();
+			}
+			this.paused = !this.paused;
+
+		}	
 	}
 
 	drawRect(x, y, w, h, color) {
@@ -297,6 +306,8 @@ export class PongGame {
 		this.drawRect(this.rightPad.x, this.rightPad.y, this.rightPad.width, this.rightPad.height, this.rightPad.color);
 
 		this.drawSquare(this.ball.x, this.ball.y, this.ball.size, this.ball.color);
+		if (!this.gameOver)
+			requestAnimationFrame(this.drawObjects);
 	}
 
 	update() {
@@ -305,20 +316,18 @@ export class PongGame {
 		this.ball.move();
 	}
 
-	gameLoop() {
-		if (this.gameOver || this.gameStop) {	
-			this.gameStop = false;
-			return ;
+	startGameLoop() {
+		if (!this.interval) {
+			this.interval = setInterval(() => {
+				this.update();
+			}, 5);
 		}
+		requestAnimationFrame(this.drawObjects);
+	}
 
-		if (!this.paused) {
-			this.update();
-			this.drawObjects();
-		}		
-		else {
-			this.drawObjects();
-		}
-		requestAnimationFrame(this.gameLoop);
+	stopInterval() {
+		clearInterval(this.interval);
+		this.interval = null;
 	}
 
 	handleKeyDown = (event) => {
@@ -348,11 +357,7 @@ export class PongGame {
 					this.rightPad.useMinimize();
 				break;
 			case 'Escape':
-				if (this.gameStarted && !this.gameOver) {
-					if (!this.paused)
-						this.pauseModal.show();
-					this.paused = !this.paused;
-				}				
+				this.pauseGame();			
 				break;
 			default:
 				break;
@@ -384,8 +389,7 @@ export class PongGame {
 
 	stopGameLoop() {
 		this.timer.stop();
-		if (this.gameStarted) {
-			this.gameStop = true;
-		}
+		this.stopInterval();
+		this.gameOver = true;
 	}
 }
