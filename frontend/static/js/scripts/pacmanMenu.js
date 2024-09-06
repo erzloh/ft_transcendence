@@ -400,11 +400,11 @@ export class PacmanMenu {
 				break;
 			case "pinkGhost":
 				ghostSkinDescription.innerHTML = "active: intangible";
-				ghostSkinSpell.innerHTML = "the pink ghost can go through wall for 5 seconds. If the spell ends while it's still in a wall, the pink ghost gets placed back on the last ground tile it passed on. 30 seconds cooldown.";
+				ghostSkinSpell.innerHTML = "The pink ghost can pass through walls for 5 seconds. If the spell ends while the ghost is still inside a wall, it will be returned to the last ground tile it crossed. 30 seconds cooldown.";
 				break;
 			case "greenGhost":
 				ghostSkinDescription.innerHTML = "active: blockade";
-				ghostSkinSpell.innerHTML = "the green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. These blocks last forever but can't be placed on portals. 40 seconds cooldown.";
+				ghostSkinSpell.innerHTML = "the green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. these blocks last forever. 40 seconds cooldown.";
 				break;
 		}
 

@@ -44,6 +44,7 @@ class PacmanGame {
 		// Image objects
 		this.images = {
 			imgPacman1 : new Image(), imgPacman2 : new Image(), imgPacman3 : new Image(),
+			imgPacman1_frenzy : new Image(), imgPacman2_frenzy : new Image(), imgPacman3_frenzy : new Image(),
 			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
 			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image(),
@@ -152,6 +153,9 @@ class PacmanGame {
 		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
 		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
 		this.images.imgPacman3.src = 'static/assets/pacman/images/' + this.pacmanSkin + '3.png';
+		this.images.imgPacman1_frenzy.src = 'static/assets/pacman/images/pacman1_frenzy.png';
+		this.images.imgPacman2_frenzy.src = 'static/assets/pacman/images/pacman2_frenzy.png';
+		this.images.imgPacman3_frenzy.src = 'static/assets/pacman/images/pacman3_frenzy.png';
 		this.images.imgGhost1.src = 'static/assets/pacman/images/' + this.ghostSkin + '1.png';
 		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
 		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
@@ -228,9 +232,17 @@ class PacmanGame {
 			}
 		}
 
-		let imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
+		let imgpac;
+		if (this.pacman.inFrenzy) {
+			imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1_frenzy : 
+						this.frame % 40 < 20 ? this.images.imgPacman2_frenzy :
+						this.frame % 40 < 30 ? this.images.imgPacman3_frenzy : this.images.imgPacman2_frenzy;
+		}
+		else {
+			imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
 						this.frame % 40 < 20 ? this.images.imgPacman2 :
 						this.frame % 40 < 30 ? this.images.imgPacman3 : this.images.imgPacman2;
+		}
 
 		this.pacman.render(imgpac);
 		this.ghost.render();
