@@ -98,11 +98,16 @@ class AIPongMatch(models.Model):
 	def __str__(self):
 		return f"{self.player_one} ({'won' if self.winner == self.player_one else 'lost'})"
 
-class PvPongMatch(AIPongMatch):
+class PvPongMatch(models.Model):
+	player_one = models.CharField(max_length=255)
 	player_two = models.CharField(max_length=255)
+	winner = models.CharField(max_length=255)
+	match_score = models.CharField(max_length=255)
+	match_duration = models.DurationField()
+	match_date = models.DateTimeField(auto_now_add=True)
 
 	def save(self, *args, **kwargs):
-		models.Model.save(self, *args, **kwargs)
+		super().save(*args, **kwargs)
 		try:
 			user_one = CustomUser.objects.get(username=self.player_one)
 			user_one.total_pong_matches += 1

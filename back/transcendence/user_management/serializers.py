@@ -92,7 +92,7 @@ class AIPongMatchSerializer(serializers.ModelSerializer):
 class PvPongMatchSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = PvPongMatch
-		fields = ['player_one', 'winner', 'match_score', 'match_duration', 'match_date']
+		fields = ['player_one', 'player_two', 'winner', 'match_score', 'match_duration', 'match_date']
 
 class PongTournamentSerializer(serializers.ModelSerializer):
 	matches = PvPongMatchSerializer(many=True, read_only=True)

@@ -235,7 +235,7 @@ class UserPvPongMatchHistory(ListAPIView):
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         user = self.request.user
-        return PvPongMatch.objects.filter(Q(player_one=user) | Q(player_two=user))
+        return PvPongMatch.objects.filter(Q(player_one=user) | Q(player_two=user)).order_by('-match_date')
 
 class UserAIPongMatchHistory(ListAPIView):
     serializer_class = AIPongMatchSerializer
@@ -243,4 +243,4 @@ class UserAIPongMatchHistory(ListAPIView):
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         user = self.request.user
-        return AIPongMatch.objects.filter(player_one=user).exclude(pvpongmatch__isnull=False)
+        return AIPongMatch.objects.filter(player_one=user).order_by('-match_date')

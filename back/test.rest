@@ -116,17 +116,17 @@ Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
 
 GET https://localhost/api/pong_stats/
 Content-Type: application/json
-Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+Cookie: jwt=b8723d93e2d7f7d846f333c043c43849093d1aa3
 
 ###
 
 POST https://localhost/api/record_AIpong_match/
 Content-Type: application/json
-Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+Cookie: jwt=b8723d93e2d7f7d846f333c043c43849093d1aa3
 
 {
     "player_one": "pascal",
-    "winner": "pascal",
+    "winner": "l",
     "match_score": "11-9",
     "match_duration": 134,
     "match_date": "2021-06-01"
@@ -136,7 +136,7 @@ Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
 
 POST https://localhost/api/record_PvPong_match/
 Content-Type: application/json
-Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+Cookie: jwt=b8723d93e2d7f7d846f333c043c43849093d1aa3
 
 {
     "player_one": "pascal",
@@ -151,10 +151,10 @@ Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
 
 GET https://localhost/api/AIpong_match_history/
 Content-Type: application/json
-Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+Cookie: jwt=b8723d93e2d7f7d846f333c043c43849093d1aa3
 
 ###
 
 GET https://localhost/api/PvPong_match_history/
 Content-Type: application/json
-Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+Cookie: jwt=b8723d93e2d7f7d846f333c043c43849093d1aa3
