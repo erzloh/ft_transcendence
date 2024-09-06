@@ -319,11 +319,11 @@ export class PacmanMenu {
 		switch (this.pacmanSkin) {
 			case "pacman":
 				pacmanSkinDescription.innerHTML = "passive: frenzy";
-				pacmanSkinSpell.innerHTML = "When Pacman eats a fruit, he enters a frenzy for 5 seconds. While in frenzy, he moves 30% faster and can eat the Ghost. If he eats the Ghost, pacman gains 500 points and the Ghost is sent back to his spawn position, ending the frenzy.";
+				pacmanSkinSpell.innerHTML = "When Pacman eats a fruit, he enters a frenzy for 5 seconds. While in frenzy, he moves 20% faster and can eat the Ghost. If he eats the Ghost, pacman gains 300 points and the Ghost is sent back to his spawn position, ending the frenzy.";
 				break;
 			case "pacgirl":
 				pacmanSkinDescription.innerHTML = "active: speed boost";
-				pacmanSkinSpell.innerHTML = "Pacgirl can boost her speed for 10 seconds. 20 seconds cooldown.";
+				pacmanSkinSpell.innerHTML = "Pacgirl can boost her speed by 30% for 10 seconds. 20 seconds cooldown.";
 				break;
 			case "coolman":
 				pacmanSkinDescription.innerHTML = "active: stun";
@@ -331,7 +331,7 @@ export class PacmanMenu {
 				break;
 			case "pacventurer":
 				pacmanSkinDescription.innerHTML = "passive: exploration";
-				pacmanSkinSpell.innerHTML = "Pacventurer moves 25% faster and gains 10% more points.";
+				pacmanSkinSpell.innerHTML = "Pacventurer moves 20% faster and gains 10% more points.";
 				break;
 		}
 
@@ -392,19 +392,19 @@ export class PacmanMenu {
 		switch (this.ghostSkin) {
 			case "blueGhost":
 				ghostSkinDescription.innerHTML = "active: ghost block";
-				ghostSkinSpell.innerHTML = "The blue ghost can place a ghost block behind it. It can go throught it, but pacman can't. The Ghost block lasts until another one is placed. 5 seconds cooldown";
+				ghostSkinSpell.innerHTML = "the blue ghost can place a ghost block behind it. It can go throught it, but pacman can't. Using the spell again will move the block. 5 seconds cooldown";
 				break;
 			case "orangeGhost":
-				ghostSkinDescription.innerHTML = "passive: disappearance";
-				ghostSkinSpell.innerHTML = "the orange ghost becomes invisible when it stops moving and is 10% faster.";
+				ghostSkinDescription.innerHTML = "active: disappearance";
+				ghostSkinSpell.innerHTML = "the orange ghost can become invisible, stopping his movements. additionnaly, he has 10% bonus movespeed.";
 				break;
 			case "pinkGhost":
 				ghostSkinDescription.innerHTML = "active: intangible";
-				ghostSkinSpell.innerHTML = "The pink ghost can pass through walls for 5 seconds. If the spell ends while the ghost is still inside a wall, it will be returned to the last ground tile it crossed. 30 seconds cooldown.";
+				ghostSkinSpell.innerHTML = "the pink ghost can pass through walls for 3 seconds. If the spell ends while the ghost is still inside a wall, it will be returned to the last ground tile it crossed. 30 seconds cooldown.";
 				break;
 			case "greenGhost":
 				ghostSkinDescription.innerHTML = "active: blockade";
-				ghostSkinSpell.innerHTML = "the green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. these blocks last forever. 40 seconds cooldown.";
+				ghostSkinSpell.innerHTML = "the green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. these blocks last forever. 50 seconds cooldown.";
 				break;
 		}
 
@@ -596,7 +596,7 @@ export class PacmanMenu {
 	//#region EVENT LISTENERS HANDLERS
 
 	selectPacmanSkin(event, skin) {
-		this.toastBody.innerHTML = "Chosen pacman skin: " + skin;
+		this.toastBody.innerHTML = "chosen pacman character: " + skin;
 		this.toastBootstrap.show();
 		this.pacmanSkin = skin;
 		localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
@@ -613,7 +613,7 @@ export class PacmanMenu {
 	}
 
 	selectGhostSkin(event, skin) {
-		this.toastBody.innerHTML = "Chosen ghost skin: " + skin;
+		this.toastBody.innerHTML = "chosen ghost character: " + skin;
 		this.toastBootstrap.show();
 		this.ghostSkin = skin;
 		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
@@ -639,7 +639,7 @@ export class PacmanMenu {
 	}
 
 	selectGamemode(event, gamemode) {
-		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
+		this.toastBody.innerHTML = "chosen gamemode: " + gamemode;
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
 		localStorage.setItem('pacmanGamemode', JSON.stringify(this.gamemode));
@@ -648,7 +648,7 @@ export class PacmanMenu {
 	}
 
 	selectMap(event, map) {
-		this.toastBody.innerHTML = "Chosen map: " + map;
+		this.toastBody.innerHTML = "chosen map: " + map;
 		this.toastBootstrap.show();
 		this.mapName = map;
 
@@ -663,7 +663,7 @@ export class PacmanMenu {
 	}
 
 	selectTheme(event, theme) {
-		this.toastBody.innerHTML = "Chosen theme: " + theme;
+		this.toastBody.innerHTML = "chosen theme: " + theme;
 		this.toastBootstrap.show();
 		switch (theme) {
 			case "obsidian":
@@ -723,43 +723,43 @@ export class PacmanMenu {
 			}
 			switch (this.waitingKey) {
 				case "pUp":
-					this.toastBody.innerHTML = "Changed Pacman Move Up keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman move up keybind to: " + event.code;
 					this.keybinds.pUp = event.code;
 					break;
 				case "pLeft":
-					this.toastBody.innerHTML = "Changed Pacman Move Left keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman move left keybind to: " + event.code;
 					this.keybinds.pLeft = event.code;
 					break;
 				case "pDown":
-					this.toastBody.innerHTML = "Changed Pacman Move Down keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman move down keybind to: " + event.code;
 					this.keybinds.pDown = event.code;
 					break;
 				case "pRight":
-					this.toastBody.innerHTML = "Changed Pacman Move Right keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman move right keybind to: " + event.code;
 					this.keybinds.pRight = event.code;
 					break;
 				case "pSpell":
-					this.toastBody.innerHTML = "Changed Pacman Spell keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman spell keybind to: " + event.code;
 					this.keybinds.pSpell = event.code;
 					break;
 				case "gUp":
-					this.toastBody.innerHTML = "Changed Ghost Move Up keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost move up keybind to: " + event.code;
 					this.keybinds.gUp = event.code;
 					break;
 				case "gLeft":
-					this.toastBody.innerHTML = "Changed Ghost Move Left keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost move left keybind to: " + event.code;
 					this.keybinds.gLeft = event.code;
 					break;
 				case "gDown":
-					this.toastBody.innerHTML = "Changed Ghost Move Down keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost move down keybind to: " + event.code;
 					this.keybinds.gDown = event.code;
 					break;
 				case "gRight":
-					this.toastBody.innerHTML = "Changed Ghost Move right keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost move right keybind to: " + event.code;
 					this.keybinds.gRight = event.code;
 					break;
 				case "gSpell":
-					this.toastBody.innerHTML = "Changed Ghost Spell keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost spell keybind to: " + event.code;
 					this.keybinds.gSpell = event.code;
 					break;
 				default:

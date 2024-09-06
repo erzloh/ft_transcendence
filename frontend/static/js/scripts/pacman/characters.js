@@ -148,7 +148,7 @@ export class Pacman extends PacmanBase {
 		this.spellName = "Frenzy";
 		this.frenzyDuration = 5;
 		this.frenzyCooldown = 15;
-		this.frenzySpeedBoost = 130 / 100;
+		this.frenzySpeedBoost = 120 / 100;
 		this.inFrenzy = false;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.frenzyDuration, this.frenzyCooldown);
 	}
@@ -220,7 +220,7 @@ export class Pacventurer extends PacmanBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "Exploration";
 		this.cooldownDisplay.style.opcaity = 0;
-		this.speed *= 125/100;
+		this.speed *= 120/100;
 		this.pointFactor = 110/100;
 	}
 }
@@ -304,7 +304,7 @@ export class GhostBase extends Character {
 				if (this.pcG.pacman.inFrenzy) {
 					this.sendBackToSpawn();
 					this.pcG.pacman.inFrenzy = false;
-					this.pcG.pacman.gainPoints(500);
+					this.pcG.pacman.gainPoints(300);
 				}
 				else {
 					this.pcG.partyOver(this.pcG.usernames.ghost);
@@ -426,7 +426,7 @@ export class PinkGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "intangible";
-		this.intangibleDuration = 2;
+		this.intangibleDuration = 3;
 		this.intangibleCooldown = 30;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.intangibleDuration, this.intangibleCooldown);
 		this.intangible = false;
@@ -526,7 +526,7 @@ export class GreenGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "blockade";
-		this.blockadeCooldown = 60;
+		this.blockadeCooldown = 50;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.blockadeCooldown);
 		this.lastX = this.x;
 		this.lastY = this.y;
