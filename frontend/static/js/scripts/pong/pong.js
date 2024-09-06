@@ -248,6 +248,7 @@ export class PongGame {
 		let response;
 		switch (this.gamemode) {
 			case "pvp":
+				console.log("PVP match saved");
 				matchData = {
 					"player_one": this.usernames.p1,
 					"player_two": this.usernames.p2,
@@ -266,7 +267,7 @@ export class PongGame {
 				})
 				break;
 			case "AI":
-				console.log("log");
+				console.log("AI match saved");
 				matchData = {
 					"player_one": this.usernames.p1,
 					"winner": winner,

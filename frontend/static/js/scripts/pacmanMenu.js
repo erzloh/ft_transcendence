@@ -31,6 +31,9 @@ export class PacmanMenu {
 		this.ghostUsernameLabel = document.getElementById('ghostName');
 		this.ghostInput = document.getElementById('ghostInput');
 
+		this.imgCurrentPacSkin = document.getElementById('imgCurrentPacSkin');
+		this.imgCurrentGhostSkin = document.getElementById('imgCurrentGhostSkin');
+
 		this.toastNotification = document.getElementById('liveToast');
 		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
 		this.toastBody = document.getElementById('toastBody');
@@ -87,6 +90,9 @@ export class PacmanMenu {
 		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 		localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
 		localStorage.setItem('themeName', this.theme.name);
+
+		this.setPacmanSkinImage();
+		this.setGhostSkinImage();
 	}
 
 	pacmanPlayerInputHandle(event) {
@@ -275,14 +281,24 @@ export class PacmanMenu {
 				<h2 class="modal-title text-white w-100 text-center" data-translate="pacman-skin">pacman skins</h2>
 			</div>
 			<div class="modal-body">
-				<div class="col-12 justify-content-center">
+				<div class="col-12 d-flex flex-column justify-content-center">
 					<div class="row justify-content-center text-center mt-2 mb-3">					
 						<div class="col-3 d-flex justify-content-center">
-							<img class="clickable" role="button" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacman1.png" alt="An image of pac-man." tabindex="0">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacman_high_res.png" alt="An image of pac-man.">
 						</div>
 						<div class="col-3 d-flex justify-content-center">
-							<img class="clickable" role="button" id="pPacgirlSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacgirl1.png" alt="An image of pac-girl." tabindex="0">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacgirlSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacgirl_high_res.png" alt="An image of pac-girl.">
 						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pCoolmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/coolman_high_res.png" alt="An image of cool-man.">
+						</div>
+						<div class="col-3 d-flex justify-content-center">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacventurerSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacventurer_high_res.png" alt="An image of pac-venturer.">
+						</div>
+					</div>
+					<div class="col-12 mt-2 mb-1">
+						<p class="h5 text-white text-center" id="pacmanSkinDescription"></p>
+						<p class="text-white text-center" id="pacmanSkinSpell"></p>
 					</div>
 				</div>
 			</div>
@@ -290,13 +306,40 @@ export class PacmanMenu {
 
 		let btnPacmanSkin = document.getElementById('pPacmanSkin');
         let btnPacgirlSkin = document.getElementById('pPacgirlSkin');
+		let btnCoolmanSkin = document.getElementById('pCoolmanSkin');
+        let btnPacventurerSkin = document.getElementById('pPacventurerSkin');
+		let pacmanSkinDescription = document.getElementById('pacmanSkinDescription');
+		let pacmanSkinSpell = document.getElementById('pacmanSkinSpell');
 
 		this.addEventListeners(btnPacmanSkin, (event) => this.selectPacmanSkin(event, "pacman"));
 		this.addEventListeners(btnPacgirlSkin, (event) => this.selectPacmanSkin(event, "pacgirl"));
+		this.addEventListeners(btnCoolmanSkin, (event) => this.selectPacmanSkin(event, "coolman"));
+		this.addEventListeners(btnPacventurerSkin, (event) => this.selectPacmanSkin(event, "pacventurer"));
+
+		switch (this.pacmanSkin) {
+			case "pacman":
+				pacmanSkinDescription.innerHTML = "Pacman the true OG.";
+				pacmanSkinSpell.innerHTML = "When Pacman eats a fruit, he enters a frenzy for 5 seconds. While in frenzy, he moves 30% faster and can eat the Ghost. If he eats the Ghost, pacman gains 500 points and the Ghost is sent back to his spawn position, ending the frenzy.";
+				break;
+			case "pacgirl":
+				pacmanSkinDescription.innerHTML = "Pacgirl is ready to take over.";
+				pacmanSkinSpell.innerHTML = "Pacgirl can boost her speed for 10 seconds. 20 seconds cooldown.";
+				break;
+			case "coolman":
+				pacmanSkinDescription.innerHTML = "Coolman knows how cool he is.";
+				pacmanSkinSpell.innerHTML = "Coolman can stun the Ghost for 4 seconds. 20 seconds cooldown.";
+				break;
+			case "pacventurer":
+				pacmanSkinDescription.innerHTML = "Pacventurer is ready to explore the world.";
+				pacmanSkinSpell.innerHTML = "Pacventurer moves 25% faster and gains 10% more points.";
+				break;
+		}
 
 		const pacmanSkins = {
 			pacman: btnPacmanSkin,
-			pacgirl: btnPacgirlSkin
+			pacgirl: btnPacgirlSkin,
+			coolman: btnCoolmanSkin,
+			pacventurer: btnPacventurerSkin
 		}
 		this.applySelectedSetting("pacmanSkin", pacmanSkins);
 
@@ -311,20 +354,24 @@ export class PacmanMenu {
 				<h2 class="modal-title text-white w-100 text-center" data-translate="ghost-skin">ghost skins</h2>
 			</div>
 			<div class="modal-body">
-				<div class="col-12 justify-content-center">
+				<div class="col-12 d-flex flex-column justify-content-center">
 					<div class="row justify-content-center text-center mt-2 mb-1">
 						<div class="col-3 d-flex justify-content-center">
-							<img class="clickable" role="button" tabindex="0" id="pBlueGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/blueGhost1.png" alt="An image of a blue ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pBlueGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/blueGhost_high_res.png" alt="An image of a blue ghost.">
 						</div>
 						<div class="col-3 d-flex justify-content-center">
-							<img class="clickable" role="button" tabindex="0" id="pOrangeGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/orangeGhost1.png" alt="An image of an orange ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pOrangeGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/orangeGhost_high_res.png" alt="An image of an orange ghost.">
 						</div>
 						<div class="col-3 d-flex justify-content-center">
-							<img class="clickable" role="button" tabindex="0" id="pPinkGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pinkGhost1.png" alt="An image of a pink ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPinkGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pinkGhost_high_res.png" alt="An image of a pink ghost.">
 						</div>
 						<div class="col-3 d-flex justify-content-center">
-							<img class="clickable" role="button" tabindex="0" id="pGreenGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/greenGhost1.png" alt="An image of a green ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pGreenGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/greenGhost_high_res.png" alt="An image of a green ghost.">
 						</div>
+					</div>
+					<div class="col-12 mt-2 mb-1">
+						<p class="h5 text-white text-center" id="ghostSkinDescription"></p>
+						<p class="text-white text-center" id="ghostSkinSpell"></p>
 					</div>
 				</div>
 			</div>
@@ -334,11 +381,32 @@ export class PacmanMenu {
         let btnOrangeSkin = document.getElementById('pOrangeGhostSkin');
 		let btnPinkSkin = document.getElementById('pPinkGhostSkin');
         let btnGreenSkin = document.getElementById('pGreenGhostSkin');
+		let ghostSkinDescription = document.getElementById('ghostSkinDescription');
+		let ghostSkinSpell = document.getElementById('ghostSkinSpell');
 
 		this.addEventListeners(btnBlueSkin, (event) => this.selectGhostSkin(event, "blueGhost"));
 		this.addEventListeners(btnOrangeSkin, (event) => this.selectGhostSkin(event, "orangeGhost"));
 		this.addEventListeners(btnPinkSkin, (event) => this.selectGhostSkin(event, "pinkGhost"));
 		this.addEventListeners(btnGreenSkin, (event) => this.selectGhostSkin(event, "greenGhost"));
+
+		switch (this.ghostSkin) {
+			case "blueGhost":
+				ghostSkinDescription.innerHTML = "The blue ghost.";
+				ghostSkinSpell.innerHTML = "The blue ghost accelerates in straight lines, losing its momentum when changing direction.";
+				break;
+			case "orangeGhost":
+				ghostSkinDescription.innerHTML = "The orange ghost.";
+				ghostSkinSpell.innerHTML = "The orange ghost can place a ghost block behind it. It can go throught it, but pacman can't. The Ghost block lasts until another one is placed. 5 seconds cooldown";
+				break;
+			case "pinkGhost":
+				ghostSkinDescription.innerHTML = "The pink ghost.";
+				ghostSkinSpell.innerHTML = "The pink ghost can go through wall for 5 seconds. If the spell ends while it's still in a wall, the pink ghost gets placed back on the last ground tile it passed on. 30 seconds cooldown.";
+				break;
+			case "greenGhost":
+				ghostSkinDescription.innerHTML = "The green ghost.";
+				ghostSkinSpell.innerHTML = "The green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. These blocks last forever but can't be placed on portals. 20 seconds cooldown.";
+				break;
+		}
 
 		// Get element that is selected from the local storage and apply the border
 		const ghostSkins = {
@@ -535,9 +603,13 @@ export class PacmanMenu {
 
 		const pacmanSkins = {
 			pacman: document.getElementById('pPacmanSkin'),
-			pacgirl: document.getElementById('pPacgirlSkin')
+			pacgirl: document.getElementById('pPacgirlSkin'),
+			coolman: document.getElementById('pCoolmanSkin'),
+			pacventurer: document.getElementById('pPacventurerSkin')
 		}
 		this.applySelectedSetting("pacmanSkin", pacmanSkins);
+		this.setPacmanSkinImage();
+		this.showPacmanSkinConfig();
 	}
 
 	selectGhostSkin(event, skin) {
@@ -554,6 +626,16 @@ export class PacmanMenu {
 			greenGhost: document.getElementById('pGreenGhostSkin')
 		}
 		this.applySelectedSetting("ghostSkin", ghostSkins);
+		this.setGhostSkinImage();
+		this.showGhostSkinConfig();
+	}
+
+	setPacmanSkinImage() {
+		this.imgCurrentPacSkin.src = "/static/assets/pacman/images/" + this.pacmanSkin + "_high_res.png";
+	}
+
+	setGhostSkinImage() {
+		this.imgCurrentGhostSkin.src = "/static/assets/pacman/images/" + this.ghostSkin + "_high_res.png";
 	}
 
 	selectGamemode(event, gamemode) {
