@@ -1,3 +1,5 @@
+import { CooldownTimer } from "./objects.js";
+
 class Character {
 	constructor(x, y, direction, pacmanGame) {
 		this.x = x;
@@ -9,6 +11,7 @@ class Character {
 		this.tpReady = true;
 		this.pcG = pacmanGame;
 		this.ts = this.pcG.tileSize;
+		this.cooldownTimer = null;
 	}
 
 	teleport() {
@@ -30,24 +33,25 @@ class Character {
 	}
 }
 
-export class Pacman extends Character {
+//#region PACMAN CHARACTERS
+
+export class PacmanBase extends Character {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.speed = pacmanGame.pSpeed;
 		this.points = 0;
 		this.objective = -1;
-		this.ghostSpeed;
+		this.cooldownDisplay = document.getElementById('pCD');
+		this.cooldownDisplay.innerHTML = "ready";
+		this.pointFactor = 100/100;
 	}
 
-	useSpell() {
-		if (this.pcG.timer.pacmanStartCD()) {
-			this.ghostSpeed = this.pcG.ghost.speed;
-			this.pcG.ghost.speed = 0;
-		}			
-	}
+	useSpell() {}
 
-	stopSpell() {
-		this.pcG.ghost.speed = this.ghostSpeed;
+	stopSpell() {}
+
+	gainPoints(pointsGain) {
+		this.points += Math.floor(pointsGain * this.pointFactor);
 	}
 
 	// Makes the character move until it reaches its destination
@@ -59,11 +63,11 @@ export class Pacman extends Character {
 				this.pcG.cells[this.y][this.x].value === 7) {
 				if (this.pcG.cells[this.y][this.x].value === 5){
 					this.pcG.cells[this.y][this.x].value = 6;
-					this.points += 15;
+					this.gainPoints(15);
 				}
 				else {
 					this.pcG.cells[this.y][this.x].value = 8;
-					this.points += 150;
+					this.gainPoints(150);
 				}
 				this.pcG.pScore.textContent = this.points;
 			}
@@ -97,16 +101,16 @@ export class Pacman extends Character {
 
 		if (this.px != this.x)
 			this.px = this.px < this.x ? 
-				(Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
-				(Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
+				(Math.round((this.px + this.speed) * 10000) / 10000 > this.x ? this.x : Math.round((this.px + this.speed) * 10000) / 10000):
+				(Math.round((this.px - this.speed) * 10000) / 10000 < this.x ? this.x : Math.round((this.px - this.speed) * 10000) / 10000);
 		else if (this.py != this.y)
 			this.py = this.py < this.y ? 
-				(Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
-				(Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
+				(Math.round((this.py + this.speed) * 10000) / 10000 > this.y ? this.y : Math.round((this.py + this.speed) * 10000) / 10000):
+				(Math.round((this.py - this.speed) * 10000) / 10000 < this.y ? this.y : Math.round((this.py - this.speed) * 10000) / 10000);
 	}
 
 	eatFruit(fruit) {
-		this.points += fruit.points;
+		this.gainPoints(fruit.points);
 		this.pcG.pScore.textContent = this.points;
 	}
 
@@ -138,35 +142,118 @@ export class Pacman extends Character {
 	}
 }
 
-export class Ghost extends Character {
+export class Pacman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.lastX = x;
-		this.lastY = y;
-		this.gBlockX;
-		this.gBlockY;
-		this.cellValue = "Nothing";
-		this.speed = pacmanGame.gSpeed;
+		this.spellName = "Frenzy";
+		this.frenzyDuration = 5;
+		this.frenzyCooldown = 15;
+		this.frenzySpeedBoost = 130 / 100;
+		this.inFrenzy = false;
+		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.frenzyDuration, this.frenzyCooldown);
+	}
+
+	eatFruit(fruit) {
+		this.points += fruit.points;
+		this.pcG.pScore.textContent = this.points;
+		this.startFrenzy();
+	}
+
+	startFrenzy() {
+		if (this.cooldownTimer.startCD()) {
+			this.speed *= this.frenzySpeedBoost;
+			this.inFrenzy = true;
+		}
+	}
+
+	stopSpell() {
+		this.speed /= this.frenzySpeedBoost;
+		this.inFrenzy = false;
+	}
+}
+
+export class Pacgirl extends PacmanBase {
+	constructor(x, y, direction, pacmanGame) {
+		super(x, y, direction, pacmanGame);
+		this.spellName = "Speed boost";
+		this.speedDuration = 10;
+		this.speedCooldown = 20;
+		this.speedBoost = 130 / 100;
+		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.speedDuration, this.speedCooldown);
 	}
 
 	useSpell() {
-		if (this.pcG.timer.ghostStartCD()) {
-			console.log(this.cellValue);
-			if (this.cellValue != "Nothing")  {
-				this.pcG.cells[this.gBlockX][this.gBlockY].value = this.cellValue;
-				console.log(this.pcG.cells[this.gBlockX][this.gBlockY].value);
-			}
-			this.gBlockX = this.lastY;
-			this.gBlockY = this.lastX;
-			this.cellValue = this.pcG.cells[this.gBlockX][this.gBlockY].value;
-			this.pcG.cells[this.gBlockX][this.gBlockY].value = 9;
-		}   
+		if (this.cooldownTimer.startCD()) {
+			this.speed *= this.speedBoost;
+		}
+	}
+
+	stopSpell() {
+		this.speed /= this.speedBoost;
+	}
+}
+
+export class Coolman extends PacmanBase {
+	constructor(x, y, direction, pacmanGame) {
+		super(x, y, direction, pacmanGame);
+		this.spellName = "Stun";
+		this.stunDuration = 5;
+		this.stunCooldown = 15;
+		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.stunDuration, this.stunCooldown);
+		this.ghostSpeed;
+	}
+
+	useSpell() {
+		if (this.cooldownTimer.startCD()) {
+			this.ghostSpeed = this.pcG.ghost.speed;
+			this.pcG.ghost.speed = 0;
+		}
+	}
+
+	stopSpell() {
+		this.pcG.ghost.speed = this.ghostSpeed;
+	}
+}
+
+export class Pacventurer extends PacmanBase {
+	constructor(x, y, direction, pacmanGame) {
+		super(x, y, direction, pacmanGame);
+		this.spellName = "Exploration";
+		this.cooldownDisplay.style.opcaity = 0;
+		this.speed *= 125/100;
+		this.pointFactor = 110/100;
+	}
+}
+
+//#endregion
+
+export class GhostBase extends Character {
+	constructor(x, y, direction, pacmanGame) {
+		super(x, y, direction, pacmanGame);
+		this.speed = pacmanGame.gSpeed;
+		this.cooldownDisplay = document.getElementById('gCD');
+		this.cooldownDisplay.innerHTML = "ready";
+		this.spawnX = this.x;
+		this.spawnY = this.y;
+		this.disabled = false;
+	}
+
+	useSpell() {}
+
+	stopSpell() {}
+
+	premove() {}
+
+	sendBackToSpawn() {
+		this.x = this.spawnX;
+		this.y = this.spawnY;
+		this.disappeared = false;
+		this.disabled = true;
+		this.direction = "";
 	}
 
 	// Makes the character move until it reaches its destination
 	move() {
-		if (this.direction == "none")
-			return;
 		if (this.y == this.py && this.x == this.px) {
 			if (this.pcG.cells[this.y][this.x].value >= 2 &&
 				this.pcG.cells[this.y][this.x].value <=  4) {
@@ -175,8 +262,7 @@ export class Ghost extends Character {
 			else {
 				this.tpReady = true;
 			}
-			this.lastX = this.x;
-			this.lastY = this.y;
+			this.premove();
 			switch (this.direction) {
 				case "up":
 					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1)
@@ -212,9 +298,23 @@ export class Ghost extends Character {
 	// Render the character's sprite
 	render() {
 		var img;
-		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
-			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
-			this.pcG.partyOver(this.pcG.usernames.ghost);
+		if (!this.disabled) {
+			if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
+				Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
+				if (this.pcG.pacman.inFrenzy) {
+					this.sendBackToSpawn();
+					this.pcG.pacman.inFrenzy = false;
+					this.pcG.pacman.gainPoints(500);
+				}
+				else {
+					this.pcG.partyOver(this.pcG.usernames.ghost);
+				}
+			}
+		}
+		else {
+			if (this.px == this.spawnX && this.py == this.spawnY) {
+				this.disabled = false;
+			}
 		}
 		switch (this.direction){
 			case "right":
@@ -235,4 +335,255 @@ export class Ghost extends Character {
 		}
 		this.pcG.c.drawImage(img, this.px * this.ts, this.py * this.ts, this.ts, this.ts);
 	}
+}
+
+export class BlueGhost extends GhostBase {
+	constructor(x, y, direction, pacmanGame) {
+		super(x, y, direction, pacmanGame);
+		this.spellName = "ghost block";
+		this.ghostBlockCooldown = 5;
+		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.ghostBlockCooldown);
+		this.gBlockX;
+		this.gBlockY;
+		this.lastX = this.x;
+		this.lastY = this.y;
+		this.cellValue = "Nothing";
+	}
+
+	premove() {
+		this.lastX = this.x;
+		this.lastY = this.y;	
+	}
+	
+	useSpell() {
+		if (this.cooldownTimer.startCD()) {
+			if (this.cellValue != "Nothing")  {
+				this.pcG.cells[this.gBlockX][this.gBlockY].value = this.cellValue;
+			}
+			this.gBlockX = this.lastY;
+			this.gBlockY = this.lastX;
+			this.cellValue = this.pcG.cells[this.gBlockX][this.gBlockY].value;
+			this.pcG.cells[this.gBlockX][this.gBlockY].value = 9;
+		}
+	}
+}
+
+export class OrangeGhost extends GhostBase {
+	constructor(x, y, direction, pacmanGame) {
+		super(x, y, direction, pacmanGame);
+		this.spellName = "disappearance";
+		this.disappeared = false;
+		this.cooldownDisplay.style.opacity = 0;
+		this.speed *= 110 / 100;
+	}
+
+	premove() {
+		if (this.direction != "")
+			this.disappeared = false;
+	}
+
+	useSpell() {
+		this.direction = "";
+		this.disappeared = true;
+	}
+
+	render() {
+		var img;
+		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
+			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
+			if (this.pcG.pacman.inFrenzy) {
+				this.pcG.Ghost.sendBackToSpawn();
+			}
+			else {
+				this.pcG.partyOver(this.pcG.usernames.ghost);
+			}
+		}
+
+		if (!(this.disappeared && this.y == this.py && this.x == this.px)) {		
+			switch (this.direction){
+				case "right":
+					img = this.pcG.images.imgGhost1;
+					break;
+				case "down":
+					img = this.pcG.images.imgGhost2;
+					break;
+				case "up":
+					img = this.pcG.images.imgGhost3;
+					break;
+				case "left":
+					img = this.pcG.images.imgGhost4;
+					break;
+				default:
+					img = this.pcG.images.imgGhost1;
+					break;
+			}
+			this.pcG.c.drawImage(img, this.px * this.ts, this.py * this.ts, this.ts, this.ts);
+		}
+	}
+}
+
+export class PinkGhost extends GhostBase {
+	constructor(x, y, direction, pacmanGame) {
+		super(x, y, direction, pacmanGame);
+		this.spellName = "intangible";
+		this.intangibleDuration = 2;
+		this.intangibleCooldown = 30;
+		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.intangibleDuration, this.intangibleCooldown);
+		this.intangible = false;
+		this.lastGroundX = this.x;
+		this.lastGroundY = this.y;
+	}
+
+	premove() {
+		if (this.pcG.cells[this.y][this.x].value != 1) {
+			this.lastGroundX = this.x;
+			this.lastGroundY = this.y;
+		}
+	}
+
+	useSpell() {
+		if (this.cooldownTimer.startCD()) {
+			this.intangible = true;
+		}		
+	}
+
+	stopSpell() {
+		this.intangible = false;
+		if (this.pcG.cells[this.y][this.x].value == 1) {
+			this.x = this.lastGroundX;
+			this.y = this.lastGroundY;
+		}
+	}
+
+	move() {
+		if (this.y == this.py && this.x == this.px) {
+			if (this.pcG.cells[this.y][this.x].value >= 2 &&
+				this.pcG.cells[this.y][this.x].value <=  4) {
+				this.teleport();
+			}
+			else {
+				this.tpReady = true;
+			}
+			this.premove();
+			if (this.intangible) {
+				switch (this.direction) {
+					case "up":
+						if (this.y - 1 >= 0)
+							this.y -= 1;
+						break;
+					case "down":
+						if (this.y + 1 < this.pcG.height)
+							this.y += 1;
+						break;
+					case "left":
+						if (this.x - 1 >= 0)
+							this.x -= 1;
+						break;
+					case "right":
+						if (this.x + 1 < this.pcG.width)
+							this.x += 1;
+						break;
+					default:
+						break;
+				}
+			}
+			else {
+				switch (this.direction) {
+					case "up":
+						if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9)
+							this.y -= 1;
+						break;
+					case "down":
+						if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9)
+							this.y += 1;
+						break;
+					case "left":
+						if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9)
+							this.x -= 1;
+						break;
+					case "right":
+						if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9)
+							this.x += 1;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		if (this.px != this.x)
+			this.px = this.px < this.x ? 
+				(Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
+				(Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
+		else if (this.py != this.y)
+			this.py = this.py < this.y ? 
+			(Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
+			(Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
+	}
+}
+
+export class GreenGhost extends GhostBase {
+	constructor(x, y, direction, pacmanGame) {
+		super(x, y, direction, pacmanGame);
+		this.spellName = "blockade";
+		this.blockadeCooldown = 60;
+		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.blockadeCooldown);
+		this.lastX = this.x;
+		this.lastY = this.y;
+	}
+
+	premove() {
+		this.lastX = this.x;
+		this.lastY = this.y;
+	}
+
+	useSpell() {
+		if (this.cooldownTimer.startCD()) {
+			this.pcG.cells[this.lastY][this.lastX].value = 9;
+		}		
+	}
+
+	move() {
+		if (this.y == this.py && this.x == this.px) {
+			if (this.pcG.cells[this.y][this.x].value >= 2 &&
+				this.pcG.cells[this.y][this.x].value <=  4) {
+				this.teleport();
+			}
+			else {
+				this.tpReady = true;
+			}
+			this.premove();
+			switch (this.direction) {
+				case "up":
+					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9)
+						this.y -= 1;
+					break;
+				case "down":
+					if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9)
+						this.y += 1;
+					break;
+				case "left":
+					if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9)
+						this.x -= 1;
+					break;
+				case "right":
+					if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9)
+						this.x += 1;
+					break;
+				default:
+					break;
+			}
+		}
+
+		if (this.px != this.x)
+			this.px = this.px < this.x ? 
+				(Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
+				(Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
+		else if (this.py != this.y)
+			this.py = this.py < this.y ? 
+			(Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
+			(Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
+	}
+
+
 }

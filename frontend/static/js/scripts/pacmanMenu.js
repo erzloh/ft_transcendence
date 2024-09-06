@@ -296,7 +296,7 @@ export class PacmanMenu {
 							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacventurerSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacventurer_high_res.png" alt="An image of pac-venturer.">
 						</div>
 					</div>
-					<div class="col-12 mt-2 mb-1">
+					<div class="col-12 mt-2 mb-1 d-flex flex-column">
 						<p class="h5 text-white text-center" id="pacmanSkinDescription"></p>
 						<p class="text-white text-center" id="pacmanSkinSpell"></p>
 					</div>
@@ -318,19 +318,19 @@ export class PacmanMenu {
 
 		switch (this.pacmanSkin) {
 			case "pacman":
-				pacmanSkinDescription.innerHTML = "Pacman the true OG.";
+				pacmanSkinDescription.innerHTML = "passive: frenzy";
 				pacmanSkinSpell.innerHTML = "When Pacman eats a fruit, he enters a frenzy for 5 seconds. While in frenzy, he moves 30% faster and can eat the Ghost. If he eats the Ghost, pacman gains 500 points and the Ghost is sent back to his spawn position, ending the frenzy.";
 				break;
 			case "pacgirl":
-				pacmanSkinDescription.innerHTML = "Pacgirl is ready to take over.";
+				pacmanSkinDescription.innerHTML = "active: speed boost";
 				pacmanSkinSpell.innerHTML = "Pacgirl can boost her speed for 10 seconds. 20 seconds cooldown.";
 				break;
 			case "coolman":
-				pacmanSkinDescription.innerHTML = "Coolman knows how cool he is.";
+				pacmanSkinDescription.innerHTML = "active: stun";
 				pacmanSkinSpell.innerHTML = "Coolman can stun the Ghost for 4 seconds. 20 seconds cooldown.";
 				break;
 			case "pacventurer":
-				pacmanSkinDescription.innerHTML = "Pacventurer is ready to explore the world.";
+				pacmanSkinDescription.innerHTML = "passive: exploration";
 				pacmanSkinSpell.innerHTML = "Pacventurer moves 25% faster and gains 10% more points.";
 				break;
 		}
@@ -391,20 +391,20 @@ export class PacmanMenu {
 
 		switch (this.ghostSkin) {
 			case "blueGhost":
-				ghostSkinDescription.innerHTML = "The blue ghost.";
-				ghostSkinSpell.innerHTML = "The blue ghost accelerates in straight lines, losing its momentum when changing direction.";
+				ghostSkinDescription.innerHTML = "active: ghost block";
+				ghostSkinSpell.innerHTML = "The blue ghost can place a ghost block behind it. It can go throught it, but pacman can't. The Ghost block lasts until another one is placed. 5 seconds cooldown";
 				break;
 			case "orangeGhost":
-				ghostSkinDescription.innerHTML = "The orange ghost.";
-				ghostSkinSpell.innerHTML = "The orange ghost can place a ghost block behind it. It can go throught it, but pacman can't. The Ghost block lasts until another one is placed. 5 seconds cooldown";
+				ghostSkinDescription.innerHTML = "passive: disappearance";
+				ghostSkinSpell.innerHTML = "the orange ghost becomes invisible when it stops moving and is 10% faster.";
 				break;
 			case "pinkGhost":
-				ghostSkinDescription.innerHTML = "The pink ghost.";
-				ghostSkinSpell.innerHTML = "The pink ghost can go through wall for 5 seconds. If the spell ends while it's still in a wall, the pink ghost gets placed back on the last ground tile it passed on. 30 seconds cooldown.";
+				ghostSkinDescription.innerHTML = "active: intangible";
+				ghostSkinSpell.innerHTML = "the pink ghost can go through wall for 5 seconds. If the spell ends while it's still in a wall, the pink ghost gets placed back on the last ground tile it passed on. 30 seconds cooldown.";
 				break;
 			case "greenGhost":
-				ghostSkinDescription.innerHTML = "The green ghost.";
-				ghostSkinSpell.innerHTML = "The green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. These blocks last forever but can't be placed on portals. 20 seconds cooldown.";
+				ghostSkinDescription.innerHTML = "active: blockade";
+				ghostSkinSpell.innerHTML = "the green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. These blocks last forever but can't be placed on portals. 40 seconds cooldown.";
 				break;
 		}
 

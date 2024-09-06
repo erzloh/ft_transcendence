@@ -65,13 +65,6 @@ export class Timer {
 		this.images = pacmanGame.images;
 
 		this.timer = document.getElementById('timer');
-		this.pCD = document.getElementById('pCD');
-		this.gCD = document.getElementById('gCD');
-
-		// Spells
-		this.pSpellDuration = 0;
-		this.pSpellCD = 0;
-		this.gSpellCD = 0;
 	}
 
 	start() {
@@ -106,38 +99,16 @@ export class Timer {
 		if (this.dsec == 100) {
 			this.dsec = 0;
 			this.sec++;
-		
-			if (this.pSpellDuration > 0) {
-				this.pSpellDuration--;
-				if (this.pSpellDuration == 0)
-					this.pcG.pacman.stopSpell();
-			}
-				
-			if (this.pSpellCD > 0) {
-				this.pSpellCD--;
-				this.pCD.innerHTML = this.pSpellCD.toString().padStart(2, '0');
-			}
-			else
-				this.pCD.innerHTML = "Ready";
 	
-			// if (this.gSpellDuration > 0) {
-			// 	this.gSpellDuration--;
-			// 	if (this.gSpellDuration == 0)
-			// 		this.pcG.ghost.stopSpell();
-			// }
-	
-			if (this.gSpellCD > 0) {
-				this.gSpellCD--;
-				this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
-			} 
-			else
-				this.gCD.innerHTML = "Ready";
-	
-			// Every 8 seconds create a fruit
+			
 			if (this.sec % 8 == 0) {
+				// Every 8 seconds create a fruit
+				var fruitSpawned = false;
+				while (!fruitSpawned) {
 				var ypos = Math.floor(Math.random() * (this.pcG.height - 1));
 				var xpos = Math.floor(Math.random() * (this.pcG.width - 1));
 				if (this.pcG.cells[ypos][xpos].value !== 1) {
+					fruitSpawned = true;
 					var ran = Math.floor(Math.random() * 3);
 					switch (ran) {
 						case 0:
@@ -153,6 +124,7 @@ export class Timer {
 							break;
 					}
 				}
+			}
 			}
 	
 			// Update minutes if 60 seconds is reached
@@ -173,30 +145,84 @@ export class Timer {
 			this.updateDisplay();		
 		}
 	}
+
 	updateDisplay() {
 		this.timer.innerHTML = this.getTime();
-	}
-
-	pacmanStartCD() {
-		if (this.pSpellCD > 0)
-			return false;
-		this.pSpellDuration = 3;
-		this.pSpellCD = 20;
-		this.pCD.innerHTML = this.pSpellCD.toString().padStart(2, '0');
-		return true;
-	}
-
-	ghostStartCD() {
-		if (this.gSpellCD > 0)
-			return false;
-		this.gSpellCD = 5;
-		this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
-		return true;
 	}
 
 	getTime() {
 		return (this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0'));
 	}
+}
+
+export class CooldownTimer {
+	constructor(cooldownDisplay, character, spellDuration, spellCD) {
+		this.sec = 0;
+		this.interval = null;
+
+		this.cooldownDisplay = cooldownDisplay;
+		
+		// Spells
+		this.character = character;
+		this.spellDuration = spellDuration;
+		this.spellCD = spellCD;
+	}
+
+	startCD() {
+		if (this.sec > 0) {
+			return false;
+		}
+		this.sec = this.spellCD;
+		this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');
+		if (!this.interval) {
+			this.interval = setInterval(() => {
+				this.cooldown();
+			}, 1000);
+		}
+		return true;
+	}
+
+	stopCD() {
+		clearInterval(this.interval);
+		this.interval = null;
+	}
+
+	resetCD() {
+		this.stopCD();
+		this.sec = 0;
+		this.cooldownDisplay.innerHTML = "ready";
+	}
+
+	cooldown() {
+		if (this.sec > 0) {
+			this.sec--;
+			if (this.sec == (this.spellCD - this.spellDuration)) {
+				this.character.stopSpell();
+			}
+			this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');
+		}
+		else {
+			this.cooldownDisplay.innerHTML = "ready";
+			this.stopCD();
+		}	
+	}
+
+	// pacmanStartCD() {
+	// 	if (this.pSpellCD > 0)
+	// 		return false;
+	// 	this.pSpellDuration = 3;
+	// 	this.pSpellCD = 20;
+	// 	this.pCD.innerHTML = this.pSpellCD.toString().padStart(2, '0');
+	// 	return true;
+	// }
+
+	// ghostStartCD() {
+	// 	if (this.gSpellCD > 0)
+	// 		return false;
+	// 	this.gSpellCD = 5;
+	// 	this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
+	// 	return true;
+	// }
 }
 
 export class Cell {

@@ -1,5 +1,5 @@
 import { updateTexts } from "../utils/languages.js";
-import { Pacman, Ghost} from "./pacman/characters.js";
+import { Pacman, Pacgirl, Coolman, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
 
 let eventListeners = { }
@@ -11,6 +11,8 @@ class PacmanGame {
 		this.pScore = document.getElementById('pScore');
 		this.startButton = document.getElementById('btnStart');
 
+		this.pacmanSpellName = document.getElementById('pacmanSpellName');
+		this.ghostSpellName = document.getElementById('ghostSpellName');
 		this.pacmanUsername = document.getElementById('pacmanPlayerLabel');
 		this.ghostUsername = document.getElementById('ghostPlayerLabel');
 		this.imgPacmanSkin = document.getElementById('imgPacmanSkin');
@@ -50,8 +52,8 @@ class PacmanGame {
 
 		// Utils
 		this.timer;
-		this.pSpeed = 1 / 18;
-		this.gSpeed = 1 / 17;
+		this.pSpeed = 1 / 20;
+		this.gSpeed = 1 / 19;
 		this.frame = 0; // The frame number
 		this.gameOver = false;
 		this.gamePaused = false;
@@ -113,6 +115,40 @@ class PacmanGame {
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
 
+		switch (this.pacmanSkin) {
+			case "pacman":
+				pacmanSpellName.innerHTML = "frenzy";
+				break;
+			case "pacgirl":
+				pacmanSpellName.innerHTML = "speed boost";
+				break;
+			case "coolman":
+				pacmanSpellName.innerHTML = "stun";
+				break;
+			case "pacventurer":
+				pacmanSpellName.innerHTML = "exploration";
+				break;
+			default:
+				break;
+		}
+
+		switch (this.ghostSkin) {
+			case "blueGhost":
+				ghostSpellName.innerHTML = "ghost block";
+				break;
+			case "orangeGhost":
+				ghostSpellName.innerHTML = "disappearance";
+				break;
+			case "pinkGhost":
+				ghostSpellName.innerHTML = "intangible";
+				break;
+			case "greenGhost":
+				ghostSpellName.innerHTML = "blockade";
+				break;
+			default:
+				break;
+		}
+
 		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
 		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
 		this.images.imgPacman3.src = 'static/assets/pacman/images/' + this.pacmanSkin + '3.png';
@@ -157,6 +193,10 @@ class PacmanGame {
 		this.fruitArray = [];
 		this.starArray = [];
 
+		if (this.pacman.cooldownTimer != null)
+			this.pacman.cooldownTimer.resetCD();
+		if (this.ghost.cooldownTimer != null)
+			this.ghost.cooldownTimer.resetCD();
 		this.timer.reset();
 
 		this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -166,7 +206,7 @@ class PacmanGame {
 
 	partyOver(winner) {
 		this.gameOver = true;
-		this.timer.stop();
+		this.stopGameLoop();
 
 		this.endgameModalWinner.textContent = winner + " won the game !";
 		this.endgameModalScore.textContent = "Pacman's score: " + this.pacman.points;
@@ -259,18 +299,57 @@ class PacmanGame {
 			let row = [];
 			for (let x = 0; x < this.width; x++) {
 				if (data[y][x] === "p") {
-					this.pacman = new Pacman(x, y, "none", this);
-					data[y][x] = 0;
+					this.createCharacter("pacman", x, y);
+					data[y][x] = 6;
 				}
 				else if (data[y][x] === "g") {
-					this.ghost = new Ghost(x, y, "none", this);
-					data[y][x] = 0;
+					this.createCharacter("ghost", x, y);
+					data[y][x] = 6;
 				}
 				row.push(new Cell(x, y, data[y][x], this, this.tileSize));
 			}
 			tmp.push(row);
 		}
 		return tmp;
+	}
+
+	createCharacter(type, x, y) {
+		if (type == "pacman") {
+			switch (this.pacmanSkin) {
+				case "pacman":
+					this.pacman = new Pacman(x, y, "none", this);
+					break;
+				case "pacgirl":
+					this.pacman = new Pacgirl(x, y, "none", this);
+					break;
+				case "coolman":
+					this.pacman = new Coolman(x, y, "none", this);
+					break;
+				case "pacventurer":
+					this.pacman = new Pacventurer(x, y, "none", this);
+					break;
+				default:
+					break;
+			}
+		} 
+		else if (type == "ghost") {
+			switch (this.ghostSkin) {
+				case "blueGhost":
+					this.ghost = new BlueGhost(x, y, "none", this);
+					break;
+				case "orangeGhost":
+					this.ghost = new OrangeGhost(x, y, "none", this);
+					break;
+				case "pinkGhost":
+					this.ghost = new PinkGhost(x, y, "none", this);
+					break;
+				case "greenGhost":
+					this.ghost = new GreenGhost(x, y, "none", this);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
 	pacmanHandleKeyDown = (event) => {
@@ -321,6 +400,10 @@ class PacmanGame {
 	stopGameLoop() {
 		console.log("stop pacman loop");
 		if (this.gameStart) {
+			if (this.pacman.cooldownTimer != null)
+				this.pacman.cooldownTimer.stopCD();
+			if (this.ghost.cooldownTimer != null)
+				this.ghost.cooldownTimer.stopCD();
 			this.timer.stop();
 		}
 	}
