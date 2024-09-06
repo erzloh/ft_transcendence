@@ -12477,7 +12477,7 @@ select {
 }
 
 .table-container {
-  height: 500px;
+  height: 400px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -12485,12 +12485,23 @@ select {
   animation: fadeIn 0.5s ease-out;
 }
 
-#pong-stat-table {
+.global-table-container {
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  overflow-y: auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.stats-table {
   border-collapse: separate;
   max-height: 100%;
   overflow-x: auto;
 }
-#pong-stat-table thead {
+.stats-table thead {
   border-radius: inherit;
   overflow: hidden;
   position: sticky;
@@ -12499,18 +12510,23 @@ select {
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
 }
-#pong-stat-table thead th {
+.stats-table thead th {
   border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
-#pong-stat-table tbody {
+.stats-table tbody {
   background: rgba(255, 255, 255, 0.2);
   border-radius: inherit;
 }
-#pong-stat-table th, #pong-stat-table td {
+.stats-table th, .stats-table td {
   border: none;
   padding: 10px;
   height: -moz-fit-content;
   height: fit-content;
+}
+
+#pong-global-stat-table {
+  width: 100%;
+  table-layout: fixed;
 }
 
 @media screen and (max-width: 768px) {

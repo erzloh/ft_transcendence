@@ -84,12 +84,18 @@
 	"no friends": "no friends found.",
 
  	"pong statistics": "pong statistics",
+	"total games": "total games",
+	"total duration": "total duration",
+	"average duration": "average duration",
 	"db date": "date",
 	"db player 1": "player 1",
 	"db player 2": "player 2",
 	"db score": "score",
 	"db winner": "winner",
 	"db duration": "duration",
+	"pvp data": "pvp",
+	"ai data": "cpu",
+	"tournament data": "tournament",
 
 	"graphics": "graphics", 
 	"ultra": "ultra",
