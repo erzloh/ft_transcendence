@@ -12143,8 +12143,7 @@ label {
 
 .btn:hover {
   border: 1px solid white;
-  cursor: pointer;
-  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 
 .btn-filled {

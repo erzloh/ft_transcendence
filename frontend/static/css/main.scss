@@ -236,8 +236,7 @@ $blending: hard-light;
 .btn {
 	&:hover {
 		border: 1px solid white;
-		cursor: pointer;
-		cursor: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
+		cursor: $cursor-pointer;
 	}
 }
 
