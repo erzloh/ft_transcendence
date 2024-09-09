@@ -101,7 +101,7 @@ export class Timer {
 			this.sec++;
 	
 			
-			if (this.sec % 1 == 0) {
+			if (this.sec % 10 == 0) {
 				// Every 10 seconds create a fruit
 				var fruitSpawned = false;
 				while (!fruitSpawned) {

@@ -149,7 +149,7 @@ export class Pacman extends PacmanBase {
 		this.frenzyDuration = 5;
 		this.frenzyCooldown = 25;
 		this.frenzySpeedBoost = 120 / 100;
-		this.disableGhostDuration = 2;
+		this.disableGhostDuration = 5;
 		this.inFrenzy = false;
 		this.ateGhost = false;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.frenzyDuration, this.frenzyCooldown);
@@ -165,7 +165,6 @@ export class Pacman extends PacmanBase {
 	eatGhost() {
 		this.pcG.ghost.disabled = true;
 		this.ateGhost = true;
-		this.pcG.ghost.sendBackToSpawn();
 		this.pcG.pacman.gainPoints(300);
 		this.eatenTimer.startCD();
 	}
@@ -259,15 +258,6 @@ export class GhostBase extends Character {
 	stopSpell() {}
 
 	premove() {}
-
-	sendBackToSpawn() {
-		this.x = this.spawnX;
-		this.y = this.spawnY;
-		this.px = this.x;
-		this.py = this.y;
-		this.disabled = true;
-		this.direction = "";
-	}
 
 	// Makes the character move until it reaches its destination
 	move() {
@@ -576,48 +566,4 @@ export class GreenGhost extends GhostBase {
 			this.pcG.cells[this.lastY][this.lastX].value = 9;
 		}		
 	}
-
-	move() {
-		if (this.y == this.py && this.x == this.px) {
-			if (this.pcG.cells[this.y][this.x].value >= 2 &&
-				this.pcG.cells[this.y][this.x].value <=  4) {
-				this.teleport();
-			}
-			else {
-				this.tpReady = true;
-			}
-			this.premove();
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9)
-						this.y -= 1;
-					break;
-				case "down":
-					if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9)
-						this.y += 1;
-					break;
-				case "left":
-					if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9)
-						this.x -= 1;
-					break;
-				case "right":
-					if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9)
-						this.x += 1;
-					break;
-				default:
-					break;
-			}
-		}
-
-		if (this.px != this.x)
-			this.px = this.px < this.x ? 
-				(Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
-				(Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
-		else if (this.py != this.y)
-			this.py = this.py < this.y ? 
-			(Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
-			(Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
-	}
-
-
 }
