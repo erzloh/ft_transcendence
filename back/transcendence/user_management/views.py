@@ -169,7 +169,17 @@ class RecordPacmanMatch(views.APIView):
     def post(self, request):
         serializer = PacmanMatchSerializer(data=request.data)
         if serializer.is_valid():
-            match = serializer.save()
+            serializer.save()
+            user_stats = request.user
+            stats_data = {
+                'total_pacman_matches': user_stats.total_pacman_matches + 1,
+                'total_pacman_time': user_stats.total_pacman_time + request.data['match_duration'],
+            }
+            stats_serializer = UserPacmanStatsSerializer(user_stats, data=stats_data, partial=True)
+            if stats_serializer.is_valid():
+                stats_serializer.save()
+            else:
+                return Response(stats_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -179,7 +189,7 @@ class UserPacmanMatchesHistory(ListAPIView):
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         user = self.request.user
-        return PacmanMatch.objects.filter(Q(pacman_player=user) | Q(ghost_player=user))
+        return PacmanMatch.objects.filter(user=user).order_by('-match_date')
 
 class UserPacmanStats(views.APIView):
     authentication_classes = [CookieTokenAuthentication]
@@ -214,18 +224,44 @@ class UserPongStats(views.APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class RecordAIPongMatch(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer = AIPongMatchSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            user_stats = request.user
+            stats_data = {
+                'total_pong_matches': user_stats.total_pong_matches + 1,
+                'total_pong_ai_matches': user_stats.total_pong_ai_matches + 1,
+                'total_pong_time': user_stats.total_pong_time + request.data['match_duration'],
+            }
+            stats_serializer = UserPongStatsSerializer(user_stats, data=stats_data, partial=True)
+            if stats_serializer.is_valid():
+                stats_serializer.save()
+            else:
+                return Response(stats_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class RecordPvPongMatch(views.APIView):
+    authentication_classes = [CookieTokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self, request):
         serializer = PvPongMatchSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            user_stats = request.user
+            stats_data = {
+                'total_pong_matches': user_stats.total_pong_matches + 1,
+                'total_pong_pvp_matches': user_stats.total_pong_pvp_matches + 1,
+                'total_pong_time': user_stats.total_pong_time + request.data['match_duration'],
+            }
+            stats_serializer = UserPongStatsSerializer(user_stats, data=stats_data, partial=True)
+            if stats_serializer.is_valid():
+                stats_serializer.save()
+            else:
+                return Response(stats_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -235,7 +271,7 @@ class UserPvPongMatchHistory(ListAPIView):
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         user = self.request.user
-        return PvPongMatch.objects.filter(Q(player_one=user) | Q(player_two=user))
+        return PvPongMatch.objects.filter(user=user).order_by('-match_date')
 
 class UserAIPongMatchHistory(ListAPIView):
     serializer_class = AIPongMatchSerializer
@@ -243,4 +279,4 @@ class UserAIPongMatchHistory(ListAPIView):
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         user = self.request.user
-        return AIPongMatch.objects.filter(player_one=user).exclude(pvpongmatch__isnull=False)
+        return AIPongMatch.objects.filter(user=user).order_by('-match_date')
