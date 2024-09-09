@@ -1,3 +1,5 @@
+import { BASE_URL } from "../index.js";
+
 export let eventListeners = { }
 
 export class PongMenu {
@@ -23,6 +25,7 @@ export class PongMenu {
 
 		this.waitForKey = false;
 		this.waitingKey = "";
+		this.displayName = "";
 
 		const colorsString = localStorage.getItem('pongColors');
 		this.colors = colorsString ? JSON.parse(colorsString) : {
@@ -54,14 +57,14 @@ export class PongMenu {
 		// TODO: change this to /pong3d
 		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
 
-		this.currentGamemodeLabel.innerHTML  = "current gamemode: " + this.gamemode;
-		this.currentGamestyleLabel.innerHTML  = "current game style: " + this.gamestyle;
+		this.currentGamemodeLabel.innerHTML  = this.gamemode;
+		this.currentGamestyleLabel.innerHTML  = this.gamestyle;
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
 	}
 
-	Initialize() {
+	async Initialize() {
 		// Add Event Listener to the Start Button
 		this.keysButton.addEventListener("click", () => this.showKeysConfig());
 		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
@@ -70,8 +73,22 @@ export class PongMenu {
 		document.addEventListener("keydown", this.boundKeyDownSettings);
 		eventListeners["keydown"] = this.boundKeyDownSettings;
 
+		await this.getLoggedUsername();
+
 		this.updatePlayersContainer();
 		this.setScoreRange();
+	}
+
+	async getLoggedUsername() {
+		// Check if the user is logged in or not
+		const response = await fetch(`${BASE_URL}/api/profile`);
+
+		// If the user is logged in, show the profile page
+		if (response.status === 200) {
+			const responseData = await response.json();
+			const user = responseData.user;
+			this.displayName = user.username;
+		}
 	}
 
 	updatePlayersContainer = () => {
@@ -79,22 +96,22 @@ export class PongMenu {
 			case "pvp":
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h3 text-white text-center">left paddle</label>
-							<label class="h5 text-white text-center" id="leftPaddleName">player 1</label>
-							<input type="text" id="leftPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
+							<p class="h3 text-white text-center">left paddle</p>
+							<p class="h5 text-white text-center" id="leftPaddleName">player 1</p>
+							<input type="text" id="leftPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-6 d-flex flex-column align-items-center mt-1 mb-2">
 							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h3 text-white text-center">right paddle</label>
-							<label class="h5 text-white text-center" id="rightPaddleName">player 2</label>
-							<input type="text" id="rightPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
+							<p class="h3 text-white text-center">right paddle</p>
+							<p class="h5 text-white text-center" id="rightPaddleName">player 2</p>
+							<input type="text" id="rightPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
 							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 glass" value="#00ff00">
 						</div>
 					</div>
@@ -123,12 +140,12 @@ export class PongMenu {
 			case "AI":
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h3 text-white text-center">left paddle</label>
-							<label class="h5 text-white text-center" id="playerPaddleName">player 1</label>
-							<input type="text" id="playerPaddleInput" class="form-control form-control-sm text-input text-center" placeholder="Enter username">	
+						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-2">
+							<p class="h3 text-white text-center">left paddle</p>
+							<p class="h5 text-white text-center" id="playerPaddleName">player 1</p>
+							<input type="text" id="playerPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">	
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
 							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
 						</div>
 					</div>
@@ -148,43 +165,42 @@ export class PongMenu {
 			case "tournament":
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h4 text-white text-center mb-3" id="player1Name">player 1</label>
-							<input type="text" id="player1Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-1">
+							<p class="h4 text-white text-center mb-3" id="player1Name">player 1</p>
+							<input type="text" id="player1Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-1">
 							<input type="color" id="player1Color" class="form-control form-control-sm mt-3 glass" value="#ff0000">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h4 text-white text-center mb-3" id="player2Name">player 2</label>
-							<input type="text" id="player2Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-1">
+							<p class="h4 text-white text-center mb-3" id="player2Name">player 2</p>
+							<input type="text" id="player2Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-8  d-flex flex-column align-items-center mt-1 mb-1">
 							<input type="color" id="player2Color" class="form-control form-control-sm mt-3 glass" value="#00ff00">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h4 text-white text-center mb-3" id="player3Name">player 3</label>
-							<input type="text" id="player3Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-1">
+							<p class="h4 text-white text-center mb-3" id="player3Name">player 3</p>
+							<input type="text" id="player3Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-8  d-flex flex-column align-items-center mt-1 mb-1">
 							<input type="color" id="player3Color" class="form-control form-control-sm mt-3 glass" value="#0000ff">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<label class="h4 text-white text-center mb-3" id="player4Name">...</label>
-							<input type="text" id="player4Input" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-1">
+							<p class="h4 text-white text-center mb-3" id="player4Name">...</p>
+							<input type="text" id="player4Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
-						<div class="col-5 d-flex flex-column align-items-center mt-1 mb-2">
+						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-1">
 							<input type="color" id="player4Color" class="form-control form-control-sm mt-3 glass" value="#ff00ff">
 						</div>
 					</div>
 				`;
-
 
 				const player1Name = document.getElementById('player1Name');
 				const player1Input = document.getElementById('player1Input');
@@ -198,6 +214,7 @@ export class PongMenu {
 				const player4Name = document.getElementById('player4Name');
 				const player4Input = document.getElementById('player4Input');
 				const player4Color = document.getElementById('player4Color');
+				const usernameCheckbox = document.getElementById('usernameCheckbox');
 
 				player1Name.innerHTML = this.usernames.p1;
 				player2Name.innerHTML = this.usernames.p2;
@@ -208,9 +225,16 @@ export class PongMenu {
 				player3Color.value = this.colors.p3;
 				player4Color.value = this.colors.p4;
 
-
-				player1Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
-				player1Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
+				if (this.displayName != "") {
+					this.usernames.p1 = this.displayName;
+					player1Name.innerHTML = this.usernames.p1;
+					localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
+					player1Input.style.opacity = 0;
+				}
+				else {
+					player1Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
+					player1Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player1Input, player1Name, "player 1", "p1"));
+				}				
 				player2Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player2Input, player2Name, "player 2", "p2"));
 				player2Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player2Input, player2Name, "player 2", "p2"));
 				player3Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player3Input, player3Name, "player 3", "p3"));
@@ -222,6 +246,18 @@ export class PongMenu {
 				player2Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 2", "p2"));
 				player3Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 3", "p3"));
 				player4Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 4", "p4"));
+				
+				// usernameCheckbox.addEventListener("change", (event) => {
+				// 	if (event.target.checked) {
+						
+				// 		player1Name.innerHTML = this.usernames.p1;
+				// 		player1Input.style.opacity = 0;
+				// 	}
+				// 	else {
+				// 		player1Input.disabled = false;
+				// 		player1Input.style.opacity = 1;
+				// 	}
+				// });
 				break;
 			default:
 				break;
@@ -261,7 +297,7 @@ export class PongMenu {
 	setScoreRange() {
 		this.pointsRangeContainer.innerHTML = `
 			<div class="col-6 flex-column align-items-center d-flex mb-2">
-				<label for="pongRangeInput" class="text-white h5 text-center" id="rangeLabel">points to win: 3</label>
+				<p for="pongRangeInput" class="text-white h5 text-center" id="rangeLabel">points to win: 3</p>
 				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1" max="10" value="${this.objective}" step="1" id="pongRangeInput">
 			</div>
 		`;
@@ -288,59 +324,59 @@ export class PongMenu {
 				<div class="col-12 d-flex justify-content-center">
 					<div class="col-6">
 						<div class="row justify-content-center text-center mt-2">
-							<label class="h3 text-white">left paddle</label>
+							<p class="h2 text-white">left paddle</p>
 						</div>
-						<div class="row justify-content-center text-center mt-2">
-							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white" style="padding: 3px 0px;">move up</label>
+						<div class="row justify-content-center text-center mt-1">
+							<div class="col-6 d-flex justify-content-end align-content-center">
+								<p class="text-white" style="display: inline; margin-top: 5px;">move up</p>
 							</div>
-							<div class="col-6 d-flex justify-content-start">
-								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</label>
-							</div>
-						</div>
-						<div class="row justify-content-center text-center mt-2">
-							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white" style="padding: 3px 0px;">move down</label>
-							</div>
-							<div class="col-6 d-flex justify-content-start">
-								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</label>
+							<div class="col-6 d-flex justify-content-start align-content-center">
+								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</p>
 							</div>
 						</div>
-						<div class="row justify-content-center text-center mt-2">
+						<div class="row justify-content-center text-center">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white" style="padding: 3px 0px;">minimize</label>
+								<p class="text-white" style="display: inline; margin-top: 5px;">move down</p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lMini">${this.keybinds.lMini !== "" ? this.keybinds.lMini : "none"}</label>
+								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</p>
+							</div>
+						</div>
+						<div class="row justify-content-center text-center">
+							<div class="col-6 d-flex justify-content-end">
+								<p class="text-white" style="display: inline; margin-top: 5px;">minimize</p>
+							</div>
+							<div class="col-6 d-flex justify-content-start">
+								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lMini">${this.keybinds.lMini !== "" ? this.keybinds.lMini : "none"}</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-6">
 						<div class="row justify-content-center text-center mt-2">
-							<h3 class="text-white">right paddle</h3>
+							<p class="h2 text-white">right paddle</p>
 						</div>
-						<div class="row justify-content-center text-center mt-2">
+						<div class="row justify-content-center text-center mt-1">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white" style="padding: 3px 0px;">move up</label>
+								<p class="text-white" style="display: inline; margin-top: 5px;">move up</p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</label>
+								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</p>
 							</div>
 						</div>
-						<div class="row justify-content-center text-center mt-2">
+						<div class="row justify-content-center text-center">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white" style="padding: 3px 0px;">move down</label>
+								<p class="text-white" style="display: inline; margin-top: 5px;">move down</p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</label>
+								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</p>
 							</div>
 						</div>
-						<div class="row justify-content-center text-center mt-2">
+						<div class="row justify-content-center text-center">
 							<div class="col-6 d-flex justify-content-end">
-								<label class="text-white" style="padding: 3px 0px;">minimize</label>
+								<p class="text-white" style="display: inline; margin-top: 5px;">minimize</p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
-								<label role="button" tabindex="0" class="text-white clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rMini">${this.keybinds.rMini !== "" ? this.keybinds.rMini : "none"}</label>
+								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rMini">${this.keybinds.rMini !== "" ? this.keybinds.rMini : "none"}</p>
 							</div>
 						</div>
 					</div>
@@ -374,10 +410,7 @@ export class PongMenu {
 		addEventListeners(btnRDown, "rDown");
 		addEventListeners(btnRMini, "rMini");
 
-		if (!document.getElementById('settingsModal').classList.contains('show')) {
-			console.log("show settings modal");
-			this.settingsModal.show();
-		}
+		this.settingsModal.show();
 	}
 
 	showGamemodeConfig() {
@@ -398,8 +431,8 @@ export class PongMenu {
 					</div>
 					<div class="col-12 d-flex justify-content-center mb-2 mt-4">
 						<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
-							<label class="text-white text-center" id="gamemodeDescription"></label>
-							<label class="h5 mt-4 text-white text-center" id="disclaimer"></label>
+							<p class="text-white text-center" id="gamemodeDescription"></p>
+							<p class="h5 mt-4 text-white text-center" id="disclaimer"></p>
 						</div>
 					</div>
 				</div>
@@ -410,7 +443,7 @@ export class PongMenu {
         let btnPvp = document.getElementById('btnPvp');
 		let btnAI = document.getElementById('btnAI');
 		let btnTournament = document.getElementById('btnTournament');
-		let labelDescription = document.getElementById('gamemodeDescription');
+		let pDescription = document.getElementById('gamemodeDescription');
 		let AiDifficulties = document.getElementById('AiDifficulties');
 
 		btnPvp.addEventListener("click", (event) => this.selectGamemode(event, "pvp"));
@@ -419,13 +452,13 @@ export class PongMenu {
 		
 		switch (this.gamemode) {
 			case "pvp":
-				labelDescription.innerHTML = "Two players play against each other, one playing the left paddle, the other playing the right paddle.";
+				pDescription.innerHTML = "Two players play against each other, one playing the left paddle, the other playing the right paddle.";
 				break;
 			case "AI":
-				labelDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
+				pDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
 				break;
 			case "tournament":
-				labelDescription.innerHTML = "Multiple players compete against each other in a tournament.";
+				pDescription.innerHTML = "Multiple players compete against each other in a tournament.";
 				break;
 			default:
 				break; 
@@ -468,8 +501,8 @@ export class PongMenu {
 					</div>
 					<div class="col-12 d-flex justify-content-center mb-2 mt-4">
 						<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
-							<label class="text-white text-center" id="gamestyleDescription"></label>
-							<label class="text-white text-center" id="availableGamemodes"></label>
+							<p class="text-white text-center" id="gamestyleDescription"></p>
+							<p class="text-white text-center" id="availableGamemodes"></p>
 						</div>
 					</div>
 				</div>
@@ -523,7 +556,7 @@ export class PongMenu {
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
 		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
-		this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
+		this.currentGamemodeLabel.innerHTML = this.gamemode;
 
 		this.showGamemodeConfig();
 		this.updatePlayersContainer();
@@ -539,14 +572,14 @@ export class PongMenu {
 		} 
 		else if (this.gamestyle == "3D" && gamestyle != this.gamestyle) {
 			this.gamemode = this.lastGamemode;
-			this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
+			this.currentGamemodeLabel.innerHTML = this.gamemode;
 		}
 		
 		this.gamestyle = gamestyle;
 		// TODO: change this to /pong3d
 		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
 		localStorage.setItem('gamestyle', JSON.stringify(this.gamestyle));
-		this.currentGamestyleLabel.innerHTML = "current game style: " + this.gamestyle;
+		this.currentGamestyleLabel.innerHTML = this.gamestyle;
 
 		this.showGamestyleConfig();
 		this.updatePlayersContainer();

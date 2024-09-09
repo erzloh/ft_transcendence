@@ -29,33 +29,33 @@
 				</div>
 			</div>
 			<div class="row justify-content-center">
-				<div class="col-4 d-flex flex-column align-items-center mb-3 squarer-glass m-1 me-3 p-2">
-					<p class="text-white h5 text-center">Freeze</p>
-					<p class="text-white h5" id="pCD">Ready</p>	
+				<div class="col-3 d-flex flex-column align-items-center mb-3 squarer-glass m-1 me-3 p-2">
+					<p class="text-white h4 text-center" id="pacmanSpellName">spell</p>
+					<p class="text-white h5" id="pCD">cooldown</p>	
 					<img class="m-3" id="imgPacmanSkin"/>
-					<p class="h4 text-white m-0" id="pacmanPlayerLabel"></p>
+					<p class="h3 text-white m-0" id="pacmanPlayerLabel"></p>
 					
 				</div>
 				
-				<div class="col-4 d-flex flex-column align-items-center mb-3 squarer-glass m-1 p-2">
-					<p class="text-white h5 text-center">Block</p>
-					<p class="text-white h5" id="gCD">Ready</p>	
+				<div class="col-3 d-flex flex-column align-items-center mb-3 squarer-glass m-1 me-3 p-2">
+					<p class="text-white h4 text-center" id="ghostSpellName">spell</p>
+					<p class="text-white h5" id="gCD">cooldown</p>	
 					<img class="m-3" id="imgGhostSkin"/>
-					<p class="h4 text-white m-0" id="ghostPlayerLabel"></p>
+					<p class="h3 text-white m-0" id="ghostPlayerLabel"></p>
 				</div>
 			</div>
 		</div>
-		<div class="modal" id="pauseModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="pauseModalLabel" aria-hidden="true">
+		<div class="modal" id="pauseModal" data-bs-backdrop="static" tabindex="-1" aria-pledby="pauseModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center">
 						<div class="modal-header">
-							<label class="h3 modal-title text-white w-100 text-center" data-translate="game paused">Game Paused</label>
+							<p class="h3 modal-title text-white w-100 text-center" data-translate="game paused">Game Paused</p>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
 								<div class="col-10 d-flex justify-content-center mt-2">
-									<label class="h5 text-white" data-translate="press escape">Press escape to continue</label>
+									<p class="h5 text-white" data-translate="press escape">Press escape to continue</p>
 								</div>
 							</div>
 						</div>
@@ -63,25 +63,26 @@
 			  	</div>
 			</div>
 		</div>
-		<div class="modal fade glass-modal-bg" id="endgameModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true">
+		<div class="modal fade glass-modal-bg" id="endgameModal" data-bs-backdrop="static" tabindex="-1" aria-pledby="endgameModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<label class="h3 modal-title text-white w-100 text-center" id="endgameModalWinner">Keys settings</label>
+							<p class="h1 modal-title text-white w-100 text-center" id="endgameModalWinner">Keys settings</p>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
-								<div class="col-10 d-flex justify-content-center mt-2">
-									<label class="h5 text-white" id="endgameModalScore"></label>
+								<div class="col-10 d-flex justify-content-center mt-1">
+									<p class="h4 text-white" id="endgameModalScore"></p>
 								</div>
-								<div class="col-10 d-flex justify-content-center mt-3">
-									<label class="h5 text-white" id="endgameModalTime"></label>
+								<div class="col d-flex justify-content-center align-items-center mb-2">
+									<img src="/static/assets/UI/icons/time.svg" width="28x"/>
+									<p class="h4 text-white text-center mb-0 ms-2" id="endgameModalTime"></p>
 								</div>
 								<div class="col-12 d-flex justify-content-center mt-3 mb-2">
-									<button type="button" class="btn btn-lg text-white mx-2" id="playAgainButton" data-bs-dismiss="modal">Play Again</button>
-									<a type="button" class="btn btn-lg text-white mx-2" href="/pacmanMenu">Menu</a>
-									<a type="button" class="btn btn-lg text-white mx-2" href="/">Home page</a>
+									<button type="button" class="btn btn-lg text-white btn-filled mx-2" id="playAgainButton" data-bs-dismiss="modal">play again</button>
+									<a type="button" class="btn btn-lg text-white btn-filled mx-2" href="/pacmanMenu">Menu</a>
+									<a type="button" class="btn btn-lg text-white btn-filled mx-2" href="/">home page</a>
 								</div>
 							</div>
 						</div>

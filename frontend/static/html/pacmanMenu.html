@@ -3,10 +3,10 @@
 		<div class="toast-container position-fixed top-0 end-0 p-3">
 			<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none; max-width: none; width: auto;" role="alert" aria-live="assertive" aria-atomic="true">
 				<div class="d-flex glass">
-					<div class="toast-body" >
-						<label class="text-white" id="toastBody">Hello, world! This is a toast message.</label>
+					<div class="toast-body">
+						<p class="text-white" style="display: inline;" id="toastBody">Hello, world! This is a toast message.</p>
 					</div>
-					<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+					<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-p="Close"></button>
 				</div>
 			</div>
 		</div>
@@ -20,19 +20,19 @@
 			<div class="col d-flex flex-column">
 				<div class="row justify-content-between gap-5">
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<!-- <label class="h3 text-white mb-3">pacman</label> -->
-							<img class="mb-3" src="/static/assets/pacman/images/pacman_high_res.png" width="32px" alt="An image of pac-man."/>
-							<label class="h5 text-white mb-3" id="pacmanName">player 1</label>
-							<input type="text" id="pacmanInput" class="form-control form-control-sm text-input text-center" placeholder="enter username" data-translate="enter-username">
+						<div class="col-8 d-flex flex-column align-items-center mb-1">
+							<!-- <p class="h3 text-white mb-3">pacman</p> -->
+							<img class="mb-2" id="imgCurrentPacSkin" src="/static/assets/pacman/images/pacman_high_res.png" width="48px" alt="An image of pac-man."/>
+							<p class="h5 text-white mb-3" id="pacmanName">player 1</p>
+							<input type="text" id="pacmanInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="enter username" data-translate="enter-username">
 						</div>
 					</div>		
 					<div class="col d-flex flex-column align-items-center glass mt-1 p-4">
-						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-2">
-							<!-- <label class="h3 text-white">ghost</label> -->
-							<img class="mb-3" src="/static/assets/pacman/images/blueGhost_high_res.png" width="32px" alt="An image of a ghost."/>
-							<label class="h5 text-white mb-3" id="ghostName">player 2</label>
-							<input type="text" id="ghostInput" class="form-control form-control-sm text-input text-center" placeholder="enter username" data-translate="enter-username">
+						<div class="col-8 d-flex flex-column align-items-center mb-1">
+							<!-- <p class="h3 text-white">ghost</p> -->
+							<img class="mb-2" id="imgCurrentGhostSkin" src="/static/assets/pacman/images/blueGhost_high_res.png" width="48px" alt="An image of a ghost."/>
+							<p class="h5 text-white mb-3" id="ghostName">player 2</p>
+							<input type="text" id="ghostInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="enter username" data-translate="enter-username">
 						</div>
 					</div>
 				</div>
@@ -40,13 +40,13 @@
 		</div>
 		<div style="width: 75vw;" class="col-12 text-center mt-5 mb-5 p-5 glass">
 			<button class="btn btn-lg text-white btn-filled m-2" id="btnKeys" data-translate="keys">keys</button>
-			<button class="btn btn-lg text-white btn-filled m-2" id="btnPSkin" data-translate="pacman-skin">pacman skin</button>
-			<button class="btn btn-lg text-white btn-filled m-2" id="btnGSkin" data-translate="ghost-skin">ghost skin</button>
+			<button class="btn btn-lg text-white btn-filled m-2" id="btnPSkin" data-translate="pac-man">pacman</button>
+			<button class="btn btn-lg text-white btn-filled m-2" id="btnGSkin" data-translate="ghost">ghost</button>
 			<button class="btn btn-lg text-white btn-filled m-2" id="btnGamemode" data-translate="gamemode">gamemode</button>
 			<button class="btn btn-lg text-white btn-filled m-2" id="btnMap" data-translate="map">map</button>
 			<button class="btn btn-lg text-white btn-filled m-2" id="btnColor" data-translate="theme">theme</button>
 		</div>
-		<div class="modal fade glass-modal-bg" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+		<div class="modal fade glass-modal-bg" id="settingsModal" tabindex="-1" aria-pledby="settingsModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass"  id="settingsModalContent">						
