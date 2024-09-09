@@ -2,8 +2,8 @@
 	<div class="row justify-content-center">
 		<div class="row justify-content-center">
 			<div class="col-12 d-flex flex-column align-items-center mb-4">
-				<label class="text-white h1" animated-letters data-translate="pong">pong</label>
-				<label class="text-white h3 mt-2" id="objectiveLabel">points to win: </label>
+				<p class="text-white h1" animated-letters data-translate="pong">pong</p>
+				<p class="text-white h3 mt-2" id="objectiveLabel">points to win: </p>
 				<div class="col-3 d-flex justify-content-center align-items-end mt-2">
 					<img src="/static/assets/UI/icons/time.svg" width="32px"/>
 					<p id="timer" class="h3 text-white text-center mb-0 ms-2">00:00</p>
@@ -22,14 +22,14 @@
 					<div id="colorBoxLeft" class="border border-white" style="width: 100px; height: 20px;"></div>
 					<p class="h3 mt-1" style="display: inline;" id="leftPaddleName">Player 1</p>
 					<p class="h3" style="display: inline;" id="leftScore">0</p>
-					<p class="h5" style="display: inline;" id="labelMinimize1">minimize</p>
+					<p class="h5" style="display: inline;" id="pMinimize1">minimize</p>
 					<p class="h5" style="display: inline;" id="lMinimizeCD">ready</p>
 				</div>
 				<div class="col-6 d-flex align-items-center flex-column justify-content-start">
 					<div id="colorBoxRight" class="border border-white" style="width: 100px; height: 20px;"></div>
 					<p class="h3 mt-1" style="display: inline;" id="rightPaddleName">Player 2</p>
 					<p class="h3" style="display: inline;" id="rightScore">0</p>
-					<p class="h5" style="display: inline;" id="labelMinimize2">minimize</p>
+					<p class="h5" style="display: inline;" id="pMinimize2">minimize</p>
 					<p class="h5" style="display: inline;" id="rMinimizeCD">ready</p>
 				</div>
 			</div>
@@ -39,17 +39,17 @@
 		</div>
 
 
-		<div class="modal glass-modal-bg" id="pauseModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="pauseModalLabel" aria-hidden="true">
+		<div class="modal glass-modal-bg" id="pauseModal" data-bs-backdrop="static" tabindex="-1" aria-pledby="pauseModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center">
 						<div class="modal-header">
-							<label class="h3 modal-title text-white w-100 text-center">Game Paused</label>
+							<p class="h3 modal-title text-white w-100 text-center">Game Paused</p>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
 								<div class="col-10 d-flex justify-content-center mt-2">
-									<label class="h5 text-white">Press escape to continue</label>
+									<p class="h5 text-white">Press escape to continue</p>
 								</div>
 							</div>
 						</div>
@@ -57,18 +57,18 @@
 			  	</div>
 			</div>
 		</div>
-		<div class="modal fade glass-modal-bg" id="tournamentModal" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true" data-bs-keyboard="false">
+		<div class="modal fade glass-modal-bg" id="tournamentModal" tabindex="-1" aria-pledby="endgameModalLabel" aria-hidden="true" data-bs-keyboard="false">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<label class="h1 modal-title text-white w-100 text-center mb-1" id="matchTournament">tournament</label>
+							<p class="h1 modal-title text-white w-100 text-center mb-1" id="matchTournament">tournament</p>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
 								<div class="col-10 d-flex justify-content-center align-items-center mt-2 mb-2">
 									<div id="colorBox1" class="border border-white" style="width: 50px; height: 20px; margin-right: 10px;"></div>
-									<label class="h3 text-white text-center" id="playersTournament">player1 VS player2</label>
+									<p class="h3 text-white text-center" id="playersTournament">player1 VS player2</p>
 									<div id="colorBox2" class="border border-white" style="width: 50px; height: 20px; margin-left: 10px;"></div>
 								</div>								
 								<div class="col-3 d-flex flex-column justify-content-center mt-2"></div>
@@ -80,21 +80,21 @@
 			  	</div>
 			</div>
 		</div>
-		<div class="modal fade glass-modal-bg" id="tournamentMatchEndModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true" data-bs-keyboard="false">
+		<div class="modal fade glass-modal-bg" id="tournamentMatchEndModal" data-bs-backdrop="static" tabindex="-1" aria-pledby="endgameModalLabel" aria-hidden="true" data-bs-keyboard="false">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<label class="h1 modal-title text-white w-100 text-center mb-1"  id="matchId">tournament match end</label>
+							<p class="h1 modal-title text-white w-100 text-center mb-1"  id="matchId">tournament match end</p>
 						</div>
 						<div class="modal-body">
 							<div class="col d-flex flex-column align-items-center">
-								<div class="col-10 d-flex flex-column justify-content-center mt-2">
-									<label class="h3 text-white text-center" id="matchWinner">winner</label>
-									<label class="h4 text-white text-center" id="matchScore">score</label>
+								<div class="col-10 d-flex flex-column justify-content-center mb-1">
+									<p class="h3 text-white text-center" id="matchWinner">winner</p>
+									<p class="h4 text-white text-center" id="matchScore">score</p>
 									<div class="col d-flex justify-content-center align-items-center">
 										<img src="/static/assets/UI/icons/time.svg" width="28x"/>
-										<p class="h4 text-white text-center mb-0 ms-2" id="matchTimeElapsed" >time elapsed</label>
+										<p class="h4 text-white text-center mb-0 ms-2" id="matchTimeElapsed" >time elapsed</p>
 									</div>
 								</div>
 								<div class="col-3 d-flex flex-column justify-content-center mt-2"></div>
@@ -106,21 +106,21 @@
 			  	</div>
 			</div>
 		</div>
-		<div class="modal fade glass-modal-bg" id="endgameModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="endgameModalLabel" aria-hidden="true" data-bs-keyboard="false">
+		<div class="modal fade glass-modal-bg" id="endgameModal" data-bs-backdrop="static" tabindex="-1" aria-pledby="endgameModalLabel" aria-hidden="true" data-bs-keyboard="false">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<label class="h1 modal-title text-white w-100 text-center" id="endgameModalWinner">winner</label>
+							<p class="h1 modal-title text-white w-100 text-center" id="endgameModalWinner">winner</p>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
 								<div class="col-10 d-flex justify-content-center mt-1">
-									<label class="h4 text-white" id="endgameModalScore"></label>
+									<p class="h4 text-white" id="endgameModalScore"></p>
 								</div>
 								<div class="col d-flex justify-content-center align-items-center mb-2">
 									<img src="/static/assets/UI/icons/time.svg" width="28x"/>
-									<p class="h4 text-white text-center mb-0 ms-2" id="endgameModalTime" >time elapsed</label>
+									<p class="h4 text-white text-center mb-0 ms-2" id="endgameModalTime" >time elapsed</p>
 								</div>
 								<div class="col-12 d-flex justify-content-center mt-1 mb-2">
 									<button type="button" class="btn btn-lg text-white btn-filled mx-2" id="playAgainButton" data-bs-dismiss="modal">play again</button>

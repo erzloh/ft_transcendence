@@ -148,8 +148,7 @@ export class Timer {
 		this.updateDisplay();
 	}
 	updateDisplay() {
-		this.timer.innerHTML = 
-			this.min.toString().padStart(2, '0') + ":" + this.sec.toString().padStart(2, '0');
+		this.timer.innerHTML = this.getTime();
 
 		if (this.leftMinimizeCD > 0)
 			this.lMinimizeLabel.innerHTML = this.leftMinimizeCD.toString().padStart(2, '0');
@@ -186,25 +185,20 @@ export class Timer {
 }
 
 export class Ball {
-    constructor(x, y, size, color, baseSpeed, maxY, maxX, pongGame) {
-        this.x = x;
-		this.y = y;
+    constructor(size, color, baseSpeed, maxY, maxX, pongGame) {
+        this.x;
+		this.y;
 		this.size = size;
 		this.color = color;
-		this.speed = baseSpeed + 2.5;
+		this.speed;
 		this.baseSpeed = baseSpeed;
 		this.dx = baseSpeed;
 		this.maxY = maxY;
 		this.maxX = maxX;
 		this.pG = pongGame;
 
-		if (Math.random() > 0.5) {
-			this.dy = (Math.random() * 3 + 2.5);
-		} 
-		else {
-			this.dy = (Math.random() * 3 + 2.5);
-		}
-    }
+		this.resetPosition();
+	}
 
 	collisionDetect(pad) {
 		pad.top = pad.y;
@@ -234,23 +228,20 @@ export class Ball {
 
 		if (this.collisionDetect(currentPad)) {
 			this.dx *= -1;
-			this.speed += 0.3;
+			this.speed += 0.2;
 			this.dx = this.dx > 0 ? this.speed : -this.speed;
 
 			if (this.pG.gamestyle == "enhanced" && currentPad.direction != "") {
 				// Apply a velocity change 
 				this.dy *= 	((this.dy > 0 && currentPad.direction == "down") || 
 							(this.dy < 0 && currentPad.direction == "up")) ?
-							1.4 : -0.8;
-				
+							1.2 : -0.9;
 				// Keep the values acceptable
 				if (this.dy > 0) {
-					this.dy = Math.max(2, Math.min(this.dy, 10));
+					this.dy = Math.max(0.3, Math.min(this.dy, 4));
 				} else {
-					this.dy = Math.min(-2, Math.max(this.dy, -10));
+					this.dy = Math.min(-0.3, Math.max(this.dy, -4));
 				}
-
-				console.log(this.dy);
 			}
 		}
 
@@ -265,7 +256,7 @@ export class Ball {
 	resetPosition() {
 		this.x = this.maxX / 2;
 		this.y = this.maxY / 2;
-		this.speed = this.baseSpeed + 2.5;
+		this.speed = this.baseSpeed + 0.2;
 
 		if (Math.random() > 0.5) {
 			this.dx = this.baseSpeed;
@@ -275,10 +266,10 @@ export class Ball {
 		}
 
 		if (Math.random() > 0.5) {
-			this.dy = (Math.random() * 3 + 2.5);
+			this.dy = (Math.random() * 1.3 + 0.5);
 		} 
 		else {
-			this.dy = (Math.random() * 3 + 2.5);
+			this.dy = -(Math.random() * 1.3 + 0.5);
 		}
 	}
 }

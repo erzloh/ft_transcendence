@@ -1,5 +1,5 @@
 import { updateTexts } from "../utils/languages.js";
-import { Pacman, Ghost} from "./pacman/characters.js";
+import { Pacman, Pacgirl, Coolman, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
 
 let eventListeners = { }
@@ -11,6 +11,8 @@ class PacmanGame {
 		this.pScore = document.getElementById('pScore');
 		this.startButton = document.getElementById('btnStart');
 
+		this.pacmanSpellName = document.getElementById('pacmanSpellName');
+		this.ghostSpellName = document.getElementById('ghostSpellName');
 		this.pacmanUsername = document.getElementById('pacmanPlayerLabel');
 		this.ghostUsername = document.getElementById('ghostPlayerLabel');
 		this.imgPacmanSkin = document.getElementById('imgPacmanSkin');
@@ -28,7 +30,7 @@ class PacmanGame {
 		this.c = this.canvas.getContext('2d');
 
 		// Map data
-		this.cells; // The cells array
+		this.cells;
 		this.fruitArray = [];
 		this.starArray = [];
 		this.width, this.height, this.tileSize;
@@ -42,7 +44,8 @@ class PacmanGame {
 		// Image objects
 		this.images = {
 			imgPacman1 : new Image(), imgPacman2 : new Image(), imgPacman3 : new Image(),
-			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(),
+			imgPacman1_frenzy : new Image(), imgPacman2_frenzy : new Image(), imgPacman3_frenzy : new Image(),
+			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(), imgGhostDisabled : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
 			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image(),
 			imgBluePortal1 : new Image(), imgBluePortal2 : new Image(), imgBluePortal3 : new Image(), imgBluePortal4 : new Image()
@@ -113,13 +116,51 @@ class PacmanGame {
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
 
+		switch (this.pacmanSkin) {
+			case "pacman":
+				pacmanSpellName.innerHTML = "frenzy";
+				break;
+			case "pacgirl":
+				pacmanSpellName.innerHTML = "speed boost";
+				break;
+			case "coolman":
+				pacmanSpellName.innerHTML = "stun";
+				break;
+			case "pacventurer":
+				pacmanSpellName.innerHTML = "exploration";
+				break;
+			default:
+				break;
+		}
+
+		switch (this.ghostSkin) {
+			case "blueGhost":
+				ghostSpellName.innerHTML = "ghost block";
+				break;
+			case "orangeGhost":
+				ghostSpellName.innerHTML = "excavate";
+				break;
+			case "pinkGhost":
+				ghostSpellName.innerHTML = "intangible";
+				break;
+			case "greenGhost":
+				ghostSpellName.innerHTML = "blockade";
+				break;
+			default:
+				break;
+		}
+
 		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
 		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
 		this.images.imgPacman3.src = 'static/assets/pacman/images/' + this.pacmanSkin + '3.png';
+		this.images.imgPacman1_frenzy.src = 'static/assets/pacman/images/pacman1_frenzy.png';
+		this.images.imgPacman2_frenzy.src = 'static/assets/pacman/images/pacman2_frenzy.png';
+		this.images.imgPacman3_frenzy.src = 'static/assets/pacman/images/pacman3_frenzy.png';
 		this.images.imgGhost1.src = 'static/assets/pacman/images/' + this.ghostSkin + '1.png';
 		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
 		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
 		this.images.imgGhost4.src = 'static/assets/pacman/images/' + this.ghostSkin + '4.png';
+		this.images.imgGhostDisabled.src = 'static/assets/pacman/images/ghostDisabled.png';
 		this.images.imgCherry.src = 'static/assets/pacman/images/cherry.png';
 		this.images.imgBanana.src = 'static/assets/pacman/images/banana.png';
 		this.images.imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';
@@ -157,6 +198,10 @@ class PacmanGame {
 		this.fruitArray = [];
 		this.starArray = [];
 
+		if (this.pacman.cooldownTimer != null)
+			this.pacman.cooldownTimer.resetCD();
+		if (this.ghost.cooldownTimer != null)
+			this.ghost.cooldownTimer.resetCD();
 		this.timer.reset();
 
 		this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -166,11 +211,11 @@ class PacmanGame {
 
 	partyOver(winner) {
 		this.gameOver = true;
-		this.timer.stop();
+		this.stopGameLoop();
 
 		this.endgameModalWinner.textContent = winner + " won the game !";
 		this.endgameModalScore.textContent = "Pacman's score: " + this.pacman.points;
-		this.endgameModalTime.textContent = "Time elapsed: " + this.timer.min.toString().padStart(2, '0') + ":" + this.timer.sec.toString().padStart(2, '0');
+		this.endgameModalTime.textContent = this.timer.getTime();
 
 		// Show the modal
 		this.endgameModal.show();
@@ -188,9 +233,17 @@ class PacmanGame {
 			}
 		}
 
-		let imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
+		let imgpac;
+		if (this.pacman.inFrenzy) {
+			imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1_frenzy : 
+						this.frame % 40 < 20 ? this.images.imgPacman2_frenzy :
+						this.frame % 40 < 30 ? this.images.imgPacman3_frenzy : this.images.imgPacman2_frenzy;
+		}
+		else {
+			imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
 						this.frame % 40 < 20 ? this.images.imgPacman2 :
 						this.frame % 40 < 30 ? this.images.imgPacman3 : this.images.imgPacman2;
+		}
 
 		this.pacman.render(imgpac);
 		this.ghost.render();
@@ -259,18 +312,57 @@ class PacmanGame {
 			let row = [];
 			for (let x = 0; x < this.width; x++) {
 				if (data[y][x] === "p") {
-					this.pacman = new Pacman(x, y, "none", this);
-					data[y][x] = 0;
+					this.createCharacter("pacman", x, y);
+					data[y][x] = 6;
 				}
 				else if (data[y][x] === "g") {
-					this.ghost = new Ghost(x, y, "none", this);
-					data[y][x] = 0;
+					this.createCharacter("ghost", x, y);
+					data[y][x] = 6;
 				}
 				row.push(new Cell(x, y, data[y][x], this, this.tileSize));
 			}
 			tmp.push(row);
 		}
 		return tmp;
+	}
+
+	createCharacter(type, x, y) {
+		if (type == "pacman") {
+			switch (this.pacmanSkin) {
+				case "pacman":
+					this.pacman = new Pacman(x, y, "none", this);
+					break;
+				case "pacgirl":
+					this.pacman = new Pacgirl(x, y, "none", this);
+					break;
+				case "coolman":
+					this.pacman = new Coolman(x, y, "none", this);
+					break;
+				case "pacventurer":
+					this.pacman = new Pacventurer(x, y, "none", this);
+					break;
+				default:
+					break;
+			}
+		} 
+		else if (type == "ghost") {
+			switch (this.ghostSkin) {
+				case "blueGhost":
+					this.ghost = new BlueGhost(x, y, "none", this);
+					break;
+				case "orangeGhost":
+					this.ghost = new OrangeGhost(x, y, "none", this);
+					break;
+				case "pinkGhost":
+					this.ghost = new PinkGhost(x, y, "none", this);
+					break;
+				case "greenGhost":
+					this.ghost = new GreenGhost(x, y, "none", this);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 
 	pacmanHandleKeyDown = (event) => {
@@ -321,6 +413,10 @@ class PacmanGame {
 	stopGameLoop() {
 		console.log("stop pacman loop");
 		if (this.gameStart) {
+			if (this.pacman.cooldownTimer != null)
+				this.pacman.cooldownTimer.stopCD();
+			if (this.ghost.cooldownTimer != null)
+				this.ghost.cooldownTimer.stopCD();
 			this.timer.stop();
 		}
 	}
