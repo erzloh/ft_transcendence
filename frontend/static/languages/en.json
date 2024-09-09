@@ -96,6 +96,7 @@
 	"pvp data": "pvp",
 	"ai data": "cpu",
 	"tournament data": "tournament",
+	"no stats": "no stats found.",
 
 	"graphics": "graphics", 
 	"ultra": "ultra",

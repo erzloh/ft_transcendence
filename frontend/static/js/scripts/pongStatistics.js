@@ -1,4 +1,5 @@
 import { BASE_URL } from '../index.js';
+import { updateTextForElem } from '../utils/languages.js';
 
 // Function that will be called when the view is loaded
 export function pongStatistics () {
@@ -47,6 +48,7 @@ export function pongStatistics () {
 			console.log(response);
 			if (response.status === 200) {
 				const stats = await response.json();
+				console.log(stats);
 
 				// If there are no stats
 				if (stats.length === 0) {
@@ -54,6 +56,7 @@ export function pongStatistics () {
 					const td = document.createElement('td');
 					td.setAttribute('colspan', '6');
 					td.setAttribute('data-translate', 'no stats');
+					updateTextForElem(td, 'no stats');
 					tr.appendChild(td);
 					tbody.appendChild(tr);
 					return;

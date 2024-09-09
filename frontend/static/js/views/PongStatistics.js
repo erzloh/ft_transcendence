@@ -11,7 +11,7 @@ export default class extends AbstractView {
         return (await fetch("static/html/pongStatistics.html")).text();
     }
 
-    loadJS() {
+    async loadJS() {
         pongStatistics();
     }
 }
