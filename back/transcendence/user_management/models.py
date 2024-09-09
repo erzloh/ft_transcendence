@@ -29,7 +29,6 @@ class CustomUser(AbstractUser):
 	profile_picture = models.ImageField(upload_to='profile_pictures/', default='profile_pictures/default.jpg')
 	friends = models.ManyToManyField('self', blank=True)
 	online_status = models.BooleanField(default=False)
-	max_endless_score = models.IntegerField(default=0)
 	objects = CustomUserManager()
 
 	total_pong_matches = models.IntegerField(default=0)
@@ -38,38 +37,28 @@ class CustomUser(AbstractUser):
 	total_pong_pvp_matches = models.IntegerField(default=0)
 	total_tournament_played = models.IntegerField(default=0)
 
+	total_pacman_matches = models.IntegerField(default=0)
+	total_pacman_time = models.IntegerField(default=0)
+	max_endless_score = models.IntegerField(default=0)
+
 	def __str__(self):
 		return self.username
 	
-	def total_pacman_matches(self):
-		return self.pacman_matches_as_pacman.count() + self.pacman_matches_as_ghost.count()
-
-	def total_pacman_wins(self):
-		return self.pacman_matches_won.count()
-
-	def total_pacman_as_pacman_matches(self):
-		return self.pacman_matches_as_pacman.count()
-
-	def total_pacman_as_pacman_wins(self):
-		return self.pacman_matches_won.filter(pacman_player=self).count()
-
-	def total_pacman_as_ghost_matches(self):
-		return self.pacman_matches_as_ghost.count()
-
-	def total_pacman_as_ghost_wins(self):
-		return self.pacman_matches_won.filter(ghost_player=self).count()
-
 
 class PacmanMatch(models.Model):
-	pacman_player = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='pacman_matches_as_pacman')
-	ghost_player = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='pacman_matches_as_ghost')
+	pacman_player = models.CharField(max_length=255)
+	pacman_character = models.CharField(max_length=255)
+	ghost_player = models.CharField(max_length=255)
+	ghost_character = models.CharField(max_length=255)
 	map_name = models.CharField(max_length=255)
 	match_duration = models.DurationField()
-	winner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='pacman_matches_won')
+	winner = models.CharField(max_length=255)
 	pacman_score = models.IntegerField()
+	match_date = models.DateTimeField(auto_now_add=True)
+	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
 	def __str__(self):
-		return f"Pacman: {self.pacman_player.username}, Ghost: {self.ghost_player.username}, Winner: {self.winner.username}"
+		return f"Pacman: {self.pacman_player}, Ghost: {self.ghost_player}, Winner: {self.winner}"
 
 
 class AIPongMatch(models.Model):
@@ -100,6 +89,7 @@ class PongTournament(models.Model):
 	name = models.CharField(max_length=255)
 	matches = models.ManyToManyField(PvPongMatch)
 	ranking = models.TextField()
+	duration = models.DurationField()
 
 	def __str__(self):
 		return self.name

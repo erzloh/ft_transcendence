@@ -169,7 +169,17 @@ class RecordPacmanMatch(views.APIView):
     def post(self, request):
         serializer = PacmanMatchSerializer(data=request.data)
         if serializer.is_valid():
-            match = serializer.save()
+            serializer.save()
+            user_stats = request.user
+            stats_data = {
+                'total_pacman_matches': user_stats.total_pacman_matches + 1,
+                'total_pacman_time': user_stats.total_pacman_time + request.data['match_duration'],
+            }
+            stats_serializer = UserPacmanStatsSerializer(user_stats, data=stats_data, partial=True)
+            if stats_serializer.is_valid():
+                stats_serializer.save()
+            else:
+                return Response(stats_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -179,7 +189,7 @@ class UserPacmanMatchesHistory(ListAPIView):
     permission_classes = [IsAuthenticated]
     def get_queryset(self):
         user = self.request.user
-        return PacmanMatch.objects.filter(Q(pacman_player=user) | Q(ghost_player=user))
+        return PacmanMatch.objects.filter(user=user).order_by('-match_date')
 
 class UserPacmanStats(views.APIView):
     authentication_classes = [CookieTokenAuthentication]

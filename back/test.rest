@@ -79,37 +79,41 @@ Cookie: jwt=e39b493e181c827d20faa60bb1322ab180b2f5cb
 
 POST https://localhost/api/record_pacman_match/
 Content-Type: application/json
-Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
 
 {
-    "pacman_player": 1,
-    "ghost_player": 2,
+    "pacman_player": "noobman",
+    "pacman_character": "pacgirl",
+    "ghost_player": "noob2",
+    "ghost_character": "green ghost",
     "map_name": "map3",
     "match_duration": 11,
-    "winner": 2,
-    "pacman_score": 50
+    "winner": "noobman",
+    "pacman_score": 50,
+    "match_date": "2024-06-01",
+    "user": 1
 }
 
 ###
 
 GET https://localhost/api/pacman_matches_history/
 Content-Type: application/json
-Cookie: jwt=7fc9fc0d990d21778412067ce811e7987c1319e7
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
 
 ###
 
 GET https://localhost/api/pacman_stats/
 Content-Type: application/json
-Cookie: jwt=185a0e3a92e160680125bf6fc7ea6be94ee66304
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
 
 ###
 
 PUT https://localhost/api/pacman_endless_update
 Content-Type: application/json
-Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
 
 {
-    "max_endless_score": 10000
+    "max_endless_score": 1000
 }
 
 ### PONG ####################################################################
@@ -160,4 +164,4 @@ Cookie: jwt=8f959505666f7be154f13beb27a39ead11655d5a
 
 GET https://localhost/api/PvPong_match_history/
 Content-Type: application/json
-Cookie: jwt=8f959505666f7be154f13beb27a39ead11655d5a
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
