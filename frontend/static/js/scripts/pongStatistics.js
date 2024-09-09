@@ -9,6 +9,48 @@ export function pongStatistics () {
 	const tournamentBtn = document.getElementById('tournament-stat-btn');
 
 	const statTable = document.getElementById('pong-stat-table');
+	const globalStatTable = document.getElementById('pong-global-stat-table');
+
+	// Fill global stats table
+	const fillGlobalStatTable = () => {
+		globalStatTable.innerHTML = '';
+
+		// Create the table headers
+		const thead = document.createElement('thead');
+		const tr = document.createElement('tr');
+		const columns = ['total games', 'total duration', 'average duration'];
+		columns.forEach(column => {
+			const th = document.createElement('th');
+			th.setAttribute('data-translate', column);
+			tr.appendChild(th);
+			updateTextForElem(th, column);
+		})
+		thead.appendChild(tr);
+		globalStatTable.append(thead);
+
+		// Create the table body
+		const tbody = document.createElement('tbody');
+		globalStatTable.appendChild(tbody);
+
+		// Get the global stats
+		const fillGlobalStats = async () => {
+			const response = await fetch(`${BASE_URL}/api/pong_stats/`);
+			if (response.status === 200) {
+				const responseData = await response.json();
+				
+				const tr = document.createElement('tr');
+				const columns = ['total_pong_matches', 'total_pong_time', 'average_pong_time'];
+				columns.forEach(column => {
+					const td = document.createElement('td');
+					td.textContent = responseData[column];
+					tr.appendChild(td);
+				});
+				tbody.appendChild(tr);
+			}
+		}
+
+		fillGlobalStats();
+	}
 
 	// Fill table with pvp stats
 	// Function to fill the table
@@ -197,7 +239,9 @@ export function pongStatistics () {
 	// Select the pvp stats by default
 	pvpBtn.classList.add('selected');
 	// Fill the table with pvp stats by default
-	fillPvpTable();	
+	fillPvpTable();
+	// Fill the global stats table
+	fillGlobalStatTable();
 
 	// Add Event Listener to each stat button
 	pvpBtn.addEventListener('click', () => {
