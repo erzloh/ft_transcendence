@@ -149,7 +149,7 @@ export class Pacman extends PacmanBase {
 		this.frenzyDuration = 5;
 		this.frenzyCooldown = 25;
 		this.frenzySpeedBoost = 120 / 100;
-		this.disableGhostDuration = 3;
+		this.disableGhostDuration = 2;
 		this.inFrenzy = false;
 		this.ateGhost = false;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.frenzyDuration, this.frenzyCooldown);
@@ -164,7 +164,6 @@ export class Pacman extends PacmanBase {
 
 	eatGhost() {
 		this.pcG.ghost.disabled = true;
-		this.stopSpell();
 		this.ateGhost = true;
 		this.pcG.ghost.sendBackToSpawn();
 		this.pcG.pacman.gainPoints(300);
@@ -190,7 +189,7 @@ export class Pacman extends PacmanBase {
 	}
 }
 
-export class Pacgirl extends PacmanBase {
+export class PacWoman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "Speed boost";

@@ -1,5 +1,5 @@
 import { updateTexts } from "../utils/languages.js";
-import { Pacman, Pacgirl, Coolman, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
+import { Pacman, PacWoman, Coolman, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
 
 let eventListeners = { }
@@ -333,7 +333,7 @@ class PacmanGame {
 					this.pacman = new Pacman(x, y, "none", this);
 					break;
 				case "pacgirl":
-					this.pacman = new Pacgirl(x, y, "none", this);
+					this.pacman = new PacWoman(x, y, "none", this);
 					break;
 				case "coolman":
 					this.pacman = new Coolman(x, y, "none", this);
