@@ -5,6 +5,7 @@
 
 	"pong": "pong",
 	"pac-man": "pac-man",
+	"ghost": "ghost",
 
 	"pacman-menu": "pac-man menu",
 	"enter-username": "enter username",
@@ -19,8 +20,8 @@
 	"move-right": "move right",
 	"use-spell": "use spell",
 
-	"pacman-skin": "pac-man skin",
-	"ghost-skin": "ghost skin",
+	"pacman-skin": "pac-man characters",
+	"ghost-skin": "ghost characters",
 
 	"gamemode": "gamemode",
 	"objective": "objective",
