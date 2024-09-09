@@ -21,15 +21,15 @@ Content-Type: application/json
 
 POST https://localhost/api/logout
 Content-Type: application/json
-Cookie: jwt=553cface1f9311a16878b1c9c4cfdf7ffc9a88cf
+Cookie: jwt=2122e1cf9af50899c5e0240c180cc1440c28e111
 
 {}
 
-###
+### PROFFILE AND FRIENDS ###################################################
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=a1d155741ccdac75ec1fd8f3f303ae67c80c9189
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
 
 ###
 
@@ -75,4 +75,86 @@ GET https://localhost/api/users_list/
 Content-Type: application/json
 Cookie: jwt=e39b493e181c827d20faa60bb1322ab180b2f5cb
 
+### PACMAN ##################################################################
+
+POST https://localhost/api/record_pacman_match/
+Content-Type: application/json
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
+
+{
+    "pacman_player": 1,
+    "ghost_player": 2,
+    "map_name": "map3",
+    "match_duration": 11,
+    "winner": 2,
+    "pacman_score": 50
+}
+
 ###
+
+GET https://localhost/api/pacman_matches_history/
+Content-Type: application/json
+Cookie: jwt=7fc9fc0d990d21778412067ce811e7987c1319e7
+
+###
+
+GET https://localhost/api/pacman_stats/
+Content-Type: application/json
+Cookie: jwt=185a0e3a92e160680125bf6fc7ea6be94ee66304
+
+###
+
+PUT https://localhost/api/pacman_endless_update
+Content-Type: application/json
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
+
+{
+    "max_endless_score": 10000
+}
+
+### PONG ####################################################################
+
+GET https://localhost/api/pong_stats/
+Content-Type: application/json
+Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+
+###
+
+POST https://localhost/api/record_AIpong_match/
+Content-Type: application/json
+Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+
+{
+    "player_one": "pascal",
+    "winner": "pascal",
+    "match_score": "11-9",
+    "match_duration": 134,
+    "match_date": "2021-06-01"
+}
+
+###
+
+POST https://localhost/api/record_PvPong_match/
+Content-Type: application/json
+Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+
+{
+    "player_one": "pascal",
+    "player_two": "noobman",
+    "winner": "pascal",
+    "match_score": "11-9",
+    "match_duration": 134,
+    "match_date": "2021-06-01"
+}
+
+###
+
+GET https://localhost/api/AIpong_match_history/
+Content-Type: application/json
+Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
+
+###
+
+GET https://localhost/api/PvPong_match_history/
+Content-Type: application/json
+Cookie: jwt=1d4e979b0a0bff62e2f9f0ee9cd597a597489a45
