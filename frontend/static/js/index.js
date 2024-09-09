@@ -14,6 +14,7 @@ import SignUp from "./views/SignUp.js";
 import EditProfile from "./views/EditProfile.js";
 import Friends from "./views/Friends.js";
 import PongStatistics from "./views/PongStatistics.js";
+import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
@@ -52,7 +53,8 @@ const routes = [
 	{ path: "/signup", view: SignUp },
 	{ path: "/edit-profile", view: EditProfile },
 	{ path: "/friends", view: Friends },
-	{ path: "/pong-statistics", view: PongStatistics }
+	{ path: "/pong-statistics", view: PongStatistics },
+	{ path: "/pacman-statistics", view: PacmanStatistics }
 ];
 
 // Store the current view

@@ -103,6 +103,13 @@
 	"tournament data": "tournament",
 	"no stats": "no stats found.",
 
+	"pacman statistics": "pac-man statistics",
+	"db pacman": "pac-man",
+	"db pacman character": "character",
+	"db ghost": "ghost",
+	"db ghost character": "character",
+	"db map": "map",
+
 	"graphics": "graphics", 
 	"ultra": "ultra",
 	"medium": "medium",
