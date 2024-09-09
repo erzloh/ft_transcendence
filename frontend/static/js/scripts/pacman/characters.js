@@ -196,7 +196,7 @@ export class Pacgirl extends PacmanBase {
 		this.spellName = "Speed boost";
 		this.speedDuration = 10;
 		this.speedCooldown = 25;
-		this.speedBoost = 130 / 100;
+		this.speedBoost = 140 / 100;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.speedDuration, this.speedCooldown);
 	}
 
@@ -394,7 +394,7 @@ export class OrangeGhost extends GhostBase {
 		this.wallBlockX = -1;
 		this.wallBlockY = -1;
 		this.isWall = false;
-		this.intangibleCooldown = 25;
+		this.intangibleCooldown = 20;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.intangibleCooldown);
 	}
 
@@ -443,6 +443,8 @@ export class OrangeGhost extends GhostBase {
 		else if (this.pcG.cells[this.wallBlockY][this.wallBlockX].value == 1) {
 			this.isWall = true;
 		}
+		else
+			this.isWall = false;
 	}
 			
 
