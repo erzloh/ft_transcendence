@@ -319,15 +319,15 @@ export class PacmanMenu {
 		switch (this.pacmanSkin) {
 			case "pacman":
 				pacmanSkinDescription.innerHTML = "passive: frenzy";
-				pacmanSkinSpell.innerHTML = "When Pacman eats a fruit, he enters a frenzy for 5 seconds. While in frenzy, he moves 20% faster and can eat the Ghost. If he eats the Ghost, pacman gains 300 points and the Ghost is sent back to his spawn position, ending the frenzy.";
+				pacmanSkinSpell.innerHTML = "When Pacman eats a fruit, he goes into a frenzy for 5 seconds. While in frenzy, he moves 20% faster and can eat the Ghost. If he eats the Ghost, pacman gains 300 points, the Ghost is sent back to his spawn position and disabled for 3 seconds, ending the frenzy.";
 				break;
 			case "pacgirl":
 				pacmanSkinDescription.innerHTML = "active: speed boost";
-				pacmanSkinSpell.innerHTML = "Pacgirl can boost her speed by 30% for 10 seconds. 20 seconds cooldown.";
+				pacmanSkinSpell.innerHTML = "Pacgirl can boost her speed by 30% for 10 seconds. 25 seconds cooldown.";
 				break;
 			case "coolman":
-				pacmanSkinDescription.innerHTML = "active: stun";
-				pacmanSkinSpell.innerHTML = "Coolman can stun the Ghost for 4 seconds. 20 seconds cooldown.";
+				pacmanSkinDescription.innerHTML = "active: flash";
+				pacmanSkinSpell.innerHTML = "Coolman can disable the Ghost for 3 seconds. 20 seconds cooldown.";
 				break;
 			case "pacventurer":
 				pacmanSkinDescription.innerHTML = "passive: exploration";
@@ -392,19 +392,19 @@ export class PacmanMenu {
 		switch (this.ghostSkin) {
 			case "blueGhost":
 				ghostSkinDescription.innerHTML = "active: ghost block";
-				ghostSkinSpell.innerHTML = "the blue ghost can place a ghost block behind it. It can go throught it, but pacman can't. Using the spell again will move the block. 5 seconds cooldown";
+				ghostSkinSpell.innerHTML = "the blue ghost can place a ghost block behind it. It can go throught it, but pacman can't. Using the spell again will move the block. 5 seconds cooldown passive: 10% bonus movespeed";
 				break;
 			case "orangeGhost":
-				ghostSkinDescription.innerHTML = "active: disappearance";
-				ghostSkinSpell.innerHTML = "the orange ghost can become invisible, stopping his movements. additionnaly, he has 10% bonus movespeed.";
+				ghostSkinDescription.innerHTML = "active: excavate";
+				ghostSkinSpell.innerHTML = "the orange ghost can turn walls into ghost blocks, creating paths that pacman can't use. 20 seconds cooldown.";
 				break;
 			case "pinkGhost":
 				ghostSkinDescription.innerHTML = "active: intangible";
-				ghostSkinSpell.innerHTML = "the pink ghost can pass through walls for 3 seconds. If the spell ends while the ghost is still inside a wall, it will be returned to the last ground tile it crossed. 30 seconds cooldown.";
+				ghostSkinSpell.innerHTML = "the pink ghost can pass through walls for 3 seconds. If the spell ends while the ghost is still inside a wall, it will be returned to the last ground tile it crossed. 25 seconds cooldown.";
 				break;
 			case "greenGhost":
 				ghostSkinDescription.innerHTML = "active: blockade";
-				ghostSkinSpell.innerHTML = "the green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. these blocks last forever. 50 seconds cooldown.";
+				ghostSkinSpell.innerHTML = "the green ghost can leave blocks behind him through which neither the Ghost nor Pacman can go through. these blocks last forever. 30 seconds cooldown.";
 				break;
 		}
 

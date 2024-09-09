@@ -45,7 +45,7 @@ class PacmanGame {
 		this.images = {
 			imgPacman1 : new Image(), imgPacman2 : new Image(), imgPacman3 : new Image(),
 			imgPacman1_frenzy : new Image(), imgPacman2_frenzy : new Image(), imgPacman3_frenzy : new Image(),
-			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(),
+			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(), imgGhostDisabled : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
 			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image(),
 			imgBluePortal1 : new Image(), imgBluePortal2 : new Image(), imgBluePortal3 : new Image(), imgBluePortal4 : new Image()
@@ -138,7 +138,7 @@ class PacmanGame {
 				ghostSpellName.innerHTML = "ghost block";
 				break;
 			case "orangeGhost":
-				ghostSpellName.innerHTML = "disappearance";
+				ghostSpellName.innerHTML = "excavate";
 				break;
 			case "pinkGhost":
 				ghostSpellName.innerHTML = "intangible";
@@ -160,6 +160,7 @@ class PacmanGame {
 		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
 		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
 		this.images.imgGhost4.src = 'static/assets/pacman/images/' + this.ghostSkin + '4.png';
+		this.images.imgGhostDisabled.src = 'static/assets/pacman/images/ghostDisabled.png';
 		this.images.imgCherry.src = 'static/assets/pacman/images/cherry.png';
 		this.images.imgBanana.src = 'static/assets/pacman/images/banana.png';
 		this.images.imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';

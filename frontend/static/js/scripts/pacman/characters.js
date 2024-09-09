@@ -147,16 +147,28 @@ export class Pacman extends PacmanBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "Frenzy";
 		this.frenzyDuration = 5;
-		this.frenzyCooldown = 15;
+		this.frenzyCooldown = 25;
 		this.frenzySpeedBoost = 120 / 100;
+		this.disableGhostDuration = 3;
 		this.inFrenzy = false;
+		this.ateGhost = false;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.frenzyDuration, this.frenzyCooldown);
+		this.eatenTimer = new CooldownTimer(null, this, this.disableGhostDuration,this.disableGhostDuration);
 	}
 
 	eatFruit(fruit) {
 		this.points += fruit.points;
 		this.pcG.pScore.textContent = this.points;
 		this.startFrenzy();
+	}
+
+	eatGhost() {
+		this.pcG.ghost.disabled = true;
+		this.stopSpell();
+		this.ateGhost = true;
+		this.pcG.ghost.sendBackToSpawn();
+		this.pcG.pacman.gainPoints(300);
+		this.eatenTimer.startCD();
 	}
 
 	startFrenzy() {
@@ -167,8 +179,14 @@ export class Pacman extends PacmanBase {
 	}
 
 	stopSpell() {
-		this.speed /= this.frenzySpeedBoost;
-		this.inFrenzy = false;
+		if (this.inFrenzy) {
+			this.speed /= this.frenzySpeedBoost;
+			this.inFrenzy = false;
+		}
+		if (this.ateGhost) {
+			this.ateGhost = false;
+			this.pcG.ghost.disabled = false;
+		}	
 	}
 }
 
@@ -177,7 +195,7 @@ export class Pacgirl extends PacmanBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "Speed boost";
 		this.speedDuration = 10;
-		this.speedCooldown = 20;
+		this.speedCooldown = 25;
 		this.speedBoost = 130 / 100;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.speedDuration, this.speedCooldown);
 	}
@@ -197,21 +215,20 @@ export class Coolman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "Stun";
-		this.stunDuration = 5;
-		this.stunCooldown = 15;
+		this.stunDuration = 3;
+		this.stunCooldown = 20;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.stunDuration, this.stunCooldown);
 		this.ghostSpeed;
 	}
 
 	useSpell() {
 		if (this.cooldownTimer.startCD()) {
-			this.ghostSpeed = this.pcG.ghost.speed;
-			this.pcG.ghost.speed = 0;
+			this.pcG.ghost.disabled = true;
 		}
 	}
 
 	stopSpell() {
-		this.pcG.ghost.speed = this.ghostSpeed;
+		this.pcG.ghost.disabled = false;
 	}
 }
 
@@ -247,7 +264,8 @@ export class GhostBase extends Character {
 	sendBackToSpawn() {
 		this.x = this.spawnX;
 		this.y = this.spawnY;
-		this.disappeared = false;
+		this.px = this.x;
+		this.py = this.y;
 		this.disabled = true;
 		this.direction = "";
 	}
@@ -263,25 +281,27 @@ export class GhostBase extends Character {
 				this.tpReady = true;
 			}
 			this.premove();
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1)
-						this.y -= 1;
-					break;
-				case "down":
-					if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1)
-						this.y += 1;
-					break;
-				case "left":
-					if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1)
-						this.x -= 1;
-					break;
-				case "right":
-					if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1)
-						this.x += 1;
-					break;
-				default:
-					break;
+			if (!this.disabled) {
+				switch (this.direction) {
+					case "up":
+						if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1)
+							this.y -= 1;
+						break;
+					case "down":
+						if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1)
+							this.y += 1;
+						break;
+					case "left":
+						if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1)
+							this.x -= 1;
+						break;
+					case "right":
+						if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1)
+							this.x += 1;
+						break;
+					default:
+						break;
+				}
 			}
 		}
 
@@ -302,36 +322,34 @@ export class GhostBase extends Character {
 			if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
 				Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
 				if (this.pcG.pacman.inFrenzy) {
-					this.sendBackToSpawn();
-					this.pcG.pacman.inFrenzy = false;
-					this.pcG.pacman.gainPoints(300);
+					this.pcG.pacman.eatGhost();
 				}
-				else {
+				else if (!this.disabled) {
 					this.pcG.partyOver(this.pcG.usernames.ghost);
 				}
 			}
 		}
+		if (this.disabled) {
+			img = this.pcG.images.imgGhostDisabled;
+		}		
 		else {
-			if (this.px == this.spawnX && this.py == this.spawnY) {
-				this.disabled = false;
+			switch (this.direction){
+				case "right":
+					img = this.pcG.images.imgGhost1;
+					break;
+				case "down":
+					img = this.pcG.images.imgGhost2;
+					break;
+				case "up":
+					img = this.pcG.images.imgGhost3;
+					break;
+				case "left":
+					img = this.pcG.images.imgGhost4;
+					break;
+				default:
+					img = this.pcG.images.imgGhost1;
+					break;
 			}
-		}
-		switch (this.direction){
-			case "right":
-				img = this.pcG.images.imgGhost1;
-				break;
-			case "down":
-				img = this.pcG.images.imgGhost2;
-				break;
-			case "up":
-				img = this.pcG.images.imgGhost3;
-				break;
-			case "left":
-				img = this.pcG.images.imgGhost4;
-				break;
-			default:
-				img = this.pcG.images.imgGhost1;
-				break;
 		}
 		this.pcG.c.drawImage(img, this.px * this.ts, this.py * this.ts, this.ts, this.ts);
 	}
@@ -347,6 +365,7 @@ export class BlueGhost extends GhostBase {
 		this.gBlockY;
 		this.lastX = this.x;
 		this.lastY = this.y;
+		this.speed *= 110/100;
 		this.cellValue = "Nothing";
 	}
 
@@ -371,54 +390,68 @@ export class BlueGhost extends GhostBase {
 export class OrangeGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "disappearance";
-		this.disappeared = false;
-		this.cooldownDisplay.style.opacity = 0;
-		this.speed *= 110 / 100;
+		this.spellName = "excavate";
+		this.wallBlockX = -1;
+		this.wallBlockY = -1;
+		this.isWall = false;
+		this.intangibleCooldown = 25;
+		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.intangibleCooldown);
 	}
 
 	premove() {
-		if (this.direction != "")
-			this.disappeared = false;
+		switch (this.direction) {
+			case "right":
+				if (this.x != this.pcG.cells.width) {
+					this.wallBlockX = this.x + 1;
+					this.wallBlockY = this.y;
+				}
+				else
+					this.wallBlockX = -1;
+				break;
+			case "down":
+				if (this.y != this.pcG.cells.height) {
+					this.wallBlockX = this.x;
+					this.wallBlockY = this.y + 1;
+				}
+				else
+					this.wallBlockY = -1;
+				break;
+			case "up":
+				if (this.y != 0) {
+					this.wallBlockX = this.x;
+					this.wallBlockY = this.y - 1;
+				}
+				else
+					this.wallBlockY = -1;
+				break;
+			case "left":
+				if (this.x != 0) {
+					this.wallBlockX = this.x - 1;
+					this.wallBlockY = this.y;
+				}
+				else
+					this.wallBlockX = -1;
+				break;
+			default:
+				this.wallBlockX = -1;
+				this.wallBlockY = -1;
+				break;
+		}
+		if (this.wallBlockX == -1 || this.wallBlockY == -1) {
+			this.isWall = false;
+		}
+		else if (this.pcG.cells[this.wallBlockY][this.wallBlockX].value == 1) {
+			this.isWall = true;
+		}
 	}
+			
 
 	useSpell() {
-		this.direction = "";
-		this.disappeared = true;
-	}
-
-	render() {
-		var img;
-		if (Math.abs(this.pcG.pacman.py - this.py) < 0.5 &&
-			Math.abs(this.pcG.pacman.px - this.px) < 0.5) {
-			if (this.pcG.pacman.inFrenzy) {
-				this.pcG.Ghost.sendBackToSpawn();
+		if (this.isWall) {
+			if (this.cooldownTimer.startCD()) {
+				this.pcG.cells[this.wallBlockY][this.wallBlockX].value = 9;
 			}
-			else {
-				this.pcG.partyOver(this.pcG.usernames.ghost);
-			}
-		}
-
-		if (!(this.disappeared && this.y == this.py && this.x == this.px)) {		
-			switch (this.direction){
-				case "right":
-					img = this.pcG.images.imgGhost1;
-					break;
-				case "down":
-					img = this.pcG.images.imgGhost2;
-					break;
-				case "up":
-					img = this.pcG.images.imgGhost3;
-					break;
-				case "left":
-					img = this.pcG.images.imgGhost4;
-					break;
-				default:
-					img = this.pcG.images.imgGhost1;
-					break;
-			}
-			this.pcG.c.drawImage(img, this.px * this.ts, this.py * this.ts, this.ts, this.ts);
-		}
+		}		
 	}
 }
 
@@ -427,7 +460,7 @@ export class PinkGhost extends GhostBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "intangible";
 		this.intangibleDuration = 3;
-		this.intangibleCooldown = 30;
+		this.intangibleCooldown = 20;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.intangibleDuration, this.intangibleCooldown);
 		this.intangible = false;
 		this.lastGroundX = this.x;
@@ -526,7 +559,7 @@ export class GreenGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "blockade";
-		this.blockadeCooldown = 50;
+		this.blockadeCooldown = 30;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.blockadeCooldown);
 		this.lastX = this.x;
 		this.lastY = this.y;

@@ -257,7 +257,7 @@ export class PongGame {
 					"match_duration": this.timer.getTime(),
 					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()
 				};
-				console.log(matchData[player_two]);
+				console.log(matchData["player_two"]);
 				response = await fetch(`${BASE_URL}/api/record_PvPong_match/`, {
 					method: 'POST',
 					headers: {

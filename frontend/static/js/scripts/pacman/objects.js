@@ -101,8 +101,8 @@ export class Timer {
 			this.sec++;
 	
 			
-			if (this.sec % 8 == 0) {
-				// Every 8 seconds create a fruit
+			if (this.sec % 10 == 0) {
+				// Every 10 seconds create a fruit
 				var fruitSpawned = false;
 				while (!fruitSpawned) {
 				var ypos = Math.floor(Math.random() * (this.pcG.height - 1));
@@ -173,7 +173,8 @@ export class CooldownTimer {
 			return false;
 		}
 		this.sec = this.spellCD;
-		this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');
+		if (this.cooldownDisplay != null)
+			this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');
 		if (!this.interval) {
 			this.interval = setInterval(() => {
 				this.cooldown();
@@ -190,7 +191,8 @@ export class CooldownTimer {
 	resetCD() {
 		this.stopCD();
 		this.sec = 0;
-		this.cooldownDisplay.innerHTML = "ready";
+		if (this.cooldownDisplay != null)
+			this.cooldownDisplay.innerHTML = "ready";
 	}
 
 	cooldown() {
@@ -199,10 +201,12 @@ export class CooldownTimer {
 			if (this.sec == (this.spellCD - this.spellDuration)) {
 				this.character.stopSpell();
 			}
-			this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');
+			if (this.cooldownDisplay != null)
+				this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');
 		}
 		else {
-			this.cooldownDisplay.innerHTML = "ready";
+			if (this.cooldownDisplay != null)
+				this.cooldownDisplay.innerHTML = "ready";
 			this.stopCD();
 		}	
 	}
