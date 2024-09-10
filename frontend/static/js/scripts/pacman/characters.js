@@ -439,33 +439,31 @@ export class GhostBase extends Character {
 		}
 	}
 
-	// Render the character's sprite
-	render() {
-		var img;
-		this.checkPacmanCollision();
-
+	getImage () {
 		if (this.disabled) {
-			img = this.pcG.images.imgGhostDisabled;
+			return this.pcG.images.imgGhostDisabled;
 		}		
 		else {
 			switch (this.direction){
 				case "right":
-					img = this.pcG.images.imgGhost1;
-					break;
+					return this.pcG.images.imgGhost1;
 				case "down":
-					img = this.pcG.images.imgGhost2;
-					break;
+					return this.pcG.images.imgGhost2;
 				case "up":
-					img = this.pcG.images.imgGhost3;
-					break;
+					return this.pcG.images.imgGhost3;
 				case "left":
-					img = this.pcG.images.imgGhost4;
-					break;
+					return this.pcG.images.imgGhost4;
 				default:
-					img = this.pcG.images.imgGhost1;
-					break;
+					return this.pcG.images.imgGhost1;
 			}
 		}
+	}
+
+	// Render the character's sprite
+	render() {
+		this.checkPacmanCollision();
+
+		let img = this.getImage();
 
 		this.pcG.c.drawImage(img, this.px * this.ts, this.py * this.ts, this.ts, this.ts);
 	}
@@ -584,7 +582,7 @@ export class PinkGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "intangible";
-		this.intangibleDuration = 3;
+		this.intangibleDuration = 2;
 		this.intangibleCooldown = 25;
 		this.intangibleSpeed = 110/100;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.intangibleDuration, this.intangibleCooldown, this.stopSpell.bind(this));
@@ -613,52 +611,68 @@ export class PinkGhost extends GhostBase {
 		if (this.pcG.cells[this.y][this.x].value == 1) {
 			this.x = this.lastGroundX;
 			this.y = this.lastGroundY;
+			this.px = this.x;
+			this.py = this.y;
 		}
 	}
 
 	checkDirection() {
-		if (this.intangible) {
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 >= 0)
+		switch (this.direction) {
+			case "up":
+				if (this.y - 1 >= 0)
+					if (this.intangible || (this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9))
 						this.y -= 1;
-					break;
-				case "down":
-					if (this.y + 1 < this.pcG.height)
+				break;
+			case "down":
+				if (this.y + 1 < this.pcG.height)
+					if (this.intangible || (this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9))
 						this.y += 1;
-					break;
-				case "left":
-					if (this.x - 1 >= 0)
+				break;
+			case "left":
+				if (this.x - 1 >= 0)
+					if (this.intangible || (this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9))
 						this.x -= 1;
-					break;
-				case "right":
-					if (this.x + 1 < this.pcG.width)
+				break;
+			case "right":
+				if (this.x + 1 < this.pcG.width)
+					if (this.intangible || (this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9))
 						this.x += 1;
-					break;
+				break;
+			default:
+				break;
+		}
+	}
+
+	getImage () {
+		if (this.disabled) {
+			return this.pcG.images.imgGhostDisabled;
+		}		
+		else if (this.intangible){
+			switch (this.direction){
+				case "right":
+					return this.pcG.images.imgGhost1_intangible;
+				case "down":
+					return this.pcG.images.imgGhost2_intangible;
+				case "up":
+					return this.pcG.images.imgGhost3_intangible;
+				case "left":
+					return this.pcG.images.imgGhost4_intangible;
 				default:
-					break;
+					return this.pcG.images.imgGhost1_intangible;
 			}
 		}
 		else {
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9)
-						this.y -= 1;
-					break;
-				case "down":
-					if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9)
-						this.y += 1;
-					break;
-				case "left":
-					if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9)
-						this.x -= 1;
-					break;
+			switch (this.direction){
 				case "right":
-					if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9)
-						this.x += 1;
-					break;
+					return this.pcG.images.imgGhost1;
+				case "down":
+					return this.pcG.images.imgGhost2;
+				case "up":
+					return this.pcG.images.imgGhost3;
+				case "left":
+					return this.pcG.images.imgGhost4;
 				default:
-					break;
+					return this.pcG.images.imgGhost1;
 			}
 		}
 	}
