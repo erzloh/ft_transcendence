@@ -156,7 +156,7 @@ export class Timer {
 }
 
 export class CooldownTimer {
-	constructor(cooldownDisplay, character, spellDuration, spellCD) {
+	constructor(cooldownDisplay, character, spellDuration, spellCD, stop) {
 		this.sec = 0;
 		this.interval = null;
 
@@ -166,6 +166,8 @@ export class CooldownTimer {
 		this.character = character;
 		this.spellDuration = spellDuration;
 		this.spellCD = spellCD;
+
+		this.stop = stop;
 	}
 
 	startCD() {
@@ -199,7 +201,7 @@ export class CooldownTimer {
 		if (this.sec > 0) {
 			this.sec--;
 			if (this.sec == (this.spellCD - this.spellDuration)) {
-				this.character.stopSpell();
+				this.stop();
 			}
 			if (this.cooldownDisplay != null)
 				this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');

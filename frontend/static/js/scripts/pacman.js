@@ -375,31 +375,31 @@ class PacmanGame {
 		if (!this.gamePaused) {
 			switch (event.code) {
 				case this.keybinds.pUp:
-					this.pacman.direction = "up";
+					this.pacman.setDirection("up");
 					break;
 				case this.keybinds.pDown:
-					this.pacman.direction = "down";
+					this.pacman.setDirection("down");
 					break;
 				case this.keybinds.pLeft:
-					this.pacman.direction = "left";
+					this.pacman.setDirection("left");
 					break;
 				case this.keybinds.pRight:
-					this.pacman.direction = "right";
+					this.pacman.setDirection("right");
 					break;
 				case this.keybinds.pSpell:
 					this.pacman.useSpell();
 					break;
 				case this.keybinds.gUp:
-					this.ghost.direction = "up";
+					this.ghost.setDirection("up");
 					break;
 				case this.keybinds.gDown:
-					this.ghost.direction = "down";
+					this.ghost.setDirection("down");
 					break;
 				case this.keybinds.gLeft:
-					this.ghost.direction = "left";
+					this.ghost.setDirection("left");
 					break;
 				case this.keybinds.gRight:
-					this.ghost.direction = "right";
+					this.ghost.setDirection("right");
 					break;
 				case this.keybinds.gSpell:
 					this.ghost.useSpell();

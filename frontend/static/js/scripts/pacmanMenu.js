@@ -342,11 +342,11 @@ export class PacmanMenu {
 				cooldown.innerHTML = "20";
 				pacmanDesc1.innerHTML = "Pac-Man-In-Black flashes the Ghost, disabling it for 3 seconds.";
 				pacmanTitle2.innerHTML = "passive: warp master";
-				pacmanDesc2.innerHTML = "Pac-Man-In-Black is used to teleporting, he gains 10% move speed for 10 seconds after warping.";
+				pacmanDesc2.innerHTML = "Pac-Man-In-Black is used to teleporting, he gains 20% move speed for 5 seconds after warping.";
 				break;
 			case "pacventurer":
 				pacmanTitle1.innerHTML = "active: grappling hook";
-				cooldown.innerHTML = "15";
+				cooldown.innerHTML = "20";
 				pacmanDesc1.innerHTML = "Using his favorite grappling hook, Pacventurer propels himself in a straight line until he hits a wall.";
 				pacmanTitle2.innerHTML = "passive: exploration";
 				pacmanDesc2.innerHTML = "Pacventurer moves 10% faster and gains 10% more points.";
@@ -416,21 +416,21 @@ export class PacmanMenu {
 			case "blueGhost":
 				ghostTitle1.innerHTML = "active: ghost block";
 				cooldown.innerHTML = "5";
-				ghostDesc1.innerHTML = "The blue ghost places the ghost block which pacman can't go through but the ghost can";
+				ghostDesc1.innerHTML = "The blue ghost places the ghost block which pacman can't go through but the ghost can.";
 				ghostTitle2.innerHTML = "passive: speedy"
-				ghostDesc2.innerHTML = "The blue ghost has 10% bonus movespeed";
+				ghostDesc2.innerHTML = "The blue ghost has 10% bonus movespeed.";
 				break;
 			case "orangeGhost":
 				ghostTitle1.innerHTML = "active: excavate";
 				cooldown.innerHTML = "20";
-				ghostDesc1.innerHTML = "the orange ghost turns the wall in front of him into a ghost block, creating paths that pacman can't use";
+				ghostDesc1.innerHTML = "the orange ghost turns the wall in front of him into a ghost block, creating paths that pacman can't use.";
 				ghostTitle2.innerHTML = "passive: ghostly"
-				ghostDesc2.innerHTML = "The orange ghost has 50% bonus movespeed while on ghost block";
+				ghostDesc2.innerHTML = "The orange ghost has double movespeed while on ghost block.";
 				break;
 			case "pinkGhost":
 				ghostTitle1.innerHTML = "active: intangible";
 				cooldown.innerHTML = "25";
-				ghostDesc1.innerHTML = "The pink ghost becomes intangible for 3 seconds. He gets brought back on the last ground tile it crossed when the spell ends";
+				ghostDesc1.innerHTML = "The pink ghost becomes intangible for 3 seconds. He gets brought back on the last ground tile it crossed when the spell ends.";
 				ghostTitle2.innerHTML = "effect: intangible"
 				ghostDesc2.innerHTML = "The pink ghost gains 10% movespeed and can go through walls.";
 				break;
@@ -439,7 +439,7 @@ export class PacmanMenu {
 				cooldown.innerHTML = "30";
 				ghostDesc1.innerHTML = "the green ghost creates a wall behind him";
 				ghostTitle2.innerHTML = "passive: destructor";
-				ghostDesc2.innerHTML = "when facing a wall for 5 seconds, the green ghost will break it, creating new paths";
+				ghostDesc2.innerHTML = "when facing a wall for 3 seconds, the green ghost will break it, creating new paths.";
 				break;
 		}
 
