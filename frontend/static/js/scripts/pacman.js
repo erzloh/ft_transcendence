@@ -195,7 +195,6 @@ class PacmanGame {
 			else
 				this.timer.start();
 			this.gamePaused = !this.gamePaused;
-
 		}
 	}
 
@@ -213,9 +212,7 @@ class PacmanGame {
 		this.timer.reset();
 
 		this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.swapButton.style.opacity = 1;
 		this.startButton.style.display = "block";
-		this.swapButton.disabled = false;
 		this.startButton.disabled = false;
 	}
 
@@ -231,7 +228,7 @@ class PacmanGame {
 			"winner": winner,
 			"pacman_score": this.pacman.score,
 			"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
-			"user": 1
+			"user": localStorage.getItem('user_id')
 		};
 		let response = await fetch(`${BASE_URL}/api/record_pacman_match`, {
 			method: 'POST',
@@ -310,7 +307,6 @@ class PacmanGame {
 	// Initialize everything needed for the game
 	async StartGame() {
 		// Hide the button
-		this.swapButton.style.opacity = 0;
 		this.startButton.style.display = "none";
 
 		// Get the map's JSON data
@@ -337,7 +333,6 @@ class PacmanGame {
 
 		if (this.pacman && this.ghost) {
 			this.gameStart = true;
-			this.swapButton.disabled = true;
 			this.startButton.disabled = true;
 			// Start the timer, which starts the game
 			this.timer.start();
@@ -460,6 +455,7 @@ class PacmanGame {
 
 		this.pacmanUsername.innerHTML = this.usernames.pacman;
 		this.ghostUsername.innerHTML = this.usernames.ghost;
+		this.resetGame();
 	}
 
 	stopGameLoop() {

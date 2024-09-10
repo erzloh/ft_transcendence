@@ -256,7 +256,7 @@ export class PongGame {
 					"match_score": this.leftPad.score + "-" + this.rightPad.score,
 					"match_duration": ((this.timer.min * 60) + this.timer.sec),
 					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
-					"user": 1
+					"user": localStorage.getItem('user_id')
 				};
 				response = await fetch(`${BASE_URL}/api/record_PvPong_match/`, {
 					method: 'POST',
@@ -275,7 +275,7 @@ export class PongGame {
 					"match_score": this.leftPad.score + "-" + this.rightPad.score,
 					"match_duration": ((this.timer.min * 60) + this.timer.sec),
 					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
-					"user": 1
+					"user": localStorage.getItem('user_id')
 				};
 				response = await fetch(`${BASE_URL}/api/record_AIpong_match/`, {
 					method: 'POST',
