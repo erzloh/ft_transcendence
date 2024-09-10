@@ -16,6 +16,9 @@ export async function profile() {
 			const responseData = await response.json();
 			const user = responseData.user;
 
+			// Store the user id in the local storage
+			localStorage.setItem('user_id', user.id);
+
 			const usernameElem = document.getElementById('username-name');
 			usernameElem.innerText = user.username;
 
