@@ -1,5 +1,6 @@
 import { BASE_URL } from '../index.js';
 import { updateTextForElem } from '../utils/languages.js';
+import { formatDate, formatSeconds } from '../utils/date.js';
 
 // Function that will be called when the view is loaded
 export function pongStatistics () {
@@ -42,7 +43,11 @@ export function pongStatistics () {
 				const columns = ['total_pong_matches', 'total_pong_time', 'average_pong_time'];
 				columns.forEach(column => {
 					const td = document.createElement('td');
-					td.textContent = responseData[column];
+					if (column === 'total_pong_time') {
+						td.textContent = formatSeconds(responseData[column]);
+					} else {
+						td.textContent = responseData[column];
+					}
 					tr.appendChild(td);
 				});
 				tbody.appendChild(tr);
@@ -102,7 +107,13 @@ export function pongStatistics () {
 					const columns = ['match_date', 'player_one', 'player_two', 'match_score', 'winner', 'match_duration'];
 					columns.forEach(column => {
 						const td = document.createElement('td');
-						td.textContent = stat[column];
+						if (column === 'match_date') {
+							td.textContent = formatDate(stat[column]);
+						} else if (column === 'match_duration') {
+							td.textContent = stat[column].substring(3);
+						} else {
+							td.textContent = stat[column];
+						}
 						tr.appendChild(td);
 					});
 					tbody.appendChild(tr);
@@ -164,7 +175,13 @@ export function pongStatistics () {
 					const columns = ['match_date', 'player_one', 'ai_level', 'match_score', 'winner', 'match_duration'];
 					columns.forEach(column => {
 						const td = document.createElement('td');
-						td.textContent = stat[column];
+						if (column === 'match_date') {
+							td.textContent = formatDate(stat[column]);
+						} else if (column === 'match_duration') {
+							td.textContent = stat[column].substring(3);
+						} else {
+							td.textContent = stat[column];
+						}
 						tr.appendChild(td);
 					});
 					tbody.appendChild(tr);
@@ -225,7 +242,14 @@ export function pongStatistics () {
 					const columns = ['match_date', 'player_one', 'player_two', 'player_tree', 'player_four', 'winner', 'match_duration'];
 					columns.forEach(column => {
 						const td = document.createElement('td');
-						td.textContent = stat[column];
+						if (column === 'match_date') {
+							td.textContent = formatDate(stat[column]);
+						} else if (column === 'match_duration') {
+							td.textContent = stat[column].substring(3);
+						} else {
+							td.textContent = stat[column];
+						}
+
 						tr.appendChild(td);
 					});
 					tbody.appendChild(tr);

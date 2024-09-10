@@ -1,13 +1,10 @@
 import { BASE_URL } from '../index.js'
 import { updateTextForElem } from '../utils/languages.js';
+import { formatDate, formatSeconds } from '../utils/date.js'
 
 
 // Function that will be called when the view is loaded
 export function pacmanStatistics () {
-    // Select tables
-	const pacmanGlobalStatTable = document.getElementById('pacman-global-stat-table');
-	const pacmanHistoryStatTable = document.getElementById('pacman-history-stat-table');
-
 	// Fetch global statistics and fill the global stat table
 	const fillPacmanGlobalStatTable = async () => {
 		const response = await fetch(`${BASE_URL}/api/pacman_stats`);
@@ -17,7 +14,11 @@ export function pacmanStatistics () {
 			const columns = ['total_pacman_matches', 'total_pacman_time', 'max_endless_score']
 			columns.forEach(column => {
 				const td = document.createElement('td');
-				td.textContent = responseData[column];
+				if (column === 'total_pacman_time') {
+					td.textContent = formatSeconds(responseData[column]);
+				} else {
+					td.textContent = responseData[column];
+				}
 				tr.appendChild(td);
 			});
 		}
@@ -60,7 +61,13 @@ export function pacmanStatistics () {
 				const tr = document.createElement('tr');
 				columns.forEach(column => {
 					const td = document.createElement('td');
-					td.textContent = match[column];
+					if (column === 'match_date') {
+						td.textContent = formatDate(match[column]);
+					} else if (column === 'match_duration') {
+						td.textContent = match[column].substring(3);
+					} else {
+						td.textContent = match[column];
+					}
 					tr.appendChild(td);
 				});
 				tbody.appendChild(tr);
