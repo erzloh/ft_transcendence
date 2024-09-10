@@ -3,7 +3,7 @@
         <div class="row justify-content-center mb-3">
             <div class="col-12 text-center">
                 <p class="text-white h1" animated-letters data-translate="pacman statistics">pacman statistics</p>
-				<div class=" d-flex justify-content-center m-3 mb-2">
+				<div class=" d-flex justify-content-center mt-4 mb-4">
 					<hr class="text-white" style="width: 400px;">
 				</div>
             </div>
@@ -20,10 +20,10 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>10</td>
+							<tr id="pacman-global-stat-tbody-tr">
+								<!-- <td>10</td>
 								<td>00:10:00</td>
-								<td>01:00</td>
+								<td>01:00</td> -->
 							</tr>
 						</tbody>
 					</table>
@@ -33,7 +33,7 @@
         <div class="row justify-content-center mb-3">
             <div class="col-12 text-center text-white d-flex justify-content-center">
 				<div class="table-container">
-					<table class="stats-table" id="pacman-stat-table">
+					<table class="stats-table" id="pacman-history-stat-table">
 						<thead>
 							<tr>
 								<th data-translate="db date">Date</th>
@@ -48,96 +48,13 @@
 							</tr>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>2021-10-01</td>
-								<td>eric</td>
-								<td>pacgirl</td>
-								<td>Player 2</td>
-								<td>green ghost</td>
-								<td>spiral</td>
-								<td>10000</td>
-								<td>eric</td>
-								<td>02:10</td>
-							</tr>
-							<tr>
-								<td>2021-10-02</td>
-								<td>Player 1</td>
-								<td>pacgirl</td>
-								<td>Player 2</td>
-								<td>green ghost</td>
-								<td>spiral</td>
-								<td>10000</td>
-								<td>Player 1</td>
-								<td>02:10</td>
-							</tr>
-							<tr>
-								<td>2021-10-03</td>
-								<td>Player 1</td>
-								<td>pacgirl</td>
-								<td>Player 2</td>
-								<td>green ghost</td>
-								<td>spiral</td>
-								<td>10000</td>
-								<td>Player 1</td>
-								<td>02:10</td>
-							</tr>
-							<tr>
-								<td>2021-10-04</td>
-								<td>Player 1</td>
-								<td>pacgirl</td>
-								<td>Player 2</td>
-								<td>green ghost</td>
-								<td>spiral</td>
-								<td>10000</td>
-								<td>Player 1</td>
-								<td>02:10</td>
-							</tr>
-							<tr>
-								<td>2021-10-05</td>
-								<td>Player 1</td>
-								<td>pacgirl</td>
-								<td>Player 2</td>
-								<td>green ghost</td>
-								<td>spiral</td>
-								<td>10000</td>
-								<td>Player 1</td>
-								<td>02:10</td>
-							</tr>
-							<tr>
-								<td>2021-10-05</td>
-								<td>Player 1</td>
-								<td>pacgirl</td>
-								<td>Player 2</td>
-								<td>green ghost</td>
-								<td>spiral</td>
-								<td>10000</td>
-								<td>Player 1</td>
-								<td>02:10</td>
-							</tr>
-							<tr>
-								<td>2021-10-05</td>
-								<td>Player 1</td>
-								<td>pacgirl</td>
-								<td>Player 2</td>
-								<td>green ghost</td>
-								<td>spiral</td>
-								<td>10000</td>
-								<td>Player 1</td>
-								<td>02:10</td>
-							</tr>
+						<tbody id="pacman-history-stat-tbody">
+
 						</tbody>
 					</table>
 				</div>
             </div>
         </div>
-		<!-- <div class="row justify-content-center mb-3">
-			<div class="col-12 text-center text-white d-flex justify-content-around">
-				<button class="btn btn-lg text-light btn-filled" id="pvp-stat-btn" data-translate="pvp data">pvp data</button>
-				<button class="btn btn-lg text-light btn-filled" id="ai-stat-btn" data-translate="ai data">ai data</button>
-				<button class="btn btn-lg text-light btn-filled" id="tournament-stat-btn" data-translate="tournament data">tournament data</button>
-			</div>
-		</div> -->
     </div>
     <a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3 mt-1" href="/profile" data-link>
         <img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow">
