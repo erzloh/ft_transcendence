@@ -609,6 +609,7 @@ canvas {
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	overflow-y: auto;
 	animation: fadeIn 0.5s ease-out;
+	
 }
 
 .global-table-container {
@@ -625,6 +626,8 @@ canvas {
 	border-collapse: separate;
 	max-height: 100%;
 	overflow-x: auto;
+	// width: 100%;
+	// table-layout: fixed;
 
 	thead {
 		border-radius: inherit;
@@ -687,7 +690,7 @@ canvas {
 		display: none !important;
 	}
 
-	#pong-stat-table {
+	#pong-stat-table, #pacman-stat-table {
 		width: 100%;
 		table-layout: fixed;
 	}
