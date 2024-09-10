@@ -21,28 +21,32 @@
 
 			</div>
 		</div>
-		<div class="col">
-			<div class="row-12">
+		<div class="col pacman-game-container container">
+			<div>
 				<div class="col-12 d-flex flex-column align-items-center mb-3" id="gameContainer">
-					<canvas class="glass" id="cvsPacman" width="500" height="500"></canvas>
+					<canvas class="squarer-glass" id="cvsPacman" width="500px" height="500px"></canvas>
 					<button id="btnStart" class="btn btn-lg text-light btn-filled" data-translate="start game">start game</button>
 				</div>
 			</div>
-			<div class="row justify-content-center">
-				<div class="col-3 d-flex flex-column align-items-center mb-3">
-					<p class="text-white h4 text-center" id="pacmanSpellName">spell</p>
-					<p class="text-white h5" id="pCD">cooldown</p>	
+			<div class="pacman-player-box-container">
+			<!-- <div class="row justify-content-center pacman-player-box-container"> -->
+				<!-- <div class="col-5 d-flex flex-column align-items-center squarer-glass me-3 p-2 pacman-player-box"> -->
+				<div class="squarer-glass pacman-player-box">
+					<p class="text-white h5 text-center" id="pacmanSpellName">spell</p>
+					<p class="text-white h6" id="pCD">cooldown</p>	
 					<img class="m-3" id="imgPacmanSkin"/>
-					<p class="h3 text-white m-0" id="pacmanPlayerLabel"></p>
+					<p class="h4 text-white m-0" id="pacmanPlayerLabel"></p>
 				</div>
 				<div class="col-1 d-flex align-items-center justify-content-center mt-1 p-4">
 					<img class="btn btn-lg text-white btn-filled m-2" width="64px" height="64px" id="btnSwap" src="/static/assets/UI/icons/swap.svg" alt="An image for swapping characters"></button>
 				</div>
-				<div class="col-3 d-flex flex-column align-items-center mb-3">
-					<p class="text-white h4 text-center" id="ghostSpellName">spell</p>
-					<p class="text-white h5" id="gCD">cooldown</p>	
+				
+				<!-- <div class="col-5 d-flex flex-column align-items-center squarer-glass  p-2 pacman-player-box-container"> -->
+				<div class="squarer-glass pacman-player-box">
+					<p class="text-white h5 text-center" id="ghostSpellName">spell</p>
+					<p class="text-white h6" id="gCD">cooldown</p>	
 					<img class="m-3" id="imgGhostSkin"/>
-					<p class="h3 text-white m-0" id="ghostPlayerLabel"></p>
+					<p class="h4 text-white m-0" id="ghostPlayerLabel"></p>
 				</div>
 			</div>
 		</div>
@@ -91,7 +95,7 @@
 			  	</div>
 			</div>
 		</div>
-		<div class="col-12 text-center mt-3 d-flex justify-content-center">
+		<div class="col-12 text-center mt-4 d-flex justify-content-center">
 			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/pacmanMenu" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
 		</div>
 	</div>

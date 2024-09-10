@@ -12143,8 +12143,7 @@ label {
 
 .btn:hover {
   border: 1px solid white;
-  cursor: pointer;
-  cursor: url("/static/assets/UI/icons/cursor_pointer.svg") 10 10, pointer;
+  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 
 .btn-filled {
@@ -12190,6 +12189,10 @@ label {
   background: rgba(255, 255, 255, 0.1);
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
+}
+
+.not-found {
+  font-size: 8rem;
 }
 
 .container-settings {
@@ -12356,6 +12359,26 @@ select {
   z-index: 1;
 }
 
+.pacman-game-container {
+  width: 500px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pacman-player-box-container {
+  display: flex;
+  gap: 17px;
+  width: 500px;
+}
+
+.pacman-player-box {
+  flex: 1;
+  background-color: lightblue;
+  padding: 20px;
+  text-align: center;
+}
+
 .container-edit {
   max-width: 28.125rem;
   max-height: 1000px !important;
@@ -12459,6 +12482,67 @@ select {
   border-radius: 50%;
 }
 
+.squarer-glass {
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+
+.table-container {
+  height: 400px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  overflow-y: auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.global-table-container {
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  overflow-y: auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.stats-table {
+  border-collapse: separate;
+  max-height: 100%;
+  overflow-x: auto;
+}
+.stats-table thead {
+  border-radius: inherit;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.stats-table thead th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.stats-table tbody {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: inherit;
+}
+.stats-table th, .stats-table td {
+  border: none;
+  padding: 10px;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+#pong-global-stat-table, #pacman-global-stat-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
 @media screen and (max-width: 768px) {
   .games-page, .pacman-menu-page, .pacman-page, .pong-page {
     display: none !important;
@@ -12480,6 +12564,10 @@ select {
   }
   .games-page-mobile {
     display: none !important;
+  }
+  #pong-stat-table, #pacman-history-stat-table {
+    width: 100%;
+    table-layout: fixed;
   }
 }
 @keyframes waitFadeIn {
