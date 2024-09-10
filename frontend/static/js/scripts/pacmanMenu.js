@@ -26,6 +26,7 @@ export class PacmanMenu {
         this.colorButton = document.getElementById('btnColor');
 		this.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 		this.settingsModalContent = document.getElementById('settingsModalContent');
+		this.swapButton = document.getElementById('btnSwap');
 		this.pacmanUsernameLabel = document.getElementById('pacmanName');
 		this.pacmanInput = document.getElementById('pacmanInput');
 		this.ghostUsernameLabel = document.getElementById('ghostName');
@@ -78,6 +79,7 @@ export class PacmanMenu {
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
 		};
 
+		this.swapButton.addEventListener('click', () => this.swapUsernames());
 		this.pacmanInput.addEventListener('keypress', (event) => this.pacmanPlayerInputHandle(event));
 		this.pacmanInput.addEventListener('blur', (event) => this.pacmanPlayerInputHandle(event));
 		this.ghostInput.addEventListener('keypress', (event) => this.ghostPlayerInputHandle(event));
@@ -631,6 +633,19 @@ export class PacmanMenu {
 	}
 
 	//#region EVENT LISTENERS HANDLERS
+
+	swapUsernames() {
+		let tmpUsername = this.usernames.pacman;
+		this.usernames.pacman = this.usernames.ghost;
+		this.usernames.ghost = tmpUsername;
+		localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames));
+
+		this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
+		this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
+
+		this.toastBody.innerHTML = "Swapped players usernames";
+		this.toastBootstrap.show();
+	}
 
 	selectPacmanSkin(event, skin) {
 		this.toastBody.innerHTML = "chosen pacman character: " + skin;

@@ -285,53 +285,70 @@ export class Pacventurer extends PacmanBase {
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.grapplingCD,	this.stopSpell.bind(this));
 		this.grappling = false;
 		this.grapplingSpeed = 300/100;
+		this.grapplingDirection = "";
 	}
 
 
 	premove() {
 		if (this.grappling) {
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 == 0 || this.pcG.cells[this.y - 1][this.x].value === 1) {
-						this.grappling = false;
-						this.speed /= this.grapplingSpeed;
-					}
-					break;
-				case "down":
-					if (this.y + 1 == this.pcG.height || this.pcG.cells[this.y + 1][this.x].value === 1) {
-						this.grappling = false;
-						this.speed /= this.grapplingSpeed;
-					}
-					break;
-				case "left":
-					if (this.x - 1 == 0 || this.pcG.cells[this.y][this.x - 1].value === 1) {
-						this.grappling = false;
-						this.speed /= this.grapplingSpeed;
-					}
-					break;
-				case "right":
-					if (this.x + 1 == this.pcG.width || this.pcG.cells[this.y][this.x + 1].value === 1) {
-						console.log("log");
-						this.grappling = false;
-						this.speed /= this.grapplingSpeed;
-					}
-					break;
-				default:
-					break;
+			const isWall = (nextY, nextX) => {
+				return nextY < 0 || nextX < 0 || nextY >= this.pcG.height || nextX >= this.pcG.width || 
+					   this.pcG.cells[nextY][nextX].value === 1 || this.pcG.cells[nextY][nextX].value === 9;
+			};
+		
+			let nextY = this.y, nextX = this.x;
+		
+			switch (this.grapplingDirection) {
+				case "up": nextY -= 1; break;
+				case "down": nextY += 1; break;
+				case "left": nextX -= 1; break;
+				case "right": nextX += 1; break;
+				default: break;
+			}
+		
+			if (isWall(nextY, nextX)) {
+				this.grappling = false;
+				this.speed /= this.grapplingSpeed;
 			}
 		}
 	}
 
-	setDirection(direction) {
-		if (!this.grappling) {
-			this.direction = direction;
+	checkDirection() {
+		let usedDirection = this.direction;
+		if (this.grappling) {
+			usedDirection = this.grapplingDirection;
 		}
+		switch (usedDirection) {
+			case "up":
+				if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9)
+					this.y -= 1;
+				break;
+			case "down":
+				if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9)
+					this.y += 1;
+				break;
+			case "left":
+				if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9)
+					this.x -= 1;
+				break;
+			case "right":
+				if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9)
+					this.x += 1;
+				break;
+			default:
+				break;
+		}
+	}
+
+	setDirection(direction) {
+		this.direction = direction;
 	}
 
 	useSpell() {
 		if (this.cooldownTimer.startCD()) {
 			this.grappling = true;
 			this.speed *= this.grapplingSpeed;
+			this.grapplingDirection = this.direction;
 		}
 	}
 }

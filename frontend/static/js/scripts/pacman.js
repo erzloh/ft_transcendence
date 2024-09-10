@@ -11,6 +11,7 @@ class PacmanGame {
 		this.pGamemode = document.getElementById('pGamemode');
 		this.pScore = document.getElementById('pScore');
 		this.startButton = document.getElementById('btnStart');
+		this.swapButton = document.getElementById('btnSwap');
 
 		this.pacmanSpellName = document.getElementById('pacmanSpellName');
 		this.ghostSpellName = document.getElementById('ghostSpellName');
@@ -64,6 +65,7 @@ class PacmanGame {
 	}
 
 	Initialize() {
+		this.swapButton.addEventListener('click', () => this.swapUsernames());
 		this.startButton.addEventListener("click", () => this.StartGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
 
@@ -206,7 +208,9 @@ class PacmanGame {
 		this.timer.reset();
 
 		this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.swapButton.style.opacity = 1;
 		this.startButton.style.display = "block";
+		this.swapButton.disabled = false;
 		this.startButton.disabled = false;
 	}
 
@@ -224,7 +228,6 @@ class PacmanGame {
 			"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
 			"user": 1
 		};
-		console.log(matchData);
 		let response = await fetch(`${BASE_URL}/api/record_pacman_match`, {
 			method: 'POST',
 			headers: {
@@ -302,6 +305,7 @@ class PacmanGame {
 	// Initialize everything needed for the game
 	async StartGame() {
 		// Hide the button
+		this.swapButton.style.opacity = 0;
 		this.startButton.style.display = "none";
 
 		// Get the map's JSON data
@@ -328,6 +332,7 @@ class PacmanGame {
 
 		if (this.pacman && this.ghost) {
 			this.gameStart = true;
+			this.swapButton.disabled = true;
 			this.startButton.disabled = true;
 			// Start the timer, which starts the game
 			this.timer.start();
@@ -442,8 +447,17 @@ class PacmanGame {
 		}
 	}
 
+	swapUsernames() {
+		let tmpUsername = this.usernames.pacman;
+		this.usernames.pacman = this.usernames.ghost;
+		this.usernames.ghost = tmpUsername;
+		localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames));
+
+		this.pacmanUsername.innerHTML = this.usernames.pacman;
+		this.ghostUsername.innerHTML = this.usernames.ghost;
+	}
+
 	stopGameLoop() {
-		console.log("stop pacman loop");
 		if (this.gameStart) {
 			if (this.pacman.cooldownTimer != null)
 				this.pacman.cooldownTimer.stopCD();
@@ -453,17 +467,5 @@ class PacmanGame {
 		}
 	}
 }
-
-// --------------------------- Event Listener Functions ---------------------------
-// (Only Event Listener that are attached to the document.
-// Those attached to elements in the view are gonna be removed
-// when the view changes anyway)
-
-// Example:
-// function printKey (event) {
-// 	console.log(event.key);
-// }
-
-// --------------------------- Export Event Listeners Object ---------------------------
 
 export { PacmanGame, eventListeners };
