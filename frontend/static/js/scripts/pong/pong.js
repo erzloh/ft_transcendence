@@ -254,10 +254,10 @@ export class PongGame {
 					"player_two": this.usernames.p2,
 					"winner": winner,
 					"match_score": this.leftPad.score + "-" + this.rightPad.score,
-					"match_duration": this.timer.getTime(),
-					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()
+					"match_duration": ((this.timer.min * 60) + this.timer.sec),
+					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
+					"user": 1
 				};
-				console.log(matchData["player_two"]);
 				response = await fetch(`${BASE_URL}/api/record_PvPong_match/`, {
 					method: 'POST',
 					headers: {
@@ -270,10 +270,12 @@ export class PongGame {
 				console.log("AI match saved");
 				matchData = {
 					"player_one": this.usernames.p1,
+					"ai_level" : "easy",
 					"winner": winner,
 					"match_score": this.leftPad.score + "-" + this.rightPad.score,
-					"match_duration": this.timer.getTime(),
-					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay()
+					"match_duration": ((this.timer.min * 60) + this.timer.sec),
+					"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
+					"user": 1
 				};
 				response = await fetch(`${BASE_URL}/api/record_AIpong_match/`, {
 					method: 'POST',

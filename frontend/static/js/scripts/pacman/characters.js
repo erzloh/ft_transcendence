@@ -43,7 +43,7 @@ export class PacmanBase extends Character {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.speed = pacmanGame.pSpeed;
-		this.points = 0;
+		this.score = 0;
 		this.objective = -1;
 		this.cooldownDisplay = document.getElementById('pCD');
 		this.cooldownDisplay.innerHTML = "ready";
@@ -55,7 +55,7 @@ export class PacmanBase extends Character {
 	stopSpell() {}
 
 	gainPoints(pointsGain) {
-		this.points += Math.floor(pointsGain * this.pointFactor);
+		this.score += Math.floor(pointsGain * this.pointFactor);
 	}
 
 	premove() {}
@@ -71,7 +71,7 @@ export class PacmanBase extends Character {
 				this.pcG.cells[this.y][this.x].value = 8;
 				this.gainPoints(150);
 			}
-			this.pcG.pScore.textContent = this.points;
+			this.pcG.pScore.textContent = this.score;
 		}
 		else if (this.pcG.cells[this.y][this.x].value >= 2 &&
 					this.pcG.cells[this.y][this.x].value <=  4) {
@@ -126,13 +126,13 @@ export class PacmanBase extends Character {
 
 	eatFruit(fruit) {
 		this.gainPoints(fruit.points);
-		this.pcG.pScore.textContent = this.points;
+		this.pcG.pScore.textContent = this.score;
 	}
 
 	// Render the character's sprite
 	render(img) {
 		if (this.objective > 0) {
-			if (this.points >= this.objective) {
+			if (this.score >= this.objective) {
 				this.pcG.partyOver(this.pcG.usernames.pacman);
 			}
 		}
@@ -160,7 +160,7 @@ export class PacmanBase extends Character {
 export class Pacman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "Frenzy";
+		this.spellName = "frenzy";
 		this.frenzyDuration = 5;
 		this.frenzyCooldown = 25;
 		this.frenzySpeedBoost = 120 / 100;
@@ -171,8 +171,8 @@ export class Pacman extends PacmanBase {
 	}
 
 	eatFruit(fruit) {
-		this.points += fruit.points;
-		this.pcG.pScore.textContent = this.points;
+		this.score += fruit.points;
+		this.pcG.pScore.textContent = this.score;
 		this.startFrenzy();
 	}
 
@@ -202,7 +202,7 @@ export class Pacman extends PacmanBase {
 export class PacWoman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "Speed boost";
+		this.spellName = "speed boost";
 		this.speedDuration = 10;
 		this.speedCooldown = 25;
 		this.speedBoost = 120 / 100;
@@ -210,8 +210,8 @@ export class PacWoman extends PacmanBase {
 	}
 
 	eatFruit(fruit) {
-		this.points += fruit.points;
-		this.pcG.pScore.textContent = this.points;
+		this.score += fruit.points;
+		this.pcG.pScore.textContent = this.score;
 		this.speed *= 105/100;
 	}
 
@@ -226,10 +226,10 @@ export class PacWoman extends PacmanBase {
 	}
 }
 
-export class Coolman extends PacmanBase {
+export class PacMIB extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "Stun";
+		this.spellName = "flash";
 		this.stunDuration = 3;
 		this.stunCooldown = 20;
 		this.speedBoost = 120/100;
@@ -278,7 +278,7 @@ export class Coolman extends PacmanBase {
 export class Pacventurer extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "Exploration";
+		this.spellName = "grappling hook";
 		this.speed *= 110/100;
 		this.pointFactor = 110/100;
 		this.grapplingCD = 20;
@@ -380,27 +380,25 @@ export class GhostBase extends Character {
 	}
 
 	checkDirection() {
-		if (!this.disabled) {
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1)
-						this.y -= 1;
-					break;
-				case "down":
-					if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1)
-						this.y += 1;
-					break;
-				case "left":
-					if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1)
-						this.x -= 1;
-					break;
-				case "right":
-					if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1)
-						this.x += 1;
-					break;
-				default:
-					break;
-			}
+		switch (this.direction) {
+			case "up":
+				if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1)
+					this.y -= 1;
+				break;
+			case "down":
+				if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1)
+					this.y += 1;
+				break;
+			case "left":
+				if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1)
+					this.x -= 1;
+				break;
+			case "right":
+				if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1)
+					this.x += 1;
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -412,14 +410,16 @@ export class GhostBase extends Character {
 			this.checkDirection();
 		}
 
-		if (this.px != this.x)
-			this.px = this.px < this.x ? 
-				(Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
-				(Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
-		else if (this.py != this.y)
-			this.py = this.py < this.y ? 
-			(Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
-			(Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
+		if (!this.disabled) {
+			if (this.px != this.x)
+				this.px = this.px < this.x ? 
+					(Math.round((this.px + this.speed) * 1000) / 1000 > this.x ? this.x : Math.round((this.px + this.speed) * 1000) / 1000):
+					(Math.round((this.px - this.speed) * 1000) / 1000 < this.x ? this.x : Math.round((this.px - this.speed) * 1000) / 1000);
+			else if (this.py != this.y)
+				this.py = this.py < this.y ? 
+				(Math.round((this.py + this.speed) * 1000) / 1000 > this.y ? this.y : Math.round((this.py + this.speed) * 1000) / 1000):
+				(Math.round((this.py - this.speed) * 1000) / 1000 < this.y ? this.y : Math.round((this.py - this.speed) * 1000) / 1000);
+		}
 	}
 
 	// Render the character's sprite
@@ -651,13 +651,13 @@ export class GreenGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "blockade";
-		this.blockadeCooldown = 30;
+		this.blockadeCooldown = 25;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.blockadeCooldown, this.stopSpell.bind(this));
 		this.lastX = this.x;
 		this.lastY = this.y;
 		this.frontBlockX = -1;
 		this.frontBlockY = -1;
-		this.breakWallDuration = 3;
+		this.breakWallDuration = 5;
 		this.breakWallTimer = new CooldownTimer(null, this, this.breakWallDuration, this.breakWallDuration, this.breakWall.bind(this));
 	}
 

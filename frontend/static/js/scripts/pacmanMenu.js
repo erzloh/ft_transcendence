@@ -287,7 +287,7 @@ export class PacmanMenu {
 						<div class="d-flex justify-content-between w-100">
 							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacman_high_res.png" alt="An image of pac-man.">
 							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacWomanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacgirl_high_res.png" alt="An image of pac-girl.">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pCoolmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/coolman_high_res.png" alt="An image of cool-man.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacMIBSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacMIB_high_res.png" alt="An image of Pac-Man-In-Black.">
 							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacventurerSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacventurer_high_res.png" alt="An image of pac-venturer.">
 						</div>
 					</div>
@@ -309,7 +309,7 @@ export class PacmanMenu {
 
 		let btnPacmanSkin = document.getElementById('pPacmanSkin');
         let btnPacWomanSkin = document.getElementById('pPacWomanSkin');
-		let btnCoolmanSkin = document.getElementById('pCoolmanSkin');
+		let btnPacMIBSkin = document.getElementById('pPacMIBSkin');
         let btnPacventurerSkin = document.getElementById('pPacventurerSkin');
 		let cooldown = document.getElementById('cooldown');
 		let pacmanTitle1 = document.getElementById('pacmanTitle1');
@@ -319,7 +319,7 @@ export class PacmanMenu {
 
 		this.addEventListeners(btnPacmanSkin, (event) => this.selectPacmanSkin(event, "pacman"));
 		this.addEventListeners(btnPacWomanSkin, (event) => this.selectPacmanSkin(event, "pacgirl"));
-		this.addEventListeners(btnCoolmanSkin, (event) => this.selectPacmanSkin(event, "coolman"));
+		this.addEventListeners(btnPacMIBSkin, (event) => this.selectPacmanSkin(event, "pacMIB"));
 		this.addEventListeners(btnPacventurerSkin, (event) => this.selectPacmanSkin(event, "pacventurer"));
 
 		switch (this.pacmanSkin) {
@@ -337,7 +337,7 @@ export class PacmanMenu {
 				pacmanTitle2.innerHTML = "passive: fruit lover";
 				pacmanDesc2.innerHTML = "Pac-Woman loves fruits and gains 5% stacking movespeed after eating one.";
 				break;
-			case "coolman":
+			case "pacMIB":
 				pacmanTitle1.innerHTML = "active: flash";
 				cooldown.innerHTML = "20";
 				pacmanDesc1.innerHTML = "Pac-Man-In-Black flashes the Ghost, disabling it for 3 seconds.";
@@ -356,7 +356,7 @@ export class PacmanMenu {
 		const pacmanSkins = {
 			pacman: btnPacmanSkin,
 			pacgirl: btnPacWomanSkin,
-			coolman: btnCoolmanSkin,
+			pacMIB: btnPacMIBSkin,
 			pacventurer: btnPacventurerSkin
 		}
 		this.applySelectedSetting("pacmanSkin", pacmanSkins);
@@ -423,7 +423,7 @@ export class PacmanMenu {
 			case "orangeGhost":
 				ghostTitle1.innerHTML = "active: excavate";
 				cooldown.innerHTML = "20";
-				ghostDesc1.innerHTML = "the orange ghost turns the wall in front of him into a ghost block, creating paths that pacman can't use.";
+				ghostDesc1.innerHTML = "The orange ghost turns the wall in front of him into a ghost block, creating paths that pacman can't use.";
 				ghostTitle2.innerHTML = "passive: ghostly"
 				ghostDesc2.innerHTML = "The orange ghost has double movespeed while on ghost block.";
 				break;
@@ -436,10 +436,10 @@ export class PacmanMenu {
 				break;
 			case "greenGhost":
 				ghostTitle1.innerHTML = "active: blockade";
-				cooldown.innerHTML = "30";
-				ghostDesc1.innerHTML = "the green ghost creates a wall behind him";
+				cooldown.innerHTML = "25";
+				ghostDesc1.innerHTML = "The green ghost creates a wall behind him.";
 				ghostTitle2.innerHTML = "passive: destructor";
-				ghostDesc2.innerHTML = "when facing a wall for 3 seconds, the green ghost will break it, creating new paths.";
+				ghostDesc2.innerHTML = "When facing a wall for 5 seconds, the green ghost will break it. Useful when blocked.";
 				break;
 		}
 
@@ -641,7 +641,7 @@ export class PacmanMenu {
 		const pacmanSkins = {
 			pacman: document.getElementById('pPacmanSkin'),
 			pacgirl: document.getElementById('pPacWomanSkin'),
-			coolman: document.getElementById('pCoolmanSkin'),
+			pacMIB: document.getElementById('pPacMIBSkin'),
 			pacventurer: document.getElementById('pPacventurerSkin')
 		}
 		this.applySelectedSetting("pacmanSkin", pacmanSkins);
