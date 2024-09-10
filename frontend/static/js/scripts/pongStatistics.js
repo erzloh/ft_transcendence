@@ -161,7 +161,7 @@ export function pongStatistics () {
 				// Add the stats to the table
 				stats.map(stat => {
 					const tr = document.createElement('tr');
-					const columns = ['match_date', 'player', 'ai_level', 'match_score', 'winner', 'match_duration'];
+					const columns = ['match_date', 'player_one', 'ai_level', 'match_score', 'winner', 'match_duration'];
 					columns.forEach(column => {
 						const td = document.createElement('td');
 						td.textContent = stat[column];

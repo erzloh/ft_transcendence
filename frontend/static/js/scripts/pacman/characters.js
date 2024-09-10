@@ -567,7 +567,7 @@ export class PinkGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "intangible";
-		this.intangibleDuration = 3;
+		this.intangibleDuration = 2;
 		this.intangibleCooldown = 25;
 		this.intangibleSpeed = 110/100;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.intangibleDuration, this.intangibleCooldown, this.stopSpell.bind(this));

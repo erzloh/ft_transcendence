@@ -464,7 +464,22 @@ select {
 
 .pacman-game-container {
 	width: 500px !important;
-	flex: none
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.pacman-player-box-container {
+	display: flex;
+	gap: 20px;
+	width: 500px;
+}
+
+.pacman-player-box {
+	flex: 1; /* Make both divs take up equal space */
+	background-color: lightblue;
+	padding: 20px;
+	text-align: center;
 }
 
 // EDIT PROFILE PAGE
