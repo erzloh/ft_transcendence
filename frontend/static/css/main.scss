@@ -471,12 +471,12 @@ select {
 
 .pacman-player-box-container {
 	display: flex;
-	gap: 20px;
+	gap: 17px;
 	width: 500px;
 }
 
 .pacman-player-box {
-	flex: 1; /* Make both divs take up equal space */
+	flex: 1;
 	background-color: lightblue;
 	padding: 20px;
 	text-align: center;
