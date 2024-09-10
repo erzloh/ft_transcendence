@@ -1,6 +1,7 @@
 import { updateTexts } from "../utils/languages.js";
-import { Pacman, Pacgirl, Coolman, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
+import { Pacman, PacWoman, PacMIB, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
+import { BASE_URL } from '../index.js';
 
 let eventListeners = { }
 
@@ -123,7 +124,7 @@ class PacmanGame {
 			case "pacgirl":
 				pacmanSpellName.innerHTML = "speed boost";
 				break;
-			case "coolman":
+			case "pacMIB":
 				pacmanSpellName.innerHTML = "stun";
 				break;
 			case "pacventurer":
@@ -209,12 +210,43 @@ class PacmanGame {
 		this.startButton.disabled = false;
 	}
 
+	async sendPacmanData(winner) {
+		const date = new Date();
+		let matchData = {
+			"pacman_player": this.usernames.pacman,
+			"pacman_character": this.pacmanSkin,
+			"ghost_player": this.usernames.ghost,
+			"ghost_character": this.ghostSkin,
+			"map_name": this.mapName,
+			"match_duration": ((this.timer.min * 60) + this.timer.sec),
+			"winner": winner,
+			"pacman_score": this.pacman.score,
+			"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
+			"user": 1
+		};
+		console.log(matchData);
+		let response = await fetch(`${BASE_URL}/api/record_pacman_match`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(matchData)
+		});
+		if (response.status === 400) {
+			console.log("User isn't logged. Game history has not been saved.");
+		} else if (response.status === 200) {
+			console.log("Game saved.");
+		}
+	}
+
 	partyOver(winner) {
 		this.gameOver = true;
 		this.stopGameLoop();
 
+		this.sendPacmanData(winner);
+
 		this.endgameModalWinner.textContent = winner + " won the game !";
-		this.endgameModalScore.textContent = "Pacman's score: " + this.pacman.points;
+		this.endgameModalScore.textContent = "Pacman's score: " + this.pacman.score;
 		this.endgameModalTime.textContent = this.timer.getTime();
 
 		// Show the modal
@@ -333,10 +365,10 @@ class PacmanGame {
 					this.pacman = new Pacman(x, y, "none", this);
 					break;
 				case "pacgirl":
-					this.pacman = new Pacgirl(x, y, "none", this);
+					this.pacman = new PacWoman(x, y, "none", this);
 					break;
-				case "coolman":
-					this.pacman = new Coolman(x, y, "none", this);
+				case "pacMIB":
+					this.pacman = new PacMIB(x, y, "none", this);
 					break;
 				case "pacventurer":
 					this.pacman = new Pacventurer(x, y, "none", this);
@@ -375,31 +407,31 @@ class PacmanGame {
 		if (!this.gamePaused) {
 			switch (event.code) {
 				case this.keybinds.pUp:
-					this.pacman.direction = "up";
+					this.pacman.setDirection("up");
 					break;
 				case this.keybinds.pDown:
-					this.pacman.direction = "down";
+					this.pacman.setDirection("down");
 					break;
 				case this.keybinds.pLeft:
-					this.pacman.direction = "left";
+					this.pacman.setDirection("left");
 					break;
 				case this.keybinds.pRight:
-					this.pacman.direction = "right";
+					this.pacman.setDirection("right");
 					break;
 				case this.keybinds.pSpell:
 					this.pacman.useSpell();
 					break;
 				case this.keybinds.gUp:
-					this.ghost.direction = "up";
+					this.ghost.setDirection("up");
 					break;
 				case this.keybinds.gDown:
-					this.ghost.direction = "down";
+					this.ghost.setDirection("down");
 					break;
 				case this.keybinds.gLeft:
-					this.ghost.direction = "left";
+					this.ghost.setDirection("left");
 					break;
 				case this.keybinds.gRight:
-					this.ghost.direction = "right";
+					this.ghost.setDirection("right");
 					break;
 				case this.keybinds.gSpell:
 					this.ghost.useSpell();

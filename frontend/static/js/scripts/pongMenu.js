@@ -640,7 +640,7 @@ export class PongMenu {
 	// Add the "selected" class to to correct element based on the setting in the local storage
 	// settingType is for example "pacmanSkin", "ghostSkin", "gamemode", "mapName", "pacmanTheme"
 	// elementMapping is an object with the settings as keys and the elements as values
-	// for example { "pacman": btnPacmanSkin, "pacgirl": btnPacgirlSkin }
+	// for example { "pacman": btnPacmanSkin, "pacgirl": btnPacWomanSkin }
 	applySelectedSetting(settingType, elementMapping) {
 		const selectedSetting = localStorage.getItem(settingType)?.replace(/"/g, '');
 	
