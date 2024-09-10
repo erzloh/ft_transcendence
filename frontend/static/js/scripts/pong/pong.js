@@ -51,6 +51,10 @@ export class PongGame {
 			p1: "#ff0000", p2: "#00ff00", p3: "#266fff", p4: "#ff00ff"
 		};
 
+		const aiDifficultyString = localStorage.getItem('pongAIDifficulty');
+		this.aiDifficulty = aiDifficultyString ? JSON.parse(aiDifficultyString) : "easy";
+		localStorage.setItem('pongAIDifficulty', JSON.stringify(this.aiDifficulty));
+
 		const leftPaddleName = document.getElementById('leftPaddleName');
 		const rightPaddleName = document.getElementById('rightPaddleName');
 		leftPaddleName.innerHTML = this.usernames.p1;
@@ -270,7 +274,7 @@ export class PongGame {
 				console.log("AI match saved");
 				matchData = {
 					"player_one": this.usernames.p1,
-					"ai_level" : "easy",
+					"ai_level" : this.aiDifficulty,
 					"winner": winner,
 					"match_score": this.leftPad.score + "-" + this.rightPad.score,
 					"match_duration": ((this.timer.min * 60) + this.timer.sec),
