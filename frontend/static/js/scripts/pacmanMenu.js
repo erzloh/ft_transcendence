@@ -499,18 +499,20 @@ export class PacmanMenu {
 				rangeContainer.innerHTML = `
 					<div class="col-12 d-flex justify-content-center align-items-center mb-2">
 						<p for="rangeInput" class="text-white h5 mb-0" id="rangeLabel" style="margin-right: 10px;">Label</p>
-						<input type="range" class="form-range clickable" style="width: 70%;" min="1000" max="30000" value="15000" step="1000" id="rangeInput">
+						<input type="range" class="form-range clickable" style="width: 70%;" min="1000" max="30000" step="1000" id="rangeInput">
 					</div>
 				`;
 				let rangeInput = document.getElementById('rangeInput');
 				let rangeLabel = document.getElementById('rangeLabel');
 
 				rangeLabel.innerHTML = this.objective;
+				rangeInput.value = this.objective;
 				localStorage.setItem('objective', JSON.stringify(this.objective));
 
 				rangeInput.addEventListener('input', (event) => {
 					rangeLabel.textContent = event.target.value;
 					this.objective = event.target.value;
+					localStorage.setItem('objective', JSON.stringify(this.objective));
 				});
 
 				break;
