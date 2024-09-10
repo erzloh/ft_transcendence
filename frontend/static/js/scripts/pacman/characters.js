@@ -505,67 +505,54 @@ export class OrangeGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "excavate";
-		this.wallBlockX = -1;
-		this.wallBlockY = -1;
+		this.wallBlockX = this.x;
+		this.wallBlockY = this.y;
+		this.lastX = this.x;
+		this.lastY = this.y;
 		this.isWall = false;
 		this.excavateCooldown = 20;
+		this.ghostlySpeed = this.speed * 150/100;
 		this.baseSpeed = this.speed;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.excavateCooldown, this.stopSpell.bind(this));
 	}
 
 	premove() {
-		if (this.pcG.cells[this.y][this.x].value === 9) {
-			this.speed *= 200/100;
+		const isWall = (nextY, nextX) => {
+			return nextY < 0 || nextX < 0 || nextY >= this.pcG.height || nextX >= this.pcG.width || 
+				   this.pcG.cells[nextY][nextX].value === 1;
+		};
+
+		const isGhostBlock = (nextY, nextX) => {
+			return nextY < 0 || nextX < 0 || nextY >= this.pcG.height || nextX >= this.pcG.width || 
+				this.pcG.cells[nextY][nextX].value === 9;
+		};	
+
+		this.lastX = this.x;
+		this.lastY = this.y;
+		this.wallBlockY = this.y;
+		this.wallBlockX = this.x;
+	
+		switch (this.direction) {
+			case "up": this.wallBlockY -= 1; break;
+			case "down": this.wallBlockY += 1; break;
+			case "left": this.wallBlockX -= 1; break;
+			case "right": this.wallBlockX += 1; break;
+			default: break;
+		}
+	
+		if (isWall(this.wallBlockY, this.wallBlockX)) {
+			this.isWall = true;
+		}
+		else {
+			this.isWall = false;
+		}
+		
+		if (isGhostBlock(this.wallBlockY, this.wallBlockX) || this.pcG.cells[this.lastY][this.lastX].value === 9) {
+			this.speed = this.ghostlySpeed;
 		}
 		else {
 			this.speed = this.baseSpeed;
 		}
-		switch (this.direction) {
-			case "right":
-				if (this.x != this.pcG.cells.width) {
-					this.wallBlockX = this.x + 1;
-					this.wallBlockY = this.y;
-				}
-				else
-					this.wallBlockX = -1;
-				break;
-			case "down":
-				if (this.y != this.pcG.cells.height) {
-					this.wallBlockX = this.x;
-					this.wallBlockY = this.y + 1;
-				}
-				else
-					this.wallBlockY = -1;
-				break;
-			case "up":
-				if (this.y != 0) {
-					this.wallBlockX = this.x;
-					this.wallBlockY = this.y - 1;
-				}
-				else
-					this.wallBlockY = -1;
-				break;
-			case "left":
-				if (this.x != 0) {
-					this.wallBlockX = this.x - 1;
-					this.wallBlockY = this.y;
-				}
-				else
-					this.wallBlockX = -1;
-				break;
-			default:
-				this.wallBlockX = -1;
-				this.wallBlockY = -1;
-				break;
-		}
-		if (this.wallBlockX == -1 || this.wallBlockY == -1) {
-			this.isWall = false;
-		}
-		else if (this.pcG.cells[this.wallBlockY][this.wallBlockX].value == 1) {
-			this.isWall = true;
-		}
-		else
-			this.isWall = false;
 	}
 			
 
