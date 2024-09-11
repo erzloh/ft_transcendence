@@ -328,36 +328,36 @@ export class PacmanMenu {
 
 		switch (this.pacmanSkin) {
 			case "pacman":
-				pacmanTitle.innerHTML = "pac-man";
-				pacmanTitle1.innerHTML = "passive: gluttony";
+				updateTextForElem(pacmanTitle, "pacman-name");
+				updateTextForElem(pacmanTitle1, "pacman-passive");
+				updateTextForElem(pacmanDesc1, "pacman-passive-desc");
+				updateTextForElem(pacmanTitle2, "pacman-frenzy");
+				updateTextForElem(pacmanDesc2, "pacman-frenzy-desc");
 				cooldown.innerHTML = "20";
-				pacmanDesc1.innerHTML = "When eating a fruit, Pac-Man goes into a frenzy for 5 seconds.";
-				pacmanTitle2.innerHTML = "effect: frenzy";
-				pacmanDesc2.innerHTML = "Pac-Man moves 20% faster and can eat the Ghost. Eating the Ghost disables it for 5 seconds and grants 300 points.";
 				break;
 			case "pac-woman":
-				pacmanTitle.innerHTML = "pac-woman";
-				pacmanTitle1.innerHTML = "active: turbo";
+				updateTextForElem(pacmanTitle, "pacwoman-name");
+				updateTextForElem(pacmanTitle1, "pacwoman-active");
+				updateTextForElem(pacmanDesc1, "pacwoman-active-desc");
+				updateTextForElem(pacmanTitle2, "pacwoman-passive");
+				updateTextForElem(pacmanDesc2, "pacwoman-passive-desc");
 				cooldown.innerHTML = "25";
-				pacmanDesc1.innerHTML = "Pac-Woman can boost her speed by 20% for 10 seconds.";
-				pacmanTitle2.innerHTML = "passive: fruit lover";
-				pacmanDesc2.innerHTML = "Pac-Woman loves fruits and gains 3% stacking movespeed after eating one.";
 				break;
 			case "pacMIB":
-				pacmanTitle.innerHTML = "pac-man-in-black";
-				pacmanTitle1.innerHTML = "active: flash";
+				updateTextForElem(pacmanTitle, "pacMIB-name");
+				updateTextForElem(pacmanTitle1, "pacMIB-active");
+				updateTextForElem(pacmanDesc1, "pacMIB-active-desc");
+				updateTextForElem(pacmanTitle2, "pacMIB-passive");
+				updateTextForElem(pacmanDesc2, "pacMIB-passive-desc");
 				cooldown.innerHTML = "20";
-				pacmanDesc1.innerHTML = "Pac-Man-In-Black flashes the Ghost, disabling it for 3 seconds.";
-				pacmanTitle2.innerHTML = "passive: warp master";
-				pacmanDesc2.innerHTML = "Pac-Man-In-Black is used to teleporting, he gains 20% move speed for 5 seconds after warping.";
 				break;
 			case "pacventurer":
-				pacmanTitle.innerHTML = "pac-venturer";
-				pacmanTitle1.innerHTML = "active: grappling hook";
+				updateTextForElem(pacmanTitle, "pac-venturer-name");
+				updateTextForElem(pacmanTitle1, "pac-venturer-active");
+				updateTextForElem(pacmanDesc1, "pac-venturer-active-desc");
+				updateTextForElem(pacmanTitle2, "pac-venturer-passive");
+				updateTextForElem(pacmanDesc2, "pac-venturer-passive-desc");
 				cooldown.innerHTML = "20";
-				pacmanDesc1.innerHTML = "Using his favorite grappling hook, Pac-Venturer propels himself in a straight line until he hits a wall.";
-				pacmanTitle2.innerHTML = "passive: exploration";
-				pacmanDesc2.innerHTML = "Pac-Venturer moves 10% faster and gains 10% more points.";
 				break;
 		}
 
@@ -424,36 +424,36 @@ export class PacmanMenu {
 
 		switch (this.ghostSkin) {
 			case "blueGhost":
-				ghostTitle.innerHTML = "blue ghost";
-				ghostTitle1.innerHTML = "active: ghost block";
+				updateTextForElem(ghostTitle, "blueGhost-name");
+				updateTextForElem(ghostTitle1, "blueGhost-active");
+				updateTextForElem(ghostDesc1, "blueGhost-active-desc");
+				updateTextForElem(ghostTitle2, "blueGhost-passive");
+				updateTextForElem(ghostDesc2, "blueGhost-passive-desc");
 				cooldown.innerHTML = "5";
-				ghostDesc1.innerHTML = "The blue ghost places the ghost block which pacman can't go through but the ghost can.";
-				ghostTitle2.innerHTML = "passive: speedy"
-				ghostDesc2.innerHTML = "The blue ghost has 10% bonus movespeed.";
 				break;
 			case "orangeGhost":
-				ghostTitle.innerHTML = "orange ghost";
-				ghostTitle1.innerHTML = "active: excavate";
+				updateTextForElem(ghostTitle, "orangeGhost-name");
+				updateTextForElem(ghostTitle1, "orangeGhost-active");
+				updateTextForElem(ghostDesc1, "orangeGhost-active-desc");
+				updateTextForElem(ghostTitle2, "orangeGhost-passive");
+				updateTextForElem(ghostDesc2, "orangeGhost-passive-desc");
 				cooldown.innerHTML = "20";
-				ghostDesc1.innerHTML = "The orange ghost turns the wall in front of him into a ghost block, creating paths that pacman can't use.";
-				ghostTitle2.innerHTML = "passive: ghostly"
-				ghostDesc2.innerHTML = "The orange ghost has double movespeed while on ghost block.";
 				break;
 			case "pinkGhost":
-				ghostTitle.innerHTML = "pink ghost";
-				ghostTitle1.innerHTML = "active: dematerialize";
+				updateTextForElem(ghostTitle, "pinkGhost-name");
+				updateTextForElem(ghostTitle1, "pinkGhost-active");
+				updateTextForElem(ghostDesc1, "pinkGhost-active-desc");
+				updateTextForElem(ghostTitle2, "pinkGhost-effect");
+				updateTextForElem(ghostDesc2, "pinkGhost-effect-desc");
 				cooldown.innerHTML = "25";
-				ghostDesc1.innerHTML = "The pink ghost becomes intangible for 3 seconds. He gets brought back on the last ground tile it crossed when the spell ends.";
-				ghostTitle2.innerHTML = "effect: intangible"
-				ghostDesc2.innerHTML = "The pink ghost gains 10% movespeed and can go through walls.";
 				break;
 			case "greenGhost":
-				ghostTitle.innerHTML = "green ghost";
-				ghostTitle1.innerHTML = "active: blockade";
+				updateTextForElem(ghostTitle, "greenGhost-name");
+				updateTextForElem(ghostTitle1, "greenGhost-active");
+				updateTextForElem(ghostDesc1, "greenGhost-active-desc");
+				updateTextForElem(ghostTitle2, "greenGhost-passive");
+				updateTextForElem(ghostDesc2, "greenGhost-passive-desc");
 				cooldown.innerHTML = "25";
-				ghostDesc1.innerHTML = "The green ghost creates a wall behind him.";
-				ghostTitle2.innerHTML = "passive: sneak";
-				ghostDesc2.innerHTML = "When facing a wall for 3 seconds, the green ghost will turn it into a ghost block, lasting until another one is created.";
 				break;
 		}
 
