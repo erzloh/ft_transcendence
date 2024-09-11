@@ -297,14 +297,15 @@ export class PacmanMenu {
 				<div class="row justify-content-center"> 
 					<div class="col-10 mt-3">
 						<p class="h3 text-white text-center mb-3 mt-1" id="pacmanTitle">pac-man</p>
+						<hr class="text-white">
 						<div class="col-12 mb-1">
 							<p class="h5 text-left text-white fw-bold" id="pacmanTitle1" style="display: inline; vertical-align: middle;">Title</p>
 							<img src="/static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
 							<p id="cooldown" class="h5 text-white" style="display: inline; vertical-align: middle;">00:00</p>
 						</div>
-						<p class="text-white text-left lh-sm" id="pacmanDesc1" style="min-height: 3em; line-height: 1;">Description 1</p>
+						<p class="text-white text-left lh-sm" id="pacmanDesc1" style="min-height: 4em; line-height: 1;">Description 1</p>
 						<p class="h5 text-white text-left fw-bold mb-1 mt-1" id="pacmanTitle2">Title 2</p>
-						<p class="text-white text-left lh-sm" style="min-height: 3em; line-height: 1;" id="pacmanDesc2">Description 2</p>
+						<p class="text-white text-left lh-sm" style="min-height: 4em; line-height: 1;" id="pacmanDesc2">Description 2</p>
 					</div>
 				</div>
 			</div>
@@ -393,14 +394,15 @@ export class PacmanMenu {
 				<div class="row justify-content-center"> 
 					<div class="col-10 mt-3">
 						<p class="h3 text-white text-center mb-3 mt-1" id="ghostTitle">blue ghost</p>
+						<hr class="text-white">
 						<div class="col-12 mb-1">
 							<p class="h5 text-left text-white fw-bold" id="ghostTitle1" style="display: inline; vertical-align: middle;">Title</p>
 							<img src="/static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
 							<p id="cooldown" class="h5 text-white" style="display: inline; vertical-align: middle;">00:00</p>
 						</div>
-						<p class="text-white text-left lh-sm" id="ghostDesc1" style="min-height: 3em; line-height: auto;">Description 1</p>
+						<p class="text-white text-left lh-sm" id="ghostDesc1" style="min-height: 4em; line-height: auto;">Description 1</p>
 						<p class="h5 text-white text-left fw-bold mb-1" id="ghostTitle2">Title 2</p>
-						<p class="text-white text-left lh-sm" style="min-height: 3em; line-height: auto;" id="ghostDesc2">Description 2</p>
+						<p class="text-white text-left lh-sm" style="min-height: 4em; line-height: auto;" id="ghostDesc2">Description 2</p>
 					</div>
 				</div>
 			</div>
@@ -554,15 +556,15 @@ export class PacmanMenu {
 				<div class="col-auto mr-2 ml-2">
 					<div class="row justify-content-center text-center">
 						<div class="col-4 d-flex flex-column align-items-center">
-							<p class="h4 text-white mb-2">maze</p>
+							<p class="h4 text-white mb-2" data-translate="maze">maze</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
 						</div>
 						<div class="col-4 d-flex flex-column align-items-center">
-							<p class="h4 text-white mb-2">spiral</p>
+							<p class="h4 text-white mb-2" data-translate="spiral">spiral</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
 						</div>
 						<div class="col-4 d-flex flex-column align-items-center">
-								<p class="h4 text-white mb-2">butterfly</p>
+								<p class="h4 text-white mb-2" data-translate="butterfly">butterfly</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
 						</div>
 					</div>
@@ -600,19 +602,19 @@ export class PacmanMenu {
 					<div class="row justify-content-center text-center mt-2 mb-3">
 						<div class="row justify-content-center text-center">
 							<div class="col-3 d-flex flex-column align-items-center">
-								<p class="h4 text-white">obsidian</p>
+								<p class="h4 text-white" data-translate="obsidian">obsidian</p>
 								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian" alt="A map that has the color of obsidian." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
-								<p class="h4 text-white">autumn</p>
+								<p class="h4 text-white" data-translate="autumn">autumn</p>
 								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn" alt="A map that has the color of autumn." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
-								<p class="h4 text-white">garden</p>
+								<p class="h4 text-white" data-translate="garden">garden</p>
 								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden" alt="A map that has the color of a garden." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
-								<p class="h4 text-white">retro</p>
+								<p class="h4 text-white" data-translate="retro">retro</p>
 								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial" alt="A map that has the color of the retro pac-man." tabindex="0"/>
 							</div>
 						</div>

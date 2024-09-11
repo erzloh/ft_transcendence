@@ -25,7 +25,7 @@ import { setLanguage, updateTexts } from "./utils/languages.js";
 
 // ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
 // Set the base URL of the website
-export const BASE_URL = "https://localhost:4443";
+export const BASE_URL = "https://localhost";
 export const BIG_TEXT = '18px';
 export const DEFAULT_TEXT = '16px';
 

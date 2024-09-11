@@ -1,6 +1,7 @@
 import { updateTexts } from "../utils/languages.js";
 import { Pacman, PacWoman, PacMIB, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
+import { updateTextForElem } from "../utils/languages.js";
 import { BASE_URL } from '../index.js';
 
 let eventListeners = { }
@@ -121,39 +122,12 @@ class PacmanGame {
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
 
-		switch (this.pacmanSkin) {
-			case "pacman":
-				pacmanSpellName.innerHTML = "frenzy";
-				break;
-			case "pac-woman":
-				pacmanSpellName.innerHTML = "turbo";
-				break;
-			case "pacMIB":
-				pacmanSpellName.innerHTML = "stun";
-				break;
-			case "pacventurer":
-				pacmanSpellName.innerHTML = "grappling hook";
-				break;
-			default:
-				break;
-		}
-
-		switch (this.ghostSkin) {
-			case "blueGhost":
-				ghostSpellName.innerHTML = "ghost block";
-				break;
-			case "orangeGhost":
-				ghostSpellName.innerHTML = "excavate";
-				break;
-			case "pinkGhost":
-				ghostSpellName.innerHTML = "dematerialize";
-				break;
-			case "greenGhost":
-				ghostSpellName.innerHTML = "blockade";
-				break;
-			default:
-				break;
-		}
+		this.createCharacter("pacman", 0, 0);
+		this.createCharacter("ghost", 0, 0);
+		updateTextForElem(this.pacmanSpellName, this.pacman.spellName);
+		updateTextForElem(this.ghostSpellName, this.ghost.spellName);
+		// this.pacmanSpellName.innerHTML = this.pacman.spellName;
+		// this.ghostSpellName.innerHTML = this.ghost.spellName;
 
 		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
 		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';

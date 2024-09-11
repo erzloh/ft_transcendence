@@ -1,7 +1,9 @@
 import { CooldownTimer } from "./objects.js";
+import { updateTextForElem } from "../../utils/languages.js";
 
 class Character {
 	constructor(x, y, direction, pacmanGame) {
+		this.spellName = "";
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
@@ -46,7 +48,7 @@ export class PacmanBase extends Character {
 		this.score = 0;
 		this.objective = -1;
 		this.cooldownDisplay = document.getElementById('pCD');
-		this.cooldownDisplay.innerHTML = "ready";
+		updateTextForElem(this.cooldownDisplay, "ready");
 		this.pointFactor = 100/100;
 	}
 
@@ -168,7 +170,7 @@ export class PacmanBase extends Character {
 export class Pacman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "frenzy";
+		this.spellName = "gluttony";
 		this.frenzyDuration = 5;
 		this.frenzyCooldown = 25;
 		this.frenzySpeedBoost = 120 / 100;
@@ -270,7 +272,8 @@ export class PacMIB extends PacmanBase {
 		this.spellName = "flash";
 		this.stunDuration = 3;
 		this.stunCooldown = 20;
-		this.speedBoost = 120/100;
+		this.baseSpeed = this.speed;
+		this.speedBoost = this.speed * 120/100;
 		this.speedDuration = 5;
 		this.speedy = false;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.stunDuration, this.stunCooldown, this.stopSpell.bind(this));
@@ -289,7 +292,7 @@ export class PacMIB extends PacmanBase {
 	}
 
 	stopSpeedBoost() {
-		this.speed /= this.speedBoost;
+		this.speed = this.baseSpeed;
 	}
 
 	teleport() {
@@ -302,7 +305,7 @@ export class PacMIB extends PacmanBase {
 						this.y = i;
 						this.px = j;
 						this.py = i;
-						this.speed *= this.speedBoost;
+						this.speed = this.speedBoost;
 						this.warpSpeedTimer.startCD();
 						this.tpReady = false;
 						return;
@@ -322,7 +325,7 @@ export class Pacventurer extends PacmanBase {
 		this.grapplingCD = 20;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.grapplingCD,	this.stopSpell.bind(this));
 		this.grappling = false;
-		this.grapplingSpeed = 300/100;
+		this.grapplingSpeed = 400/100;
 		this.grapplingDirection = "";
 	}
 
@@ -398,7 +401,7 @@ export class GhostBase extends Character {
 		super(x, y, direction, pacmanGame);
 		this.speed = pacmanGame.gSpeed;
 		this.cooldownDisplay = document.getElementById('gCD');
-		this.cooldownDisplay.innerHTML = "ready";
+		updateTextForElem(this.cooldownDisplay, "ready");
 		this.spawnX = this.x;
 		this.spawnY = this.y;
 		this.disabled = false;

@@ -5,6 +5,16 @@
 
 	"pong": "ポン",
 	"pac-man": "パックマン",
+	"ghost": "ゆうれい",
+
+	"maze": "迷路",
+	"spiral": "渦巻き",
+	"butterfly": "蝶",
+
+	"obsidian": "黒曜石",
+	"autumn": "秋",
+	"garden": "庭",
+	"retro": "レトロ",
 
 	"pacman-menu": "パックマンメニュー",
 	"enter-username": "ユーザー名を入力",
@@ -17,8 +27,68 @@
 	"move-right": "右に移動",
 	"use-spell": "スペルを使用",
 
-	"pacman-skin": "パックマンスキン",
-	"ghost-skin": "ゴーストスキン",
+	"pacman-skin": "パックマンキャラクター",
+	"ghost-skin": "ゴーストキャラクター",
+
+	"pacman-name" : "パックマン",
+	"pacman-passive" : "パッシブ：大食い",
+	"pacman-passive-desc" : "フルーツを食べると、パックマンは5秒間フレンジ状態に入る。",
+	"pacman-frenzy" : "効果：フレンジ",
+	"pacman-frenzy-desc" : "パックマンは20%速く移動し、ゴーストを食べることができる。ゴーストを食べると、ゴーストが5秒間無効化され、300ポイントを獲得する。",
+
+	"pacwoman-name" : "パックウーマン",
+	"pacwoman-active" : "アクティブ：ターボ",
+	"pacwoman-active-desc" : "パックウーマンは10秒間速度を20%上げる。",
+	"pacwoman-passive" : "パッシブ：フルーツ好き",
+	"pacwoman-passive-desc" : "パックウーマンはフルーツが大好きで、食べるごとにスタックされる移動速度が3%増加する。",
+
+	"pacMIB-name" : "パックマン・イン・ブラック",
+	"pacMIB-active" : "アクティブ：フラッシュ",
+	"pacMIB-active-desc" : "パックマン・イン・ブラックはゴーストを閃光で目くらまし、3秒間無効化する。",
+	"pacMIB-passive" : "パッシブ：ワープマスター",
+	"pacMIB-passive-desc" : "パックマン・イン・ブラックはテレポートに慣れており、ワープ後5秒間移動速度が20%上昇する。",
+
+	"pac-venturer-name" : "パック冒険者",
+	"pac-venturer-active" : "アクティブ：グラップリングフック",
+	"pac-venturer-active-desc" : "お気に入りのグラップリングフックを使って、パック冒険者は壁にぶつかるまで一直線に進む。",
+	"pac-venturer-passive" : "パッシブ：探検",
+	"pac-venturer-passive-desc" : "パック冒険者は10%速く移動し、獲得ポイントが10%増加する。",
+
+	"blueGhost-name" : "青いゴースト",
+	"blueGhost-active" : "アクティブ：ゴーストブロック",
+	"blueGhost-active-desc" : "青いゴーストは背後にゴーストブロックを配置する。このブロックはゴーストだけが通過でき、パックマンは通過できない。",
+	"blueGhost-passive" : "パッシブ：満足",
+	"blueGhost-passive-desc" : "ゴーストブロックを配置した後、青いゴーストは10秒間移動速度が15%増加する。",
+
+	"orangeGhost-name" : "オレンジのゴースト",
+	"orangeGhost-active" : "アクティブ：掘削",
+	"orangeGhost-active-desc" : "オレンジのゴーストは前方の壁をゴーストブロックに変え、パックマンが通れない道を作る。",
+	"orangeGhost-passive" : "パッシブ：ゴースト状",
+	"orangeGhost-passive-desc" : "オレンジのゴーストは、ゴーストブロックの上にいるときに移動速度が2倍になる。",
+
+	"pinkGhost-name" : "ピンクのゴースト",
+	"pinkGhost-active" : "アクティブ：非物質化",
+	"pinkGhost-active-desc" : "ピンクのゴーストは3秒間非物質化し、壁の中にいる場合は最後に通過した床タイルに戻される。",
+	"pinkGhost-effect" : "効果：非物質化",
+	"pinkGhost-effect-desc" : "ピンクのゴーストは移動速度が10%上昇し、壁を通り抜けることができる。",
+
+	"greenGhost-name" : "緑のゴースト",
+	"greenGhost-active" : "アクティブ：封鎖",
+	"greenGhost-active-desc" : "緑のゴーストは背後に壁を作り、全員の通路を封鎖する。",
+	"greenGhost-passive" : "パッシブ：隠密",
+	"greenGhost-passive-desc" : "3秒間壁を見つめると、緑のゴーストはその壁をゴーストブロックに変える。このブロックは次のものが作成されるまで持続する。",
+
+	"ready" : "準備完了",
+
+	"gluttony" : "大食い",
+	"turbo" : "ターボ",
+	"flash" : "フラッシュ",
+	"grappling hook" : "グラップリングフック",
+
+	"ghost block" : "ゴーストブロック",
+	"excavate" : "掘削",
+	"dematerialize" : "非物質化",
+	"blockade" : "封鎖",
 
 	"gamemode": "ゲームモード",
 	"objective": "目的",

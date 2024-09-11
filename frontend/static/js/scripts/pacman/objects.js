@@ -1,3 +1,5 @@
+import { updateTextForElem } from "../../utils/languages.js";
+
 export class Star {
 	constructor(x, y, imgStar, pcG) {
 		this.x = x;
@@ -194,7 +196,7 @@ export class CooldownTimer {
 		this.stopCD();
 		this.sec = 0;
 		if (this.cooldownDisplay != null)
-			this.cooldownDisplay.innerHTML = "ready";
+			updateTextForElem(this.cooldownDisplay, "ready");
 	}
 
 	cooldown() {
@@ -208,27 +210,10 @@ export class CooldownTimer {
 		}
 		else {
 			if (this.cooldownDisplay != null)
-				this.cooldownDisplay.innerHTML = "ready";
+				updateTextForElem(this.cooldownDisplay, "ready");
 			this.stopCD();
 		}	
 	}
-
-	// pacmanStartCD() {
-	// 	if (this.pSpellCD > 0)
-	// 		return false;
-	// 	this.pSpellDuration = 3;
-	// 	this.pSpellCD = 20;
-	// 	this.pCD.innerHTML = this.pSpellCD.toString().padStart(2, '0');
-	// 	return true;
-	// }
-
-	// ghostStartCD() {
-	// 	if (this.gSpellCD > 0)
-	// 		return false;
-	// 	this.gSpellCD = 5;
-	// 	this.gCD.innerHTML = this.gSpellCD.toString().padStart(2, '0');
-	// 	return true;
-	// }
 }
 
 export class Cell {

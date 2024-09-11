@@ -7,6 +7,15 @@
 	"pac-man": "pac-man",
 	"ghost": "ghost",
 
+	"maze": "maze",
+	"spiral": "spiral",
+	"butterfly": "butterfly",
+
+	"obsidian": "obsidian",
+	"autumn": "autumn",
+	"garden": "garden",
+	"retro": "retro",
+
 	"pacman-menu": "pac-man menu",
 	"enter-username": "enter username",
 
@@ -25,7 +34,7 @@
 	"pacman-passive" : "passive: gluttony",
 	"pacman-passive-desc" : "When eating a fruit, Pac-Man goes into a frenzy for 5 seconds.",
 	"pacman-frenzy" : "effect: frenzy",
-	"pacman-frenzy-desc" : "Pac-Man moves 20% faster and can eat the Ghost. Eating the Ghost disables it for 5 seconds and grants 300 points.",
+	"pacman-frenzy-desc" : "Pac-Man moves 20% faster and can eat the Ghost. Eating the Ghost disables it for 5 seconds and grants Pac-Man 300 points.",
 
 	"pacwoman-name" : "pac-woman",
 	"pacwoman-active" : "active: turbo",
@@ -47,34 +56,45 @@
 
 	"blueGhost-name" : "blue ghost",
 	"blueGhost-active" : "active: ghost block",
-	"blueGhost-active-desc" : "The blue ghost places the ghost block which pacman can't go through but the ghost can.",
-	"blueGhost-passive" : "passive: speedy",
-	"blueGhost-passive-desc" : "The blue ghost has 10% bonus movespeed.",
+	"blueGhost-active-desc" : "The Blue Ghost places the ghost block which pacman can't go through but the ghost can.",
+	"blueGhost-passive" : "passive: satisfaction",
+	"blueGhost-passive-desc" : "After placing his ghost block, the Blue Ghost gains 15% move speed for 10 seconds.",
 
 	"orangeGhost-name" : "orange ghost",
 	"orangeGhost-active" : "active: excavate",
-	"orangeGhost-active-desc" : "The orange ghost turns the wall in front of him into a ghost block, creating paths that pacman can't use.",
+	"orangeGhost-active-desc" : "The Orange Ghost turns the wall in front of him into a ghost block, creating paths that pacman can't use.",
 	"orangeGhost-passive" : "passive: ghostly",
-	"orangeGhost-passive-desc" : "The orange ghost has double movespeed while on ghost block.",
+	"orangeGhost-passive-desc" : "The Orange Ghost has double movespeed while on ghost block.",
 
 	"pinkGhost-name" : "pink ghost",
 	"pinkGhost-active" : "active: dematerialize",
-	"pinkGhost-active-desc" : "The pink ghost becomes intangible for 3 seconds. He gets brought back on the last ground tile it crossed when the spell ends.",
+	"pinkGhost-active-desc" : "The Pink Ghost becomes intangible for 3 seconds. He gets brought back on the last ground tile it crossed when the spell ends.",
 	"pinkGhost-effect" : "effect: intangible",
-	"pinkGhost-effect-desc" : "The pink ghost gains 10% movespeed and can go through walls.",
+	"pinkGhost-effect-desc" : "The Pink Ghost gains 10% movespeed and can go through walls.",
 
 	"greenGhost-name" : "green ghost",
 	"greenGhost-active" : "active: blockade",
-	"greenGhost-active-desc" : "The green ghost creates a wall behind him.",
+	"greenGhost-active-desc" : "The Green Ghost creates a wall behind him.",
 	"greenGhost-passive" : "passive: sneak",
-	"greenGhost-passive-desc" : "When facing a wall for 3 seconds, the green ghost will turn it into a ghost block, lasting until another one is created.",
+	"greenGhost-passive-desc" : "When facing a wall for 3 seconds, the Green Ghost will turn it into a ghost block, lasting until another one is created.",
+
+	"ready" : "ready",
+
+	"gluttony" : "gluttony",
+	"turbo" : "turbo",
+	"flash" : "flash",
+	"grappling hook" : "grappling hook",
+
+	"ghost block" : "ghost block",
+	"excavate" : "excavate",
+	"dematerialize" : "dematerialize",
+	"blockade" : "blockade",
 
 	"gamemode": "gamemode",
 	"objective": "objective",
 	"objective-description": "the game ends once Pacman's score reaches the objective or the Ghost catches Pacman.",
 	"endless": "endless",
 	"endless-description": "the game ends once the Ghost catches Pacman.",
-
 
 	"map": "map",
 	"theme": "theme",
