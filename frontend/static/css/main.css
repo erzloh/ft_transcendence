@@ -12372,7 +12372,7 @@ select {
   width: 500px;
 }
 
-.pacman-player-box {
+.pacman-player-box, .pong-player-box {
   flex: 1;
   background-color: lightblue;
   padding: 20px;
@@ -12523,6 +12523,17 @@ select {
 #pongRangeInput::-webkit-slider-runnable-track {
   background: rgba(255, 255, 255, 0.5);
   cursor: url("/static/assets/UI/icons/cursor_big.svg") 15 15, auto;
+}
+
+.pong-interface-container {
+  width: 800px;
+}
+
+.pong-player-box-container {
+  display: flex;
+  gap: 17px;
+  width: 100%;
+  padding: 0px;
 }
 
 .table-container {

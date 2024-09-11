@@ -475,7 +475,7 @@ select {
 	width: 500px;
 }
 
-.pacman-player-box {
+.pacman-player-box, .pong-player-box {
 	flex: 1;
 	background-color: lightblue;
 	padding: 20px;
@@ -650,6 +650,17 @@ select {
 
 	// change cursor
 	cursor: $cursor-pointer;
+}
+
+.pong-interface-container {
+	width: 800px;
+}
+
+.pong-player-box-container {
+	display: flex;
+	gap: 17px;
+	width: 100%;
+	padding: 0px;
 }
 
 // Pong Statistics Page

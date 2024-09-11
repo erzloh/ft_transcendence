@@ -71,7 +71,7 @@ export class PongGame {
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
-		this.objectiveLabel.innerHTML = "points to win: " + this.objective;
+		this.objectiveLabel.innerHTML = this.objective;
 
 		this.boundPongHandleKeyDown = this.handleKeyDown.bind(this);
 		this.boundPongHandleKeyUp = this.handleKeyUp.bind(this);
