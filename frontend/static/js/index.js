@@ -1,3 +1,4 @@
+//
 // ------------------------------- IMPORT VIEWS -------------------------------
 // A view is a class containing the HTML and JS of a page
 import Home from "./views/Home.js";
