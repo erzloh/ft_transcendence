@@ -101,22 +101,22 @@ export class PongMenu {
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h3 text-white text-center">left paddle</p>
-							<p class="h5 text-white text-center" id="leftPaddleName">player 1</p>
-							<input type="text" id="leftPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<p class="h5 text-white text-center">left paddle</p>
+							<p class="h3 text-white text-center" id="leftPaddleName">player 1</p>
+							<input type="text" id="leftPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-3" placeholder="Enter username">
 						</div>
 						<div class="col-6 d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
+							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#ff0000">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h3 text-white text-center">right paddle</p>
-							<p class="h5 text-white text-center" id="rightPaddleName">player 2</p>
-							<input type="text" id="rightPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<p class="h5 text-white text-center">right paddle</p>
+							<p class="h3 text-white text-center" id="rightPaddleName">player 2</p>
+							<input type="text" id="rightPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-3" placeholder="Enter username">
 						</div>
 						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 glass" value="#00ff00">
+							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#00ff00">
 						</div>
 					</div>
 				`;
@@ -143,14 +143,14 @@ export class PongMenu {
 				break;
 			case "AI":
 				this.playersContainer.innerHTML = `
-					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4 player-box">
 						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h3 text-white text-center">left paddle</p>
-							<p class="h5 text-white text-center" id="playerPaddleName">player 1</p>
-							<input type="text" id="playerPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">	
+							<p class="h5 text-white text-center">left paddle</p>
+							<p class="h3 text-white text-center" id="playerPaddleName">player 1</p>
+							<input type="text" id="playerPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-2" placeholder="Enter username">	
 						</div>
 						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
+							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#ff0000">
 						</div>
 					</div>
 				`;
@@ -174,7 +174,7 @@ export class PongMenu {
 							<input type="text" id="player1Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-1">
-							<input type="color" id="player1Color" class="form-control form-control-sm mt-3 glass" value="#ff0000">
+							<input type="color" id="player1Color" class="form-control form-control-sm mt-3 color-picker" value="#ff0000">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
@@ -183,7 +183,7 @@ export class PongMenu {
 							<input type="text" id="player2Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
 						<div class="col-8  d-flex flex-column align-items-center mt-1 mb-1">
-							<input type="color" id="player2Color" class="form-control form-control-sm mt-3 glass" value="#00ff00">
+							<input type="color" id="player2Color" class="form-control form-control-sm mt-3 color-picker" value="#00ff00">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
@@ -192,7 +192,7 @@ export class PongMenu {
 							<input type="text" id="player3Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
 						<div class="col-8  d-flex flex-column align-items-center mt-1 mb-1">
-							<input type="color" id="player3Color" class="form-control form-control-sm mt-3 glass" value="#0000ff">
+							<input type="color" id="player3Color" class="form-control form-control-sm mt-3 color-picker" value="#0000ff">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
@@ -201,7 +201,7 @@ export class PongMenu {
 							<input type="text" id="player4Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
 						</div>
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-1">
-							<input type="color" id="player4Color" class="form-control form-control-sm mt-3 glass" value="#ff00ff">
+							<input type="color" id="player4Color" class="form-control form-control-sm mt-3 color-picker" value="#ff00ff">
 						</div>
 					</div>
 				`;
@@ -289,7 +289,7 @@ export class PongMenu {
 		this.pointsRangeContainer.innerHTML = `
 			<div class="col-6 flex-column align-items-center d-flex mb-2">
 				<p for="pongRangeInput" class="text-white h5 text-center" id="rangeLabel">points to win: 3</p>
-				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1" max="10" value="${this.objective}" step="1" id="pongRangeInput">
+				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range mt-2" min="1" max="10" value="${this.objective}" step="1" id="pongRangeInput">
 			</div>
 		`;
 

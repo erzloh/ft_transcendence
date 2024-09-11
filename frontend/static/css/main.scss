@@ -87,6 +87,26 @@ $color4: rgb(149, 34, 119);
 $color5: rgb(136, 140, 40);
 $color-interactive: rgb(7, 56, 201);
 
+// new palette 1
+// $color-bg1: rgb(0, 0, 0);
+// $color-bg2: rgb(28, 0, 45);
+// $color1: rgb(49, 1, 117);
+// $color2: rgb(129, 11, 156);
+// $color3: rgb(111, 8, 61);
+// $color4: rgb(149, 34, 119);
+// $color5: rgb(14, 45, 72);
+// $color-interactive: rgb(106, 5, 52);
+
+// violet light blue palette
+// $color-bg1: rgb(34, 23, 51);
+// $color-bg2: rgb(34, 23, 51);
+// $color1: rgb(101, 55, 125);
+// $color2: rgb(138, 171, 203);
+// $color3: rgb(70, 57, 120);
+// $color4: rgb(57, 21, 79);
+// $color5: rgb(67, 78, 146);
+// $color-interactive: rgb(80, 56, 116);
+
 // Red color palette
 // $color-bg1: rgb(84, 0, 0);
 // $color-bg2: rgb(60, 63, 0);
@@ -263,7 +283,7 @@ $blending: hard-light;
 .glass {
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
-	border-radius: 50px;
+	border-radius: 25px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	// box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 	animation: fadeIn 0.5s ease-out;
@@ -475,7 +495,7 @@ select {
 	width: 500px;
 }
 
-.pacman-player-box {
+.pacman-player-box, .pong-player-box {
 	flex: 1;
 	background-color: lightblue;
 	padding: 20px;
@@ -609,6 +629,58 @@ select {
 	// blur
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
+}
+
+.player-box {
+	max-width: 400px;
+}
+
+.color-picker {
+	width: 100px;
+	height: 10px !important;
+	border-radius: 0;
+	background-color: transparent;
+	padding: 0;
+	opacity: 0.7;
+
+	::-webkit-color-swatch {
+		border: 1px solid rgba(255, 255, 255, 0.5);
+	}
+}
+
+#pongRangeInput {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 8px;
+	background: transparent;
+	outline: none;
+	
+	// Custom thumb color
+	&::-webkit-slider-thumb {
+		background: rgba(240, 160, 0, 0.688);
+		cursor: $cursor-pointer;
+	}
+
+	// Custom track color
+	&::-webkit-slider-runnable-track {
+		background: rgba(255, 255, 255, 0.5);
+		cursor: $cursor;
+	}
+
+	// change cursor
+	cursor: $cursor-pointer;
+}
+
+.pong-interface-container {
+	width: 800px;
+}
+
+.pong-player-box-container {
+	display: flex;
+	gap: 17px;
+	width: 100%;
+	padding: 0px;
 }
 
 // Pong Statistics Page
