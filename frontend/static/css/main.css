@@ -12109,7 +12109,7 @@ label {
 }
 .gradient-bg .interactive {
   position: absolute;
-  background: radial-gradient(circle at center, rgba(7, 56, 201, 0.8) 0, rgba(7, 56, 201, 0) 50%) no-repeat;
+  background: radial-gradient(circle at center, rgba(79, 0, 125, 0.8) 0, rgba(79, 0, 125, 0) 50%) no-repeat;
   mix-blend-mode: hard-light;
   width: 100%;
   height: 100%;
