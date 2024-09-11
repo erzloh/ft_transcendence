@@ -288,7 +288,7 @@ export class PacmanMenu {
 					<div class="col-10 d-flex justify-content-center">
 						<div class="d-flex justify-content-between w-100">
 							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacman_high_res.png" alt="An image of pac-man." text="Pacman">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacWomanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacgirl_high_res.png" alt="An image of pac-girl.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacWomanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pac-woman_high_res.png" alt="An image of pac-girl.">
 							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacMIBSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacMIB_high_res.png" alt="An image of Pac-Man-In-Black.">
 							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacventurerSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacventurer_high_res.png" alt="An image of pac-venturer.">
 						</div>
@@ -296,6 +296,7 @@ export class PacmanMenu {
 				</div>
 				<div class="row justify-content-center"> 
 					<div class="col-10 mt-3">
+						<p class="h3 text-white text-center mb-3 mt-1" id="pacmanTitle">pac-man</p>
 						<div class="col-12 mb-1">
 							<p class="h5 text-left text-white fw-bold" id="pacmanTitle1" style="display: inline; vertical-align: middle;">Title</p>
 							<img src="/static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
@@ -314,32 +315,36 @@ export class PacmanMenu {
 		let btnPacMIBSkin = document.getElementById('pPacMIBSkin');
         let btnPacventurerSkin = document.getElementById('pPacventurerSkin');
 		let cooldown = document.getElementById('cooldown');
+		let pacmanTitle = document.getElementById('pacmanTitle');
 		let pacmanTitle1 = document.getElementById('pacmanTitle1');
 		let pacmanDesc1 = document.getElementById('pacmanDesc1');
 		let pacmanTitle2 = document.getElementById('pacmanTitle2');
 		let pacmanDesc2 = document.getElementById('pacmanDesc2');
 
 		this.addEventListeners(btnPacmanSkin, (event) => this.selectPacmanSkin(event, "pacman"));
-		this.addEventListeners(btnPacWomanSkin, (event) => this.selectPacmanSkin(event, "pacgirl"));
+		this.addEventListeners(btnPacWomanSkin, (event) => this.selectPacmanSkin(event, "pac-woman"));
 		this.addEventListeners(btnPacMIBSkin, (event) => this.selectPacmanSkin(event, "pacMIB"));
 		this.addEventListeners(btnPacventurerSkin, (event) => this.selectPacmanSkin(event, "pacventurer"));
 
 		switch (this.pacmanSkin) {
 			case "pacman":
+				pacmanTitle.innerHTML = "pac-man";
 				pacmanTitle1.innerHTML = "passive: gluttony";
 				cooldown.innerHTML = "20";
 				pacmanDesc1.innerHTML = "When eating a fruit, Pac-Man goes into a frenzy for 5 seconds.";
 				pacmanTitle2.innerHTML = "effect: frenzy";
 				pacmanDesc2.innerHTML = "Pac-Man moves 20% faster and can eat the Ghost. Eating the Ghost disables it for 5 seconds and grants 300 points.";
 				break;
-			case "pacgirl":
-				pacmanTitle1.innerHTML = "active: speed boost";
+			case "pac-woman":
+				pacmanTitle.innerHTML = "pac-woman";
+				pacmanTitle1.innerHTML = "active: turbo";
 				cooldown.innerHTML = "25";
 				pacmanDesc1.innerHTML = "Pac-Woman can boost her speed by 20% for 10 seconds.";
 				pacmanTitle2.innerHTML = "passive: fruit lover";
-				pacmanDesc2.innerHTML = "Pac-Woman loves fruits and gains 5% stacking movespeed after eating one.";
+				pacmanDesc2.innerHTML = "Pac-Woman loves fruits and gains 3% stacking movespeed after eating one.";
 				break;
 			case "pacMIB":
+				pacmanTitle.innerHTML = "pac-man-in-black";
 				pacmanTitle1.innerHTML = "active: flash";
 				cooldown.innerHTML = "20";
 				pacmanDesc1.innerHTML = "Pac-Man-In-Black flashes the Ghost, disabling it for 3 seconds.";
@@ -347,19 +352,20 @@ export class PacmanMenu {
 				pacmanDesc2.innerHTML = "Pac-Man-In-Black is used to teleporting, he gains 20% move speed for 5 seconds after warping.";
 				break;
 			case "pacventurer":
+				pacmanTitle.innerHTML = "pac-venturer";
 				pacmanTitle1.innerHTML = "active: grappling hook";
 				cooldown.innerHTML = "20";
-				pacmanDesc1.innerHTML = "Using his favorite grappling hook, Pacventurer propels himself in a straight line until he hits a wall.";
+				pacmanDesc1.innerHTML = "Using his favorite grappling hook, Pac-Venturer propels himself in a straight line until he hits a wall.";
 				pacmanTitle2.innerHTML = "passive: exploration";
-				pacmanDesc2.innerHTML = "Pacventurer moves 10% faster and gains 10% more points.";
+				pacmanDesc2.innerHTML = "Pac-Venturer moves 10% faster and gains 10% more points.";
 				break;
 		}
 
 		const pacmanSkins = {
-			pacman: btnPacmanSkin,
-			pacgirl: btnPacWomanSkin,
-			pacMIB: btnPacMIBSkin,
-			pacventurer: btnPacventurerSkin
+			"pacman": btnPacmanSkin,
+			"pac-woman": btnPacWomanSkin,
+			"pacMIB": btnPacMIBSkin,
+			"pacventurer": btnPacventurerSkin
 		}
 		this.applySelectedSetting("pacmanSkin", pacmanSkins);
 
@@ -386,6 +392,7 @@ export class PacmanMenu {
 				</div>
 				<div class="row justify-content-center"> 
 					<div class="col-10 mt-3">
+						<p class="h3 text-white text-center mb-3 mt-1" id="ghostTitle">blue ghost</p>
 						<div class="col-12 mb-1">
 							<p class="h5 text-left text-white fw-bold" id="ghostTitle1" style="display: inline; vertical-align: middle;">Title</p>
 							<img src="/static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
@@ -404,6 +411,7 @@ export class PacmanMenu {
 		let btnPinkSkin = document.getElementById('pPinkGhostSkin');
         let btnGreenSkin = document.getElementById('pGreenGhostSkin');
 		let cooldown = document.getElementById('cooldown');
+		let ghostTitle = document.getElementById('ghostTitle');
 		let ghostTitle1 = document.getElementById('ghostTitle1');
 		let ghostDesc1 = document.getElementById('ghostDesc1');
 		let ghostTitle2 = document.getElementById('ghostTitle2');
@@ -416,6 +424,7 @@ export class PacmanMenu {
 
 		switch (this.ghostSkin) {
 			case "blueGhost":
+				ghostTitle.innerHTML = "blue ghost";
 				ghostTitle1.innerHTML = "active: ghost block";
 				cooldown.innerHTML = "5";
 				ghostDesc1.innerHTML = "The blue ghost places the ghost block which pacman can't go through but the ghost can.";
@@ -423,6 +432,7 @@ export class PacmanMenu {
 				ghostDesc2.innerHTML = "The blue ghost has 10% bonus movespeed.";
 				break;
 			case "orangeGhost":
+				ghostTitle.innerHTML = "orange ghost";
 				ghostTitle1.innerHTML = "active: excavate";
 				cooldown.innerHTML = "20";
 				ghostDesc1.innerHTML = "The orange ghost turns the wall in front of him into a ghost block, creating paths that pacman can't use.";
@@ -430,18 +440,20 @@ export class PacmanMenu {
 				ghostDesc2.innerHTML = "The orange ghost has double movespeed while on ghost block.";
 				break;
 			case "pinkGhost":
-				ghostTitle1.innerHTML = "active: intangible";
+				ghostTitle.innerHTML = "pink ghost";
+				ghostTitle1.innerHTML = "active: dematerialize";
 				cooldown.innerHTML = "25";
 				ghostDesc1.innerHTML = "The pink ghost becomes intangible for 3 seconds. He gets brought back on the last ground tile it crossed when the spell ends.";
 				ghostTitle2.innerHTML = "effect: intangible"
 				ghostDesc2.innerHTML = "The pink ghost gains 10% movespeed and can go through walls.";
 				break;
 			case "greenGhost":
+				ghostTitle.innerHTML = "green ghost";
 				ghostTitle1.innerHTML = "active: blockade";
 				cooldown.innerHTML = "25";
 				ghostDesc1.innerHTML = "The green ghost creates a wall behind him.";
-				ghostTitle2.innerHTML = "passive: destructor";
-				ghostDesc2.innerHTML = "When facing a wall for 5 seconds, the green ghost will break it. Useful when blocked.";
+				ghostTitle2.innerHTML = "passive: sneak";
+				ghostDesc2.innerHTML = "When facing a wall for 3 seconds, the green ghost will turn it into a ghost block, lasting until another one is created.";
 				break;
 		}
 
@@ -655,7 +667,7 @@ export class PacmanMenu {
 
 		const pacmanSkins = {
 			pacman: document.getElementById('pPacmanSkin'),
-			pacgirl: document.getElementById('pPacWomanSkin'),
+			pacwoman: document.getElementById('pPacWomanSkin'),
 			pacMIB: document.getElementById('pPacMIBSkin'),
 			pacventurer: document.getElementById('pPacventurerSkin')
 		}
@@ -827,7 +839,7 @@ export class PacmanMenu {
 	// Add the "selected" class to to correct element based on the setting in the local storage
 	// settingType is for example "pacmanSkin", "ghostSkin", "pacmanGamemode", "mapName", "pacmanTheme"
 	// elementMapping is an object with the settings as keys and the elements as values
-	// for example { "pacman": btnPacmanSkin, "pacgirl": btnPacWomanSkin }
+	// for example { "pacman": btnPacmanSkin, "pac-woman": btnPacWomanSkin }
 	applySelectedSetting(settingType, elementMapping) {
 		const selectedSetting = localStorage.getItem(settingType)?.replace(/"/g, '');
 	

@@ -129,13 +129,21 @@ export class PacmanBase extends Character {
 		this.pcG.pScore.textContent = this.score;
 	}
 
+	getSprite() {
+		return	this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacman1 : 
+				this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacman2 :
+				this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacman3 : this.pcG.images.imgPacman2;
+	}
+
 	// Render the character's sprite
-	render(img) {
+	render() {
 		if (this.objective > 0) {
 			if (this.score >= this.objective) {
 				this.pcG.partyOver(this.pcG.usernames.pacman);
 			}
 		}
+
+		let img =  this.getSprite(); 
 
 		// Convert degrees to radians
 		var angle = this.direction == "right" ? 0 :
@@ -197,32 +205,62 @@ export class Pacman extends PacmanBase {
 	stopEaten() {
 		this.pcG.ghost.disabled = false;
 	}
+
+	getSprite() {
+		if (this.inFrenzy) {
+			return  this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacman1_frenzy : 
+					this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacman2_frenzy :
+					this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacman3_frenzy : this.pcG.images.imgPacman2_frenzy;
+		}
+		else {
+			return  this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacman1 : 
+					this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacman2 :
+					this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacman3 : this.pcG.images.imgPacman2;
+		}
+	}
 }
 
 export class PacWoman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "speed boost";
+		this.spellName = "turbo";
+		this.turbo = false;
 		this.speedDuration = 10;
 		this.speedCooldown = 25;
 		this.speedBoost = 120 / 100;
+		this.speedAdd = (this.speed * 103/100) - this.speed;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.speedDuration, this.speedCooldown, this.stopSpell.bind(this));
 	}
 
 	eatFruit(fruit) {
 		this.score += fruit.points;
 		this.pcG.pScore.textContent = this.score;
-		this.speed *= 105/100;
+		this.speed += this.speedAdd;
 	}
 
 	useSpell() {
 		if (this.cooldownTimer.startCD()) {
 			this.speed *= this.speedBoost;
+			this.turbo = true;
 		}
 	}
 
 	stopSpell() {
 		this.speed /= this.speedBoost;
+		this.turbo = false;
+	}
+
+	getSprite() {
+		if (this.turbo) {
+			return  this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacwoman1_turbo : 
+					this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacwoman2_turbo :
+					this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacwoman3_turbo : this.pcG.images.imgPacwoman2_turbo;
+		}
+		else {
+			return  this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacman1 : 
+					this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacman2 :
+					this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacman3 : this.pcG.images.imgPacman2;
+		}
 	}
 }
 
@@ -568,7 +606,7 @@ export class OrangeGhost extends GhostBase {
 export class PinkGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "intangible";
+		this.spellName = "dematerialize";
 		this.intangibleDuration = 2;
 		this.intangibleCooldown = 25;
 		this.intangibleSpeed = 110/100;
@@ -675,7 +713,9 @@ export class GreenGhost extends GhostBase {
 		this.lastY = this.y;
 		this.frontBlockX = -1;
 		this.frontBlockY = -1;
-		this.breakWallDuration = 5;
+		this.ghostBlockX = -1;
+		this.ghostBlockY = -1;
+		this.breakWallDuration = 2;
 		this.breakWallTimer = new CooldownTimer(null, this, this.breakWallDuration, this.breakWallDuration, this.breakWall.bind(this));
 	}
 
@@ -720,7 +760,11 @@ export class GreenGhost extends GhostBase {
 
 	breakWall() {
 		if (this.pcG.cells[this.frontBlockY][this.frontBlockX].value === 1) {
-			this.pcG.cells[this.frontBlockY][this.frontBlockX].value = 0;
+			this.pcG.cells[this.frontBlockY][this.frontBlockX].value = 9;
+			if (this.ghostBlockX != -1 && this.ghostBlockY != -1)
+			this.pcG.cells[this.ghostBlockY][this.ghostBlockX].value = 1;
+			this.ghostBlockX = this.frontBlockX;
+			this.ghostBlockY = this.frontBlockY;
 		}
 	}
 }

@@ -47,6 +47,7 @@ class PacmanGame {
 		this.images = {
 			imgPacman1 : new Image(), imgPacman2 : new Image(), imgPacman3 : new Image(),
 			imgPacman1_frenzy : new Image(), imgPacman2_frenzy : new Image(), imgPacman3_frenzy : new Image(),
+			imgPacwoman1_turbo : new Image(), imgPacwoman2_turbo : new Image(), imgPacwoman3_turbo : new Image(),
 			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(), imgGhostDisabled : new Image(),
 			imgGhost1_intangible : new Image(), imgGhost2_intangible : new Image(), imgGhost3_intangible : new Image(), imgGhost4_intangible : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
@@ -124,14 +125,14 @@ class PacmanGame {
 			case "pacman":
 				pacmanSpellName.innerHTML = "frenzy";
 				break;
-			case "pacgirl":
-				pacmanSpellName.innerHTML = "speed boost";
+			case "pac-woman":
+				pacmanSpellName.innerHTML = "turbo";
 				break;
 			case "pacMIB":
 				pacmanSpellName.innerHTML = "stun";
 				break;
 			case "pacventurer":
-				pacmanSpellName.innerHTML = "exploration";
+				pacmanSpellName.innerHTML = "grappling hook";
 				break;
 			default:
 				break;
@@ -145,7 +146,7 @@ class PacmanGame {
 				ghostSpellName.innerHTML = "excavate";
 				break;
 			case "pinkGhost":
-				ghostSpellName.innerHTML = "intangible";
+				ghostSpellName.innerHTML = "dematerialize";
 				break;
 			case "greenGhost":
 				ghostSpellName.innerHTML = "blockade";
@@ -160,6 +161,9 @@ class PacmanGame {
 		this.images.imgPacman1_frenzy.src = 'static/assets/pacman/images/pacman1_frenzy.png';
 		this.images.imgPacman2_frenzy.src = 'static/assets/pacman/images/pacman2_frenzy.png';
 		this.images.imgPacman3_frenzy.src = 'static/assets/pacman/images/pacman3_frenzy.png';
+		this.images.imgPacwoman1_turbo.src = 'static/assets/pacman/images/pac-woman1-turbo.png';
+		this.images.imgPacwoman2_turbo.src = 'static/assets/pacman/images/pac-woman2-turbo.png';
+		this.images.imgPacwoman3_turbo.src = 'static/assets/pacman/images/pac-woman3-turbo.png';
 		this.images.imgGhost1.src = 'static/assets/pacman/images/' + this.ghostSkin + '1.png';
 		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
 		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
@@ -270,19 +274,7 @@ class PacmanGame {
 			}
 		}
 
-		let imgpac;
-		if (this.pacman.inFrenzy) {
-			imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1_frenzy : 
-						this.frame % 40 < 20 ? this.images.imgPacman2_frenzy :
-						this.frame % 40 < 30 ? this.images.imgPacman3_frenzy : this.images.imgPacman2_frenzy;
-		}
-		else {
-			imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
-						this.frame % 40 < 20 ? this.images.imgPacman2 :
-						this.frame % 40 < 30 ? this.images.imgPacman3 : this.images.imgPacman2;
-		}
-
-		this.pacman.render(imgpac);
+		this.pacman.render();
 		this.ghost.render();
 
 		// Remove used objects from arrays
@@ -369,7 +361,7 @@ class PacmanGame {
 				case "pacman":
 					this.pacman = new Pacman(x, y, "none", this);
 					break;
-				case "pacgirl":
+				case "pac-woman":
 					this.pacman = new PacWoman(x, y, "none", this);
 					break;
 				case "pacMIB":
