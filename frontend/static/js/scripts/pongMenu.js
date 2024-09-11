@@ -46,6 +46,10 @@ export class PongMenu {
 		};
 		localStorage.setItem('pongKeybinds', JSON.stringify(this.keybinds));
 
+		const aiDifficultyString = localStorage.getItem('pongAIDifficulty');
+		this.aiDifficulty = aiDifficultyString ? JSON.parse(aiDifficultyString) : "easy";
+		localStorage.setItem('pongAIDifficulty', JSON.stringify(this.aiDifficulty));
+
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
 		this.lastGamemode = "pvp";
@@ -214,7 +218,6 @@ export class PongMenu {
 				const player4Name = document.getElementById('player4Name');
 				const player4Input = document.getElementById('player4Input');
 				const player4Color = document.getElementById('player4Color');
-				const usernameCheckbox = document.getElementById('usernameCheckbox');
 
 				player1Name.innerHTML = this.usernames.p1;
 				player2Name.innerHTML = this.usernames.p2;
@@ -246,18 +249,6 @@ export class PongMenu {
 				player2Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 2", "p2"));
 				player3Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 3", "p3"));
 				player4Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 4", "p4"));
-				
-				// usernameCheckbox.addEventListener("change", (event) => {
-				// 	if (event.target.checked) {
-						
-				// 		player1Name.innerHTML = this.usernames.p1;
-				// 		player1Input.style.opacity = 0;
-				// 	}
-				// 	else {
-				// 		player1Input.disabled = false;
-				// 		player1Input.style.opacity = 1;
-				// 	}
-				// });
 				break;
 			default:
 				break;
@@ -429,10 +420,11 @@ export class PongMenu {
 					<div class="col-4 d-flex justify-content-center">
 						<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">tournament</button>
 					</div>
-					<div class="col-12 d-flex justify-content-center mb-2 mt-4">
-						<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
-							<p class="text-white text-center" id="gamemodeDescription"></p>
-							<p class="h5 mt-4 text-white text-center" id="disclaimer"></p>
+					<div class="col-12 d-flex justify-content-center mt-3">
+						<div class="col-8 justify-content-center d-flex flex-column">
+							<p class="text-white text-center lh-sm mt-3" style="min-height: 3em; line-height: 1;" id="gamemodeDescription"></p>
+							<p class="h5 fw-boldtext-white text-center " id="disclaimer"></p>
+							<div id="aiLevelsContainer"></div>
 						</div>
 					</div>
 				</div>
@@ -444,7 +436,7 @@ export class PongMenu {
 		let btnAI = document.getElementById('btnAI');
 		let btnTournament = document.getElementById('btnTournament');
 		let pDescription = document.getElementById('gamemodeDescription');
-		let AiDifficulties = document.getElementById('AiDifficulties');
+		let aiLevelsContainer = document.getElementById('aiLevelsContainer');
 
 		btnPvp.addEventListener("click", (event) => this.selectGamemode(event, "pvp"));
 		btnAI.addEventListener("click", (event) => this.selectGamemode(event, "AI"));
@@ -456,6 +448,29 @@ export class PongMenu {
 				break;
 			case "AI":
 				pDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
+				aiLevelsContainer.innerHTML = `
+					<div class="row justify-content-center">
+						<div class="col-6 d-flex justify-content-end">
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnEasy">easy</button>
+						</div>
+						<div class="col-6 d-flex justify-content-start">
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnHard">hard</button>
+						</div>
+					</div>
+				`;
+
+				let btnEasy = document.getElementById('btnEasy');
+				let btnHard = document.getElementById('btnHard');
+				btnEasy.addEventListener("click", (event) => this.selectAIDifficulty(event, "easy"));
+				btnHard.addEventListener("click", (event) => this.selectAIDifficulty(event, "hard"));
+
+				const difficulties = {
+					"easy": document.getElementById('btnEasy'),
+					"hard": document.getElementById('btnHard'),
+				}
+
+				this.applySelectedSetting("pongAIDifficulty", difficulties);
+
 				break;
 			case "tournament":
 				pDescription.innerHTML = "Multiple players compete against each other in a tournament.";
@@ -583,6 +598,14 @@ export class PongMenu {
 
 		this.showGamestyleConfig();
 		this.updatePlayersContainer();
+	}
+
+	selectAIDifficulty(event, difficulty) {
+		this.toastBody.innerHTML = "chosen AI difficulty: " + difficulty;
+		this.toastBootstrap.show();
+		this.aiDifficulty = difficulty;
+		localStorage.setItem('pongAIDifficulty', JSON.stringify(this.aiDifficulty));
+		this.showGamemodeConfig();
 	}
 
 	changeKeybind(event, key, btn) {

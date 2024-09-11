@@ -285,53 +285,70 @@ export class Pacventurer extends PacmanBase {
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.grapplingCD,	this.stopSpell.bind(this));
 		this.grappling = false;
 		this.grapplingSpeed = 300/100;
+		this.grapplingDirection = "";
 	}
 
 
 	premove() {
 		if (this.grappling) {
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 == 0 || this.pcG.cells[this.y - 1][this.x].value === 1) {
-						this.grappling = false;
-						this.speed /= this.grapplingSpeed;
-					}
-					break;
-				case "down":
-					if (this.y + 1 == this.pcG.height || this.pcG.cells[this.y + 1][this.x].value === 1) {
-						this.grappling = false;
-						this.speed /= this.grapplingSpeed;
-					}
-					break;
-				case "left":
-					if (this.x - 1 == 0 || this.pcG.cells[this.y][this.x - 1].value === 1) {
-						this.grappling = false;
-						this.speed /= this.grapplingSpeed;
-					}
-					break;
-				case "right":
-					if (this.x + 1 == this.pcG.width || this.pcG.cells[this.y][this.x + 1].value === 1) {
-						console.log("log");
-						this.grappling = false;
-						this.speed /= this.grapplingSpeed;
-					}
-					break;
-				default:
-					break;
+			const isWall = (nextY, nextX) => {
+				return nextY < 0 || nextX < 0 || nextY >= this.pcG.height || nextX >= this.pcG.width || 
+					   this.pcG.cells[nextY][nextX].value === 1 || this.pcG.cells[nextY][nextX].value === 9;
+			};
+		
+			let nextY = this.y, nextX = this.x;
+		
+			switch (this.grapplingDirection) {
+				case "up": nextY -= 1; break;
+				case "down": nextY += 1; break;
+				case "left": nextX -= 1; break;
+				case "right": nextX += 1; break;
+				default: break;
+			}
+		
+			if (isWall(nextY, nextX)) {
+				this.grappling = false;
+				this.speed /= this.grapplingSpeed;
 			}
 		}
 	}
 
-	setDirection(direction) {
-		if (!this.grappling) {
-			this.direction = direction;
+	checkDirection() {
+		let usedDirection = this.direction;
+		if (this.grappling) {
+			usedDirection = this.grapplingDirection;
 		}
+		switch (usedDirection) {
+			case "up":
+				if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9)
+					this.y -= 1;
+				break;
+			case "down":
+				if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9)
+					this.y += 1;
+				break;
+			case "left":
+				if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9)
+					this.x -= 1;
+				break;
+			case "right":
+				if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9)
+					this.x += 1;
+				break;
+			default:
+				break;
+		}
+	}
+
+	setDirection(direction) {
+		this.direction = direction;
 	}
 
 	useSpell() {
 		if (this.cooldownTimer.startCD()) {
 			this.grappling = true;
 			this.speed *= this.grapplingSpeed;
+			this.grapplingDirection = this.direction;
 		}
 	}
 }
@@ -422,33 +439,31 @@ export class GhostBase extends Character {
 		}
 	}
 
-	// Render the character's sprite
-	render() {
-		var img;
-		this.checkPacmanCollision();
-
+	getImage () {
 		if (this.disabled) {
-			img = this.pcG.images.imgGhostDisabled;
+			return this.pcG.images.imgGhostDisabled;
 		}		
 		else {
 			switch (this.direction){
 				case "right":
-					img = this.pcG.images.imgGhost1;
-					break;
+					return this.pcG.images.imgGhost1;
 				case "down":
-					img = this.pcG.images.imgGhost2;
-					break;
+					return this.pcG.images.imgGhost2;
 				case "up":
-					img = this.pcG.images.imgGhost3;
-					break;
+					return this.pcG.images.imgGhost3;
 				case "left":
-					img = this.pcG.images.imgGhost4;
-					break;
+					return this.pcG.images.imgGhost4;
 				default:
-					img = this.pcG.images.imgGhost1;
-					break;
+					return this.pcG.images.imgGhost1;
 			}
 		}
+	}
+
+	// Render the character's sprite
+	render() {
+		this.checkPacmanCollision();
+
+		let img = this.getImage();
 
 		this.pcG.c.drawImage(img, this.px * this.ts, this.py * this.ts, this.ts, this.ts);
 	}
@@ -490,67 +505,54 @@ export class OrangeGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "excavate";
-		this.wallBlockX = -1;
-		this.wallBlockY = -1;
+		this.wallBlockX = this.x;
+		this.wallBlockY = this.y;
+		this.lastX = this.x;
+		this.lastY = this.y;
 		this.isWall = false;
 		this.excavateCooldown = 20;
+		this.ghostlySpeed = this.speed * 150/100;
 		this.baseSpeed = this.speed;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.excavateCooldown, this.stopSpell.bind(this));
 	}
 
 	premove() {
-		if (this.pcG.cells[this.y][this.x].value === 9) {
-			this.speed *= 200/100;
+		const isWall = (nextY, nextX) => {
+			return nextY < 0 || nextX < 0 || nextY >= this.pcG.height || nextX >= this.pcG.width || 
+				   this.pcG.cells[nextY][nextX].value === 1;
+		};
+
+		const isGhostBlock = (nextY, nextX) => {
+			return nextY < 0 || nextX < 0 || nextY >= this.pcG.height || nextX >= this.pcG.width || 
+				this.pcG.cells[nextY][nextX].value === 9;
+		};	
+
+		this.lastX = this.x;
+		this.lastY = this.y;
+		this.wallBlockY = this.y;
+		this.wallBlockX = this.x;
+	
+		switch (this.direction) {
+			case "up": this.wallBlockY -= 1; break;
+			case "down": this.wallBlockY += 1; break;
+			case "left": this.wallBlockX -= 1; break;
+			case "right": this.wallBlockX += 1; break;
+			default: break;
+		}
+	
+		if (isWall(this.wallBlockY, this.wallBlockX)) {
+			this.isWall = true;
+		}
+		else {
+			this.isWall = false;
+		}
+		
+		if (isGhostBlock(this.wallBlockY, this.wallBlockX) || this.pcG.cells[this.lastY][this.lastX].value === 9) {
+			this.speed = this.ghostlySpeed;
 		}
 		else {
 			this.speed = this.baseSpeed;
 		}
-		switch (this.direction) {
-			case "right":
-				if (this.x != this.pcG.cells.width) {
-					this.wallBlockX = this.x + 1;
-					this.wallBlockY = this.y;
-				}
-				else
-					this.wallBlockX = -1;
-				break;
-			case "down":
-				if (this.y != this.pcG.cells.height) {
-					this.wallBlockX = this.x;
-					this.wallBlockY = this.y + 1;
-				}
-				else
-					this.wallBlockY = -1;
-				break;
-			case "up":
-				if (this.y != 0) {
-					this.wallBlockX = this.x;
-					this.wallBlockY = this.y - 1;
-				}
-				else
-					this.wallBlockY = -1;
-				break;
-			case "left":
-				if (this.x != 0) {
-					this.wallBlockX = this.x - 1;
-					this.wallBlockY = this.y;
-				}
-				else
-					this.wallBlockX = -1;
-				break;
-			default:
-				this.wallBlockX = -1;
-				this.wallBlockY = -1;
-				break;
-		}
-		if (this.wallBlockX == -1 || this.wallBlockY == -1) {
-			this.isWall = false;
-		}
-		else if (this.pcG.cells[this.wallBlockY][this.wallBlockX].value == 1) {
-			this.isWall = true;
-		}
-		else
-			this.isWall = false;
 	}
 			
 
@@ -596,52 +598,68 @@ export class PinkGhost extends GhostBase {
 		if (this.pcG.cells[this.y][this.x].value == 1) {
 			this.x = this.lastGroundX;
 			this.y = this.lastGroundY;
+			this.px = this.x;
+			this.py = this.y;
 		}
 	}
 
 	checkDirection() {
-		if (this.intangible) {
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 >= 0)
+		switch (this.direction) {
+			case "up":
+				if (this.y - 1 >= 0)
+					if (this.intangible || (this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9))
 						this.y -= 1;
-					break;
-				case "down":
-					if (this.y + 1 < this.pcG.height)
+				break;
+			case "down":
+				if (this.y + 1 < this.pcG.height)
+					if (this.intangible || (this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9))
 						this.y += 1;
-					break;
-				case "left":
-					if (this.x - 1 >= 0)
+				break;
+			case "left":
+				if (this.x - 1 >= 0)
+					if (this.intangible || (this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9))
 						this.x -= 1;
-					break;
-				case "right":
-					if (this.x + 1 < this.pcG.width)
+				break;
+			case "right":
+				if (this.x + 1 < this.pcG.width)
+					if (this.intangible || (this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9))
 						this.x += 1;
-					break;
+				break;
+			default:
+				break;
+		}
+	}
+
+	getImage () {
+		if (this.disabled) {
+			return this.pcG.images.imgGhostDisabled;
+		}		
+		else if (this.intangible){
+			switch (this.direction){
+				case "right":
+					return this.pcG.images.imgGhost1_intangible;
+				case "down":
+					return this.pcG.images.imgGhost2_intangible;
+				case "up":
+					return this.pcG.images.imgGhost3_intangible;
+				case "left":
+					return this.pcG.images.imgGhost4_intangible;
 				default:
-					break;
+					return this.pcG.images.imgGhost1_intangible;
 			}
 		}
 		else {
-			switch (this.direction) {
-				case "up":
-					if (this.y - 1 >= 0 && this.pcG.cells[this.y - 1][this.x].value !== 1 && this.pcG.cells[this.y - 1][this.x].value !== 9)
-						this.y -= 1;
-					break;
-				case "down":
-					if (this.y + 1 < this.pcG.height && this.pcG.cells[this.y + 1][this.x].value !== 1 && this.pcG.cells[this.y + 1][this.x].value !== 9)
-						this.y += 1;
-					break;
-				case "left":
-					if (this.x - 1 >= 0 && this.pcG.cells[this.y][this.x - 1].value !== 1 && this.pcG.cells[this.y][this.x - 1].value !== 9)
-						this.x -= 1;
-					break;
+			switch (this.direction){
 				case "right":
-					if (this.x + 1 < this.pcG.width && this.pcG.cells[this.y][this.x + 1].value !== 1 && this.pcG.cells[this.y][this.x + 1].value !== 9)
-						this.x += 1;
-					break;
+					return this.pcG.images.imgGhost1;
+				case "down":
+					return this.pcG.images.imgGhost2;
+				case "up":
+					return this.pcG.images.imgGhost3;
+				case "left":
+					return this.pcG.images.imgGhost4;
 				default:
-					break;
+					return this.pcG.images.imgGhost1;
 			}
 		}
 	}

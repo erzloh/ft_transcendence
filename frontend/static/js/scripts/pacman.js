@@ -11,6 +11,7 @@ class PacmanGame {
 		this.pGamemode = document.getElementById('pGamemode');
 		this.pScore = document.getElementById('pScore');
 		this.startButton = document.getElementById('btnStart');
+		this.swapButton = document.getElementById('btnSwap');
 
 		this.pacmanSpellName = document.getElementById('pacmanSpellName');
 		this.ghostSpellName = document.getElementById('ghostSpellName');
@@ -47,6 +48,7 @@ class PacmanGame {
 			imgPacman1 : new Image(), imgPacman2 : new Image(), imgPacman3 : new Image(),
 			imgPacman1_frenzy : new Image(), imgPacman2_frenzy : new Image(), imgPacman3_frenzy : new Image(),
 			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(), imgGhostDisabled : new Image(),
+			imgGhost1_intangible : new Image(), imgGhost2_intangible : new Image(), imgGhost3_intangible : new Image(), imgGhost4_intangible : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
 			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image(),
 			imgBluePortal1 : new Image(), imgBluePortal2 : new Image(), imgBluePortal3 : new Image(), imgBluePortal4 : new Image()
@@ -64,6 +66,7 @@ class PacmanGame {
 	}
 
 	Initialize() {
+		this.swapButton.addEventListener('click', () => this.swapUsernames());
 		this.startButton.addEventListener("click", () => this.StartGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
 
@@ -161,6 +164,10 @@ class PacmanGame {
 		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
 		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
 		this.images.imgGhost4.src = 'static/assets/pacman/images/' + this.ghostSkin + '4.png';
+		this.images.imgGhost1_intangible.src = 'static/assets/pacman/images/pinkGhost1_intangible.png';
+		this.images.imgGhost2_intangible.src = 'static/assets/pacman/images/pinkGhost2_intangible.png';
+		this.images.imgGhost3_intangible.src = 'static/assets/pacman/images/pinkGhost3_intangible.png';
+		this.images.imgGhost4_intangible.src = 'static/assets/pacman/images/pinkGhost4_intangible.png';
 		this.images.imgGhostDisabled.src = 'static/assets/pacman/images/ghostDisabled.png';
 		this.images.imgCherry.src = 'static/assets/pacman/images/cherry.png';
 		this.images.imgBanana.src = 'static/assets/pacman/images/banana.png';
@@ -188,7 +195,6 @@ class PacmanGame {
 			else
 				this.timer.start();
 			this.gamePaused = !this.gamePaused;
-
 		}
 	}
 
@@ -222,9 +228,8 @@ class PacmanGame {
 			"winner": winner,
 			"pacman_score": this.pacman.score,
 			"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
-			"user": 1
+			"user": localStorage.getItem('user_id')
 		};
-		console.log(matchData);
 		let response = await fetch(`${BASE_URL}/api/record_pacman_match`, {
 			method: 'POST',
 			headers: {
@@ -442,8 +447,18 @@ class PacmanGame {
 		}
 	}
 
+	swapUsernames() {
+		let tmpUsername = this.usernames.pacman;
+		this.usernames.pacman = this.usernames.ghost;
+		this.usernames.ghost = tmpUsername;
+		localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames));
+
+		this.pacmanUsername.innerHTML = this.usernames.pacman;
+		this.ghostUsername.innerHTML = this.usernames.ghost;
+		this.resetGame();
+	}
+
 	stopGameLoop() {
-		console.log("stop pacman loop");
 		if (this.gameStart) {
 			if (this.pacman.cooldownTimer != null)
 				this.pacman.cooldownTimer.stopCD();
@@ -453,17 +468,5 @@ class PacmanGame {
 		}
 	}
 }
-
-// --------------------------- Event Listener Functions ---------------------------
-// (Only Event Listener that are attached to the document.
-// Those attached to elements in the view are gonna be removed
-// when the view changes anyway)
-
-// Example:
-// function printKey (event) {
-// 	console.log(event.key);
-// }
-
-// --------------------------- Export Event Listeners Object ---------------------------
 
 export { PacmanGame, eventListeners };
