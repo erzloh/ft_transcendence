@@ -79,7 +79,7 @@ export class PacmanMenu {
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
 		};
 
-		this.swapButton.addEventListener('click', () => this.swapUsernames());
+		this.swapButton.addEventListener('click', () => this.swapPlayers());
 		this.pacmanInput.addEventListener('keypress', (event) => this.pacmanPlayerInputHandle(event));
 		this.pacmanInput.addEventListener('blur', (event) => this.pacmanPlayerInputHandle(event));
 		this.ghostInput.addEventListener('keypress', (event) => this.ghostPlayerInputHandle(event));
@@ -146,7 +146,7 @@ export class PacmanMenu {
 					<div class="col-12 d-flex justify-content-center">
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<p class="h2 text-white" data-translate="pacman-keys">left paddle</p>
+								<p class="h3 text-white">${this.usernames.pacman}</p>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
@@ -191,7 +191,7 @@ export class PacmanMenu {
 						</div>
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<p class="h2 text-white" data-translate="ghost-keys">ghost</p>
+								<p class="h3 text-white">${this.usernames.ghost}</p>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
@@ -646,7 +646,7 @@ export class PacmanMenu {
 
 	//#region EVENT LISTENERS HANDLERS
 
-	swapUsernames() {
+	swapPlayers() {
 		let tmpUsername = this.usernames.pacman;
 		this.usernames.pacman = this.usernames.ghost;
 		this.usernames.ghost = tmpUsername;
@@ -654,6 +654,13 @@ export class PacmanMenu {
 
 		this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
 		this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
+
+		this.oldKeys = this.keybinds;
+		this.keybinds = {
+			pUp : this.oldKeys.gUp, pLeft : this.oldKeys.gLeft, pDown : this.oldKeys.gDown, pRight : this.oldKeys.gRight, pSpell : this.oldKeys.gSpell,
+			gUp : this.oldKeys.pUp, gLeft : this.oldKeys.pLeft, gDown : this.oldKeys.pDown, gRight : this.oldKeys.pRight, gSpell : this.oldKeys.pSpell
+		}
+		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 
 		this.toastBody.innerHTML = "Swapped players usernames";
 		this.toastBootstrap.show();

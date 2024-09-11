@@ -67,7 +67,7 @@ class PacmanGame {
 	}
 
 	Initialize() {
-		this.swapButton.addEventListener('click', () => this.swapUsernames());
+		this.swapButton.addEventListener('click', () => this.swapPlayers());
 		this.startButton.addEventListener("click", () => this.StartGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
 
@@ -439,11 +439,18 @@ class PacmanGame {
 		}
 	}
 
-	swapUsernames() {
+	swapPlayers() {
 		let tmpUsername = this.usernames.pacman;
 		this.usernames.pacman = this.usernames.ghost;
 		this.usernames.ghost = tmpUsername;
 		localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames));
+
+		this.oldKeys = this.keybinds;
+		this.keybinds = {
+			pUp : this.oldKeys.gUp, pLeft : this.oldKeys.gLeft, pDown : this.oldKeys.gDown, pRight : this.oldKeys.gRight, pSpell : this.oldKeys.gSpell,
+			gUp : this.oldKeys.pUp, gLeft : this.oldKeys.pLeft, gDown : this.oldKeys.pDown, gRight : this.oldKeys.pRight, gSpell : this.oldKeys.pSpell
+		}
+		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 
 		this.pacmanUsername.innerHTML = this.usernames.pacman;
 		this.ghostUsername.innerHTML = this.usernames.ghost;

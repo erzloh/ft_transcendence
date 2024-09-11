@@ -11,8 +11,6 @@
 
 	"keys": "touches",
 	"keybinds-settings": "paramètres de touches",
-	"pacman-keys": "touches de pac-man",
-	"ghost-keys": "touches du fantôme",
 	"move-up": "monter",
 	"move-down": "descendre",
 	"move-left": "gauche",

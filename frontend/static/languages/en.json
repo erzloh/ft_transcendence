@@ -12,8 +12,6 @@
 
 	"keys": "keys",
 	"keybinds-settings": "keybind settings",
-	"pacman-keys": "pac-man keys",
-	"ghost-keys": "ghost keys",
 	"move-up": "move up",
 	"move-down": "move down",
 	"move-left": "move left",
