@@ -12517,7 +12517,7 @@ select {
   cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 #pongRangeInput::-webkit-slider-thumb {
-  background: rgba(240, 160, 0, 0.688);
+  background: rgb(220, 250, 255);
   cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 #pongRangeInput::-webkit-slider-runnable-track {
@@ -12644,7 +12644,7 @@ select {
   }
 }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .tabbable:focus-visible, label:focus-visible, img:focus-visible, .clickable:focus-visible {
-  outline: 3px solid #ffcc00 !important;
+  outline: 3px solid rgb(220, 250, 255) !important;
   outline-offset: 4px !important;
 }
 
