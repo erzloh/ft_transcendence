@@ -31,7 +31,7 @@ export class PongMenu {
 
 		const colorsString = localStorage.getItem('pongColors');
 		this.colors = colorsString ? JSON.parse(colorsString) : {
-			p1: "#ff0000", p2: "#00ff00", p3: "#266fff", p4: "#ff00ff"
+			p1: "#b3ecff", p2: "#e09eff", p3: "#266fff", p4: "#ff00ff"
 		};
 		localStorage.setItem('pongColors', JSON.stringify(this.colors));
 
@@ -108,7 +108,7 @@ export class PongMenu {
 							<input type="text" id="leftPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-3" placeholder="Enter username" data-translate="enter-username">
 						</div>
 						<div class="col-6 d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#ff0000">
+							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#b3ecff">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
@@ -118,7 +118,7 @@ export class PongMenu {
 							<input type="text" id="rightPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-3" placeholder="Enter username" data-translate="enter-username">
 						</div>
 						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#00ff00">
+							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#e09eff">
 						</div>
 					</div>
 				`;
@@ -152,7 +152,7 @@ export class PongMenu {
 							<input type="text" id="playerPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-2" placeholder="Enter username"  data-translate="enter-username">	
 						</div>
 						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#ff0000">
+							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#b3ecff">
 						</div>
 					</div>
 				`;

@@ -38,3 +38,29 @@ export const moveNoise = () => {
 
 	noiseElement.style.backgroundPosition = `${randomX}px ${randomY}px`;
 }
+
+// init load transition
+export const initLoadTransition = () => {
+	const upperRect = document.getElementById("upper-transition-rectangle");
+	const lowerRect = document.getElementById("lower-transition-rectangle");
+  
+	upperRect.addEventListener("animationend", function () {
+	  upperRect.style.display = "none";
+	});
+  
+	lowerRect.addEventListener("animationend", function () {
+	  lowerRect.style.display = "none";
+	});
+  }
+
+  // Load transition
+export const loadTransition = () => {
+	const upperRect = document.getElementById("upper-transition-rectangle");
+	const lowerRect = document.getElementById("lower-transition-rectangle");
+  
+	upperRect.style.display = "block";
+	upperRect.style.top = "0";
+
+	lowerRect.style.display = "block";
+	lowerRect.style.top = "50%";
+  }
