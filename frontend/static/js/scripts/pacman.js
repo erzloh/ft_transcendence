@@ -277,6 +277,7 @@ class PacmanGame {
 
 		// Get the map's JSON data
 		const mapData = await this.loadMap("static/assets/pacman/maps/" + this.mapName + ".json");
+		console.log(mapData);
 		const { tileSize: tmpTileSize, width: tmpWidth, height: tmpHeight, data: tmpData } = mapData;
 		this.tileSize = tmpTileSize;
 		this.width = tmpWidth;

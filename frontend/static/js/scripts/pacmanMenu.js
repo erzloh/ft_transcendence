@@ -555,17 +555,21 @@ export class PacmanMenu {
 			<div class="modal-body p-5 pt-4 pb-5">
 				<div class="col-auto mr-2 ml-2">
 					<div class="row justify-content-center text-center">
-						<div class="col-4 d-flex flex-column align-items-center">
+						<div class="col-3 d-flex flex-column align-items-center">
 							<p class="h4 text-white mb-2" data-translate="maze">maze</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
 						</div>
-						<div class="col-4 d-flex flex-column align-items-center">
+						<div class="col-3 d-flex flex-column align-items-center">
 							<p class="h4 text-white mb-2" data-translate="spiral">spiral</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
 						</div>
-						<div class="col-4 d-flex flex-column align-items-center">
-								<p class="h4 text-white mb-2" data-translate="butterfly">butterfly</p>
+						<div class="col-3 d-flex flex-column align-items-center">
+							<p class="h4 text-white mb-2" data-translate="butterfly">butterfly</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
+						</div>
+						<div class="col-3 d-flex flex-column align-items-center">
+							<p class="h4 text-white mb-2" data-translate="battlefield"></p>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/battlefield.png" id="pBattlefield" alt="A map that looks like a battlefield." tabindex="0"/>
 						</div>
 					</div>
 				</div>
@@ -575,15 +579,18 @@ export class PacmanMenu {
 		let btnMaze = document.getElementById('pMaze');
         let btnSpiral = document.getElementById('pSpiral');
 		let btnButterfly = document.getElementById('pButterfly');
+		let btnBattlefield = document.getElementById('pBattlefield');
 
 		this.addEventListeners(btnMaze, (event) => this.selectMap(event, "maze"));
 		this.addEventListeners(btnSpiral, (event) => this.selectMap(event, "spiral"));
 		this.addEventListeners(btnButterfly, (event) => this.selectMap(event, "butterfly"));
+		this.addEventListeners(btnBattlefield, (event) => this.selectMap(event, "battlefield"));
 
 		const maps = {
 			maze: btnMaze,
 			spiral: btnSpiral,
-			butterfly: btnButterfly
+			butterfly: btnButterfly,
+			battlefield: btnBattlefield
 		}
 		this.applySelectedSetting("mapName", maps);
 
@@ -730,7 +737,8 @@ export class PacmanMenu {
 		const maps = {
 			maze: document.getElementById('pMaze'),
 			spiral: document.getElementById('pSpiral'),
-			butterfly: document.getElementById('pButterfly')
+			butterfly: document.getElementById('pButterfly'),
+			battlefield: document.getElementById('pBattlefield')
 		}
 		this.applySelectedSetting("mapName", maps);
 	}
