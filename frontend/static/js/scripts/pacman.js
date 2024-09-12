@@ -228,8 +228,8 @@ class PacmanGame {
 
 		this.sendPacmanData(winner);
 
-		this.endgameModalWinner.textContent = winner + " won the game !";
-		this.endgameModalScore.textContent = "Pacman's score: " + this.pacman.score;
+		this.endgameModalWinner.textContent = winner;
+		this.endgameModalScore.textContent = this.pacman.score;
 		this.endgameModalTime.textContent = this.timer.getTime();
 
 		// Show the modal

@@ -80,6 +80,19 @@
 
 	"ready" : "ready",
 
+	"won-the-game": "won the game",
+	"won-the-match": "won the match",
+	"won-the-tournament": "won the tournament",
+	"tournament-match": "tournament match",
+	"play-again": "play again",
+	"next-match": "next match",
+	"start-match": "start match",
+	"menu": "menu",
+	"home-page": "home page",
+	"score": "score:",
+	"pacman-score": "pac-man's score:",
+	"swap-players": "swap players",
+
 	"gluttony" : "gluttony",
 	"turbo" : "turbo",
 	"flash" : "flash",

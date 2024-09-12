@@ -80,6 +80,19 @@
 
 	"ready" : "準備完了",
 
+	"won-the-game": "ゲームに勝った",
+	"won-the-match": "試合に勝った",
+	"won-the-tournament": "トーナメントに勝った",
+	"tournament-match": "トーナメントマッチ",
+	"play-again": "もう一度プレイ",
+	"next-match": "次の試合",
+	"start-match": "試合を開始",
+	"menu": "メニュー",
+	"home-page": "ホームページ",
+	"score": "スコア：",
+	"pacman-score": "パックマンのスコア：",
+	"swap-players": "プレイヤーを交代",
+
 	"gluttony" : "大食い",
 	"turbo" : "ターボ",
 	"flash" : "フラッシュ",

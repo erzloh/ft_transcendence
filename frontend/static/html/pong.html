@@ -40,15 +40,15 @@
 				<div class="col-6 d-flex align-items-center flex-column justify-content-end squarer-glass p-3 pong-player-box">
 					<p class="h3" style="display: inline;" id="leftScore">0</p>
 					<div id="colorBoxLeft" class="border border-white mb-3" style="width: 100px; height: 20px;"></div>
-					<p class="h5" style="display: inline;" id="pMinimize1">minimize</p>
-					<p class="h6" style="display: inline;" id="lMinimizeCD">ready</p>
+					<p class="h5" style="display: inline;" id="pMinimize1" data-translate="minimize"></p>
+					<p class="h6" style="display: inline;" id="lMinimizeCD" data-translate="ready"></p>
 					<p class="h3 mt-1" style="display: inline;" id="leftPaddleName">Player 1</p>
 				</div>
 				<div class="col-6 d-flex align-items-center flex-column justify-content-start squarer-glass p-3 pong-player-box">
 					<p class="h3" style="display: inline;" id="rightScore">0</p>
 					<div id="colorBoxRight" class="border border-white mb-3" style="width: 100px; height: 20px;"></div>
-					<p class="h5" style="display: inline;" id="pMinimize2">minimize</p>
-					<p class="h6" style="display: inline;" id="rMinimizeCD">ready</p>
+					<p class="h5" style="display: inline;" id="pMinimize2" data-translate="minimize"></p>
+					<p class="h6" style="display: inline;" id="rMinimizeCD" data-translate="ready"></p>
 					<p class="h3 mt-1" style="display: inline;" id="rightPaddleName">Player 2</p>
 				</div>
 			</div>
@@ -80,17 +80,20 @@
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<p class="h1 modal-title text-white w-100 text-center mb-1" id="matchTournament">tournament</p>
+							<div class="col-12 d-flex justify-content-center align-items-center mt-1">
+								<p class="h1 text-white text-center" style="display: inline; margin-right: 20px;" data-translate="tournament-match"></p>
+								<p class="h1 text-white text-center" id="matchTournament"></p>
+							</div>							
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
 								<div class="col-10 d-flex justify-content-center align-items-center mt-2 mb-2">
 									<div id="colorBox1" class="border border-white" style="width: 50px; height: 20px; margin-right: 10px;"></div>
-									<p class="h3 text-white text-center" id="playersTournament">player1 VS player2</p>
+									<p class="h3 text-white text-center" id="playersTournament"></p>
 									<div id="colorBox2" class="border border-white" style="width: 50px; height: 20px; margin-left: 10px;"></div>
 								</div>								
 								<div class="col-3 d-flex flex-column justify-content-center mt-2"></div>
-									<button type="button" class="btn btn-lg text-white btn-filled" data-bs-dismiss="modal">start match</button>
+									<button type="button" class="btn btn-lg text-white btn-filled" data-bs-dismiss="modal" data-translate="start-match"></button>
 								</div>
 							</div>
 						</div>
@@ -103,20 +106,29 @@
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<p class="h1 modal-title text-white w-100 text-center mb-1"  id="matchId">tournament match end</p>
+							<div class="col-12 d-flex justify-content-center align-items-center mt-1">
+								<p class="h1 text-white text-center" style="display: inline; margin-right: 20px;" data-translate="tournament-match"></p>
+								<p class="h1 text-white text-center" style="display: inline;" id="matchId"></p>
+							</div>
 						</div>
 						<div class="modal-body">
 							<div class="col d-flex flex-column align-items-center">
 								<div class="col-10 d-flex flex-column justify-content-center mb-1">
-									<p class="h3 text-white text-center" id="matchWinner">winner</p>
-									<p class="h4 text-white text-center" id="matchScore">score</p>
+									<div class="col-12 d-flex justify-content-center align-items-center">
+										<p class="h3 text-white text-center" style="display: inline;" id="matchWinner"></p>
+										<p class="h3 text-white text-center" style="display: inline; margin-left: 10px;" data-translate="won-the-match"></p>
+									</div>
+									<div class="col-12 d-flex justify-content-center align-items-center">
+										<p class="h4 text-white text-center" id="matchScore" style="display: inline; margin-right: 10px;" data-translate="score"></p>
+										<p class="h4 text-white text-center" id="matchScore" style="display: inline;" ></p>
+									</div>									
 									<div class="col d-flex justify-content-center align-items-center">
 										<img src="/static/assets/UI/icons/time.svg" width="28x"/>
-										<p class="h4 text-white text-center mb-0 ms-2" id="matchTimeElapsed" >time elapsed</p>
+										<p class="h4 text-white text-center mb-0 ms-2" id="matchTimeElapsed"></p>
 									</div>
 								</div>
 								<div class="col-3 d-flex flex-column justify-content-center mt-2"></div>
-									<button type="button" class="btn btn-lg text-white btn-filled" id="nextMatchButton" data-bs-dismiss="modal">next match</button>
+									<button type="button" class="btn btn-lg text-white btn-filled" id="nextMatchButton" data-bs-dismiss="modal" data-translate="next-match"></button>
 								</div>
 							</div>
 						</div>
@@ -129,21 +141,25 @@
 			  	<div class="modal-content justify-content-center" style="background-color: rgba(0, 0, 0, 0); border: none;">
 					<div class="row justify-content-center glass">
 						<div class="modal-header">
-							<p class="h1 modal-title text-white w-100 text-center" id="endgameModalWinner">winner</p>
+							<div class="col-12 d-flex justify-content-center align-items-center">
+								<p class="h1 modal-title text-white text-center" style="display: inline; margin-right: 20px;" id="endgameModalWinner"></p>
+								<p class="h1 modal-title text-white text-center" style="display: inline;" id="matchEndLabel"></p>
+							</div>
 						</div>
 						<div class="modal-body">
 							<div class="col-12 d-flex flex-column align-items-center">
 								<div class="col-10 d-flex justify-content-center mt-1">
-									<p class="h4 text-white" id="endgameModalScore"></p>
+									<p class="h4 text-white" data-translate="score" style="display: inline; margin-right: 10px;"></p>
+									<p class="h4 text-white" id="endgameModalScore" style="display: inline;"></p>
 								</div>
 								<div class="col d-flex justify-content-center align-items-center mb-2">
 									<img src="/static/assets/UI/icons/time.svg" width="28x"/>
-									<p class="h4 text-white text-center mb-0 ms-2" id="endgameModalTime" >time elapsed</p>
+									<p class="h4 text-white text-center mb-0 ms-2" id="endgameModalTime"></p>
 								</div>
 								<div class="col-12 d-flex justify-content-center mt-1 mb-2">
-									<button type="button" class="btn btn-lg text-white btn-filled mx-2" id="playAgainButton" data-bs-dismiss="modal">play again</button>
-									<a type="button" class="btn btn-lg text-white btn-filled mx-2" data-link data-bs-dismiss="modal" href="/pongMenu">menu</a>
-									<a type="button" class="btn btn-lg text-white btn-filled mx-2" data-link data-bs-dismiss="modal" href="/">home page</a>
+									<button type="button" class="btn btn-lg text-white btn-filled mx-2" id="playAgainButton" data-bs-dismiss="modal" data-translate="play-again"></button>
+									<a type="button" class="btn btn-lg text-white btn-filled mx-2" data-link data-bs-dismiss="modal" href="/pongMenu" data-translate="menu"></a>
+									<a type="button" class="btn btn-lg text-white btn-filled mx-2" data-link data-bs-dismiss="modal" href="/" data-translate="home-page"></a>
 								</div>
 							</div>
 						</div>
