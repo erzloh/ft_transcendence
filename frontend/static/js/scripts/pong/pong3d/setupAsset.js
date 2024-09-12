@@ -2,6 +2,12 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+import { BloomPass } from 'three/addons/postprocessing/BloomPass.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { Reflector } from 'three/addons/objects/Reflector.js';
+//console.log(Reflector);
+
 
 export async function loadModels(scene) {
     const loader = new GLTFLoader();
@@ -14,13 +20,19 @@ export async function loadModels(scene) {
             const paddleLeft = gltf.scene.getObjectByName('PaddleLeft');
             const paddleRight = gltf.scene.getObjectByName('PaddleRight');
 
-            const plane = gltf.scene.getObjectByName('Plane');
+			const plane = gltf.scene.getObjectByName('Plane');
             if (plane) {
+				//plane.scale.set(100, 100, 100);
                 plane.material.transparent = true;
-                plane.material.opacity = 0.1;
-                plane.material.depthWrite = false;
-            }
+                plane.material.opacity = 0.5;
 
+ //               const planeGeometry = plane.geometry;
+//				const parent = plane.parent;
+				//parent.remove(plane);
+
+            } else {
+                console.error('Plane not found in the loaded GLTF scene.');
+            }
             resolve({ ball, paddleLeft, paddleRight });
         }, undefined, (error) => {
             reject(error);
@@ -36,7 +48,7 @@ export async function loadFonts(scene) {
             const textMaterial = new THREE.MeshStandardMaterial({
                 color: 0xffffff,
                 emissive: 0xffffff,
-                emissiveIntensity: 1.0
+                emissiveIntensity: 1 
             });
 
             const createScoreText = (position) => {
