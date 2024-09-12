@@ -172,7 +172,7 @@ export class Pacman extends PacmanBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "gluttony";
 		this.frenzyDuration = 5;
-		this.frenzyCooldown = 25;
+		this.frenzyCooldown = 20;
 		this.frenzySpeedBoost = 120 / 100;
 		this.disableGhostDuration = 5;
 		this.inFrenzy = false;
