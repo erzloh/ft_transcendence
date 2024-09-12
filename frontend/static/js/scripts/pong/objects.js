@@ -1,3 +1,5 @@
+import { updateTextForElem } from "../../utils/languages.js";
+
 export class Tournament {
 	constructor(pNumber, usernames, pG) {
 		this.playerNumber = pNumber;
@@ -36,7 +38,7 @@ export class Tournament {
 				default:
 					break;
 			}
-			this.matchTournament.innerHTML = "tournament " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
+			this.matchTournament.innerHTML = this.matchId + 1;
 			this.playersTournament.innerHTML = this.usernames[this.currentMatch.left] + " VS " + this.usernames[this.currentMatch.right];
 			this.tournamentModal.show();
 			return this.currentMatch;
@@ -60,8 +62,8 @@ export class Tournament {
 			}
 		}
 		if (!this.tournamentOver) {
-			this.matchIdModal.innerHTML = "tournament: " + (this.matchId == this.maxMatchNb ? "final match" : "match " + (this.matchId + 1));
-			this.winner.innerHTML = this.usernames[this.currentMatch[side]] + " won the match";
+			this.matchIdModal.innerHTML = this.matchId + 1;
+			this.winner.innerHTML = this.usernames[this.currentMatch[side]];
 			this.timeElapsed.innerHTML = this.pG.timer.getTime();
 			this.tournamentMatchEndModal.show();
 
@@ -153,12 +155,12 @@ export class Timer {
 		if (this.leftMinimizeCD > 0)
 			this.lMinimizeLabel.innerHTML = this.leftMinimizeCD.toString().padStart(2, '0');
 		else
-			this.lMinimizeLabel.innerHTML = "ready";
+			updateTextForElem(this.lMinimizeLabel, "ready");
 
 		if (this.rightMinimizeCD > 0)
 			this.rMinimizeLabel.innerHTML = this.rightMinimizeCD.toString().padStart(2, '0');
 		else
-			this.rMinimizeLabel.innerHTML = "ready";
+			updateTextForElem(this.rMinimizeLabel, "ready");
 	}
 
 	startMinimizeCD(placement) {
