@@ -11,7 +11,7 @@
 			</div>
 		</div>
 		<div class="col-12 text-center d-flex flex-column">
-			<p class="text-white h1" animated-letters>pong menu</p>
+			<p class="text-white h1" animated-letters data-translate="pong menu"></p>
 		</div>
 		<div class=" d-flex justify-content-center m-3 mb-3">
 			<hr class="text-white" style="width: 400px;">
@@ -19,7 +19,7 @@
 		<div class="col-12 text-center d-flex flex-column mb-4">
 			<!-- <p class="text-white h3 mt-3" id="currentGamemodeLabel" style="display: inline;">pvp</p>
 			<p class="text-white h3 mt-1" id="currentGamestyleLabel" style="display: inline;">legacy</p> -->
-			<p class="text-white h3 mt-3"><span id="currentGamemodeLabel">pvp</span>・<span id="currentGamestyleLabel">legacy</span></p>
+			<p class="text-white h3 mt-3"><span id="currentGamemodeLabel"></span>・<span id="currentGamestyleLabel"></span></p>
 		</div>
 		<div class="row justify-content-center" style="width: 75vw;">
 			<div class="col d-flex flex-column">
@@ -27,9 +27,9 @@
 			</div>
 		</div>
 		<div style="width: 75vw;" class="col-12 text-center mt-5 mb-5 p-5 glass">
-			<button role="button" class="btn btn-lg text-white btn-filled" id="btnKeys">keys</button>
-			<button role="button" class="btn btn-lg text-white btn-filled" id="btnGamemode">gamemode</button>
-			<button role="button" class="btn btn-lg text-white btn-filled" id="btnGamestyle">gamestyle</button>
+			<button role="button" class="btn btn-lg text-white btn-filled" id="btnKeys" data-translate="keys"></button>
+			<button role="button" class="btn btn-lg text-white btn-filled" id="btnGamemode" data-translate="gamemode"></button>
+			<button role="button" class="btn btn-lg text-white btn-filled" id="btnGamestyle" data-translate="gamestyle"></button>
 		</div>
 		<div class="modal fade glass-modal-bg" id="settingsModal" tabindex="-1" aria-pledby="settingsModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
@@ -39,9 +39,11 @@
 				</div>
 			</div>
 		</div>
-		<div class="row justify-content-center" id="pointsRangeContainer"></div>
+		<div class="row justify-content-center" id="pointsRangeContainer">
+			
+		</div>
 		<div class="col-12 text-center mt-5">
-			<a role="button" id="btnStartGame" class="btn btn-lg text-white btn-filled" href="/pong" data-link>start game</a>
+			<a role="button" id="btnStartGame" class="btn btn-lg text-white btn-filled" href="/pong" data-link data-translate="start game"></a>
 		</div>
 		<div class="col-12 text-center mt-5 d-flex justify-content-center">
 			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/games" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
@@ -50,7 +52,7 @@
 </div>
 <div class="container full-height d-flex flex-column align-items-center justify-content-center games-page-mobile" style="display: none;">
 	<div class="container p-5 glass">
-		<p class="text-white text-center p-0 m-0" data-translate="games-not-available-mobile">games are not available on mobile.</p>
+		<p class="text-white text-center p-0 m-0" data-translate="games-not-available-mobile"></p>
 	</div>
 	<div class="row justify-content-center mb-3">
 		<div class="col-12 text-center mt-5 d-flex justify-content-center">
