@@ -1,5 +1,5 @@
 <div class="full-height d-flex align-items-center justify-content-center pacman-menu-page">
-	<div class="row justify-content-center container-menu">
+	<div class="row justify-content-center container-menu container">
 		<div class="toast-container position-fixed top-0 end-0 p-3">
 			<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none; max-width: none; width: auto;" role="alert" aria-live="assertive" aria-atomic="true">
 				<div class="d-flex glass">
@@ -16,8 +16,8 @@
 		<div class=" d-flex justify-content-center m-3 mb-4">
 			<hr class="text-white" style="width: 400px;">
 		</div>
-		<div class="row justify-content-center mb-2" style="width: 75vw;">
-			<div class="col d-flex flex-column">
+		<div class="row justify-content-center mb-2">
+			<div class="col-12 d-flex flex-column">
 				<div class="row justify-content-between gap-5">
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-8 d-flex flex-column align-items-center mb-1">
@@ -39,13 +39,15 @@
 				</div>
 			</div>
 		</div>
-		<div style="width: 75vw;" class="col-12 text-center mt-5 mb-5 p-5 glass">
-			<button class="btn btn-lg text-white btn-filled m-2" id="btnKeys" data-translate="keys">keys</button>
-			<button class="btn btn-lg text-white btn-filled m-2" id="btnPSkin" data-translate="pac-man">pacman</button>
-			<button class="btn btn-lg text-white btn-filled m-2" id="btnGSkin" data-translate="ghost">ghost</button>
-			<button class="btn btn-lg text-white btn-filled m-2" id="btnGamemode" data-translate="gamemode">gamemode</button>
-			<button class="btn btn-lg text-white btn-filled m-2" id="btnMap" data-translate="map">map</button>
-			<button class="btn btn-lg text-white btn-filled m-2" id="btnColor" data-translate="theme">theme</button>
+		<div class="row">
+			<div class="col-12 text-center mt-5 mb-5 p-5 glass">
+				<button class="btn btn-lg text-white btn-filled m-2" id="btnKeys" data-translate="keys">keys</button>
+				<button class="btn btn-lg text-white btn-filled m-2" id="btnPSkin" data-translate="pac-man">pacman</button>
+				<button class="btn btn-lg text-white btn-filled m-2" id="btnGSkin" data-translate="ghost">ghost</button>
+				<button class="btn btn-lg text-white btn-filled m-2" id="btnGamemode" data-translate="gamemode">gamemode</button>
+				<button class="btn btn-lg text-white btn-filled m-2" id="btnMap" data-translate="map">map</button>
+				<button class="btn btn-lg text-white btn-filled m-2" id="btnColor" data-translate="theme">theme</button>
+			</div>
 		</div>
 		<div class="modal fade glass-modal-bg" id="settingsModal" tabindex="-1" aria-pledby="settingsModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
