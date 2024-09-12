@@ -28,6 +28,7 @@ $base-font-size: 16px;
 $cursor: url('/static/assets/UI/icons/cursor_big.svg') 15 15, auto;
 $cursor-pointer: url('/static/assets/UI/icons/cursor_pointer_big.svg') 15 15, pointer;
 $main-color: rgb(220, 250, 255);
+$main-color-darker: rgb(133, 169, 176);
 
 // Basic CSS Reset
 html, body {
@@ -80,7 +81,7 @@ label {
 
 // Multicolor palette
 $color-bg1: rgb(0, 0, 0);
-$color-bg2: rgb(47, 0, 79);
+$color-bg2: rgb(19, 0, 31);
 $color1: rgb(22, 75, 154);
 $color2: rgb(148, 49, 171);
 $color3: rgb(68, 149, 174);
@@ -341,7 +342,8 @@ select {
 }
   
   .custom-checkbox:checked {
-	background-color: #d7c900;
+	// $main-color but darker
+	background-color: $main-color-darker;
 	border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -505,7 +507,7 @@ select {
 
 // EDIT PROFILE PAGE
 .container-edit {
-	max-width: rem(450px);
+	max-width: rem(400px);
 	max-height: 1000px !important;
 	overflow-y: auto;
 }
