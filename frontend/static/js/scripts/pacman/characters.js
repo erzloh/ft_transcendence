@@ -172,7 +172,7 @@ export class Pacman extends PacmanBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "gluttony";
 		this.frenzyDuration = 5;
-		this.frenzyCooldown = 25;
+		this.frenzyCooldown = 20;
 		this.frenzySpeedBoost = 120 / 100;
 		this.disableGhostDuration = 5;
 		this.inFrenzy = false;
@@ -515,12 +515,15 @@ export class BlueGhost extends GhostBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "ghost block";
 		this.ghostBlockCooldown = 5;
+		this.speedDuration = 10;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.ghostBlockCooldown, this.stopSpell.bind(this));
+		this.speedTimer = new CooldownTimer(null, this, this.speedDuration, this.speedDuration, this.stopSpeed.bind(this));
 		this.gBlockX;
 		this.gBlockY;
 		this.lastX = this.x;
 		this.lastY = this.y;
-		this.speed *= 110/100;
+		this.baseSpeed = this.speed;
+		this.speedBoost = this.speed * 115/100;
 		this.cellValue = "Nothing";
 	}
 
@@ -538,7 +541,13 @@ export class BlueGhost extends GhostBase {
 			this.gBlockY = this.lastX;
 			this.cellValue = this.pcG.cells[this.gBlockX][this.gBlockY].value;
 			this.pcG.cells[this.gBlockX][this.gBlockY].value = 9;
+			this.speed = this.speedBoost;
+			this.speedTimer.startCD();
 		}
+	}
+
+	stopSpeed() {
+		this.speed = this.baseSpeed;
 	}
 }
 

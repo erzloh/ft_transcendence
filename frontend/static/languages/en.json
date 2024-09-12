@@ -10,6 +10,9 @@
 	"maze": "maze",
 	"spiral": "spiral",
 	"butterfly": "butterfly",
+	"battlefield": "battlefield",
+	"trench": "trench",
+	"flower": "flower",
 
 	"obsidian": "obsidian",
 	"autumn": "autumn",
@@ -76,7 +79,7 @@
 	"greenGhost-active" : "active: blockade",
 	"greenGhost-active-desc" : "The Green Ghost creates a wall behind him.",
 	"greenGhost-passive" : "passive: sneak",
-	"greenGhost-passive-desc" : "When facing a wall for 3 seconds, the Green Ghost will turn it into a ghost block, lasting until another one is created.",
+	"greenGhost-passive-desc" : "When facing a wall for 2 seconds, the Green Ghost will turn it into a ghost block, lasting until another one is created.",
 
 	"ready" : "ready",
 

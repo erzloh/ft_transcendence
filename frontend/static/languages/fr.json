@@ -10,6 +10,9 @@
 	"maze": "labyrinthe",
 	"spiral": "spirale",
 	"butterfly": "papillon",
+	"battlefield": "bataille",
+	"trench": "tranchée",
+	"flower": "fleur",
 
 	"obsidian": "obsidienne",
 	"autumn": "automne",
@@ -76,7 +79,7 @@
 	"greenGhost-active" : "actif : blocus",
 	"greenGhost-active-desc" : "Le Fantôme Vert crée un mur derrière lui, bloquant le chemin pour tout le monde.",
 	"greenGhost-passive" : "passif : furtif",
-	"greenGhost-passive-desc" : "En regardant un mur pendant 3 secondes, le Fantôme Vert le transforme en bloc fantôme qu'il peut traverser. Ce bloc persiste jusqu'à ce qu'un autre soit créé.",
+	"greenGhost-passive-desc" : "En regardant un mur pendant 2 secondes, le Fantôme Vert le transforme en bloc fantôme qu'il peut traverser. Ce bloc persiste jusqu'à ce qu'un autre soit créé.",
 
 	"ready": "prêt",
 
