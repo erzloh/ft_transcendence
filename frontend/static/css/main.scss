@@ -48,6 +48,7 @@ button {
 
 .full-height {
 	height: 100vh;
+	
 }
 
 .big-text {
@@ -252,6 +253,52 @@ $blending: hard-light;
 	left: 0;
 	min-width: 100%;
 	min-height: 100%;
+}
+
+// ------------------------------- Load Transition -------------------------------
+// #transition-container {
+// 	position: relative;
+// }
+
+@keyframes transitionSlideUp {
+	0% {
+		transform: translateY(0);
+	}
+
+	100% {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+}
+
+@keyframes transitionSlideDown {
+	0% {
+		transform: translateY(0);
+	}
+
+	100% {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+}
+
+#upper-transition-rectangle {
+	position: absolute;
+	width: 100vw;
+	height: 50vh;
+	background-color: $color-bg1;
+	z-index: 1;
+	animation: transitionSlideUp 1s ease-in-out forwards;
+}
+
+#lower-transition-rectangle {
+	position: absolute;
+	top: 50vh;
+	width: 100vw;
+	height: 50vh;
+	background-color: $color-bg1;
+	z-index: 1;
+	animation: transitionSlideDown 1s ease-in-out forwards;
 }
 
 // ------------------------------- Custom Buttons -------------------------------

@@ -12141,6 +12141,43 @@ label {
   min-height: 100%;
 }
 
+@keyframes transitionSlideUp {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+@keyframes transitionSlideDown {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+#upper-transition-rectangle {
+  position: absolute;
+  width: 100vw;
+  height: 50vh;
+  background-color: rgb(34, 23, 51);
+  z-index: 1;
+  animation: transitionSlideUp 1s ease-in-out forwards;
+}
+
+#lower-transition-rectangle {
+  position: absolute;
+  top: 50vh;
+  width: 100vw;
+  height: 50vh;
+  background-color: rgb(34, 23, 51);
+  z-index: 1;
+  animation: transitionSlideDown 1s ease-in-out forwards;
+}
+
 .btn:hover {
   border: 1px solid white;
   cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
