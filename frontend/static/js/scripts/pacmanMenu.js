@@ -552,7 +552,7 @@ export class PacmanMenu {
 			<div class="modal-header">
 				<h2 class="modal-title text-white w-100 text-center" data-translate="map">maps</h2>
 			</div>
-			<div class="modal-body p-2 pt-4 pb-5">
+			<div class="modal-body p-4 pt-4 pb-4">
 				<div class="col-auto mr-1 ml-1">
 					<div class="row justify-content-center text-center mb-4">
 						<div class="col-4 d-flex flex-column align-items-center">
