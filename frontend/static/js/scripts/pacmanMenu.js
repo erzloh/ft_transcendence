@@ -554,26 +554,32 @@ export class PacmanMenu {
 			</div>
 			<div class="modal-body p-2 pt-4 pb-5">
 				<div class="col-auto mr-1 ml-1">
-					<div class="row justify-content-center text-center">
-						<div class="col-2 d-flex flex-column align-items-center">
-							<p class="h5 text-white mb-2" data-translate="maze">maze</p>
+					<div class="row justify-content-center text-center mb-4">
+						<div class="col-4 d-flex flex-column align-items-center">
+							<p class="h4 text-white" data-translate="maze">maze</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
 						</div>
-						<div class="col-2 d-flex flex-column align-items-center">
-							<p class="h5 text-white mb-2" data-translate="spiral">spiral</p>
+						<div class="col-4 d-flex flex-column align-items-center">
+							<p class="h4 text-white" data-translate="spiral">spiral</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
 						</div>
-						<div class="col-2 d-flex flex-column align-items-center">
-							<p class="h5 text-white mb-2" data-translate="butterfly">butterfly</p>
+						<div class="col-4 d-flex flex-column align-items-center">
+							<p class="h4 text-white" data-translate="butterfly">butterfly</p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
 						</div>
-						<div class="col-2 d-flex flex-column align-items-center">
-							<p class="h5 text-white mb-2" data-translate="battlefield"></p>
+					</div>
+					<div class="row justify-content-center text-center">
+						<div class="col-4 d-flex flex-column align-items-center">
+							<p class="h4 text-white" data-translate="battlefield"></p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/battlefield.png" id="pBattlefield" alt="A map that looks like a battlefield." tabindex="0"/>
 						</div>
-						<div class="col-2 d-flex flex-column align-items-center">
-							<p class="h5 text-white mb-2" data-translate="trench"></p>
+						<div class="col-4 d-flex flex-column align-items-center">
+							<p class="h4 text-white" data-translate="trench"></p>
 							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/trench.png" id="pTrench" alt="A map that has a trench." tabindex="0"/>
+						</div>
+						<div class="col-4 d-flex flex-column align-items-center">
+							<p class="h4 text-white" data-translate="flower"></p>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/flower.png" id="pFlower" alt="A map that looks like a flower." tabindex="0"/>
 						</div>
 					</div>
 				</div>
@@ -585,19 +591,22 @@ export class PacmanMenu {
 		let btnButterfly = document.getElementById('pButterfly');
 		let btnBattlefield = document.getElementById('pBattlefield');
 		let btnTrench = document.getElementById('pTrench');
+		let btnFlower = document.getElementById('pFlower');
 
 		this.addEventListeners(btnMaze, (event) => this.selectMap(event, "maze"));
 		this.addEventListeners(btnSpiral, (event) => this.selectMap(event, "spiral"));
 		this.addEventListeners(btnButterfly, (event) => this.selectMap(event, "butterfly"));
 		this.addEventListeners(btnBattlefield, (event) => this.selectMap(event, "battlefield"));
 		this.addEventListeners(btnTrench, (event) => this.selectMap(event, "trench"));
+		this.addEventListeners(btnFlower, (event) => this.selectMap(event, "flower"));
 
 		const maps = {
 			maze: btnMaze,
 			spiral: btnSpiral,
 			butterfly: btnButterfly,
 			battlefield: btnBattlefield,
-			trench: btnTrench
+			trench: btnTrench,
+			flower: btnFlower
 		}
 		this.applySelectedSetting("mapName", maps);
 
@@ -746,7 +755,8 @@ export class PacmanMenu {
 			spiral: document.getElementById('pSpiral'),
 			butterfly: document.getElementById('pButterfly'),
 			battlefield: document.getElementById('pBattlefield'),
-			trench: document.getElementById('pTrench')
+			trench: document.getElementById('pTrench'),
+			flower: document.getElementById('pFlower')
 		}
 		this.applySelectedSetting("mapName", maps);
 	}
