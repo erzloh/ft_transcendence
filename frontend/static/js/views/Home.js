@@ -15,6 +15,11 @@ export default class extends AbstractView {
 		home();
 	}
 
+	stopJS(){
+		// No loop in this view
+	}
+
+
 	cleanUpEventListeners() {
 		for (const [event, listener] of Object.entries(eventListeners)) {
 			document.removeEventListener(event, listener);

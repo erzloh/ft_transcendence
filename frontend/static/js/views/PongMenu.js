@@ -15,6 +15,11 @@ export default class extends AbstractView {
 		var pongMenu = new PongMenu();
 		pongMenu.Initialize();
 	}
+	
+	stopJS(){
+		// No loop in this view
+	}
+
 
 	cleanUpEventListeners() {
 		for (const [event, listener] of Object.entries(eventListeners)) {

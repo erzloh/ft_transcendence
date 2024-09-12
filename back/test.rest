@@ -1,4 +1,4 @@
-POST http://localhost:8000/api/login
+POST https://localhost/api/login
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/api/signup
+POST https://localhost/api/signup
 Content-Type: application/json
 
 {
@@ -19,28 +19,149 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8000/api/logout
+POST https://localhost/api/logout
 Content-Type: application/json
-Authorization: Token 8adda7ee25da1925a6e348208ae31daaa45b392d
+Cookie: jwt=2122e1cf9af50899c5e0240c180cc1440c28e111
 
 {}
 
+### PROFFILE AND FRIENDS ###################################################
+
+GET https://localhost/api/profile
+Content-Type: application/json
+Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
+
 ###
 
-GET http://localhost:8000/api/test_token
+PUT https://localhost/api/update_user
 Content-Type: application/json
-Authorization: Token e80232d2a804ad0f58afdde2387476e7afeafa54
-
-{}
-
-###
-
-PUT http://localhost:8000/api/update_bio
-Content-Type: application/json
-Authorization: Token 99a6c7bacd508caa9f89f5760e21ce99bb0529a7
+Cookie: jwt=21cb4ac75ce59478cb675b1c27dd68738dac1ed5
 
 {
-    "bio": "testestes."
+    "password": "Pascal333@@@!",
+    "username": "big noob",
+    "email": "pascalobispo@gmail.com"
 }
 
 ###
+
+POST https://localhost/api/add_friend
+Content-Type: application/json
+Cookie: jwt=81df7ab78c409d78b2610e77c517551c572c7f4d
+
+{
+    "username": "pascal3"
+}
+
+###
+
+POST https://localhost/api/remove_friend
+Content-Type: application/json
+Cookie: jwt=2cdceb32f3adc8aeaa3dd29ce5e2ce77738d4bc6
+
+{
+    "username": "pascal2"
+}
+
+###
+
+GET https://localhost/api/friends_list
+Content-Type: application/json
+Cookie: jwt=81df7ab78c409d78b2610e77c517551c572c7f4d
+
+###
+
+GET https://localhost/api/users_list/
+Content-Type: application/json
+Cookie: jwt=e39b493e181c827d20faa60bb1322ab180b2f5cb
+
+### PACMAN ##################################################################
+
+POST https://localhost/api/record_pacman_match/
+Content-Type: application/json
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
+
+{
+    "pacman_player": "noobman",
+    "pacman_character": "pacgirl",
+    "ghost_player": "noob2",
+    "ghost_character": "green ghost",
+    "map_name": "map3",
+    "match_duration": 11,
+    "winner": "noobman",
+    "pacman_score": 50,
+    "match_date": "2024-06-01",
+    "user": 1
+}
+
+###
+
+GET https://localhost/api/pacman_matches_history/
+Content-Type: application/json
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
+
+###
+
+GET https://localhost/api/pacman_stats/
+Content-Type: application/json
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
+
+###
+
+PUT https://localhost/api/pacman_endless_update
+Content-Type: application/json
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
+
+{
+    "max_endless_score": 1000
+}
+
+### PONG ####################################################################
+
+GET https://localhost/api/pong_stats/
+Content-Type: application/json
+Cookie: jwt=8f959505666f7be154f13beb27a39ead11655d5a
+
+###
+
+POST https://localhost/api/record_AIpong_match/
+Content-Type: application/json
+Cookie: jwt=8f959505666f7be154f13beb27a39ead11655d5a
+
+{
+    "player_one": "groscon",
+    "ai_level": "easy",
+    "winner": "ai",
+    "match_score": "11-9",
+    "match_duration": 134,
+    "match_date": "2021-06-01",
+    "user": 1
+}
+
+###
+
+POST https://localhost/api/record_PvPong_match/
+Content-Type: application/json
+Cookie: jwt=8f959505666f7be154f13beb27a39ead11655d5a
+
+{
+    "player_one": "groscon",
+    "player_two": "noobman",
+    "winner": "pascal",
+    "match_score": "11-9",
+    "match_duration": 134,
+    "match_date": "2021-06-01",
+    "user": 1
+}
+
+###
+
+GET https://localhost/api/AIpong_match_history/
+Content-Type: application/json
+Cookie: jwt=8f959505666f7be154f13beb27a39ead11655d5a
+
+###
+
+GET https://localhost/api/PvPong_match_history/
+Content-Type: application/json
+Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c

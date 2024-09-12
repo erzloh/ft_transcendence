@@ -1,5 +1,8 @@
-import { Pacman, Ghost} from "./pacman/characters.js";
+import { updateTexts } from "../utils/languages.js";
+import { Pacman, PacWoman, PacMIB, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
+import { updateTextForElem } from "../utils/languages.js";
+import { BASE_URL } from '../index.js';
 
 let eventListeners = { }
 
@@ -9,7 +12,10 @@ class PacmanGame {
 		this.pGamemode = document.getElementById('pGamemode');
 		this.pScore = document.getElementById('pScore');
 		this.startButton = document.getElementById('btnStart');
+		this.swapButton = document.getElementById('btnSwap');
 
+		this.pacmanSpellName = document.getElementById('pacmanSpellName');
+		this.ghostSpellName = document.getElementById('ghostSpellName');
 		this.pacmanUsername = document.getElementById('pacmanPlayerLabel');
 		this.ghostUsername = document.getElementById('ghostPlayerLabel');
 		this.imgPacmanSkin = document.getElementById('imgPacmanSkin');
@@ -27,7 +33,7 @@ class PacmanGame {
 		this.c = this.canvas.getContext('2d');
 
 		// Map data
-		this.cells; // The cells array
+		this.cells;
 		this.fruitArray = [];
 		this.starArray = [];
 		this.width, this.height, this.tileSize;
@@ -41,7 +47,10 @@ class PacmanGame {
 		// Image objects
 		this.images = {
 			imgPacman1 : new Image(), imgPacman2 : new Image(), imgPacman3 : new Image(),
-			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(),
+			imgPacman1_frenzy : new Image(), imgPacman2_frenzy : new Image(), imgPacman3_frenzy : new Image(),
+			imgPacwoman1_turbo : new Image(), imgPacwoman2_turbo : new Image(), imgPacwoman3_turbo : new Image(),
+			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(), imgGhostDisabled : new Image(),
+			imgGhost1_intangible : new Image(), imgGhost2_intangible : new Image(), imgGhost3_intangible : new Image(), imgGhost4_intangible : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
 			imgPortal1 : new Image(), imgPortal2 : new Image(), imgPortal3 : new Image(), imgPortal4 : new Image(),
 			imgBluePortal1 : new Image(), imgBluePortal2 : new Image(), imgBluePortal3 : new Image(), imgBluePortal4 : new Image()
@@ -59,6 +68,7 @@ class PacmanGame {
 	}
 
 	Initialize() {
+		this.swapButton.addEventListener('click', () => this.swapPlayers());
 		this.startButton.addEventListener("click", () => this.StartGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
 
@@ -85,14 +95,16 @@ class PacmanGame {
 		const objectiveString = localStorage.getItem('objective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : "10000";
 
-		const gamemodeString = localStorage.getItem('gamemode');
+		const gamemodeString = localStorage.getItem('pacmanGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
 		switch (this.gamemode) {
 			case "objective":
-				this.pGamemode.innerHTML = "Objective: " + this.objective;
+				this.pGamemode.innerHTML = this.objective;
 				break;
 			case "infinite":
-				this.pGamemode.innerHTML = "Endless";
+				document.querySelectorAll('.total-score').forEach(elem => {
+					elem.style.display = 'none';
+				});
 				break;
 			default:
 				break;
@@ -110,13 +122,31 @@ class PacmanGame {
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
 
+		this.createCharacter("pacman", 0, 0);
+		this.createCharacter("ghost", 0, 0);
+		updateTextForElem(this.pacmanSpellName, this.pacman.spellName);
+		updateTextForElem(this.ghostSpellName, this.ghost.spellName);
+		// this.pacmanSpellName.innerHTML = this.pacman.spellName;
+		// this.ghostSpellName.innerHTML = this.ghost.spellName;
+
 		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
 		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
 		this.images.imgPacman3.src = 'static/assets/pacman/images/' + this.pacmanSkin + '3.png';
+		this.images.imgPacman1_frenzy.src = 'static/assets/pacman/images/pacman1_frenzy.png';
+		this.images.imgPacman2_frenzy.src = 'static/assets/pacman/images/pacman2_frenzy.png';
+		this.images.imgPacman3_frenzy.src = 'static/assets/pacman/images/pacman3_frenzy.png';
+		this.images.imgPacwoman1_turbo.src = 'static/assets/pacman/images/pac-woman1-turbo.png';
+		this.images.imgPacwoman2_turbo.src = 'static/assets/pacman/images/pac-woman2-turbo.png';
+		this.images.imgPacwoman3_turbo.src = 'static/assets/pacman/images/pac-woman3-turbo.png';
 		this.images.imgGhost1.src = 'static/assets/pacman/images/' + this.ghostSkin + '1.png';
 		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
 		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
 		this.images.imgGhost4.src = 'static/assets/pacman/images/' + this.ghostSkin + '4.png';
+		this.images.imgGhost1_intangible.src = 'static/assets/pacman/images/pinkGhost1_intangible.png';
+		this.images.imgGhost2_intangible.src = 'static/assets/pacman/images/pinkGhost2_intangible.png';
+		this.images.imgGhost3_intangible.src = 'static/assets/pacman/images/pinkGhost3_intangible.png';
+		this.images.imgGhost4_intangible.src = 'static/assets/pacman/images/pinkGhost4_intangible.png';
+		this.images.imgGhostDisabled.src = 'static/assets/pacman/images/ghostDisabled.png';
 		this.images.imgCherry.src = 'static/assets/pacman/images/cherry.png';
 		this.images.imgBanana.src = 'static/assets/pacman/images/banana.png';
 		this.images.imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';
@@ -129,7 +159,6 @@ class PacmanGame {
 		this.images.imgBluePortal3.src = 'static/assets/pacman/images/portalBlue3.png';
 		this.images.imgBluePortal4.src = 'static/assets/pacman/images/portalBlue4.png';
 		this.images.imgStar.src = 'static/assets/pacman/images/star.png';
-
 	}
 
 	pauseGame() {
@@ -139,11 +168,11 @@ class PacmanGame {
 				this.c.fillStyle = "rgba(0, 0, 0, 0.5)";
 				this.c.fillRect(0, 0, this.canvas.width, this.canvas.height);
 				this.pauseModal.show();
+				updateTexts();
 			}
 			else
 				this.timer.start();
 			this.gamePaused = !this.gamePaused;
-
 		}
 	}
 
@@ -154,19 +183,54 @@ class PacmanGame {
 		this.fruitArray = [];
 		this.starArray = [];
 
+		if (this.pacman.cooldownTimer != null)
+			this.pacman.cooldownTimer.resetCD();
+		if (this.ghost.cooldownTimer != null)
+			this.ghost.cooldownTimer.resetCD();
 		this.timer.reset();
 
 		this.c.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.startButton.style.display = "block";
 		this.startButton.disabled = false;
+	}
+
+	async sendPacmanData(winner) {
+		const date = new Date();
+		let matchData = {
+			"pacman_player": this.usernames.pacman,
+			"pacman_character": this.pacmanSkin,
+			"ghost_player": this.usernames.ghost,
+			"ghost_character": this.ghostSkin,
+			"map_name": this.mapName,
+			"match_duration": ((this.timer.min * 60) + this.timer.sec),
+			"winner": winner,
+			"pacman_score": this.pacman.score,
+			"match_date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
+			"user": localStorage.getItem('user_id')
+		};
+		let response = await fetch(`${BASE_URL}/api/record_pacman_match`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(matchData)
+		});
+		if (response.status === 400) {
+			console.log("User isn't logged. Game history has not been saved.");
+		} else if (response.status === 200) {
+			console.log("Game saved.");
+		}
 	}
 
 	partyOver(winner) {
 		this.gameOver = true;
-		this.timer.stop();
+		this.stopGameLoop();
 
-		this.endgameModalWinner.textContent = winner + " won the game !";
-		this.endgameModalScore.textContent = "Pacman's score: " + this.pacman.points;
-		this.endgameModalTime.textContent = "Time elapsed: " + this.timer.min.toString().padStart(2, '0') + ":" + this.timer.sec.toString().padStart(2, '0');
+		this.sendPacmanData(winner);
+
+		this.endgameModalWinner.textContent = winner;
+		this.endgameModalScore.textContent = this.pacman.score;
+		this.endgameModalTime.textContent = this.timer.getTime();
 
 		// Show the modal
 		this.endgameModal.show();
@@ -184,11 +248,7 @@ class PacmanGame {
 			}
 		}
 
-		var imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
-						this.frame % 40 < 20 ? this.images.imgPacman2 :
-						this.frame % 40 < 30 ? this.images.imgPacman3 : this.images.imgPacman2;
-
-		this.pacman.render(imgpac);
+		this.pacman.render();
 		this.ghost.render();
 
 		// Remove used objects from arrays
@@ -212,6 +272,9 @@ class PacmanGame {
 
 	// Initialize everything needed for the game
 	async StartGame() {
+		// Hide the button
+		this.startButton.style.display = "none";
+
 		// Get the map's JSON data
 		const mapData = await this.loadMap("static/assets/pacman/maps/" + this.mapName + ".json");
 		const { tileSize: tmpTileSize, width: tmpWidth, height: tmpHeight, data: tmpData } = mapData;
@@ -220,7 +283,7 @@ class PacmanGame {
 		this.height = tmpHeight;
 
 		// Set score to 0
-		this.pScore.textContent = "Pacman's score: 0";
+		this.pScore.textContent = "00";
 
 		document.addEventListener("keydown", this.boundPacmanHandleKeyDown);
 		eventListeners["keydown"] = this.boundPacmanHandleKeyDown;
@@ -247,17 +310,17 @@ class PacmanGame {
 
 	// Create the cells array
 	createCellArray(data) {
-		var tmp = [];
+		let tmp = [];
 		for (let y = 0; y < this.height; y++) {
-			var row = [];
+			let row = [];
 			for (let x = 0; x < this.width; x++) {
 				if (data[y][x] === "p") {
-					this.pacman = new Pacman(x, y, "none", this);
-					data[y][x] = 0;
+					this.createCharacter("pacman", x, y);
+					data[y][x] = 6;
 				}
 				else if (data[y][x] === "g") {
-					this.ghost = new Ghost(x, y, "none", this);
-					data[y][x] = 0;
+					this.createCharacter("ghost", x, y);
+					data[y][x] = 6;
 				}
 				row.push(new Cell(x, y, data[y][x], this, this.tileSize));
 			}
@@ -266,42 +329,80 @@ class PacmanGame {
 		return tmp;
 	}
 
+	createCharacter(type, x, y) {
+		if (type == "pacman") {
+			switch (this.pacmanSkin) {
+				case "pacman":
+					this.pacman = new Pacman(x, y, "none", this);
+					break;
+				case "pac-woman":
+					this.pacman = new PacWoman(x, y, "none", this);
+					break;
+				case "pacMIB":
+					this.pacman = new PacMIB(x, y, "none", this);
+					break;
+				case "pacventurer":
+					this.pacman = new Pacventurer(x, y, "none", this);
+					break;
+				default:
+					break;
+			}
+		} 
+		else if (type == "ghost") {
+			switch (this.ghostSkin) {
+				case "blueGhost":
+					this.ghost = new BlueGhost(x, y, "none", this);
+					break;
+				case "orangeGhost":
+					this.ghost = new OrangeGhost(x, y, "none", this);
+					break;
+				case "pinkGhost":
+					this.ghost = new PinkGhost(x, y, "none", this);
+					break;
+				case "greenGhost":
+					this.ghost = new GreenGhost(x, y, "none", this);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
 	pacmanHandleKeyDown = (event) => {
 		// Prevent buttons from moving the page
 		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
-		console.log(event.code);
 		if (event.code == "Escape")
 			this.pauseGame();
 		if (!this.gamePaused) {
 			switch (event.code) {
 				case this.keybinds.pUp:
-					this.pacman.direction = "up";
+					this.pacman.setDirection("up");
 					break;
 				case this.keybinds.pDown:
-					this.pacman.direction = "down";
+					this.pacman.setDirection("down");
 					break;
 				case this.keybinds.pLeft:
-					this.pacman.direction = "left";
+					this.pacman.setDirection("left");
 					break;
 				case this.keybinds.pRight:
-					this.pacman.direction = "right";
+					this.pacman.setDirection("right");
 					break;
 				case this.keybinds.pSpell:
 					this.pacman.useSpell();
 					break;
 				case this.keybinds.gUp:
-					this.ghost.direction = "up";
+					this.ghost.setDirection("up");
 					break;
 				case this.keybinds.gDown:
-					this.ghost.direction = "down";
+					this.ghost.setDirection("down");
 					break;
 				case this.keybinds.gLeft:
-					this.ghost.direction = "left";
+					this.ghost.setDirection("left");
 					break;
 				case this.keybinds.gRight:
-					this.ghost.direction = "right";
+					this.ghost.setDirection("right");
 					break;
 				case this.keybinds.gSpell:
 					this.ghost.useSpell();
@@ -311,18 +412,34 @@ class PacmanGame {
 			}
 		}
 	}
+
+	swapPlayers() {
+		let tmpUsername = this.usernames.pacman;
+		this.usernames.pacman = this.usernames.ghost;
+		this.usernames.ghost = tmpUsername;
+		localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames));
+
+		this.oldKeys = this.keybinds;
+		this.keybinds = {
+			pUp : this.oldKeys.gUp, pLeft : this.oldKeys.gLeft, pDown : this.oldKeys.gDown, pRight : this.oldKeys.gRight, pSpell : this.oldKeys.gSpell,
+			gUp : this.oldKeys.pUp, gLeft : this.oldKeys.pLeft, gDown : this.oldKeys.pDown, gRight : this.oldKeys.pRight, gSpell : this.oldKeys.pSpell
+		}
+		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
+
+		this.pacmanUsername.innerHTML = this.usernames.pacman;
+		this.ghostUsername.innerHTML = this.usernames.ghost;
+		this.resetGame();
+	}
+
+	stopGameLoop() {
+		if (this.gameStart) {
+			if (this.pacman.cooldownTimer != null)
+				this.pacman.cooldownTimer.stopCD();
+			if (this.ghost.cooldownTimer != null)
+				this.ghost.cooldownTimer.stopCD();
+			this.timer.stop();
+		}
+	}
 }
-
-// --------------------------- Event Listener Functions ---------------------------
-// (Only Event Listener that are attached to the document.
-// Those attached to elements in the view are gonna be removed
-// when the view changes anyway)
-
-// Example:
-// function printKey (event) {
-// 	console.log(event.key);
-// }
-
-// --------------------------- Export Event Listeners Object ---------------------------
 
 export { PacmanGame, eventListeners };

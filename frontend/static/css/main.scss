@@ -1,3 +1,6 @@
+// Import the math module
+@use "sass:math";
+
 // Bootstrap override variables here
 // $primary: #6c757d;
 
@@ -9,6 +12,23 @@
 // Import Google Font
 @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap');
 
+
+
+// Define the base font size (default is 16px)
+$base-font-size: 16px;
+
+// Function to convert px to rem
+@function rem($px, $base: $base-font-size) {
+    @return math.div($px, $base) * 1rem;
+}
+
+// Variables
+// $cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, auto;
+// $cursor-pointer: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
+$cursor: url('/static/assets/UI/icons/cursor_big.svg') 15 15, auto;
+$cursor-pointer: url('/static/assets/UI/icons/cursor_pointer_big.svg') 15 15, pointer;
+$main-color: rgb(220, 250, 255);
+
 // Basic CSS Reset
 html, body {
 	font-family: 'Space Mono', monospace;
@@ -16,14 +36,33 @@ html, body {
 	padding: 0;
 	font-variant-ligatures: no-common-ligatures;
 	overflow-x: hidden;
+	// overflow-y: hidden;
+	cursor: $cursor;
+	font-size: 1rem; // CHANGE
 }
 
 button {
-	font-variant-ligatures: no-common-ligatures;
+    font-variant-ligatures: no-common-ligatures;
 }
 
 .full-height {
 	height: 100vh;
+}
+
+.big-text {
+	font-size: 1.5rem;
+}
+
+// label {
+// 	cursor: url('/static/assets/UI/icons/cursor.svg') 10 10, pointer;
+// }
+
+input, select, a, .clickable {
+	cursor: $cursor-pointer !important;
+}
+
+label {
+	cursor: $cursor;
 }
 
 // ------------------------------- BACKGROUND ANIMATION -------------------------------
@@ -47,7 +86,27 @@ $color2: rgb(148, 49, 171);
 $color3: rgb(68, 149, 174);
 $color4: rgb(149, 34, 119);
 $color5: rgb(136, 140, 40);
-$color-interactive: rgb(7, 56, 201);
+$color-interactive: rgb(79, 0, 125);
+
+// new palette 1
+// $color-bg1: rgb(0, 0, 0);
+// $color-bg2: rgb(28, 0, 45);
+// $color1: rgb(49, 1, 117);
+// $color2: rgb(129, 11, 156);
+// $color3: rgb(111, 8, 61);
+// $color4: rgb(149, 34, 119);
+// $color5: rgb(14, 45, 72);
+// $color-interactive: rgb(106, 5, 52);
+
+// violet light blue palette
+// $color-bg1: rgb(34, 23, 51);
+// $color-bg2: rgb(34, 23, 51);
+// $color1: rgb(101, 55, 125);
+// $color2: rgb(138, 171, 203);
+// $color3: rgb(70, 57, 120);
+// $color4: rgb(57, 21, 79);
+// $color5: rgb(67, 78, 146);
+// $color-interactive: rgb(80, 56, 116);
 
 // Red color palette
 // $color-bg1: rgb(84, 0, 0);
@@ -198,8 +257,26 @@ $blending: hard-light;
 .btn {
 	&:hover {
 		border: 1px solid white;
-		cursor: pointer;
+		cursor: $cursor-pointer;
 	}
+}
+
+.btn-filled {
+	background: rgba(255, 255, 255, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	color: white;
+}
+
+.return-btn {
+	animation: waitFadeIn 1s ease-out;
+}
+
+.fixed-width-btn {
+    min-width: 150px;
+}
+
+.fixed-width-btn-lg {
+	min-width: 180px;
 }
 
 // ------------------------------- Custom Classes -------------------------------
@@ -207,34 +284,41 @@ $blending: hard-light;
 .glass {
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
-	border-radius: 50px;
+	border-radius: 25px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
-	box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-	// animation: fadeIn 0.5s ease-out;
+	// box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+	animation: fadeIn 0.5s ease-out;
 }
 
-.return-btn {
-	animation: waitFadeIn 1s ease-out;
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+
+	100% {
+		opacity: 1;
+	}
 }
 
-.title {
-	// user-select: none;
+.hr {
+	border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-.fixed-width-btn {
-    width: 150px;
+.glass-modal-bg {
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
 }
 
-.fixed-width-btn-lg {
-	min-width: 180px;
+.not-found {
+	font-size: 8rem;
 }
 
 // SETTINGS PAGE
 .container-settings {
-	max-width: 400px;
+	max-width: rem(400px);
 }
 
-#languageSwitcher {
+select {
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	border-radius: 10px;
 	background: rgba(255, 255, 255, 0.1);
@@ -268,7 +352,9 @@ $blending: hard-light;
 
 // LOGIN PAGE
 .container-login {
-	max-width: 400px;
+	max-width: rem(400px);
+	max-height: 1000px !important;
+	overflow-y: auto;
 }
 
 .text-input {
@@ -300,13 +386,397 @@ $blending: hard-light;
 
 // PROFILE PAGE
 .container-profile {
-	max-width: 400px;
+	max-width: rem(400px);
+	max-height: 1000px !important;
+	overflow-y: auto;
 }
 
 .profile-pic {
 	border-radius: 50%;
 	width: 100px;
 	height: 100px;
+	border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+// PACMAN MENU PAGE
+.container-menu {
+	max-width: rem(1000px);
+}
+
+#rangeInput {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: transparent;
+    outline: none;
+}
+
+/* Custom track (background of the slider) */
+@mixin custom-track {
+	width: 100%;
+	height: 20px;
+	cursor: $cursor-pointer;
+	background: url('/static/assets/pacman/images/food2.png') repeat-x; /* Dots as background */
+	border: none;
+}
+
+#rangeInput::-webkit-slider-runnable-track {
+    @include custom-track;
+}
+
+#rangeInput::-moz-range-track {
+	@include custom-track;
+}
+
+/* Custom handle (thumb) with Pac-Man image */
+@mixin custom-thumb {
+	width: 40px;
+	height: 40px;
+	background: url('/static/assets/pacman/images/pacman_high_res.png') no-repeat;
+	background-size: cover;
+	cursor: $cursor-pointer;
+	border: none;
+}
+
+#rangeInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    @include custom-thumb;
+    margin-top: -10px;
+}
+
+#rangeInput::-moz-range-thumb {
+	@include custom-thumb;
+}
+
+// Hover effect for thumb
+@mixin custom-thumb-hover {
+	background-size: cover;
+	filter: brightness(0.7);
+}
+
+#rangeInput::-webkit-slider-thumb:hover {
+    @include custom-thumb-hover;
+}
+
+#rangeInput::-moz-range-thumb:hover {
+	@include custom-thumb-hover;
+}
+
+// Selected element
+.selected {
+	// background: rgba(255, 255, 255, 0.2);
+	border: 3px solid rgba(255, 255, 255, 1) !important;
+}
+
+// PACMAN GAME PAGE
+#gameContainer {
+	position: relative;
+}
+
+#btnStart {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+.pacman-game-container {
+	width: 500px !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.pacman-player-box-container {
+	display: flex;
+	gap: 17px;
+	width: 500px;
+}
+
+.pacman-player-box, .pong-player-box {
+	flex: 1;
+	background-color: lightblue;
+	padding: 20px;
+	text-align: center;
+}
+
+// EDIT PROFILE PAGE
+.container-edit {
+	max-width: rem(450px);
+	max-height: 1000px !important;
+	overflow-y: auto;
+}
+
+// FRIENDS PAGE
+.container-friends {
+	max-width: rem(800px);
+	height: 700px;
+}
+
+.list-container {
+	height: 100%;
+	overflow-y: auto;
+	// background-color: red;
+}
+
+.users-list, .friends-list {
+	height: 90%;
+	// overflow-y: auto;
+}
+
+#user-elements, #friend-elements {
+	height: calc(100% - 80px);
+	overflow-y: auto;
+	scrollbar-color: rgba(255,255,255, 0.5) transparent;
+}
+
+.user-element {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+	display: block;
+	text-align: start;
+
+	.profile-pic-list {
+		width: 30px;
+		height: 30px;
+		display: inline;
+		margin-right: 5px;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 50%;
+	}
+
+	.plus-icon-list {
+		width: 20px;
+		height: 20px;
+		display: inline;
+		margin-left: auto;
+		transition: 0.3s;
+
+		// on hover
+		&:hover {
+			filter: brightness(0.7);
+			rotate: 90deg;
+			cursor: $cursor-pointer;
+		}
+
+	}
+
+	p {
+		display: inline;
+	}
+}
+
+.friend-element {
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+	display: block;
+	text-align: start;
+	position: relative;
+
+	.profile-pic-list {
+		width: 30px;
+		height: 30px;
+		display: inline;
+		margin-right: 5px;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 50%;
+	}
+
+	.minus-icon-list {
+		width: 20px;
+		height: 20px;
+		display: inline;
+		margin-left: auto;
+		transition: 0.3s;
+
+		// on hover
+		&:hover {
+			filter: brightness(0.7);
+			rotate: 180deg;
+			cursor: $cursor-pointer;
+		}
+
+	}
+
+	p {
+		display: inline;
+	}
+
+	.online-icon-list {
+		width: 15px;
+		height: 15px;
+		display: inline;
+		position: absolute;
+		top: 26px;
+		left: 19px;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 50%;
+	}
+}
+
+// Pong page
+.squarer-glass {
+	border-radius: 15px;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	// blur
+	background: rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(10px);
+}
+
+.player-box {
+	max-width: 400px;
+}
+
+.color-picker {
+	width: 100px;
+	height: 10px !important;
+	border-radius: 0;
+	background-color: transparent;
+	padding: 0;
+	opacity: 0.7;
+
+	::-webkit-color-swatch {
+		border: 1px solid rgba(255, 255, 255, 0.5);
+	}
+}
+
+#pongRangeInput {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 8px;
+	background: transparent;
+	outline: none;
+	
+	// Custom thumb color
+	&::-webkit-slider-thumb {
+		background: $main-color;
+		cursor: $cursor-pointer;
+	}
+
+	// Custom track color
+	&::-webkit-slider-runnable-track {
+		background: rgba(255, 255, 255, 0.5);
+		cursor: $cursor;
+	}
+
+	// change cursor
+	cursor: $cursor-pointer;
+}
+
+.pong-interface-container {
+	width: 800px;
+}
+
+.pong-player-box-container {
+	display: flex;
+	gap: 17px;
+	width: 100%;
+	padding: 0px;
+}
+
+// Pong Statistics Page
+.table-container {
+	height: 400px;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 15px;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	overflow-y: auto;
+	animation: fadeIn 0.5s ease-out;
+	
+}
+
+.global-table-container {
+	height: fit-content;
+	width: 100%;
+	background: rgba(255, 255, 255, 0.2);
+	border-radius: 15px;
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	overflow-y: auto;
+	animation: fadeIn 0.5s ease-out;
+}
+
+.stats-table {
+	border-collapse: separate;
+	max-height: 100%;
+	overflow-x: auto;
+	// width: 100%;
+	// table-layout: fixed;
+
+	thead {
+		border-radius: inherit;
+		overflow: hidden;
+		position: sticky;
+        top: 0;
+        z-index: 1;
+		backdrop-filter: blur(10px);
+		
+		th {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+		}
+	}
+
+	tbody {
+		background: rgba(255, 255, 255, 0.2);
+		border-radius: inherit;
+	}
+
+	th, td {
+		border: none;
+		padding: 10px;
+		height: fit-content;
+	}
+}
+
+#pong-global-stat-table, #pacman-global-stat-table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+// ------------------------------- Responsive -------------------------------
+// Mobile
+@media screen and (max-width: 768px) {
+    .games-page, .pacman-menu-page, .pacman-page, .pong-page {
+        display: none !important;
+    }
+
+	.games-page-mobile {
+		display: flex !important;
+	}
+
+	.glass {
+		// remove glass effect
+		background: transparent;
+		backdrop-filter: none;
+		border: none;
+		box-shadow: none;
+
+	}
+}
+
+// Desktop
+@media screen and (min-width: 768px) {
+	.games-page, .pacman-menu-page, .pacman-page, .pong-page {
+		display: flex !important;
+	}
+
+	.games-page-mobile {
+		display: none !important;
+	}
+
+	#pong-stat-table, #pacman-history-stat-table {
+		width: 100%;
+		table-layout: fixed;
+	}
 }
 
 // ------------------------------- Custom Keyframes -------------------------------
@@ -342,4 +812,17 @@ $blending: hard-light;
 	100% {
 		transform: rotate(360deg);
 	}
+}
+
+// ------------------------------- Accessibility -------------------------------
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .tabbable:focus-visible, label:focus-visible, img:focus-visible, .clickable:focus-visible {
+    outline: 3px solid $main-color !important;
+    outline-offset: 4px !important;
+}
+
+button:focus,
+.btn:focus {
+    background-color: inherit;
+    border-color: inherit;
+    box-shadow: none;
 }

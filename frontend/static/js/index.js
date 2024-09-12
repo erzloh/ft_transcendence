@@ -1,3 +1,4 @@
+//
 // ------------------------------- IMPORT VIEWS -------------------------------
 // A view is a class containing the HTML and JS of a page
 import Home from "./views/Home.js";
@@ -12,6 +13,10 @@ import Games from "./views/Games.js";
 import Profile from "./views/Profile.js";
 import SignIn from "./views/SignIn.js";
 import SignUp from "./views/SignUp.js";
+import EditProfile from "./views/EditProfile.js";
+import Friends from "./views/Friends.js";
+import PongStatistics from "./views/PongStatistics.js";
+import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
@@ -23,6 +28,9 @@ import { setLanguage, updateTexts } from "./utils/languages.js";
 // ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
 // Set the base URL of the website
 export const BASE_URL = "https://localhost";
+export const BIG_TEXT = '18px';
+export const DEFAULT_TEXT = '16px';
+
 // Store interval IDs (to be able to clear them later)
 export const ids = {};
 
@@ -45,7 +53,11 @@ const routes = [
 	{ path: "/games", view: Games },
 	{ path: "/profile", view: Profile },
 	{ path: "/signin", view: SignIn },
-	{ path: "/signup", view: SignUp }
+	{ path: "/signup", view: SignUp },
+	{ path: "/edit-profile", view: EditProfile },
+	{ path: "/friends", view: Friends },
+	{ path: "/pong-statistics", view: PongStatistics },
+	{ path: "/pacman-statistics", view: PacmanStatistics }
 ];
 
 // Store the current view
@@ -60,15 +72,25 @@ const router = async () => {
     if (!match) {
 		match = { path: "", view: NotFound };
     }
+
+	// If there's an old view, clean it up
+    if (view) {
+        view.cleanUpEventListeners();
+        view.stopJS();
+    }
 	
 	// Create a new instance of the view
     view = new match.view();
 	
 	// Load the HTML of the view in the app div
-    document.querySelector("#app").innerHTML = await view.getHtml();
+	const appDiv = document.querySelector("#app");
+    appDiv.innerHTML = await view.getHtml();
 
 	// Load the JS of the view
 	await view.loadJS();
+
+	// Focus on the main element
+	appDiv.focus();
 
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();
@@ -79,6 +101,22 @@ const router = async () => {
 	// Animate letters
 	animateLetters();
 };
+
+// Load script
+const loadScript = async (view) => {
+	// Get the dynamic script element
+	const dynamicScript = document.getElementById('dynamic-script');
+
+	// Create a new script element
+	const newScript = document.createElement('script');
+    //newScript.type = 'module'; // Ensure the script is treated as an ES module
+	newScript.textContent = await view.getJS();
+	newScript.id = 'dynamic-script';
+
+	// Replace the dynamic script element with the new script element
+	// This is needed to load the new JS content
+	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
+}
 
 // Function to attach event listeners to the links
 // Overwrite the default behavior of the links (<a> tags)
@@ -98,35 +136,9 @@ const attachEventListenersToLinks = () => {
 	});
 }
 
-
-// Load script
-const loadScript = async (view) => {
-	// Get the dynamic script element
-	const dynamicScript = document.getElementById('dynamic-script');
-
-	// Create a new script element
-	const newScript = document.createElement('script');
-    //newScript.type = 'module'; // Ensure the script is treated as an ES module
-	newScript.textContent = await view.getJS();
-	newScript.id = 'dynamic-script';
-
-	// Replace the dynamic script element with the new script element
-	// This is needed to load the new JS content
-	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
-}
-
-// ------------------------------- THE APP STARTS HERE -------------------------------
-// When the DOM is loaded, call the router function
-document.addEventListener("DOMContentLoaded", () => {
-	router();
-});
-
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view
 export const navigateTo = url => {
-	// Clean up event listeners (that are attached to the document)
-	view.cleanUpEventListeners();
-
 	// Change the URL to the new URL and add a state to the history stack
     history.pushState(null, null, url);
 
@@ -176,3 +188,10 @@ if (noiseSetting === 'on') {
 
 // Set Language
 setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
+
+// Set text size
+if (localStorage.getItem('bigText') === 'on') {
+	document.documentElement.style.fontSize = BIG_TEXT;
+} else {
+	document.documentElement.style.fontSize = DEFAULT_TEXT;
+}

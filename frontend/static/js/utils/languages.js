@@ -15,7 +15,12 @@ export async function setLanguage(language) {
 export function updateTexts() {
 	document.querySelectorAll('[data-translate]').forEach(element => {
 		const key = element.getAttribute('data-translate');
-		element.textContent = translations[key];
+		if (element.getAttribute('placeholder')) {
+			element.setAttribute('placeholder', translations[key]);
+			return;
+		} else {
+			element.textContent = translations[key];
+		}
 	});
 }
 

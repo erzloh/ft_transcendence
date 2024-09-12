@@ -1,3 +1,19 @@
+// All close buttons were removed. The modal can be closed by clicking outside of it.
+// Here is the button div just in case though:
+
+// with an icon
+{/* <div class="col-12 d-flex justify-content-center mt-4 mb-3">
+	<button type="button" class="btn btn-lg text-white text-center d-flex align-items-center justify-content-center p-3" data-bs-dismiss="modal" aria-p="Close"><img src="static/assets/UI/icons/cross.svg" alt="close" id="close-button" width="16"></button>
+</div> */}
+
+// with text
+{/* <div class="col-12 d-flex justify-content-center mt-1">
+	<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-p="Close">Close</button>
+</div> */}
+
+import { updateTexts } from "../utils/languages.js";
+import { updateTextForElem } from "../utils/languages.js";
+
 export let eventListeners = { }
 
 export class PacmanMenu {
@@ -10,10 +26,14 @@ export class PacmanMenu {
         this.colorButton = document.getElementById('btnColor');
 		this.settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
 		this.settingsModalContent = document.getElementById('settingsModalContent');
+		this.swapButton = document.getElementById('btnSwap');
 		this.pacmanUsernameLabel = document.getElementById('pacmanName');
 		this.pacmanInput = document.getElementById('pacmanInput');
 		this.ghostUsernameLabel = document.getElementById('ghostName');
 		this.ghostInput = document.getElementById('ghostInput');
+
+		this.imgCurrentPacSkin = document.getElementById('imgCurrentPacSkin');
+		this.imgCurrentGhostSkin = document.getElementById('imgCurrentGhostSkin');
 
 		this.toastNotification = document.getElementById('liveToast');
 		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
@@ -38,7 +58,7 @@ export class PacmanMenu {
 		const ghostSkinString = localStorage.getItem('ghostSkin');
 		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
 
-		const gamemodeString = localStorage.getItem('gamemode');
+		const gamemodeString = localStorage.getItem('pacmanGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
 
 		const objectiveString = localStorage.getItem('objective');
@@ -48,7 +68,7 @@ export class PacmanMenu {
 		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
 
 		const themeString = localStorage.getItem('pacmanTheme');
-		this.theme = themeString ? JSON.parse(themeString) : {
+		this.theme = themeString ? JSON.parse(themeString) : { name: 'obsidian',
 			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
@@ -59,10 +79,22 @@ export class PacmanMenu {
 			gUp : 'ArrowUp', gLeft : 'ArrowLeft', gDown : 'ArrowDown', gRight : 'ArrowRight', gSpell : 'Numpad0'
 		};
 
+		this.swapButton.addEventListener('click', () => this.swapPlayers());
 		this.pacmanInput.addEventListener('keypress', (event) => this.pacmanPlayerInputHandle(event));
 		this.pacmanInput.addEventListener('blur', (event) => this.pacmanPlayerInputHandle(event));
 		this.ghostInput.addEventListener('keypress', (event) => this.ghostPlayerInputHandle(event));
 		this.ghostInput.addEventListener('blur', (event) => this.ghostPlayerInputHandle(event));
+
+		localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
+		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
+		localStorage.setItem('pacmanGamemode', JSON.stringify(this.gamemode));
+		localStorage.setItem('mapName', JSON.stringify(this.mapName));
+		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
+		localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
+		localStorage.setItem('themeName', this.theme.name);
+
+		this.setPacmanSkinImage();
+		this.setGhostSkinImage();
 	}
 
 	pacmanPlayerInputHandle(event) {
@@ -106,232 +138,359 @@ export class PacmanMenu {
 
 	showKeysConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
+			<div class="row justify-content-center">
 				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Keybinds settings</h2>
+					<h2 class="modal-title text-white w-100 text-center" data-translate="keybinds-settings">keybinds settings</h2>
 				</div>
 				<div class="modal-body">
 					<div class="col-12 d-flex justify-content-center">
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<label class="h3 text-white">Pacman keys</label>
+								<p class="h3 text-white">${this.usernames.pacman}</p>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move up</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-up">move up</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pUp">${this.keybinds.pUp !== "" ? this.keybinds.pUp : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move left</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-left">move left</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pLeft">${this.keybinds.pLeft !== "" ? this.keybinds.pLeft : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move down</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-down">move down</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pDown">${this.keybinds.pDown !== "" ? this.keybinds.pDown : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move right</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-right">move right</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pRight">${this.keybinds.pRight !== "" ? this.keybinds.pRight : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Use spell</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="use-spell">use spell</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="pSpell">${this.keybinds.pSpell !== "" ? this.keybinds.pSpell : "none"}</p>
 								</div>
 							</div>
 						</div>
 						<div class="col-6">
 							<div class="row justify-content-center text-center mt-2">
-								<h3 class="text-white">Ghost keys</h3>
+								<p class="h3 text-white">${this.usernames.ghost}</p>
 							</div>
 							<div class="row justify-content-center text-center mt-2">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move up</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-up">move up</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gUp">${this.keybinds.gUp !== "" ? this.keybinds.gUp : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move left</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-left">move left</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gLeft">${this.keybinds.gLeft !== "" ? this.keybinds.gLeft : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move down</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-down">move down</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gDown">${this.keybinds.gDown !== "" ? this.keybinds.gDown : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Move right</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="move-right">move right</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gRight">${this.keybinds.gRight !== "" ? this.keybinds.gRight : "none"}</p>
 								</div>
 							</div>
-							<div class="row justify-content-center text-center mt-2">
+							<div class="row justify-content-center text-center">
 								<div class="col-6 d-flex justify-content-end">
-									<label class="text-white" style="padding: 3px 0px;">Use spell</label>
+									<p class="text-white" style="padding: 3px 0px;" data-translate="use-spell">use spell</p>
 								</div>
 								<div class="col-6 d-flex justify-content-start">
-									<label role="button" class="text-white" style="border: 2px solid #260045; padding: 1px 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</label>
+									<p role="button" tabindex="0" class="text-white clickable" style="border: 1px solid white; padding: 1px 5px; border-radius: 5px;" id="gSpell">${this.keybinds.gSpell !== "" ? this.keybinds.gSpell : "none"}</p>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-12 d-flex justify-content-center mt-4">
-						<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
 					</div>
 				</div>
 			</div>
 		`;
 
-		var btnPUp = document.getElementById('pUp');
-        var btnPLeft = document.getElementById('pLeft');
-		var btnPDown = document.getElementById('pDown');
-		var btnPRight = document.getElementById('pRight');
-		var btnPSpell = document.getElementById('pSpell');
-		var btnGUp = document.getElementById('gUp');
-        var btnGLeft = document.getElementById('gLeft');
-		var btnGDown = document.getElementById('gDown');
-		var btnGRight = document.getElementById('gRight');
-		var btnGSpell = document.getElementById('gSpell');
-		btnPUp.addEventListener("click", (event) => this.changeKeybind(event, "pUp", btnPUp));
-		btnPLeft.addEventListener("click", (event) => this.changeKeybind(event, "pLeft", btnPLeft));
-		btnPDown.addEventListener("click", (event) => this.changeKeybind(event, "pDown", btnPDown));
-		btnPRight.addEventListener("click", (event) => this.changeKeybind(event, "pRight", btnPRight));
-		btnPSpell.addEventListener("click", (event) => this.changeKeybind(event, "pSpell", btnPSpell));
-		btnGUp.addEventListener("click", (event) => this.changeKeybind(event, "gUp", btnGUp));
-		btnGLeft.addEventListener("click", (event) => this.changeKeybind(event, "gLeft", btnGLeft));
-		btnGDown.addEventListener("click", (event) => this.changeKeybind(event, "gDown", btnGDown));
-		btnGRight.addEventListener("click", (event) => this.changeKeybind(event, "gRight", btnGRight));
-		btnGSpell.addEventListener("click", (event) => this.changeKeybind(event, "gSpell", btnGSpell));
+		let btnPUp = document.getElementById('pUp');
+        let btnPLeft = document.getElementById('pLeft');
+		let btnPDown = document.getElementById('pDown');
+		let btnPRight = document.getElementById('pRight');
+		let btnPSpell = document.getElementById('pSpell');
+		let btnGUp = document.getElementById('gUp');
+        let btnGLeft = document.getElementById('gLeft');
+		let btnGDown = document.getElementById('gDown');
+		let btnGRight = document.getElementById('gRight');
+		let btnGSpell = document.getElementById('gSpell');
+
+		const addEventListeners = (button, action) => {
+			button.addEventListener("click", (event) => this.changeKeybind(event, action, button));
+			button.addEventListener("keydown", (event) => {
+				if (event.key === "Enter") {
+					// wait for the next key press using settimeout
+					setTimeout(() => {
+						this.changeKeybind(event, action, button);
+					}, 100);
+				}
+			});
+		}
+		
+		addEventListeners(btnPUp, "pUp");
+		addEventListeners(btnPLeft, "pLeft");
+		addEventListeners(btnPDown, "pDown");
+		addEventListeners(btnPRight, "pRight");
+		addEventListeners(btnPSpell, "pSpell");
+		addEventListeners(btnGUp, "gUp");
+		addEventListeners(btnGLeft, "gLeft");
+		addEventListeners(btnGDown, "gDown");
+		addEventListeners(btnGRight, "gRight");
+		addEventListeners(btnGSpell, "gSpell");
 
 		this.settingsModal.show();
+		updateTexts();
 	}
 
 	showPacmanSkinConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Pacman skins</h2>
-				</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="pacman-skin">pacman skins</h2>
+			</div>
+			<div class="modal-body">
 				<div class="modal-body">
-					<div class="col-12 justify-content-center">
-						<div class="row justify-content-center text-center mt-2 mb-3">					
-							<div class="col-3 d-flex justify-content-center">
-								<img role="button" id="pPacmanSkin" style="border: 2px solid #260045; padding: 5px;" src="/static/assets/pacman/images/pacman1.png">
-							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<img role="button" id="pPacgirlSkin" style="border: 2px solid #260045; padding: 5px;" src="/static/assets/pacman/images/pacgirl1.png">
-							</div>
+				 <div class="row justify-content-center mt-2 mb-1">
+					<div class="col-10 d-flex justify-content-center">
+						<div class="d-flex justify-content-between w-100">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacman_high_res.png" alt="An image of pac-man." text="Pacman">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacWomanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pac-woman_high_res.png" alt="An image of pac-girl.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacMIBSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacMIB_high_res.png" alt="An image of Pac-Man-In-Black.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacventurerSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pacventurer_high_res.png" alt="An image of pac-venturer.">
 						</div>
 					</div>
-					<div class="col-12 d-flex justify-content-center mt-4">
-						<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
+				</div>
+				<div class="row justify-content-center"> 
+					<div class="col-10 mt-3">
+						<p class="h3 text-white text-center mb-3 mt-1" id="pacmanTitle">pac-man</p>
+						<hr class="text-white">
+						<div class="col-12 mb-1">
+							<p class="h5 text-left text-white fw-bold" id="pacmanTitle1" style="display: inline; vertical-align: middle;">Title</p>
+							<img src="/static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
+							<p id="cooldown" class="h5 text-white" style="display: inline; vertical-align: middle;">00:00</p>
+						</div>
+						<p class="text-white text-left lh-sm" id="pacmanDesc1" style="min-height: 4em; line-height: 1;">Description 1</p>
+						<p class="h5 text-white text-left fw-bold mb-1 mt-1" id="pacmanTitle2">Title 2</p>
+						<p class="text-white text-left lh-sm" style="min-height: 4em; line-height: 1;" id="pacmanDesc2">Description 2</p>
 					</div>
 				</div>
 			</div>
 		`;
 
-		var btnPacmanSkin = document.getElementById('pPacmanSkin');
-        var btnPacgirlSkin = document.getElementById('pPacgirlSkin');
-		btnPacmanSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacman"));
-		btnPacgirlSkin.addEventListener("click", (event) => this.selectPacmanSkin(event, "pacgirl"));
+		let btnPacmanSkin = document.getElementById('pPacmanSkin');
+        let btnPacWomanSkin = document.getElementById('pPacWomanSkin');
+		let btnPacMIBSkin = document.getElementById('pPacMIBSkin');
+        let btnPacventurerSkin = document.getElementById('pPacventurerSkin');
+		let cooldown = document.getElementById('cooldown');
+		let pacmanTitle = document.getElementById('pacmanTitle');
+		let pacmanTitle1 = document.getElementById('pacmanTitle1');
+		let pacmanDesc1 = document.getElementById('pacmanDesc1');
+		let pacmanTitle2 = document.getElementById('pacmanTitle2');
+		let pacmanDesc2 = document.getElementById('pacmanDesc2');
+
+		this.addEventListeners(btnPacmanSkin, (event) => this.selectPacmanSkin(event, "pacman"));
+		this.addEventListeners(btnPacWomanSkin, (event) => this.selectPacmanSkin(event, "pac-woman"));
+		this.addEventListeners(btnPacMIBSkin, (event) => this.selectPacmanSkin(event, "pacMIB"));
+		this.addEventListeners(btnPacventurerSkin, (event) => this.selectPacmanSkin(event, "pacventurer"));
+
+		switch (this.pacmanSkin) {
+			case "pacman":
+				updateTextForElem(pacmanTitle, "pacman-name");
+				updateTextForElem(pacmanTitle1, "pacman-passive");
+				updateTextForElem(pacmanDesc1, "pacman-passive-desc");
+				updateTextForElem(pacmanTitle2, "pacman-frenzy");
+				updateTextForElem(pacmanDesc2, "pacman-frenzy-desc");
+				cooldown.innerHTML = "20";
+				break;
+			case "pac-woman":
+				updateTextForElem(pacmanTitle, "pacwoman-name");
+				updateTextForElem(pacmanTitle1, "pacwoman-active");
+				updateTextForElem(pacmanDesc1, "pacwoman-active-desc");
+				updateTextForElem(pacmanTitle2, "pacwoman-passive");
+				updateTextForElem(pacmanDesc2, "pacwoman-passive-desc");
+				cooldown.innerHTML = "25";
+				break;
+			case "pacMIB":
+				updateTextForElem(pacmanTitle, "pacMIB-name");
+				updateTextForElem(pacmanTitle1, "pacMIB-active");
+				updateTextForElem(pacmanDesc1, "pacMIB-active-desc");
+				updateTextForElem(pacmanTitle2, "pacMIB-passive");
+				updateTextForElem(pacmanDesc2, "pacMIB-passive-desc");
+				cooldown.innerHTML = "20";
+				break;
+			case "pacventurer":
+				updateTextForElem(pacmanTitle, "pac-venturer-name");
+				updateTextForElem(pacmanTitle1, "pac-venturer-active");
+				updateTextForElem(pacmanDesc1, "pac-venturer-active-desc");
+				updateTextForElem(pacmanTitle2, "pac-venturer-passive");
+				updateTextForElem(pacmanDesc2, "pac-venturer-passive-desc");
+				cooldown.innerHTML = "20";
+				break;
+		}
+
+		const pacmanSkins = {
+			"pacman": btnPacmanSkin,
+			"pac-woman": btnPacWomanSkin,
+			"pacMIB": btnPacMIBSkin,
+			"pacventurer": btnPacventurerSkin
+		}
+		this.applySelectedSetting("pacmanSkin", pacmanSkins);
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	showGhostSkinConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Ghost skins</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-12 justify-content-center">
-						<div class="row justify-content-center text-center mt-2 mb-1">
-							<div class="col-3 d-flex justify-content-center">
-								<img role="button" id="pBlueGhostSkin" style="border: 2px solid #260045; padding: 5px;" src="/static/assets/pacman/images/blueGhost1.png">
-							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<img role="button" id="pOrangeGhostSkin" style="border: 2px solid #260045; padding: 5px;" src="/static/assets/pacman/images/orangeGhost1.png">
-							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<img role="button" id="pPinkGhostSkin" style="border: 2px solid #260045; padding: 5px;" src="/static/assets/pacman/images/pinkGhost1.png">
-							</div>
-							<div class="col-3 d-flex justify-content-center">
-								<img role="button" id="pGreenGhostSkin" style="border: 2px solid #260045; padding: 5px;" src="/static/assets/pacman/images/greenGhost1.png">
-							</div>
-							<div class="col-12 d-flex justify-content-center mt-4">
-								<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="ghost-skin">ghost skins</h2>
+			</div>
+			<div class="modal-body">
+				 <div class="row justify-content-center mt-2 mb-1">
+					<div class="col-10 d-flex justify-content-center">
+							<div class="d-flex justify-content-between w-100">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pBlueGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/blueGhost_high_res.png" alt="An image of a blue ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pOrangeGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/orangeGhost_high_res.png" alt="An image of an orange ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPinkGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pinkGhost_high_res.png" alt="An image of a pink ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pGreenGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/greenGhost_high_res.png" alt="An image of a green ghost.">
 						</div>
+					</div>
+				</div>
+				<div class="row justify-content-center"> 
+					<div class="col-10 mt-3">
+						<p class="h3 text-white text-center mb-3 mt-1" id="ghostTitle">blue ghost</p>
+						<hr class="text-white">
+						<div class="col-12 mb-1">
+							<p class="h5 text-left text-white fw-bold" id="ghostTitle1" style="display: inline; vertical-align: middle;">Title</p>
+							<img src="/static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
+							<p id="cooldown" class="h5 text-white" style="display: inline; vertical-align: middle;">00:00</p>
+						</div>
+						<p class="text-white text-left lh-sm" id="ghostDesc1" style="min-height: 4em; line-height: auto;">Description 1</p>
+						<p class="h5 text-white text-left fw-bold mb-1" id="ghostTitle2">Title 2</p>
+						<p class="text-white text-left lh-sm" style="min-height: 4em; line-height: auto;" id="ghostDesc2">Description 2</p>
 					</div>
 				</div>
 			</div>
 		`;
 
-		var btnBlueSkin = document.getElementById('pBlueGhostSkin');
-        var btnOrangeSkin = document.getElementById('pOrangeGhostSkin');
-		var btnPinkSkin = document.getElementById('pPinkGhostSkin');
-        var btnGreenSkin = document.getElementById('pGreenGhostSkin');
+		let btnBlueSkin = document.getElementById('pBlueGhostSkin');
+        let btnOrangeSkin = document.getElementById('pOrangeGhostSkin');
+		let btnPinkSkin = document.getElementById('pPinkGhostSkin');
+        let btnGreenSkin = document.getElementById('pGreenGhostSkin');
+		let cooldown = document.getElementById('cooldown');
+		let ghostTitle = document.getElementById('ghostTitle');
+		let ghostTitle1 = document.getElementById('ghostTitle1');
+		let ghostDesc1 = document.getElementById('ghostDesc1');
+		let ghostTitle2 = document.getElementById('ghostTitle2');
+		let ghostDesc2 = document.getElementById('ghostDesc2');
 
-		btnBlueSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "blueGhost"));
-		btnOrangeSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "orangeGhost"));
-		btnPinkSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "pinkGhost"));
-		btnGreenSkin.addEventListener("click", (event) => this.selectGhostSkin(event, "greenGhost"));
+		this.addEventListeners(btnBlueSkin, (event) => this.selectGhostSkin(event, "blueGhost"));
+		this.addEventListeners(btnOrangeSkin, (event) => this.selectGhostSkin(event, "orangeGhost"));
+		this.addEventListeners(btnPinkSkin, (event) => this.selectGhostSkin(event, "pinkGhost"));
+		this.addEventListeners(btnGreenSkin, (event) => this.selectGhostSkin(event, "greenGhost"));
+
+		switch (this.ghostSkin) {
+			case "blueGhost":
+				updateTextForElem(ghostTitle, "blueGhost-name");
+				updateTextForElem(ghostTitle1, "blueGhost-active");
+				updateTextForElem(ghostDesc1, "blueGhost-active-desc");
+				updateTextForElem(ghostTitle2, "blueGhost-passive");
+				updateTextForElem(ghostDesc2, "blueGhost-passive-desc");
+				cooldown.innerHTML = "5";
+				break;
+			case "orangeGhost":
+				updateTextForElem(ghostTitle, "orangeGhost-name");
+				updateTextForElem(ghostTitle1, "orangeGhost-active");
+				updateTextForElem(ghostDesc1, "orangeGhost-active-desc");
+				updateTextForElem(ghostTitle2, "orangeGhost-passive");
+				updateTextForElem(ghostDesc2, "orangeGhost-passive-desc");
+				cooldown.innerHTML = "20";
+				break;
+			case "pinkGhost":
+				updateTextForElem(ghostTitle, "pinkGhost-name");
+				updateTextForElem(ghostTitle1, "pinkGhost-active");
+				updateTextForElem(ghostDesc1, "pinkGhost-active-desc");
+				updateTextForElem(ghostTitle2, "pinkGhost-effect");
+				updateTextForElem(ghostDesc2, "pinkGhost-effect-desc");
+				cooldown.innerHTML = "25";
+				break;
+			case "greenGhost":
+				updateTextForElem(ghostTitle, "greenGhost-name");
+				updateTextForElem(ghostTitle1, "greenGhost-active");
+				updateTextForElem(ghostDesc1, "greenGhost-active-desc");
+				updateTextForElem(ghostTitle2, "greenGhost-passive");
+				updateTextForElem(ghostDesc2, "greenGhost-passive-desc");
+				cooldown.innerHTML = "25";
+				break;
+		}
+
+		// Get element that is selected from the local storage and apply the border
+		const ghostSkins = {
+			blueGhost: btnBlueSkin,
+			orangeGhost: btnOrangeSkin,
+			pinkGhost: btnPinkSkin,
+			greenGhost: btnGreenSkin
+		}
+		this.applySelectedSetting("ghostSkin", ghostSkins);
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	showGamemodeConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Gamemodes</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-auto mr-2 ml-3">
-						<div class="row justify-content-center text-center mt-2 mb-1">
-							<div class="col-4 d-flex justify-content-center mb-3">
-								<button role="button" class="btn btn-lg text-light" id="btnObjective">Objective</button>
-							</div>
-							<div class="col-4 d-flex justify-content-center mb-3">
-								<button role="button" class="btn btn-lg text-white" id="btnInfinite">Endless</button>
-							</div>
-							<div class="col-10 mb-3">
-								<label class="text-white" id="gamemodeDescription"></label>
-							</div>
-							<div id="rangeContainer">
-							</div>
-							<div class="col-12 d-flex justify-content-center mt-1">
-								<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="gamemode">gamemodes</h2>
+			</div>
+			<div class="modal-body">
+				<div class="col-auto mr-2 ml-3">
+					<div class="row justify-content-center text-center mt-2 mb-1">
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-light" id="btnObjective" data-translate="objective">objective</button>
+						</div>
+						<div class="col-4 d-flex justify-content-center">
+							<button role="button" class="btn btn-lg text-white" id="btnInfinite" data-translate="endless">endless</button>
+						</div>
+						<div class="col-10 mt-4 mb-3">
+							<p class="text-white" id="gamemodeDescription"></p>
+						</div>
+						<div id="rangeContainer">
 						</div>
 					</div>
 				</div>
@@ -339,10 +498,10 @@ export class PacmanMenu {
 		`;
 
 
-        var btnObjective = document.getElementById('btnObjective');
-		var btnInfinite = document.getElementById('btnInfinite');
-		var labelDescription = document.getElementById('gamemodeDescription');
-		var rangeContainer = document.getElementById('rangeContainer');
+        let btnObjective = document.getElementById('btnObjective');
+		let btnInfinite = document.getElementById('btnInfinite');
+		let pDescription = document.getElementById('gamemodeDescription');
+		let rangeContainer = document.getElementById('rangeContainer');
 
 		btnObjective.addEventListener("click", (event) => this.selectGamemode(event, "objective"));
 		btnInfinite.addEventListener("click", (event) => this.selectGamemode(event, "infinite"));
@@ -351,187 +510,255 @@ export class PacmanMenu {
 			case "objective":
 				btnObjective.disabled = true;
 				btnInfinite.disabled = false;
-				labelDescription.innerHTML = "The game ends once Pacman's score reaches the objective or the Ghost catches Pacman.";
+				pDescription.innerHTML = "the game ends once Pacman's score reaches the objective or the Ghost catches Pacman.";
+				updateTextForElem(pDescription, "objective-description");
 				rangeContainer.innerHTML = `
-							<div class="col-12 justify-content-center mb-2">
-									<label class="text-white h5" id="rangeLabel"></label>
-									<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1000" max="30000" value="${this.objective}" step="1000" id="rangeInput">
-							</div>
-							`;
-				var rangeInput = document.getElementById('rangeInput');
-				var rangeLabel = document.getElementById('rangeLabel');
+					<div class="col-12 d-flex justify-content-center align-items-center mb-2">
+						<p for="rangeInput" class="text-white h5 mb-0" id="rangeLabel" style="margin-right: 10px;">Label</p>
+						<input type="range" class="form-range clickable" style="width: 70%;" min="1000" max="30000" step="1000" id="rangeInput">
+					</div>
+				`;
+				let rangeInput = document.getElementById('rangeInput');
+				let rangeLabel = document.getElementById('rangeLabel');
 
-				rangeLabel.innerHTML = "Objective: " + this.objective;
+				rangeLabel.innerHTML = this.objective;
+				rangeInput.value = this.objective;
 				localStorage.setItem('objective', JSON.stringify(this.objective));
 
 				rangeInput.addEventListener('input', (event) => {
-					rangeLabel.textContent = "Objective: " + event.target.value;
+					rangeLabel.textContent = event.target.value;
 					this.objective = event.target.value;
 					localStorage.setItem('objective', JSON.stringify(this.objective));
-
 				});
 
 				break;
 			case "infinite":
 				btnObjective.disabled = false;
 				btnInfinite.disabled = true;
-				labelDescription.innerHTML = "The game ends once the Ghost catches Pacman.";
+				pDescription.innerHTML = "the game ends once the Ghost catches Pacman.";
+				updateTextForElem(pDescription, "endless-description");
 				break;
 			default:
 				break;
 		}
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	showMapConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Maps</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-auto mr-2 ml-2">
-						<div class="row justify-content-center text-center mt-2">
-							<div class="col-4 d-flex flex-column align-items-center">
-								<label class="h4 text-white">Maze</label>
-								<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze"/>
-							</div>
-							<div class="col-4 d-flex flex-column align-items-center">
-								<label class="h4 text-white">Spiral</label>
-								<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral"/>
-							</div>
-							<div class="col-4 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Butterfly</label>
-								<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly"/>
-							</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="map">maps</h2>
+			</div>
+			<div class="modal-body p-5 pt-4 pb-5">
+				<div class="col-auto mr-2 ml-2">
+					<div class="row justify-content-center text-center">
+						<div class="col-4 d-flex flex-column align-items-center">
+							<p class="h4 text-white mb-2" data-translate="maze">maze</p>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
 						</div>
-						<div class="col-12 d-flex justify-content-center mt-2">
-							<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
+						<div class="col-4 d-flex flex-column align-items-center">
+							<p class="h4 text-white mb-2" data-translate="spiral">spiral</p>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
+						</div>
+						<div class="col-4 d-flex flex-column align-items-center">
+								<p class="h4 text-white mb-2" data-translate="butterfly">butterfly</p>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
 						</div>
 					</div>
 				</div>
 			</div>
 		`;
 
-		var btnMaze = document.getElementById('pMaze');
-        var btnSpiral = document.getElementById('pSpiral');
-		var btnButterfly = document.getElementById('pButterfly');
+		let btnMaze = document.getElementById('pMaze');
+        let btnSpiral = document.getElementById('pSpiral');
+		let btnButterfly = document.getElementById('pButterfly');
 
-		btnMaze.addEventListener("click", (event) => this.selectMap(event, "maze"));
-		btnSpiral.addEventListener("click", (event) => this.selectMap(event, "spiral"));
-		btnButterfly.addEventListener("click", (event) => this.selectMap(event, "butterfly"));
+		this.addEventListeners(btnMaze, (event) => this.selectMap(event, "maze"));
+		this.addEventListeners(btnSpiral, (event) => this.selectMap(event, "spiral"));
+		this.addEventListeners(btnButterfly, (event) => this.selectMap(event, "butterfly"));
+
+		const maps = {
+			maze: btnMaze,
+			spiral: btnSpiral,
+			butterfly: btnButterfly
+		}
+		this.applySelectedSetting("mapName", maps);
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	showColorSchemeConfig() {
 		this.settingsModalContent.innerHTML = `
-			<div class="row justify-content-center glass">
-				<div class="modal-header">
-					<h2 class="modal-title text-white w-100 text-center">Themes</h2>
-				</div>
-				<div class="modal-body">
-					<div class="col-12 justify-content-center">
-						<div class="row justify-content-center text-center mt-2 mb-3">
-							<div class="row justify-content-center text-center">
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Obsidian</label>
-									<img class="img-fluid"style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Autumn</label>
-									<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Garden</label>
-									<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden"/>
-								</div>
-								<div class="col-3 d-flex flex-column align-items-center">
-									<label class="h4 text-white">Retro</label>
-									<img class="img-fluid" style="max-height: 275px; border: 3px solid #260045;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial"/>
-								</div>
+			<div class="modal-header">
+				<h2 class="modal-title text-white w-100 text-center" data-translate="theme">themes</h2>
+			</div>
+			<div class="modal-body">
+				<div class="col-12 justify-content-center">
+					<div class="row justify-content-center text-center mt-2 mb-3">
+						<div class="row justify-content-center text-center">
+							<div class="col-3 d-flex flex-column align-items-center">
+								<p class="h4 text-white" data-translate="obsidian">obsidian</p>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian" alt="A map that has the color of obsidian." tabindex="0"/>
+							</div>
+							<div class="col-3 d-flex flex-column align-items-center">
+								<p class="h4 text-white" data-translate="autumn">autumn</p>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn" alt="A map that has the color of autumn." tabindex="0"/>
+							</div>
+							<div class="col-3 d-flex flex-column align-items-center">
+								<p class="h4 text-white" data-translate="garden">garden</p>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden" alt="A map that has the color of a garden." tabindex="0"/>
+							</div>
+							<div class="col-3 d-flex flex-column align-items-center">
+								<p class="h4 text-white" data-translate="retro">retro</p>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spacial.png" id="pSpacial" alt="A map that has the color of the retro pac-man." tabindex="0"/>
 							</div>
 						</div>
-					</div>
-					<div class="col-12 d-flex justify-content-center mt-2">
-							<button type="button" class="btn btn-lg text-white" data-bs-dismiss="modal" aria-label="Close">Close</button>
 					</div>
 				</div>
 			</div>
 		`;
 
-		var btnObsidian = document.getElementById('pObsidian');
-        var btnAutumn = document.getElementById('pAutumn');
-		var btnGarden = document.getElementById('pGarden');
-        var btnSpacial = document.getElementById('pSpacial');
+		let btnObsidian = document.getElementById('pObsidian');
+        let btnAutumn = document.getElementById('pAutumn');
+		let btnGarden = document.getElementById('pGarden');
+        let btnSpacial = document.getElementById('pSpacial');
 
-		btnObsidian.addEventListener("click", (event) => this.selectTheme(event, "obsidian"));
-		btnAutumn.addEventListener("click", (event) => this.selectTheme(event, "autumn"));
-		btnGarden.addEventListener("click", (event) => this.selectTheme(event, "garden"));
-		btnSpacial.addEventListener("click", (event) => this.selectTheme(event, "spacial"));
+		this.addEventListeners(btnObsidian, (event) => this.selectTheme(event, "obsidian"));
+		this.addEventListeners(btnAutumn, (event) => this.selectTheme(event, "autumn"));
+		this.addEventListeners(btnGarden, (event) => this.selectTheme(event, "garden"));
+		this.addEventListeners(btnSpacial, (event) => this.selectTheme(event, "spacial"));
+
+		const themes = {
+			obsidian: btnObsidian,
+			autumn: btnAutumn,
+			garden: btnGarden,
+			spacial: btnSpacial
+		}
+		this.applySelectedSetting("themeName", themes);
 
 		this.settingsModal.show();
+
+		updateTexts();
 	}
 
 	//#region EVENT LISTENERS HANDLERS
 
+	swapPlayers() {
+		let tmpUsername = this.usernames.pacman;
+		this.usernames.pacman = this.usernames.ghost;
+		this.usernames.ghost = tmpUsername;
+		localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames));
+
+		this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
+		this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
+
+		this.oldKeys = this.keybinds;
+		this.keybinds = {
+			pUp : this.oldKeys.gUp, pLeft : this.oldKeys.gLeft, pDown : this.oldKeys.gDown, pRight : this.oldKeys.gRight, pSpell : this.oldKeys.gSpell,
+			gUp : this.oldKeys.pUp, gLeft : this.oldKeys.pLeft, gDown : this.oldKeys.pDown, gRight : this.oldKeys.pRight, gSpell : this.oldKeys.pSpell
+		}
+		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
+
+		this.toastBody.innerHTML = "Swapped players usernames";
+		this.toastBootstrap.show();
+	}
+
 	selectPacmanSkin(event, skin) {
-		this.toastBody.innerHTML = "Chosen pacman skin: " + skin;
+		this.toastBody.innerHTML = "chosen pacman character: " + skin;
 		this.toastBootstrap.show();
 		this.pacmanSkin = skin;
 		localStorage.setItem('pacmanSkin', JSON.stringify(this.pacmanSkin));
+
+		const pacmanSkins = {
+			pacman: document.getElementById('pPacmanSkin'),
+			pacwoman: document.getElementById('pPacWomanSkin'),
+			pacMIB: document.getElementById('pPacMIBSkin'),
+			pacventurer: document.getElementById('pPacventurerSkin')
+		}
+		this.applySelectedSetting("pacmanSkin", pacmanSkins);
+		this.setPacmanSkinImage();
+		this.showPacmanSkinConfig();
 	}
 
 	selectGhostSkin(event, skin) {
-		this.toastBody.innerHTML = "Chosen ghost skin: " + skin;
+		this.toastBody.innerHTML = "chosen ghost character: " + skin;
 		this.toastBootstrap.show();
 		this.ghostSkin = skin;
 		localStorage.setItem('ghostSkin', JSON.stringify(this.ghostSkin));
 
+		// Get element that is selected from the local storage and apply the border
+		const ghostSkins = {
+			blueGhost: document.getElementById('pBlueGhostSkin'),
+			orangeGhost: document.getElementById('pOrangeGhostSkin'),
+			pinkGhost: document.getElementById('pPinkGhostSkin'),
+			greenGhost: document.getElementById('pGreenGhostSkin')
+		}
+		this.applySelectedSetting("ghostSkin", ghostSkins);
+		this.setGhostSkinImage();
+		this.showGhostSkinConfig();
 	}
 
-	selectGamemode(event, gamemode, btnObjective, btnInfinite) {
-		this.toastBody.innerHTML = "Chosen gamemode: " + gamemode;
+	setPacmanSkinImage() {
+		this.imgCurrentPacSkin.src = "/static/assets/pacman/images/" + this.pacmanSkin + "_high_res.png";
+	}
+
+	setGhostSkinImage() {
+		this.imgCurrentGhostSkin.src = "/static/assets/pacman/images/" + this.ghostSkin + "_high_res.png";
+	}
+
+	selectGamemode(event, gamemode) {
+		this.toastBody.innerHTML = "chosen gamemode: " + gamemode;
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
-		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
+		localStorage.setItem('pacmanGamemode', JSON.stringify(this.gamemode));
 
 		this.showGamemodeConfig();
 	}
 
 	selectMap(event, map) {
-		this.toastBody.innerHTML = "Chosen map: " + map;
+		this.toastBody.innerHTML = "chosen map: " + map;
 		this.toastBootstrap.show();
 		this.mapName = map;
 
 		localStorage.setItem('mapName', JSON.stringify(this.mapName));
+
+		const maps = {
+			maze: document.getElementById('pMaze'),
+			spiral: document.getElementById('pSpiral'),
+			butterfly: document.getElementById('pButterfly')
+		}
+		this.applySelectedSetting("mapName", maps);
 	}
 
 	selectTheme(event, theme) {
-		this.toastBody.innerHTML = "Chosen theme: " + theme;
+		this.toastBody.innerHTML = "chosen theme: " + theme;
 		this.toastBootstrap.show();
 		switch (theme) {
 			case "obsidian":
-				this.theme = {
+				this.theme = { name: 'obsidian',
 					backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 					wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 				};
 				break;
 			case "autumn":
-				this.theme = {
+				this.theme = { name: 'autumn',
 					backgroundColor : 'rgb(15, 0, 0)', ghostWallColor1 : 'rgb(138, 22, 1)', ghostWallColor2 : 'rgb(181, 32, 2)',
 					wallColor : 'rgb(143, 34, 1)', dotColor : 'rgb(145, 67, 3)', glowColor : 'rgb(194, 90, 6)'
 				};
 				break;
 			case "garden":
-				this.theme = {
+				this.theme = { name: 'garden',
 					backgroundColor : 'rgb(0, 8, 2)', ghostWallColor1 : 'rgb(38, 82, 0)', ghostWallColor2 : 'rgb(58, 125, 0)',
 					wallColor : 'rgb(0, 54, 12)', dotColor : 'rgb(2, 56, 173)', glowColor : 'rgb(0, 66, 209)'
 				};
 				break;
 			case "spacial":
-				this.theme = {
+				this.theme = { name: 'spacial',
 					backgroundColor : 'rgb(1, 1, 26)', ghostWallColor1 : 'rgb(14, 58, 179)', ghostWallColor2 : 'rgb(18, 71, 219)',
 					wallColor : 'rgb(0, 0, 176)', dotColor : 'rgb(145, 135, 19)', glowColor : 'rgb(186, 173, 20)'
 				};
@@ -541,7 +768,15 @@ export class PacmanMenu {
 		}
 
 		localStorage.setItem('pacmanTheme', JSON.stringify(this.theme));
+		localStorage.setItem('themeName', theme);
 
+		const themes = {
+			obsidian: document.getElementById('pObsidian'),
+			autumn: document.getElementById('pAutumn'),
+			garden: document.getElementById('pGarden'),
+			spacial: document.getElementById('pSpacial')
+		}
+		this.applySelectedSetting("themeName", themes);
 	}
 
 	changeKeybind(event, key, btn) {
@@ -551,7 +786,7 @@ export class PacmanMenu {
 	}
 
 	keyDownSettings = (event) => {
-		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
+		if(["Space","ArrowUp","ArrowDown"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
 		if (this.waitForKey) {
@@ -561,43 +796,43 @@ export class PacmanMenu {
 			}
 			switch (this.waitingKey) {
 				case "pUp":
-					this.toastBody.innerHTML = "Changed Pacman Move Up keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman move up keybind to: " + event.code;
 					this.keybinds.pUp = event.code;
 					break;
 				case "pLeft":
-					this.toastBody.innerHTML = "Changed Pacman Move Left keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman move left keybind to: " + event.code;
 					this.keybinds.pLeft = event.code;
 					break;
 				case "pDown":
-					this.toastBody.innerHTML = "Changed Pacman Move Down keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman move down keybind to: " + event.code;
 					this.keybinds.pDown = event.code;
 					break;
 				case "pRight":
-					this.toastBody.innerHTML = "Changed Pacman Move Right keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman move right keybind to: " + event.code;
 					this.keybinds.pRight = event.code;
 					break;
 				case "pSpell":
-					this.toastBody.innerHTML = "Changed Pacman Spell keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed pacman spell keybind to: " + event.code;
 					this.keybinds.pSpell = event.code;
 					break;
 				case "gUp":
-					this.toastBody.innerHTML = "Changed Ghost Move Up keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost move up keybind to: " + event.code;
 					this.keybinds.gUp = event.code;
 					break;
 				case "gLeft":
-					this.toastBody.innerHTML = "Changed Ghost Move Left keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost move left keybind to: " + event.code;
 					this.keybinds.gLeft = event.code;
 					break;
 				case "gDown":
-					this.toastBody.innerHTML = "Changed Ghost Move Down keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost move down keybind to: " + event.code;
 					this.keybinds.gDown = event.code;
 					break;
 				case "gRight":
-					this.toastBody.innerHTML = "Changed Ghost Move right keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost move right keybind to: " + event.code;
 					this.keybinds.gRight = event.code;
 					break;
 				case "gSpell":
-					this.toastBody.innerHTML = "Changed Ghost Spell keybind to: " + event.code;
+					this.toastBody.innerHTML = "changed ghost spell keybind to: " + event.code;
 					this.keybinds.gSpell = event.code;
 					break;
 				default:
@@ -610,7 +845,34 @@ export class PacmanMenu {
 		}
 	}
 
+	// Add the "selected" class to to correct element based on the setting in the local storage
+	// settingType is for example "pacmanSkin", "ghostSkin", "pacmanGamemode", "mapName", "pacmanTheme"
+	// elementMapping is an object with the settings as keys and the elements as values
+	// for example { "pacman": btnPacmanSkin, "pac-woman": btnPacWomanSkin }
+	applySelectedSetting(settingType, elementMapping) {
+		const selectedSetting = localStorage.getItem(settingType)?.replace(/"/g, '');
+	
+		Object.keys(elementMapping).forEach(setting => {
+			if (setting === selectedSetting) {
+				elementMapping[setting].classList.add("selected");
+			} else {
+				elementMapping[setting].classList.remove("selected");
+			}
+		});
+	}
+
+	// Function to add event listeners to the selections (click add enter key)
+	// button is the element to add the event listener to
+	// action is the function to call when the event listener is triggered
+	addEventListeners(button, action) {
+		button.addEventListener("click", (event) => action(event));
+		button.addEventListener("keydown", (event) => {
+			if (event.key === "Enter") {
+				action(event);
+			}
+		});
+	}
+
 	//#endregion
 
 }
-
