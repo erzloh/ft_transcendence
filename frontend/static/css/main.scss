@@ -539,6 +539,11 @@ select {
 	align-items: center;
 }
 
+.pacman-ingame-stat {
+	width: 500px !important;
+	padding: 0px;
+}
+
 .pacman-player-box-container {
 	display: flex;
 	gap: 17px;

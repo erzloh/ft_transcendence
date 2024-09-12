@@ -5,22 +5,26 @@
 			<div class=" d-flex justify-content-center m-3">
 				<hr class="text-white" style="width: 400px;">
 			</div>
-			<div class="container">
-				<div class="row text-white d-flex justify-content-center">
-					<div class="col-4">
-						<img class="mb-3" src="/static/assets/pacman/images/pacman_high_res.png" width="32px" style="display: inline;"/>
-						<p id="pScore" style="display: inline;" class="h3">00</p>
-						<p style="display: inline;" class="h3 total-score">/</p>
-						<p style="display: inline;" class="h3 total-score" id="pGamemode">10000</p>
+		</div>
+		<div class="col pacman-game-container container">
+			<div class="container pacman-ingame-stat">
+				<div class="row text-white d-flex justify-content-center pb-3">
+					<div class="col-6 d-flex justify-content-start">
+						<div class="d-flex justify-content-center align-items-center">
+							<img class="me-2" src="/static/assets/pacman/images/pacman_high_res.png" width="32px"/>
+							<p id="pScore" style="display: inline;" class="h3 mb-0">00</p>
+							<p style="display: inline;" class="h3 total-score mb-0">/</p>
+							<p style="display: inline;" class="h3 total-score mb-0" id="pGamemode">10000</p>
+						</div>
 					</div>
-					<div class="col-4">
-						<img class="mb-3" src="/static/assets/UI/icons/time.svg" width="32px" style="display: inline;"/>
-						<p id="timer" style="display: inline;" class="h3">00:00</p>
+					<div class="col-6 d-flex justify-content-end">
+						<div class="d-flex justify-content-center align-items-center">
+							<img class="me-2" src="/static/assets/UI/icons/time.svg" width="32px"/>
+							<p id="timer" class="h3 mb-0">00:00</p>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col pacman-game-container container">
 			<div>
 				<div class="col-12 d-flex flex-column align-items-center mb-3" id="gameContainer">
 					<canvas class="squarer-glass" id="cvsPacman" width="500px" height="500px"></canvas>
