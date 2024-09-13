@@ -87,10 +87,10 @@ class PacmanGame {
 		};
 
 		const pacmanSkinString = localStorage.getItem('pacmanSkin');
-		this.pacmanSkin = pacmanSkinString ? JSON.parse(pacmanSkinString) : "pacman";
+		this.pacmanSkin = pacmanSkinString ? JSON.parse(pacmanSkinString) : "pac-man";
 
 		const ghostSkinString = localStorage.getItem('ghostSkin');
-		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "orangeGhost";
+		this.ghostSkin = ghostSkinString ? JSON.parse(ghostSkinString) : "blue-ghost";
 
 		const objectiveString = localStorage.getItem('objective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : "10000";
@@ -101,7 +101,7 @@ class PacmanGame {
 			case "objective":
 				this.pGamemode.innerHTML = this.objective;
 				break;
-			case "infinite":
+			case "endless":
 				document.querySelectorAll('.total-score').forEach(elem => {
 					elem.style.display = 'none';
 				});
@@ -132,9 +132,9 @@ class PacmanGame {
 		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
 		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
 		this.images.imgPacman3.src = 'static/assets/pacman/images/' + this.pacmanSkin + '3.png';
-		this.images.imgPacman1_frenzy.src = 'static/assets/pacman/images/pacman1_frenzy.png';
-		this.images.imgPacman2_frenzy.src = 'static/assets/pacman/images/pacman2_frenzy.png';
-		this.images.imgPacman3_frenzy.src = 'static/assets/pacman/images/pacman3_frenzy.png';
+		this.images.imgPacman1_frenzy.src = 'static/assets/pacman/images/pac-man1_frenzy.png';
+		this.images.imgPacman2_frenzy.src = 'static/assets/pacman/images/pac-man2_frenzy.png';
+		this.images.imgPacman3_frenzy.src = 'static/assets/pacman/images/pac-man3_frenzy.png';
 		this.images.imgPacwoman1_turbo.src = 'static/assets/pacman/images/pac-woman1-turbo.png';
 		this.images.imgPacwoman2_turbo.src = 'static/assets/pacman/images/pac-woman2-turbo.png';
 		this.images.imgPacwoman3_turbo.src = 'static/assets/pacman/images/pac-woman3-turbo.png';
@@ -333,16 +333,16 @@ class PacmanGame {
 	createCharacter(type, x, y) {
 		if (type == "pacman") {
 			switch (this.pacmanSkin) {
-				case "pacman":
+				case "pac-man":
 					this.pacman = new Pacman(x, y, "none", this);
 					break;
 				case "pac-woman":
 					this.pacman = new PacWoman(x, y, "none", this);
 					break;
-				case "pacMIB":
+				case "pac-MIB":
 					this.pacman = new PacMIB(x, y, "none", this);
 					break;
-				case "pacventurer":
+				case "pac-venturer":
 					this.pacman = new Pacventurer(x, y, "none", this);
 					break;
 				default:

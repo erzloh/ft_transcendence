@@ -27,3 +27,7 @@ export function updateTexts() {
 export function updateTextForElem(elem, key) {
 	elem.textContent = translations[key];
 }
+
+export function getText(key) {
+	return translations[key];
+}

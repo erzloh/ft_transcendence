@@ -1,5 +1,6 @@
 import { BASE_URL } from "../index.js";
 import { updateTexts } from "../utils/languages.js";
+import { getText } from "../utils/languages.js";
 import { updateTextForElem } from "../utils/languages.js";
 
 export let eventListeners = { }
@@ -21,6 +22,7 @@ export class PongMenu {
 		this.toastNotification = document.getElementById('liveToast');
 		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
 		this.toastBody = document.getElementById('toastBody');
+		this.toastValue = document.getElementById('toastValue');
 
 		this.boundKeyDownSettings = this.keyDownSettings.bind(this);
 		this.updatePlayersContainer = this.updatePlayersContainer.bind(this);
@@ -61,10 +63,10 @@ export class PongMenu {
 		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "enhanced";
 		localStorage.setItem('pongGamestyle', JSON.stringify(this.gamestyle));
 		// TODO: change this to /pong3d
-		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
+		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong3d" : "/pong";
 
-		this.currentGamemodeLabel.innerHTML  = this.gamemode;
-		this.currentGamestyleLabel.innerHTML  = this.gamestyle;
+		updateTextForElem(this.currentGamemodeLabel, this.gamemode);
+		updateTextForElem(this.currentGamestyleLabel, this.gamestyle);
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
@@ -140,8 +142,8 @@ export class PongMenu {
 				rightPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", "p2"));
 				rightPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, rightPaddleInput, rightPaddleUsernameLabel, "right paddle", "p2"));
 
-				leftPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, "left paddle", "p1"));
-				rightPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, "right paddle", "p2"));
+				leftPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, this.usernames.p1, "p1"));
+				rightPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, this.usernames.p2, "p2"));
 				break;
 			case "AI":
 				this.playersContainer.innerHTML = `
@@ -166,7 +168,7 @@ export class PongMenu {
 
 				playerPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
 				playerPaddleInput.addEventListener('blur', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
-				playerPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, "player", "p1"));
+				playerPaddleColor.addEventListener('input', (event) => this.colorInputHandle(event, this.usernames.p1, "p1"));
 				break;
 			case "tournament":
 				this.playersContainer.innerHTML = `
@@ -247,10 +249,10 @@ export class PongMenu {
 				player4Input.addEventListener('keypress', (event) => this.paddleInputHandle(event, player4Input, player4Name, "player 4", "p4"));
 				player4Input.addEventListener('blur', (event) => this.paddleInputHandle(event, player4Input, player4Name, "player 4", "p4"));
 
-				player1Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 1", "p1"));
-				player2Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 2", "p2"));
-				player3Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 3", "p3"));
-				player4Color.addEventListener('input', (event) => this.colorInputHandle(event, "player 4", "p4"));
+				player1Color.addEventListener('input', (event) => this.colorInputHandle(event, this.usernames.p1, "p1"));
+				player2Color.addEventListener('input', (event) => this.colorInputHandle(event, this.usernames.p2, "p2"));
+				player3Color.addEventListener('input', (event) => this.colorInputHandle(event, this.usernames.p3, "p3"));
+				player4Color.addEventListener('input', (event) => this.colorInputHandle(event, this.usernames.p4, "p4"));
 				break;
 			default:
 				break;
@@ -264,7 +266,8 @@ export class PongMenu {
 			playerInput.value = ""; // Clear the input box
 			playerLabel.innerHTML =   this.usernames[playerUsername];
 
-			this.toastBody.innerHTML = "Changed " + playerName + " paddle username to: " +   this.usernames[playerUsername];
+			this.toastBody.innerHTML = playerName + " " + getText("paddle-username-changed");
+			this.toastValue.textContent = this.usernames[playerUsername];
 			this.toastBootstrap.show();
 
 			localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
@@ -278,7 +281,8 @@ export class PongMenu {
 	colorInputHandle(event, name, player) {
 		this.colors[player] = event.target.value;
 
-		this.toastBody.innerHTML = "Changed " + name + " color.";
+		this.toastBody.textContent = name + " " + getText("color-changed");
+		this.toastValue.textContent = "";
 		this.toastBootstrap.show();
 
 		localStorage.setItem('pongColors', JSON.stringify(this.colors));
@@ -577,41 +581,44 @@ export class PongMenu {
 	//#region EVENT LISTENERS HANDLERS
 
 	selectGamemode(event, gamemode) {
-		this.toastBody.innerHTML = "chosen gamemode: " + gamemode;
+		updateTextForElem(this.toastBody, "chosen-gamemode");
+		this.toastValue.textContent = getText(gamemode);
 		this.toastBootstrap.show();
 		this.gamemode = gamemode;
 		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
-		this.currentGamemodeLabel.innerHTML = this.gamemode;
+		updateTextForElem(this.currentGamemodeLabel, this.gamemode);
 
 		this.showGamemodeConfig();
 		this.updatePlayersContainer();
 	}
 
 	selectGamestyle(event, gamestyle) {
-		this.toastBody.innerHTML = "chosen game style: " + gamestyle;
+		updateTextForElem(this.toastBody, "chosen-game-style");
+		this.toastValue.textContent = getText(gamestyle);
 		this.toastBootstrap.show();
 		if (gamestyle == "3D") {
 			this.lastGamemode = this.gamemode;
 			this.gamemode = "pvp";
-			this.currentGamemodeLabel.innerHTML = "current gamemode: " + this.gamemode;
+			updateTextForElem(this.currentGamemodeLabel, this.gamemode);
 		} 
 		else if (this.gamestyle == "3D" && gamestyle != this.gamestyle) {
 			this.gamemode = this.lastGamemode;
-			this.currentGamemodeLabel.innerHTML = this.gamemode;
+			updateTextForElem(this.currentGamemodeLabel, this.gamemode);
 		}
 		
 		this.gamestyle = gamestyle;
 		// TODO: change this to /pong3d
-		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong" : "/pong";
+		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong3d" : "/pong";
 		localStorage.setItem('gamestyle', JSON.stringify(this.gamestyle));
-		this.currentGamestyleLabel.innerHTML = this.gamestyle;
+		updateTextForElem(this.currentGamestyleLabel, this.gamestyle);
 
 		this.showGamestyleConfig();
 		this.updatePlayersContainer();
 	}
 
 	selectAIDifficulty(event, difficulty) {
-		this.toastBody.innerHTML = "chosen AI difficulty: " + difficulty;
+		updateTextForElem(this.toastBody, "chosen-AI");
+		this.toastValue.textContent = getText(difficulty);
 		this.toastBootstrap.show();
 		this.aiDifficulty = difficulty;
 		localStorage.setItem('pongAIDifficulty', JSON.stringify(this.aiDifficulty));
@@ -633,34 +640,37 @@ export class PongMenu {
 				if (this.keybinds[key] == event.code)
 					this.keybinds[key] = "";
 			}
+			let key;
 			switch (this.waitingKey) {
 				case "lUp":
-					this.toastBody.innerHTML = "Changed Left Paddle Move Up keybind to: " + event.code;
+					key = getText("lpad-move-up");
 					this.keybinds.lUp = event.code;
 					break;
 				case "lDown":
-					this.toastBody.innerHTML = "Changed Left Paddle Move Down keybind to: " + event.code;
+					key = getText("lpad-move-down");
 					this.keybinds.lDown = event.code;
 					break;
 				case "lMini":
-					this.toastBody.innerHTML = "Changed Left Paddle Minimize keybind to: " + event.code;
+					key = getText("lpad-minimize");
 					this.keybinds.lMini = event.code;
 					break;
 				case "rUp":
-					this.toastBody.innerHTML = "Changed Right Paddle Move Up keybind to: " + event.code;
+					key = getText("rpad-move-up");
 					this.keybinds.rUp = event.code;
 					break;
 				case "rDown":
-					this.toastBody.innerHTML = "Changed Right Paddle Move Down keybind to: " + event.code;
+					key = getText("rpad-move-down");
 					this.keybinds.rDown = event.code;
 					break;
 				case "rMini":
-					this.toastBody.innerHTML = "Changed Right Paddle Minimize keybind to: " + event.code;
+					key = getText("rpad-minimize");
 					this.keybinds.rMini = event.code;
 					break;
 				default:
 					return ;
 			}
+			updateTextForElem(this.toastBody, "changed-key");
+			this.toastValue.textContent = key + " -> " + event.code;
 			this.waitForKey = false;
 			this.toastBootstrap.show();
 			localStorage.setItem('pongKeybinds', JSON.stringify(this.keybinds));
