@@ -380,6 +380,7 @@ export class PongGame {
 		this.leftPad.move();
 		this.rightPad.move();
 		this.ball.move();
+		console.log("log");
 	}
 
 	startGameLoop() {
