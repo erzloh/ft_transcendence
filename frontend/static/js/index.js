@@ -20,7 +20,7 @@ import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
-import { animateLetters, moveNoise, initLoadTransition, initCursorClickEffect } from './visual/effects.js'
+import { animateLetters, moveNoise, initLoadTransition } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { setLanguage, updateTexts } from "./utils/languages.js";
@@ -61,7 +61,7 @@ const routes = [
 	{ path: "/edit-profile", view: EditProfile },
 	{ path: "/friends", view: Friends },
 	{ path: "/pong-statistics", view: PongStatistics },
-	{ path: "/pacman-statistics", view: PacmanStatistics }
+	{ path: "/pacman-statistics", viw: PacmanStatistics }
 ];
 
 // Store the current view
