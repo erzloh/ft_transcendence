@@ -1,7 +1,9 @@
 import { CooldownTimer } from "./objects.js";
+import { updateTextForElem } from "../../utils/languages.js";
 
 class Character {
 	constructor(x, y, direction, pacmanGame) {
+		this.spellName = "";
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
@@ -46,7 +48,7 @@ export class PacmanBase extends Character {
 		this.score = 0;
 		this.objective = -1;
 		this.cooldownDisplay = document.getElementById('pCD');
-		this.cooldownDisplay.innerHTML = "ready";
+		updateTextForElem(this.cooldownDisplay, "ready");
 		this.pointFactor = 100/100;
 	}
 
@@ -129,13 +131,21 @@ export class PacmanBase extends Character {
 		this.pcG.pScore.textContent = this.score;
 	}
 
+	getSprite() {
+		return	this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacman1 : 
+				this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacman2 :
+				this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacman3 : this.pcG.images.imgPacman2;
+	}
+
 	// Render the character's sprite
-	render(img) {
+	render() {
 		if (this.objective > 0) {
 			if (this.score >= this.objective) {
 				this.pcG.partyOver(this.pcG.usernames.pacman);
 			}
 		}
+
+		let img =  this.getSprite(); 
 
 		// Convert degrees to radians
 		var angle = this.direction == "right" ? 0 :
@@ -160,9 +170,9 @@ export class PacmanBase extends Character {
 export class Pacman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "frenzy";
+		this.spellName = "gluttony";
 		this.frenzyDuration = 5;
-		this.frenzyCooldown = 25;
+		this.frenzyCooldown = 20;
 		this.frenzySpeedBoost = 120 / 100;
 		this.disableGhostDuration = 5;
 		this.inFrenzy = false;
@@ -197,32 +207,62 @@ export class Pacman extends PacmanBase {
 	stopEaten() {
 		this.pcG.ghost.disabled = false;
 	}
+
+	getSprite() {
+		if (this.inFrenzy) {
+			return  this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacman1_frenzy : 
+					this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacman2_frenzy :
+					this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacman3_frenzy : this.pcG.images.imgPacman2_frenzy;
+		}
+		else {
+			return  this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacman1 : 
+					this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacman2 :
+					this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacman3 : this.pcG.images.imgPacman2;
+		}
+	}
 }
 
 export class PacWoman extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "speed boost";
+		this.spellName = "turbo";
+		this.turbo = false;
 		this.speedDuration = 10;
 		this.speedCooldown = 25;
 		this.speedBoost = 120 / 100;
+		this.speedAdd = (this.speed * 103/100) - this.speed;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.speedDuration, this.speedCooldown, this.stopSpell.bind(this));
 	}
 
 	eatFruit(fruit) {
 		this.score += fruit.points;
 		this.pcG.pScore.textContent = this.score;
-		this.speed *= 105/100;
+		this.speed += this.speedAdd;
 	}
 
 	useSpell() {
 		if (this.cooldownTimer.startCD()) {
 			this.speed *= this.speedBoost;
+			this.turbo = true;
 		}
 	}
 
 	stopSpell() {
 		this.speed /= this.speedBoost;
+		this.turbo = false;
+	}
+
+	getSprite() {
+		if (this.turbo) {
+			return  this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacwoman1_turbo : 
+					this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacwoman2_turbo :
+					this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacwoman3_turbo : this.pcG.images.imgPacwoman2_turbo;
+		}
+		else {
+			return  this.pcG.frame % 40 < 10 ? this.pcG.images.imgPacman1 : 
+					this.pcG.frame % 40 < 20 ? this.pcG.images.imgPacman2 :
+					this.pcG.frame % 40 < 30 ? this.pcG.images.imgPacman3 : this.pcG.images.imgPacman2;
+		}
 	}
 }
 
@@ -232,7 +272,8 @@ export class PacMIB extends PacmanBase {
 		this.spellName = "flash";
 		this.stunDuration = 3;
 		this.stunCooldown = 20;
-		this.speedBoost = 120/100;
+		this.baseSpeed = this.speed;
+		this.speedBoost = this.speed * 120/100;
 		this.speedDuration = 5;
 		this.speedy = false;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.stunDuration, this.stunCooldown, this.stopSpell.bind(this));
@@ -251,7 +292,7 @@ export class PacMIB extends PacmanBase {
 	}
 
 	stopSpeedBoost() {
-		this.speed /= this.speedBoost;
+		this.speed = this.baseSpeed;
 	}
 
 	teleport() {
@@ -264,7 +305,7 @@ export class PacMIB extends PacmanBase {
 						this.y = i;
 						this.px = j;
 						this.py = i;
-						this.speed *= this.speedBoost;
+						this.speed = this.speedBoost;
 						this.warpSpeedTimer.startCD();
 						this.tpReady = false;
 						return;
@@ -284,7 +325,7 @@ export class Pacventurer extends PacmanBase {
 		this.grapplingCD = 20;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.grapplingCD,	this.stopSpell.bind(this));
 		this.grappling = false;
-		this.grapplingSpeed = 300/100;
+		this.grapplingSpeed = 400/100;
 		this.grapplingDirection = "";
 	}
 
@@ -360,7 +401,7 @@ export class GhostBase extends Character {
 		super(x, y, direction, pacmanGame);
 		this.speed = pacmanGame.gSpeed;
 		this.cooldownDisplay = document.getElementById('gCD');
-		this.cooldownDisplay.innerHTML = "ready";
+		updateTextForElem(this.cooldownDisplay, "ready");
 		this.spawnX = this.x;
 		this.spawnY = this.y;
 		this.disabled = false;
@@ -474,12 +515,15 @@ export class BlueGhost extends GhostBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "ghost block";
 		this.ghostBlockCooldown = 5;
+		this.speedDuration = 10;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.ghostBlockCooldown, this.stopSpell.bind(this));
+		this.speedTimer = new CooldownTimer(null, this, this.speedDuration, this.speedDuration, this.stopSpeed.bind(this));
 		this.gBlockX;
 		this.gBlockY;
 		this.lastX = this.x;
 		this.lastY = this.y;
-		this.speed *= 110/100;
+		this.baseSpeed = this.speed;
+		this.speedBoost = this.speed * 115/100;
 		this.cellValue = "Nothing";
 	}
 
@@ -497,7 +541,13 @@ export class BlueGhost extends GhostBase {
 			this.gBlockY = this.lastX;
 			this.cellValue = this.pcG.cells[this.gBlockX][this.gBlockY].value;
 			this.pcG.cells[this.gBlockX][this.gBlockY].value = 9;
+			this.speed = this.speedBoost;
+			this.speedTimer.startCD();
 		}
+	}
+
+	stopSpeed() {
+		this.speed = this.baseSpeed;
 	}
 }
 
@@ -568,7 +618,7 @@ export class OrangeGhost extends GhostBase {
 export class PinkGhost extends GhostBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
-		this.spellName = "intangible";
+		this.spellName = "dematerialize";
 		this.intangibleDuration = 2;
 		this.intangibleCooldown = 25;
 		this.intangibleSpeed = 110/100;
@@ -675,7 +725,9 @@ export class GreenGhost extends GhostBase {
 		this.lastY = this.y;
 		this.frontBlockX = -1;
 		this.frontBlockY = -1;
-		this.breakWallDuration = 5;
+		this.ghostBlockX = -1;
+		this.ghostBlockY = -1;
+		this.breakWallDuration = 2;
 		this.breakWallTimer = new CooldownTimer(null, this, this.breakWallDuration, this.breakWallDuration, this.breakWall.bind(this));
 	}
 
@@ -720,7 +772,11 @@ export class GreenGhost extends GhostBase {
 
 	breakWall() {
 		if (this.pcG.cells[this.frontBlockY][this.frontBlockX].value === 1) {
-			this.pcG.cells[this.frontBlockY][this.frontBlockX].value = 0;
+			this.pcG.cells[this.frontBlockY][this.frontBlockX].value = 9;
+			if (this.ghostBlockX != -1 && this.ghostBlockY != -1)
+			this.pcG.cells[this.ghostBlockY][this.ghostBlockX].value = 1;
+			this.ghostBlockX = this.frontBlockX;
+			this.ghostBlockY = this.frontBlockY;
 		}
 	}
 }

@@ -1,5 +1,6 @@
 import { Ball, Pad, Tournament, Timer }  from "./objects.js";
 import { BASE_URL } from '../../index.js';
+import { updateTextForElem } from "../../utils/languages.js";
 
 export let eventListeners = { }
 
@@ -22,6 +23,7 @@ export class PongGame {
 		this.modalColorBox2 = document.getElementById('colorBox2');
 		this.colorBoxLeft = document.getElementById('colorBoxLeft');
 		this.colorBoxRight = document.getElementById('colorBoxRight');
+		this.matchEndLabel = document.getElementById('matchEndLabel');
 
 		this.leftScore = document.getElementById("leftScore");
 		this.rightScore = document.getElementById("rightScore");
@@ -71,7 +73,7 @@ export class PongGame {
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
-		this.objectiveLabel.innerHTML = "points to win: " + this.objective;
+		this.objectiveLabel.innerHTML = this.objective;
 
 		this.boundPongHandleKeyDown = this.handleKeyDown.bind(this);
 		this.boundPongHandleKeyUp = this.handleKeyUp.bind(this);
@@ -226,8 +228,9 @@ export class PongGame {
 	}
 
 	endTournament(side) {
-		this.endgameModalWinner.textContent = this.usernames[this.currentMatch[side]] + " won the tournament";
-		this.endgameModalScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		updateTextForElem(this.matchEndLabel, "won-the-tournament");
+		this.endgameModalWinner.textContent = this.usernames[this.currentMatch[side]];
+		this.endgameModalScore.textContent = this.leftPad.score + "-" + this.rightPad.score;
 		this.endgameModalTime.innerHTML = this.timer.getTime();
 
 		this.endgameModal.show();
@@ -239,8 +242,9 @@ export class PongGame {
 
 		this.sendMatchData(winner);
 
-		this.endgameModalWinner.textContent = winner + " won the game";
-		this.endgameModalScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		updateTextForElem(this.matchEndLabel, "won-the-game");
+		this.endgameModalWinner.textContent = winner;
+		this.endgameModalScore.textContent = this.leftPad.score + "-" + this.rightPad.score;
 		this.endgameModalTime.innerHTML = this.timer.getTime();
 
 		this.endgameModal.show();

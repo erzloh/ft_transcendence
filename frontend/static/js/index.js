@@ -1,7 +1,9 @@
+//
 // ------------------------------- IMPORT VIEWS -------------------------------
 // A view is a class containing the HTML and JS of a page
 import Home from "./views/Home.js";
 import Pong from "./views/Pong.js";
+import Pong3d from "./views/Pong3d.js";
 import PongMenu from "./views/PongMenu.js";
 import Settings from "./views/Settings.js";
 import Pacman from "./views/Pacman.js";
@@ -18,7 +20,7 @@ import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
-import { animateLetters, moveNoise } from './visual/effects.js'
+import { animateLetters, moveNoise, initLoadTransition, loadTransition } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { setLanguage, updateTexts } from "./utils/languages.js";
@@ -35,6 +37,10 @@ export const ids = {};
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call the router function
 document.addEventListener("DOMContentLoaded", async () => {
+	// Initializations
+	initLoadTransition();
+
+	// Load the view
 	await router();
 });
 
@@ -43,6 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 const routes = [
 	{ path: "/", view: Home },
 	{ path: "/pong", view: Pong },
+	{ path: "/pong3d", view: Pong3d },
 	{ path: "/pongMenu", view: PongMenu },
 	{ path: "/pacman", view: Pacman },
 	{ path: "/pacmanMenu", view: PacmanMenu },
@@ -62,6 +69,7 @@ let view = null;
 
 // Loads the view (HTML and JS) in the div with id "app" according to the current path
 const router = async () => {
+
 	// Test if the current path is in the routes array
 	let match = routes.find(route => route.path === location.pathname);
 	

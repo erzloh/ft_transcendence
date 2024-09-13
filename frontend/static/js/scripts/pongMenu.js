@@ -1,4 +1,6 @@
 import { BASE_URL } from "../index.js";
+import { updateTexts } from "../utils/languages.js";
+import { updateTextForElem } from "../utils/languages.js";
 
 export let eventListeners = { }
 
@@ -29,7 +31,7 @@ export class PongMenu {
 
 		const colorsString = localStorage.getItem('pongColors');
 		this.colors = colorsString ? JSON.parse(colorsString) : {
-			p1: "#ff0000", p2: "#00ff00", p3: "#266fff", p4: "#ff00ff"
+			p1: "#b3ecff", p2: "#e09eff", p3: "#266fff", p4: "#ff00ff"
 		};
 		localStorage.setItem('pongColors', JSON.stringify(this.colors));
 
@@ -101,22 +103,22 @@ export class PongMenu {
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h3 text-white text-center">left paddle</p>
-							<p class="h5 text-white text-center" id="leftPaddleName">player 1</p>
-							<input type="text" id="leftPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<p class="h5 text-white text-center" data-translate="left paddle"></p>
+							<p class="h3 text-white text-center" id="leftPaddleName">player 1</p>
+							<input type="text" id="leftPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-3" placeholder="Enter username" data-translate="enter-username">
 						</div>
 						<div class="col-6 d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
+							<input type="color" id="leftPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#b3ecff">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h3 text-white text-center">right paddle</p>
-							<p class="h5 text-white text-center" id="rightPaddleName">player 2</p>
-							<input type="text" id="rightPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<p class="h5 text-white text-center" data-translate="right paddle"></p>
+							<p class="h3 text-white text-center" id="rightPaddleName">player 2</p>
+							<input type="text" id="rightPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-3" placeholder="Enter username" data-translate="enter-username">
 						</div>
 						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 glass" value="#00ff00">
+							<input type="color" id="rightPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#e09eff">
 						</div>
 					</div>
 				`;
@@ -143,14 +145,14 @@ export class PongMenu {
 				break;
 			case "AI":
 				this.playersContainer.innerHTML = `
-					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
+					<div class="col d-flex flex-column align-items-center glass mt-2 p-4 player-box">
 						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h3 text-white text-center">left paddle</p>
-							<p class="h5 text-white text-center" id="playerPaddleName">player 1</p>
-							<input type="text" id="playerPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">	
+							<p class="h5 text-white text-center" data-translate="left paddle"></p>
+							<p class="h3 text-white text-center" id="playerPaddleName">player 1</p>
+							<input type="text" id="playerPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-2" placeholder="Enter username"  data-translate="enter-username">	
 						</div>
 						<div class="col-6  d-flex flex-column align-items-center mt-1 mb-2">
-							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 glass" value="#ff0000">
+							<input type="color" id="playerPaddleColor" class="form-control form-control-sm mt-3 color-picker" value="#b3ecff">
 						</div>
 					</div>
 				`;
@@ -171,37 +173,37 @@ export class PongMenu {
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-1">
 							<p class="h4 text-white text-center mb-3" id="player1Name">player 1</p>
-							<input type="text" id="player1Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<input type="text" id="player1Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username" data-translate="enter-username">
 						</div>
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-1">
-							<input type="color" id="player1Color" class="form-control form-control-sm mt-3 glass" value="#ff0000">
+							<input type="color" id="player1Color" class="form-control form-control-sm mt-3 color-picker" value="#ff0000">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-1">
 							<p class="h4 text-white text-center mb-3" id="player2Name">player 2</p>
-							<input type="text" id="player2Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<input type="text" id="player2Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username" data-translate="enter-username">
 						</div>
 						<div class="col-8  d-flex flex-column align-items-center mt-1 mb-1">
-							<input type="color" id="player2Color" class="form-control form-control-sm mt-3 glass" value="#00ff00">
+							<input type="color" id="player2Color" class="form-control form-control-sm mt-3 color-picker" value="#00ff00">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-1">
 							<p class="h4 text-white text-center mb-3" id="player3Name">player 3</p>
-							<input type="text" id="player3Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<input type="text" id="player3Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username" data-translate="enter-username">
 						</div>
 						<div class="col-8  d-flex flex-column align-items-center mt-1 mb-1">
-							<input type="color" id="player3Color" class="form-control form-control-sm mt-3 glass" value="#0000ff">
+							<input type="color" id="player3Color" class="form-control form-control-sm mt-3 color-picker" value="#0000ff">
 						</div>
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-1">
 							<p class="h4 text-white text-center mb-3" id="player4Name">...</p>
-							<input type="text" id="player4Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username">
+							<input type="text" id="player4Input" maxlength="10" class="form-control form-control-sm text-input text-center" placeholder="Enter username" data-translate="enter-username">
 						</div>
 						<div class="col-8 d-flex flex-column align-items-center mt-1 mb-1">
-							<input type="color" id="player4Color" class="form-control form-control-sm mt-3 glass" value="#ff00ff">
+							<input type="color" id="player4Color" class="form-control form-control-sm mt-3 color-picker" value="#ff00ff">
 						</div>
 					</div>
 				`;
@@ -253,6 +255,7 @@ export class PongMenu {
 			default:
 				break;
 		}
+		updateTexts();
 	}
 
 	paddleInputHandle(event, playerInput, playerLabel, playerName, playerUsername) {
@@ -288,38 +291,42 @@ export class PongMenu {
 	setScoreRange() {
 		this.pointsRangeContainer.innerHTML = `
 			<div class="col-6 flex-column align-items-center d-flex mb-2">
-				<p for="pongRangeInput" class="text-white h5 text-center" id="rangeLabel">points to win: 3</p>
-				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range" min="1" max="10" value="${this.objective}" step="1" id="pongRangeInput">
+				<div class="col-12 d-flex align-items-center justify-content-center">
+					<p class="h5 text-white text-center" style="margin-right: 10px;" data-translate="points-to-win"></p> <!-- Increased margin -->
+					<p for="pongRangeInput" class="text-white h5 text-center" id="rangeLabel"></p>
+				</div>
+				<input type="range" style=" width: 70%; margin: 0 auto;" class="form-range mt-2" min="1" max="10" value="${this.objective}" step="1" id="pongRangeInput">
 			</div>
 		`;
 
 		let rangeInput = document.getElementById('pongRangeInput');
 		let rangeLabel = document.getElementById('rangeLabel');
 
-		rangeLabel.innerHTML = "points to win: " + this.objective;
+		rangeLabel.innerHTML = this.objective;
 		localStorage.setItem('pongObjective', JSON.stringify(this.objective));
 
 		rangeInput.addEventListener('input', (event) => {
 			this.objective = event.target.value;
-			rangeLabel.textContent = "points to win: " + this.objective;
+			rangeLabel.textContent = this.objective;
 			localStorage.setItem('pongObjective', JSON.stringify(this.objective));
 		});
+		updateTexts();
 	}
 
 	showKeysConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="modal-header">
-				<h2 class="modal-title text-white w-100 text-center">keybinds settings</h2>
+				<h2 class="modal-title text-white w-100 text-center" data-translate="keybinds-settings"></h2>
 			</div>
 			<div class="modal-body">
 				<div class="col-12 d-flex justify-content-center">
 					<div class="col-6">
 						<div class="row justify-content-center text-center mt-2">
-							<p class="h2 text-white">left paddle</p>
+							<p class="h2 text-white" data-translate="left paddle"></p>
 						</div>
 						<div class="row justify-content-center text-center mt-1">
 							<div class="col-6 d-flex justify-content-end align-content-center">
-								<p class="text-white" style="display: inline; margin-top: 5px;">move up</p>
+								<p class="text-white" style="display: inline; margin-top: 5px;" data-translate="move-up"></p>
 							</div>
 							<div class="col-6 d-flex justify-content-start align-content-center">
 								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lUp">${this.keybinds.lUp !== "" ? this.keybinds.lUp : "none"}</p>
@@ -327,7 +334,7 @@ export class PongMenu {
 						</div>
 						<div class="row justify-content-center text-center">
 							<div class="col-6 d-flex justify-content-end">
-								<p class="text-white" style="display: inline; margin-top: 5px;">move down</p>
+								<p class="text-white" style="display: inline; margin-top: 5px;" data-translate="move-down"></p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
 								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lDown">${this.keybinds.lDown !== "" ? this.keybinds.lDown : "none"}</p>
@@ -335,7 +342,7 @@ export class PongMenu {
 						</div>
 						<div class="row justify-content-center text-center">
 							<div class="col-6 d-flex justify-content-end">
-								<p class="text-white" style="display: inline; margin-top: 5px;">minimize</p>
+								<p class="text-white" style="display: inline; margin-top: 5px;" data-translate="minimize"></p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
 								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="lMini">${this.keybinds.lMini !== "" ? this.keybinds.lMini : "none"}</p>
@@ -344,11 +351,11 @@ export class PongMenu {
 					</div>
 					<div class="col-6">
 						<div class="row justify-content-center text-center mt-2">
-							<p class="h2 text-white">right paddle</p>
+							<p class="h2 text-white" data-translate="right paddle"></p>
 						</div>
 						<div class="row justify-content-center text-center mt-1">
 							<div class="col-6 d-flex justify-content-end">
-								<p class="text-white" style="display: inline; margin-top: 5px;">move up</p>
+								<p class="text-white" style="display: inline; margin-top: 5px;" data-translate="move-up"></p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
 								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rUp">${this.keybinds.rUp !== "" ? this.keybinds.rUp : "none"}</p>
@@ -356,7 +363,7 @@ export class PongMenu {
 						</div>
 						<div class="row justify-content-center text-center">
 							<div class="col-6 d-flex justify-content-end">
-								<p class="text-white" style="display: inline; margin-top: 5px;">move down</p>
+								<p class="text-white" style="display: inline; margin-top: 5px;" data-translate="move-down"></p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
 								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rDown">${this.keybinds.rDown !== "" ? this.keybinds.rDown : "none"}</p>
@@ -364,7 +371,7 @@ export class PongMenu {
 						</div>
 						<div class="row justify-content-center text-center">
 							<div class="col-6 d-flex justify-content-end">
-								<p class="text-white" style="display: inline; margin-top: 5px;">minimize</p>
+								<p class="text-white" style="display: inline; margin-top: 5px;" data-translate="minimize"></p>
 							</div>
 							<div class="col-6 d-flex justify-content-start">
 								<p role="button" tabindex="0" class="text-white clickable" style="display: inline; max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" id="rMini">${this.keybinds.rMini !== "" ? this.keybinds.rMini : "none"}</p>
@@ -402,28 +409,29 @@ export class PongMenu {
 		addEventListeners(btnRMini, "rMini");
 
 		this.settingsModal.show();
+		updateTexts();
 	}
 
 	showGamemodeConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="modal-header">
-				<h2 class="modal-title text-white w-100 text-center">gamemodes</h2>
+				<h2 class="modal-title text-white w-100 text-center" data-translate="gamemode"></h2>
 			</div>
 			<div class="modal-body">
 				<div class="row justify-content-center">
 					<div class="col-4 d-flex justify-content-center">
-						<button role="button" class="btn btn-lg text-white btn-filled" id="btnPvp">pvp</button>
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnPvp" data-translate="pvp"></button>
 					</div>
 					<div class="col-4 d-flex justify-content-center">
-						<button role="button" class="btn btn-lg text-white btn-filled" id="btnAI">vs ai</button>
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnAI" data-translate="vs ai"></button>
 					</div>
 					<div class="col-4 d-flex justify-content-center">
-						<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament">tournament</button>
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnTournament" data-translate="tournament"></button>
 					</div>
 					<div class="col-12 d-flex justify-content-center mt-3">
 						<div class="col-8 justify-content-center d-flex flex-column">
 							<p class="text-white text-center lh-sm mt-3" style="min-height: 3em; line-height: 1;" id="gamemodeDescription"></p>
-							<p class="h5 fw-boldtext-white text-center " id="disclaimer"></p>
+							<p class="h5 fw-bold text-white text-center " id="disclaimer"></p>
 							<div id="aiLevelsContainer"></div>
 						</div>
 					</div>
@@ -444,17 +452,17 @@ export class PongMenu {
 		
 		switch (this.gamemode) {
 			case "pvp":
-				pDescription.innerHTML = "Two players play against each other, one playing the left paddle, the other playing the right paddle.";
+				updateTextForElem(pDescription, "pvp-desc");
 				break;
 			case "AI":
-				pDescription.innerHTML = "The player controls the left paddle and competes against an AI opponent.";
+				updateTextForElem(pDescription, "AI-desc");
 				aiLevelsContainer.innerHTML = `
 					<div class="row justify-content-center">
 						<div class="col-6 d-flex justify-content-end">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnEasy">easy</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnEasy" data-translate="easy"></button>
 						</div>
 						<div class="col-6 d-flex justify-content-start">
-							<button role="button" class="btn btn-lg text-white btn-filled" id="btnHard">hard</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnHard" data-translate="hard"></button>
 						</div>
 					</div>
 				`;
@@ -470,10 +478,10 @@ export class PongMenu {
 				}
 
 				this.applySelectedSetting("pongAIDifficulty", difficulties);
-
+				updateTexts();
 				break;
 			case "tournament":
-				pDescription.innerHTML = "Multiple players compete against each other in a tournament.";
+				updateTextForElem(pDescription, "tournament-desc");
 				break;
 			default:
 				break; 
@@ -483,7 +491,7 @@ export class PongMenu {
 			btnAI.disabled = true;
 			btnTournament.disabled = true;
 			let disclaimer = document.getElementById('disclaimer');
-			disclaimer.innerHTML = "The only available gamemode for 3D game style is PvP.";
+			updateTextForElem(disclaimer, "3D-disclaimer");
 		}
 
 		localStorage.setItem('pongGamemode', JSON.stringify(this.gamemode));
@@ -496,23 +504,24 @@ export class PongMenu {
 			"tournament": document.getElementById('btnTournament')
 		}
 		this.applySelectedSetting("pongGamemode", gamemodes);
+		updateTexts();
 	}
 
 	showGamestyleConfig() {
 		this.settingsModalContent.innerHTML = `
 			<div class="modal-header">
-				<h2 class="modal-title text-white w-100 text-center">game styles</h2>
+				<h2 class="modal-title text-white w-100 text-center" data-translate="gamestyle"></h2>
 			</div>
 			<div class="modal-body">
 				<div class="row justify-content-cfenter">
 					<div class="col-4 d-flex justify-content-center">
-						<button role="button" class="btn btn-lg text-white btn-filled" id="btnLegacy">legacy</button>
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnLegacy" data-translate="legacy"></button>
 					</div>
 					<div class="col-4 d-flex justify-content-center">
-						<button role="button" class="btn btn-lg text-white btn-filled" id="btnEnhanced">enhanced</button>
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btnEnhanced" data-translate="enhanced"></button>
 					</div>
 					<div class="col-4 d-flex justify-content-center">
-						<button role="button" class="btn btn-lg text-white btn-filled" id="btn3D">3D</button>
+						<button role="button" class="btn btn-lg text-white btn-filled" id="btn3D" data-translate="3D"></button>
 					</div>
 					<div class="col-12 d-flex justify-content-center mb-2 mt-4">
 						<div class="col-10 justify-content-center d-flex flex-column" id="AIDifficulties">
@@ -536,16 +545,16 @@ export class PongMenu {
 
 		switch (this.gamestyle) {
 			case "legacy":
-				gamestyleDescription.innerHTML = "classic pong game.";
-				availableGamemodes.innerHTML = "available gamemodes: all";
+				updateTextForElem(gamestyleDescription, "legacy-desc");
+				updateTextForElem(availableGamemodes, "available-gamemodes-all");
 				break;
 			case "enhanced":
-				gamestyleDescription.innerHTML = "enhanced pong game with new physics and skills.";
-				availableGamemodes.innerHTML = "available gamemodes: all";
+				updateTextForElem(gamestyleDescription, "enhanced-desc");
+				updateTextForElem(availableGamemodes, "available-gamemodes-all");
 				break;
 			case "3D":
-				gamestyleDescription.innerHTML = "3D pong game with classic rules.";
-				availableGamemodes.innerHTML = "available gamemodes: PvP";
+				updateTextForElem(gamestyleDescription, "3D-desc");
+				updateTextForElem(availableGamemodes, "available-gamemodes-pvp");
 				break;
 			default:
 				break; 
@@ -562,6 +571,7 @@ export class PongMenu {
 			"3D": document.getElementById('btn3D')
 		}
 		this.applySelectedSetting("pongGamestyle", gamestyles);
+		updateTexts();
 	}
 
 	//#region EVENT LISTENERS HANDLERS
@@ -663,7 +673,7 @@ export class PongMenu {
 	// Add the "selected" class to to correct element based on the setting in the local storage
 	// settingType is for example "pacmanSkin", "ghostSkin", "gamemode", "mapName", "pacmanTheme"
 	// elementMapping is an object with the settings as keys and the elements as values
-	// for example { "pacman": btnPacmanSkin, "pacgirl": btnPacWomanSkin }
+	// for example { "pacman": btnPacmanSkin, "pac-woman": btnPacWomanSkin }
 	applySelectedSetting(settingType, elementMapping) {
 		const selectedSetting = localStorage.getItem(settingType)?.replace(/"/g, '');
 	

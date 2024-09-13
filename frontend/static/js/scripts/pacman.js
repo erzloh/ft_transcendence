@@ -1,6 +1,7 @@
 import { updateTexts } from "../utils/languages.js";
 import { Pacman, PacWoman, PacMIB, Pacventurer, BlueGhost, OrangeGhost, PinkGhost, GreenGhost} from "./pacman/characters.js";
 import { Cell, Timer} from "./pacman/objects.js";
+import { updateTextForElem } from "../utils/languages.js";
 import { BASE_URL } from '../index.js';
 
 let eventListeners = { }
@@ -47,6 +48,7 @@ class PacmanGame {
 		this.images = {
 			imgPacman1 : new Image(), imgPacman2 : new Image(), imgPacman3 : new Image(),
 			imgPacman1_frenzy : new Image(), imgPacman2_frenzy : new Image(), imgPacman3_frenzy : new Image(),
+			imgPacwoman1_turbo : new Image(), imgPacwoman2_turbo : new Image(), imgPacwoman3_turbo : new Image(),
 			imgGhost1 : new Image(), imgGhost2 : new Image(), imgGhost3 : new Image(), imgGhost4 : new Image(), imgGhostDisabled : new Image(),
 			imgGhost1_intangible : new Image(), imgGhost2_intangible : new Image(), imgGhost3_intangible : new Image(), imgGhost4_intangible : new Image(),
 			imgCherry : new Image(), imgBanana : new Image(), imgStrawberry : new Image(), imgStar : new Image(),
@@ -66,7 +68,7 @@ class PacmanGame {
 	}
 
 	Initialize() {
-		this.swapButton.addEventListener('click', () => this.swapUsernames());
+		this.swapButton.addEventListener('click', () => this.swapPlayers());
 		this.startButton.addEventListener("click", () => this.StartGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
 
@@ -120,39 +122,12 @@ class PacmanGame {
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};
 
-		switch (this.pacmanSkin) {
-			case "pacman":
-				pacmanSpellName.innerHTML = "frenzy";
-				break;
-			case "pacgirl":
-				pacmanSpellName.innerHTML = "speed boost";
-				break;
-			case "pacMIB":
-				pacmanSpellName.innerHTML = "stun";
-				break;
-			case "pacventurer":
-				pacmanSpellName.innerHTML = "exploration";
-				break;
-			default:
-				break;
-		}
-
-		switch (this.ghostSkin) {
-			case "blueGhost":
-				ghostSpellName.innerHTML = "ghost block";
-				break;
-			case "orangeGhost":
-				ghostSpellName.innerHTML = "excavate";
-				break;
-			case "pinkGhost":
-				ghostSpellName.innerHTML = "intangible";
-				break;
-			case "greenGhost":
-				ghostSpellName.innerHTML = "blockade";
-				break;
-			default:
-				break;
-		}
+		this.createCharacter("pacman", 0, 0);
+		this.createCharacter("ghost", 0, 0);
+		updateTextForElem(this.pacmanSpellName, this.pacman.spellName);
+		updateTextForElem(this.ghostSpellName, this.ghost.spellName);
+		// this.pacmanSpellName.innerHTML = this.pacman.spellName;
+		// this.ghostSpellName.innerHTML = this.ghost.spellName;
 
 		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
 		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
@@ -160,6 +135,9 @@ class PacmanGame {
 		this.images.imgPacman1_frenzy.src = 'static/assets/pacman/images/pacman1_frenzy.png';
 		this.images.imgPacman2_frenzy.src = 'static/assets/pacman/images/pacman2_frenzy.png';
 		this.images.imgPacman3_frenzy.src = 'static/assets/pacman/images/pacman3_frenzy.png';
+		this.images.imgPacwoman1_turbo.src = 'static/assets/pacman/images/pac-woman1-turbo.png';
+		this.images.imgPacwoman2_turbo.src = 'static/assets/pacman/images/pac-woman2-turbo.png';
+		this.images.imgPacwoman3_turbo.src = 'static/assets/pacman/images/pac-woman3-turbo.png';
 		this.images.imgGhost1.src = 'static/assets/pacman/images/' + this.ghostSkin + '1.png';
 		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
 		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
@@ -250,8 +228,8 @@ class PacmanGame {
 
 		this.sendPacmanData(winner);
 
-		this.endgameModalWinner.textContent = winner + " won the game !";
-		this.endgameModalScore.textContent = "Pacman's score: " + this.pacman.score;
+		this.endgameModalWinner.textContent = winner;
+		this.endgameModalScore.textContent = this.pacman.score;
 		this.endgameModalTime.textContent = this.timer.getTime();
 
 		// Show the modal
@@ -270,19 +248,7 @@ class PacmanGame {
 			}
 		}
 
-		let imgpac;
-		if (this.pacman.inFrenzy) {
-			imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1_frenzy : 
-						this.frame % 40 < 20 ? this.images.imgPacman2_frenzy :
-						this.frame % 40 < 30 ? this.images.imgPacman3_frenzy : this.images.imgPacman2_frenzy;
-		}
-		else {
-			imgpac =    this.frame % 40 < 10 ? this.images.imgPacman1 : 
-						this.frame % 40 < 20 ? this.images.imgPacman2 :
-						this.frame % 40 < 30 ? this.images.imgPacman3 : this.images.imgPacman2;
-		}
-
-		this.pacman.render(imgpac);
+		this.pacman.render();
 		this.ghost.render();
 
 		// Remove used objects from arrays
@@ -311,6 +277,7 @@ class PacmanGame {
 
 		// Get the map's JSON data
 		const mapData = await this.loadMap("static/assets/pacman/maps/" + this.mapName + ".json");
+		console.log(mapData);
 		const { tileSize: tmpTileSize, width: tmpWidth, height: tmpHeight, data: tmpData } = mapData;
 		this.tileSize = tmpTileSize;
 		this.width = tmpWidth;
@@ -369,7 +336,7 @@ class PacmanGame {
 				case "pacman":
 					this.pacman = new Pacman(x, y, "none", this);
 					break;
-				case "pacgirl":
+				case "pac-woman":
 					this.pacman = new PacWoman(x, y, "none", this);
 					break;
 				case "pacMIB":
@@ -447,11 +414,18 @@ class PacmanGame {
 		}
 	}
 
-	swapUsernames() {
+	swapPlayers() {
 		let tmpUsername = this.usernames.pacman;
 		this.usernames.pacman = this.usernames.ghost;
 		this.usernames.ghost = tmpUsername;
 		localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames));
+
+		this.oldKeys = this.keybinds;
+		this.keybinds = {
+			pUp : this.oldKeys.gUp, pLeft : this.oldKeys.gLeft, pDown : this.oldKeys.gDown, pRight : this.oldKeys.gRight, pSpell : this.oldKeys.gSpell,
+			gUp : this.oldKeys.pUp, gLeft : this.oldKeys.pLeft, gDown : this.oldKeys.pDown, gRight : this.oldKeys.pRight, gSpell : this.oldKeys.pSpell
+		}
+		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 
 		this.pacmanUsername.innerHTML = this.usernames.pacman;
 		this.ghostUsername.innerHTML = this.usernames.ghost;

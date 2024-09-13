@@ -27,6 +27,8 @@ $base-font-size: 16px;
 // $cursor-pointer: url('/static/assets/UI/icons/cursor_pointer.svg') 10 10, pointer;
 $cursor: url('/static/assets/UI/icons/cursor_big.svg') 15 15, auto;
 $cursor-pointer: url('/static/assets/UI/icons/cursor_pointer_big.svg') 15 15, pointer;
+$main-color: rgb(220, 250, 255);
+$main-color-darker: rgb(133, 169, 176);
 
 // Basic CSS Reset
 html, body {
@@ -46,6 +48,7 @@ button {
 
 .full-height {
 	height: 100vh;
+	
 }
 
 .big-text {
@@ -78,14 +81,34 @@ label {
 // $color-interactive: rgb(3, 30, 42);
 
 // Multicolor palette
-$color-bg1: rgb(0, 0, 0);
-$color-bg2: rgb(47, 0, 79);
-$color1: rgb(22, 75, 154);
-$color2: rgb(148, 49, 171);
-$color3: rgb(68, 149, 174);
-$color4: rgb(149, 34, 119);
-$color5: rgb(136, 140, 40);
-$color-interactive: rgb(7, 56, 201);
+// $color-bg1: rgb(0, 0, 0);
+// $color-bg2: rgb(19, 0, 31);
+// $color1: rgb(22, 75, 154);
+// $color2: rgb(148, 49, 171);
+// $color3: rgb(68, 149, 174);
+// $color4: rgb(149, 34, 119);
+// $color5: rgb(136, 140, 40);
+// $color-interactive: rgb(79, 0, 125);
+
+// new palette 1
+// $color-bg1: rgb(0, 0, 0);
+// $color-bg2: rgb(28, 0, 45);
+// $color1: rgb(49, 1, 117);
+// $color2: rgb(129, 11, 156);
+// $color3: rgb(111, 8, 61);
+// $color4: rgb(149, 34, 119);
+// $color5: rgb(14, 45, 72);
+// $color-interactive: rgb(106, 5, 52);
+
+// violet light blue palette
+$color-bg1: rgb(34, 23, 51);
+$color-bg2: rgb(34, 23, 51);
+$color1: rgb(101, 55, 125);
+$color2: rgb(138, 171, 203);
+$color3: rgb(70, 57, 120);
+$color4: rgb(57, 21, 79);
+$color5: rgb(67, 78, 146);
+$color-interactive: rgb(80, 56, 116);
 
 // Red color palette
 // $color-bg1: rgb(84, 0, 0);
@@ -232,6 +255,52 @@ $blending: hard-light;
 	min-height: 100%;
 }
 
+// ------------------------------- Load Transition -------------------------------
+// #transition-container {
+// 	position: relative;
+// }
+
+@keyframes transitionSlideUp {
+	0% {
+		transform: translateY(0);
+	}
+
+	100% {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+}
+
+@keyframes transitionSlideDown {
+	0% {
+		transform: translateY(0);
+	}
+
+	100% {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+}
+
+#upper-transition-rectangle {
+	position: absolute;
+	width: 100vw;
+	height: 50vh;
+	background-color: $color-bg1;
+	z-index: 1;
+	animation: transitionSlideUp 1s ease-in-out forwards;
+}
+
+#lower-transition-rectangle {
+	position: absolute;
+	top: 50vh;
+	width: 100vw;
+	height: 50vh;
+	background-color: $color-bg1;
+	z-index: 1;
+	animation: transitionSlideDown 1s ease-in-out forwards;
+}
+
 // ------------------------------- Custom Buttons -------------------------------
 .btn {
 	&:hover {
@@ -263,7 +332,7 @@ $blending: hard-light;
 .glass {
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
-	border-radius: 50px;
+	border-radius: 25px;
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	// box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 	animation: fadeIn 0.5s ease-out;
@@ -320,7 +389,8 @@ select {
 }
   
   .custom-checkbox:checked {
-	background-color: #d7c900;
+	// $main-color but darker
+	background-color: $main-color-darker;
 	border-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -469,13 +539,18 @@ select {
 	align-items: center;
 }
 
+.pacman-ingame-stat {
+	width: 500px !important;
+	padding: 0px;
+}
+
 .pacman-player-box-container {
 	display: flex;
 	gap: 17px;
 	width: 500px;
 }
 
-.pacman-player-box {
+.pacman-player-box, .pong-player-box {
 	flex: 1;
 	background-color: lightblue;
 	padding: 20px;
@@ -484,7 +559,7 @@ select {
 
 // EDIT PROFILE PAGE
 .container-edit {
-	max-width: rem(450px);
+	max-width: rem(400px);
 	max-height: 1000px !important;
 	overflow-y: auto;
 }
@@ -609,6 +684,58 @@ select {
 	// blur
 	background: rgba(255, 255, 255, 0.1);
 	backdrop-filter: blur(10px);
+}
+
+.player-box {
+	max-width: 400px;
+}
+
+.color-picker {
+	width: 100px;
+	height: 10px !important;
+	border-radius: 0;
+	background-color: transparent;
+	padding: 0;
+	opacity: 0.7;
+
+	::-webkit-color-swatch {
+		border: 1px solid rgba(255, 255, 255, 0.5);
+	}
+}
+
+#pongRangeInput {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 100%;
+	height: 8px;
+	background: transparent;
+	outline: none;
+	
+	// Custom thumb color
+	&::-webkit-slider-thumb {
+		background: $main-color;
+		cursor: $cursor-pointer;
+	}
+
+	// Custom track color
+	&::-webkit-slider-runnable-track {
+		background: rgba(255, 255, 255, 0.5);
+		cursor: $cursor;
+	}
+
+	// change cursor
+	cursor: $cursor-pointer;
+}
+
+.pong-interface-container {
+	width: 800px;
+}
+
+.pong-player-box-container {
+	display: flex;
+	gap: 17px;
+	width: 100%;
+	padding: 0px;
 }
 
 // Pong Statistics Page
@@ -743,7 +870,7 @@ select {
 
 // ------------------------------- Accessibility -------------------------------
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, .tabbable:focus-visible, label:focus-visible, img:focus-visible, .clickable:focus-visible {
-    outline: 3px solid #ffcc00 !important;
+    outline: 3px solid $main-color !important;
     outline-offset: 4px !important;
 }
 
