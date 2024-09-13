@@ -6,27 +6,34 @@ export default class Pong extends AbstractView {
     constructor() {
         super();
         this.setTitle("satori - pong");
+        this.pongThree;
     }
 
     async getHtml() {
         return (await fetch("/static/html/pong3d.html")).text();
     }
 
-	// async getJS() {
+    // async getJS() {
     //     const pongLogic = await (await fetch("static/js/scripts/pongLogic.js")).text();
     //     const AI = await (await fetch("static/js/scripts/network.js")).text();
     //     return pongLogic + AI;
-	// 	// return (await fetch("static/js/scripts/pongLogic.js")).text();
-	// }
+    //     // return (await fetch("static/js/scripts/pongLogic.js")).text();
+    // }
 
-	loadJS() {
-		pongThree();
-	}
+    loadJS() {
+        this.pongThree = new pongThree();
+        this.pongThree.initialize();
+    }
 
-	cleanUpEventListeners() {
-		// for (const [event, listener] of Object.entries(eventListeners)) {
-		// 	document.removeEventListener(event, listener);
-		// }
-	}
+    stopJS() {
+        console.log("stop");
+        this.pongThree.stopGameLoop();
+    }
+
+    cleanUpEventListeners() {
+        // for (const [event, listener] of Object.entries(eventListeners)) {
+        //     document.removeEventListener(event, listener);
+        // }
+    }
 
 }
