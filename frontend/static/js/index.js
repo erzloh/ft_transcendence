@@ -20,7 +20,7 @@ import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
-import { animateLetters, moveNoise, initLoadTransition, loadTransition } from './visual/effects.js'
+import { animateLetters, moveNoise, initLoadTransition, initCursorClickEffect } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { setLanguage, updateTexts } from "./utils/languages.js";

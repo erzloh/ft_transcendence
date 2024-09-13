@@ -12264,6 +12264,12 @@ select {
   border-color: rgba(255, 255, 255, 0.5);
 }
 
+.title {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
 .loading-icon {
   animation: spin 1s linear infinite;
 }
@@ -12695,4 +12701,25 @@ button:focus,
   background-color: inherit;
   border-color: inherit;
   box-shadow: none;
+}
+
+.spark {
+  position: fixed;
+  pointer-events: none;
+  width: 25px;
+  height: 25px;
+  background-image: url("/static/assets/UI/icons/asterix.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--randomX), var(--randomY)) rotate(720deg);
+  }
 }
