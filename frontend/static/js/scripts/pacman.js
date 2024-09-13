@@ -351,16 +351,16 @@ class PacmanGame {
 		} 
 		else if (type == "ghost") {
 			switch (this.ghostSkin) {
-				case "blueGhost":
+				case "blue-ghost":
 					this.ghost = new BlueGhost(x, y, "none", this);
 					break;
-				case "orangeGhost":
+				case "orange-ghost":
 					this.ghost = new OrangeGhost(x, y, "none", this);
 					break;
-				case "pinkGhost":
+				case "pink-ghost":
 					this.ghost = new PinkGhost(x, y, "none", this);
 					break;
-				case "greenGhost":
+				case "green-ghost":
 					this.ghost = new GreenGhost(x, y, "none", this);
 					break;
 				default:
