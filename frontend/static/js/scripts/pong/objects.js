@@ -291,6 +291,7 @@ export class Pad {
 		this.score = 0;
 		this.direction = "";
 		this.pG = pongGame;
+		this.isMinimized = false;
 		this.refresh_rate = 1000;
 		this.lastAIUpdate = Date.now();
 		this.predictedPosition = null;
@@ -301,10 +302,13 @@ export class Pad {
 		if (this.pG.timer.startMinimizeCD(this.placement)) {
 			if (this.placement == "left") {
 				this.pG.rightPad.height /= 2;
+				this.pG.rightPad.isMinimized = true;
+				console.log(this.pG.rightPad.isMinimized);
 				this.pG.rightPad.y += this.pG.rightPad.height / 2;
 			}				
 			else {
 				this.pG.leftPad.height /= 2;
+				this.pG.leftPad.isMinimized = true;
 				this.pG.leftPad.y += this.pG.leftPad.height / 2;
 			}
 		}	
@@ -314,10 +318,14 @@ export class Pad {
 		if (this.placement == "left") {
 			this.pG.rightPad.y -= this.pG.rightPad.height / 2;
 			this.pG.rightPad.height *= 2;
+			this.pG.rightPad.isMinimized = false;
+
 		}				
 		else {
 			this.pG.leftPad.y -= this.pG.leftPad.height / 2;
 			this.pG.leftPad.height *= 2;
+			this.pG.leftPad.isMinimized = false;
+
 		}
 	}
 
@@ -331,6 +339,7 @@ export class Pad {
 			}
 		}
 		else {
+			this.checkMinimize();
 		    // Ball just hit the paddle
 			if (this.ball && ((this.placement === "left" && this.ball.dx > 0) || 
 			(this.placement === "right" && this.ball.dx < 0))) {
@@ -343,6 +352,15 @@ export class Pad {
 		this.paddleEdgeCollision();
 	}
 	
+	checkMinimize() {
+		if (this.pG.timer.rightMinimizeCD == 0 && this.ball.dx < 0) {
+			if (Math.random() < 0.5) {
+            console.log("Activating minimize");
+            this.useMinimize();
+        	}
+		}
+	}
+
 	AiPredictPaddle() {
 		const currentTime = Date.now();
 		if (currentTime - this.lastAIUpdate >= this.refresh_rate) {
@@ -353,14 +371,18 @@ export class Pad {
 			}
 		}
 		if (this.predictedPosition && this.ball && this.ball.dx > 0) {
-			const paddleThird = this.height / 3;
 			let targetY;
-			if (this.ball.dy > 0) {
-				// Ball moving down, aim for top third
-				targetY = this.predictedPosition.y - paddleThird;
+			if (this.pG.rightPad.isMinimized) {
+				targetY = this.predictedPosition.y - (this.height / 2);
 			} else {
-				// Ball moving up, aim for bottom third
-				targetY = this.predictedPosition.y - (2 * paddleThird);
+				const paddleThird = this.height / 3;
+				if (this.ball.dy > 0) {
+					// Ball moving down, aim for top third
+					targetY = this.predictedPosition.y - paddleThird;
+				} else {
+					// Ball moving up, aim for bottom third
+					targetY = this.predictedPosition.y - (2 * paddleThird);
+				}
 			}
 			// Move paddle towards target
 			if (this.y < targetY - 1) {
@@ -369,6 +391,7 @@ export class Pad {
 				this.y -= this.dy;
 			}
 		}
+		
 	}
 
 	predictBallPosition() {
