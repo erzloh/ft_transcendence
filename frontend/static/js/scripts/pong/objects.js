@@ -293,7 +293,6 @@ export class Pad {
 		this.pG = pongGame;
     }
 
-
 	useMinimize() {
 		if (this.pG.timer.startMinimizeCD(this.placement)) {
 			if (this.placement == "left") {
