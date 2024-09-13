@@ -6,47 +6,76 @@ import { setupBallMovement } from './ballMove.js';
 import { setupLighting } from './setupLight.js';
 import { createTextGeometry } from './textGeometry.js';
 
-export async function pongThree() {
-    const canvasRef = document.getElementById('canvas');
-    const { scene, camera, renderer, controls, composer } = setupScene(canvasRef);
+export class pongThree {
+    constructor () {
+        this.stopBtn = document.getElementById("stopBtn");
+        this.canvasRef = document.getElementById('canvas');
+        this.controller = setupScene(this.canvasRef);
+        this.scoreLeftValue = 0;
+        this.scoreRightValue = 0;
+        this.objects;
+        this.scores;
+        this.gameStop = false;
+    }
 
-    setupLighting(scene);
+    initialize() {
+        this.stopBtn.addEventListener("click", this.stopGameLoop.bind(this));
+        this.loadThings();
+        setupLighting(this.controller.scene);
+    }
 
-    const { ball, paddleLeft, paddleRight } = await loadModels(scene);
-    const { scoreLeft, scoreRight, font } = await loadFonts(scene);
+    async loadThings() {
+        this.objects = await loadModels(this.controller.scene);
+        this.scores = await loadFonts(this.controller.scene);
 
+        this.movePaddles = setupPaddleControls(this.objects.paddleLeft, this.objects.paddleRight);
+        this.moveBall = setupBallMovement(this.objects.ball, this.objects.paddleLeft, this.objects.paddleRight, this.updateScore.bind(this));
 
-    let scoreLeftValue = 0;
-    let scoreRightValue = 0;
+        this.startGameLoop();
+    }
 
-    function updateScore(side) {
+    updateScore(side) {
         if (side === 'left') {
-            scoreLeftValue++;
-            updateTextGeometry(scoreLeft, scoreLeftValue);
+            this.scoreLeftValue++;
+            this.updateTextGeometry(this.scores.scoreLeft, this.scoreLeftValue);
         } else if (side === 'right') {
-            scoreRightValue++;
-            updateTextGeometry(scoreRight, scoreRightValue);
+            this.scoreRightValue++;
+            this.updateTextGeometry(this.scores.scoreRight, this.scoreRightValue);
         }
     }
 
-    function updateTextGeometry(scoreMesh, scoreValue) {
+    updateTextGeometry(scoreMesh, scoreValue) {
         if (scoreMesh.geometry) {
             scoreMesh.geometry.dispose(); // Dispose of old geometry
         }
-        scoreMesh.geometry = createTextGeometry(scoreValue, font);
+        scoreMesh.geometry = createTextGeometry(scoreValue, this.scores.font);
     }
 
-    const movePaddles = setupPaddleControls(paddleLeft, paddleRight);
-    const moveBall = setupBallMovement(ball, paddleLeft, paddleRight, updateScore);
-
-    function animate() {
-        requestAnimationFrame(animate);
-        movePaddles();
-        moveBall();
-        controls.update();
-		renderer.render(scene, camera);
-		composer.render();
+    startGameLoop() {
+        if (!this.interval) {
+            this.interval = setInterval(() => {
+                this.update();
+            }, 5);
+        }
+        this.animate();
     }
 
-    animate();
+    update() {
+        this.movePaddles();
+        this.moveBall();
+    }
+
+    animate() {
+        if (!this.gameStop)
+            requestAnimationFrame(this.animate.bind(this));
+       
+        // controls.update();
+        this.controller.renderer.render(this.controller.scene, this.controller.camera);
+        this.controller.composer.render();
+    }
+
+    stopGameLoop() {
+        this.gameStop = true;
+        console.log("log");
+    }
 }
