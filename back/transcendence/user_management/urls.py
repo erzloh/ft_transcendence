@@ -22,4 +22,6 @@ urlpatterns = [
 	re_path('record_PvPong_match', RecordPvPongMatch.as_view()),
 	re_path('AIpong_match_history', UserAIPongMatchHistory.as_view()),
 	re_path('PvPong_match_history', UserPvPongMatchHistory.as_view()),
+	re_path('record_tournament', RecordPongTournament.as_view()),
+	re_path('tournament_history', UserPongTournamentHistory.as_view()),
 ]

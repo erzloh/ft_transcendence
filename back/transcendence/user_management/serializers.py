@@ -89,10 +89,9 @@ class PvPongMatchSerializer(serializers.ModelSerializer):
 		fields = ['player_one', 'player_two', 'winner', 'match_score', 'match_duration', 'match_date', 'user']
 
 class PongTournamentSerializer(serializers.ModelSerializer):
-	matches = PvPongMatchSerializer(many=True, read_only=True)
 	class Meta:
 		model = PongTournament
-		fields = ['name', 'matches', 'ranking']
+		fields = ['date', 'player_one', 'player_two', 'player_three', 'player_four', 'winner', 'duration', 'user']
 
 class UserPongStatsSerializer(serializers.ModelSerializer):
 	total_pong_matches = serializers.IntegerField()

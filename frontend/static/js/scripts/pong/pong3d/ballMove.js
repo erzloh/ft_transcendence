@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 export function setupBallMovement(ball, paddleLeft, paddleRight, updateScore) {
-    const originalSpeed = new THREE.Vector3(0.15, 0, 0.15);
+    const originalSpeed = new THREE.Vector3(0.08, 0, 0.08);
     let ballSpeed = originalSpeed.clone();
 
     function collisionDetect(paddle, ball) {
