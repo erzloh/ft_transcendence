@@ -303,7 +303,6 @@ export class Pad {
 			if (this.placement == "left") {
 				this.pG.rightPad.height /= 2;
 				this.pG.rightPad.isMinimized = true;
-				console.log(this.pG.rightPad.isMinimized);
 				this.pG.rightPad.y += this.pG.rightPad.height / 2;
 			}				
 			else {
@@ -353,11 +352,10 @@ export class Pad {
 	}
 	
 	checkMinimize() {
-		if (this.pG.timer.rightMinimizeCD == 0 && this.ball.dx < 0) {
-			if (Math.random() < 0.5) {
-            console.log("Activating minimize");
+		// console.log(this.pG.cvs.width - this.ball.x);
+		const cvsPortion = this.pG.cvs.width / 5;
+		if (this.pG.timer.rightMinimizeCD == 0 && this.ball.dx < 0 && this.ball.x < cvsPortion) {
             this.useMinimize();
-        	}
 		}
 	}
 
