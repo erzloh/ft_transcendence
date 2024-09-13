@@ -289,6 +289,9 @@ export class Pad {
 		this.score = 0;
 		this.direction = "";
 		this.pG = pongGame;
+		this.refresh_rate = 1000;
+		this.lastAIUpdate = Date.now();
+		this.predictedPosition = null;
     }
 
 
@@ -316,7 +319,7 @@ export class Pad {
 		}
 	}
 
-	move() {		
+	move() {
 		if (!this.isAI) {
 			if (this.direction == "up" && this.y > 0) {
 				this.y -= this.dy;
@@ -326,12 +329,93 @@ export class Pad {
 			}
 		}
 		else {
-			if (this.y + this.height / 2 < this.ball.y) {
+		    // Ball just hit the paddle
+			if (this.ball && ((this.placement === "left" && this.ball.dx > 0) || 
+			(this.placement === "right" && this.ball.dx < 0))) {
+				this.goMid();
+			} else {
+				this.AiPredictPaddle();
+			}
+		}
+
+		this.paddleEdgeCollision();
+	}
+	
+	AiPredictPaddle() {
+		const currentTime = Date.now();
+		if (currentTime - this.lastAIUpdate >= this.refresh_rate) {
+			this.lastAIUpdate = currentTime;
+			if (this.ball && this.ball.dx > 0) {
+				this.predictedPosition = this.predictBallPosition();
+				console.log("Predicted Position:", this.predictedPosition);
+			}
+		}
+		if (this.predictedPosition && this.ball && this.ball.dx > 0) {
+			const paddleThird = this.height / 3;
+			let targetY;
+			if (this.ball.dy > 0) {
+				// Ball moving down, aim for top third
+				targetY = this.predictedPosition.y - paddleThird;
+			} else {
+				// Ball moving up, aim for bottom third
+				targetY = this.predictedPosition.y - (2 * paddleThird);
+			}
+			// Move paddle towards target
+			if (this.y < targetY - 1) {
 				this.y += this.dy;
-			} 
-			else {
+			} else if (this.y > targetY + 1) {
 				this.y -= this.dy;
 			}
 		}
 	}
+
+	predictBallPosition() {
+		if (!this.ball) {
+			return null;
+		}
+	
+		let futureX = this.ball.x;
+		let futureY = this.ball.y;
+		let velocityX = this.ball.dx;
+		let velocityY = this.ball.dy;
+	
+		const paddleX = this.x; // Use the paddle's fixed x-position
+	
+		while (futureX < paddleX) {
+			futureX += velocityX;
+			futureY += velocityY;
+	
+			if (futureY + this.ball.size / 2 >= 600 || futureY - this.ball.size / 2 <= 0) {
+				velocityY *= -1;
+			}
+		}
+	
+		return {y: futureY };
+	}
+	
+	paddleEdgeCollision() {
+		if (this.y < 0) {
+			this.y = 0;
+		} else if (this.y + this.height > this.maxY) {
+			this.y = this.maxY - this.height;
+		}
+	}
+
+	goMid() {
+		const middleY = (this.maxY - this.height) / 2;
+		const moveSpeed = this.dy; // Adjust this value to control the speed of repositioning
+	
+		if (Math.abs(this.y - middleY) > moveSpeed) {
+			if (this.y < middleY) {
+				this.y += moveSpeed;
+			} else {
+				this.y -= moveSpeed;
+			}
+		} else {
+			this.y = middleY;
+		}
+	}
+	
 }
+
+
