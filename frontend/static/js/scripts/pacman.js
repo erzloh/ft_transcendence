@@ -142,10 +142,10 @@ class PacmanGame {
 		this.images.imgGhost2.src = 'static/assets/pacman/images/' + this.ghostSkin + '2.png';
 		this.images.imgGhost3.src = 'static/assets/pacman/images/' + this.ghostSkin + '3.png';
 		this.images.imgGhost4.src = 'static/assets/pacman/images/' + this.ghostSkin + '4.png';
-		this.images.imgGhost1_intangible.src = 'static/assets/pacman/images/pinkGhost1_intangible.png';
-		this.images.imgGhost2_intangible.src = 'static/assets/pacman/images/pinkGhost2_intangible.png';
-		this.images.imgGhost3_intangible.src = 'static/assets/pacman/images/pinkGhost3_intangible.png';
-		this.images.imgGhost4_intangible.src = 'static/assets/pacman/images/pinkGhost4_intangible.png';
+		this.images.imgGhost1_intangible.src = 'static/assets/pacman/images/pink-ghost1_intangible.png';
+		this.images.imgGhost2_intangible.src = 'static/assets/pacman/images/pink-ghost2_intangible.png';
+		this.images.imgGhost3_intangible.src = 'static/assets/pacman/images/pink-ghost3_intangible.png';
+		this.images.imgGhost4_intangible.src = 'static/assets/pacman/images/pink-ghost4_intangible.png';
 		this.images.imgGhostDisabled.src = 'static/assets/pacman/images/ghostDisabled.png';
 		this.images.imgCherry.src = 'static/assets/pacman/images/cherry.png';
 		this.images.imgBanana.src = 'static/assets/pacman/images/banana.png';
@@ -351,16 +351,16 @@ class PacmanGame {
 		} 
 		else if (type == "ghost") {
 			switch (this.ghostSkin) {
-				case "blueGhost":
+				case "blue-ghost":
 					this.ghost = new BlueGhost(x, y, "none", this);
 					break;
-				case "orangeGhost":
+				case "orange-ghost":
 					this.ghost = new OrangeGhost(x, y, "none", this);
 					break;
-				case "pinkGhost":
+				case "pink-ghost":
 					this.ghost = new PinkGhost(x, y, "none", this);
 					break;
-				case "greenGhost":
+				case "green-ghost":
 					this.ghost = new GreenGhost(x, y, "none", this);
 					break;
 				default:
