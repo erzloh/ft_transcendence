@@ -86,10 +86,14 @@ class PvPongMatch(models.Model):
 		return f"{self.player_one} vs {self.player_two} - Winner: {self.winner}"
 
 class PongTournament(models.Model):
-	name = models.CharField(max_length=255)
-	matches = models.ManyToManyField(PvPongMatch)
-	ranking = models.TextField()
+	date = models.DateTimeField(auto_now_add=True)
+	player_one = models.CharField(max_length=255)
+	player_two = models.CharField(max_length=255)
+	player_three = models.CharField(max_length=255)
+	player_four = models.CharField(max_length=255)
+	winner = models.CharField(max_length=255)
 	duration = models.DurationField()
+	user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return self.name
