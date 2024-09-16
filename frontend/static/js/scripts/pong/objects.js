@@ -339,7 +339,6 @@ export class Pad {
 		}
 		else {
 			this.checkMinimize();
-		    // Ball just hit the paddle
 			if (this.ball && ((this.placement === "left" && this.ball.dx > 0) || 
 			(this.placement === "right" && this.ball.dx < 0))) {
 				this.goMid();
@@ -352,7 +351,6 @@ export class Pad {
 	}
 	
 	checkMinimize() {
-		// console.log(this.pG.cvs.width - this.ball.x);
 		const cvsPortion = this.pG.cvs.width / 5;
 		if (this.pG.timer.rightMinimizeCD == 0 && this.ball.dx < 0 && this.ball.x < cvsPortion) {
             this.useMinimize();
@@ -361,6 +359,7 @@ export class Pad {
 
 	AiPredictPaddle() {
 		const currentTime = Date.now();
+		// Checks the image once per second 
 		if (currentTime - this.lastAIUpdate >= this.refresh_rate) {
 			this.lastAIUpdate = currentTime;
 			if (this.ball && this.ball.dx > 0) {
@@ -424,6 +423,7 @@ export class Pad {
 		}
 	}
 
+	/// Return Paddle in the middle after hitting the ball
 	goMid() {
 		const middleY = (this.maxY - this.height) / 2;
 		const moveSpeed = this.dy; // Adjust this value to control the speed of repositioning
