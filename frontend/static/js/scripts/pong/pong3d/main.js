@@ -8,7 +8,6 @@ import { createTextGeometry } from './textGeometry.js';
 
 export class pongThree {
     constructor () {
-        this.stopBtn = document.getElementById("stopBtn");
         this.canvasRef = document.getElementById('canvas');
         this.controller = setupScene(this.canvasRef);
         this.scoreLeftValue = 0;
@@ -19,7 +18,6 @@ export class pongThree {
     }
 
     initialize() {
-        this.stopBtn.addEventListener("click", this.stopGameLoop.bind(this));
         this.loadThings();
         setupLighting(this.controller.scene);
     }
@@ -60,6 +58,11 @@ export class pongThree {
         this.animate();
     }
 
+    stopInterval() {
+        clearInterval(this.interval);
+		this.interval = null;
+    }
+
     update() {
         this.movePaddles();
         this.moveBall();
@@ -76,6 +79,7 @@ export class pongThree {
 
     stopGameLoop() {
         this.gameStop = true;
-        console.log("log");
+        // this.timer.stop();
+		this.stopInterval();
     }
 }
