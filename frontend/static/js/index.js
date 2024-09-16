@@ -61,7 +61,7 @@ const routes = [
 	{ path: "/edit-profile", view: EditProfile },
 	{ path: "/friends", view: Friends },
 	{ path: "/pong-statistics", view: PongStatistics },
-	{ path: "/pacman-statistics", viw: PacmanStatistics }
+	{ path: "/pacman-statistics", view: PacmanStatistics }
 ];
 
 // Store the current view
@@ -72,6 +72,7 @@ const router = async () => {
 
 	// Test if the current path is in the routes array
 	let match = routes.find(route => route.path === location.pathname);
+	console.log(match);
 	
 	// If the current path is not in the routes array, set the match to the NotFound view
     if (!match) {

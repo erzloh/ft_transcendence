@@ -12602,6 +12602,7 @@ label {
   border: 1px solid rgba(255, 255, 255, 0.5);
   overflow-y: auto;
   animation: fadeIn 0.5s ease-out;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
 
 .global-table-container {

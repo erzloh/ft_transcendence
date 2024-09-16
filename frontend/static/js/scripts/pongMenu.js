@@ -105,7 +105,6 @@ export class PongMenu {
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h5 text-white text-center" data-translate="left paddle"></p>
 							<p class="h3 text-white text-center" id="leftPaddleName">player 1</p>
 							<input type="text" id="leftPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-3" placeholder="Enter username" data-translate="enter-username">
 						</div>
@@ -115,7 +114,6 @@ export class PongMenu {
 					</div>
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4">
 						<div class="col-10 d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h5 text-white text-center" data-translate="right paddle"></p>
 							<p class="h3 text-white text-center" id="rightPaddleName">player 2</p>
 							<input type="text" id="rightPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-3" placeholder="Enter username" data-translate="enter-username">
 						</div>
@@ -149,7 +147,6 @@ export class PongMenu {
 				this.playersContainer.innerHTML = `
 					<div class="col d-flex flex-column align-items-center glass mt-2 p-4 player-box">
 						<div class="col-10  d-flex flex-column align-items-center mt-1 mb-2">
-							<p class="h5 text-white text-center" data-translate="left paddle"></p>
 							<p class="h3 text-white text-center" id="playerPaddleName">player 1</p>
 							<input type="text" id="playerPaddleInput" maxlength="10" class="form-control form-control-sm text-input text-center mt-2" placeholder="Enter username"  data-translate="enter-username">	
 						</div>

@@ -262,6 +262,7 @@ export function pongStatistics () {
 
 	// Select the pvp stats by default
 	pvpBtn.classList.add('selected');
+	pvpBtn.setAttribute('aria-presed', 'true');
 	// Fill the table with pvp stats by default
 	fillPvpTable();
 	// Fill the global stats table
@@ -271,8 +272,11 @@ export function pongStatistics () {
 	pvpBtn.addEventListener('click', () => {
 		// Remove the selected class from all buttons
 		pvpBtn.classList.add('selected');
+		pvpBtn.setAttribute('aria-presed', 'true');
 		aiBtn.classList.remove('selected');
+		aiBtn.setAttribute('aria-presed', 'false');
 		tournamentBtn.classList.remove('selected');
+		tournamentBtn.setAttribute('aria-presed', 'false');
 
 		// Fill the table with pvp stats
 		fillPvpTable();
@@ -281,8 +285,11 @@ export function pongStatistics () {
 	aiBtn.addEventListener('click', () => {
 		// Remove the selected class from all buttons
 		pvpBtn.classList.remove('selected');
+		pvpBtn.setAttribute('aria-presed', 'false');
 		aiBtn.classList.add('selected');
+		aiBtn.setAttribute('aria-presed', 'true');
 		tournamentBtn.classList.remove('selected');
+		tournamentBtn.setAttribute('aria-presed', 'false');
 
 		// Fill the table with ai stats
 		fillAiTable();
@@ -291,8 +298,11 @@ export function pongStatistics () {
 	tournamentBtn.addEventListener('click', () => {
 		// Remove the selected class from all buttons
 		pvpBtn.classList.remove('selected');
+		pvpBtn.setAttribute('aria-presed', 'false');
 		aiBtn.classList.remove('selected');
+		aiBtn.setAttribute('aria-presed', 'false');
 		tournamentBtn.classList.add('selected');
+		tournamentBtn.setAttribute('aria-presed', 'true');
 
 		// Fill the table with tournament stats
 		fillTournamentTable();
