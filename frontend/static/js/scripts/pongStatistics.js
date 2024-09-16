@@ -218,7 +218,7 @@ export function pongStatistics () {
 		// Get the tournament stats and add them to the table
 		const fillTournamentStats = async () => {
 			console.log('Fetching tournament stats');
-			const response = await fetch(`${BASE_URL}/api/TournamentPong_match_history/`);
+			const response = await fetch(`${BASE_URL}/api/tournament_history/`);
 			console.log(response);
 			if (response.status === 200) {
 				const stats = await response.json();

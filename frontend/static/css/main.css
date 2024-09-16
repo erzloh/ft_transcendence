@@ -12236,15 +12236,6 @@ label {
   max-width: 25rem;
 }
 
-select {
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  padding: 5px;
-  margin-left: 10px;
-}
-
 .custom-checkbox {
   -moz-appearance: none;
        appearance: none;
@@ -12262,6 +12253,16 @@ select {
 .custom-checkbox:checked {
   background-color: rgb(133, 169, 176);
   border-color: rgba(255, 255, 255, 0.5);
+}
+
+#languageSwitcher {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 5px;
+  margin-left: 10px;
+  width: 130px;
 }
 
 .title {
