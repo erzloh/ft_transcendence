@@ -366,15 +366,6 @@ $blending: hard-light;
 	max-width: rem(400px);
 }
 
-select {
-	border: 1px solid rgba(255, 255, 255, 0.5);
-	border-radius: 10px;
-	background: rgba(255, 255, 255, 0.1);
-	color: white;
-	padding: 5px;
-	margin-left: 10px;
-}
-
 .custom-checkbox {
 	appearance: none;
 	-webkit-appearance: none;
@@ -392,6 +383,32 @@ select {
 	// $main-color but darker
 	background-color: $main-color-darker;
 	border-color: rgba(255, 255, 255, 0.5);
+}
+
+#languageSwitcher {
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.1);
+	color: white;
+	padding: 5px;
+	margin-left: 10px;
+	width: 130px;
+}
+
+// HOME PAGE
+.title {
+	user-select: none;
+}
+
+.credits {
+	position: absolute;
+	// put it at the bottom center
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: 15px;
+	color: rgba(255, 255, 255, 0.5);
+	z-index: 1;
 }
 
 // SIGN IN PAGE
@@ -746,7 +763,7 @@ select {
 	border: 1px solid rgba(255, 255, 255, 0.5);
 	overflow-y: auto;
 	animation: fadeIn 0.5s ease-out;
-	
+	scrollbar-color: rgba(255,255,255, 0.5) transparent;
 }
 
 .global-table-container {
@@ -879,4 +896,26 @@ button:focus,
     background-color: inherit;
     border-color: inherit;
     box-shadow: none;
+}
+
+// ------------------------------- Cursor Click Effect -------------------------------
+.spark {
+    position: fixed;
+    pointer-events: none;
+    width: 25px;
+    height: 25px;
+	background-image: url('/static/assets/UI/icons/asterix.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+@keyframes animate {
+    0%{
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100%{
+        opacity: 0;
+        transform: translate(var(--randomX), var(--randomY)) rotate(720deg);
+    }
 }

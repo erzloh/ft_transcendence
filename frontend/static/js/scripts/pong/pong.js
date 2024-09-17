@@ -146,7 +146,7 @@ export class PongGame {
 	winMatch(side) {
 		this.stopGameLoop();
 		this.gameOver = true;
-		this.matchScore.innerHTML = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.matchScore.innerHTML = this.leftPad.score + "-" + this.rightPad.score;
 		this.tournament.setCurrentMatchWinner(side);
 		if (this.tournament.tournamentOver) {
 			this.endTournament(side);
@@ -380,6 +380,7 @@ export class PongGame {
 		this.leftPad.move();
 		this.rightPad.move();
 		this.ball.move();
+		console.log("log");
 	}
 
 	startGameLoop() {

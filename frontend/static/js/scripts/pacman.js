@@ -146,7 +146,7 @@ class PacmanGame {
 		this.images.imgGhost2_intangible.src = 'static/assets/pacman/images/pink-ghost2_intangible.png';
 		this.images.imgGhost3_intangible.src = 'static/assets/pacman/images/pink-ghost3_intangible.png';
 		this.images.imgGhost4_intangible.src = 'static/assets/pacman/images/pink-ghost4_intangible.png';
-		this.images.imgGhostDisabled.src = 'static/assets/pacman/images/ghostDisabled.png';
+		this.images.imgGhostDisabled.src = 'static/assets/pacman/images/ghost-disabled.png';
 		this.images.imgCherry.src = 'static/assets/pacman/images/cherry.png';
 		this.images.imgBanana.src = 'static/assets/pacman/images/banana.png';
 		this.images.imgStrawberry.src = 'static/assets/pacman/images/strawberry.png';

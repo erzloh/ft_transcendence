@@ -8,7 +8,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 export function setupScene(canvasRef) {
     const scene = new THREE.Scene();
     
-    const camera = new THREE.PerspectiveCamera(90, canvasRef.width / canvasRef.height, 0.1, 10000);
+    const camera = new THREE.PerspectiveCamera(60, canvasRef.width / canvasRef.height, 0.1, 10000);
     camera.position.set(0, 20, 15);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvasRef });

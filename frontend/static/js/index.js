@@ -20,7 +20,7 @@ import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
-import { animateLetters, moveNoise, initLoadTransition, loadTransition } from './visual/effects.js'
+import { animateLetters, moveNoise, initLoadTransition } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { setLanguage, updateTexts } from "./utils/languages.js";
@@ -72,6 +72,7 @@ const router = async () => {
 
 	// Test if the current path is in the routes array
 	let match = routes.find(route => route.path === location.pathname);
+	console.log(match);
 	
 	// If the current path is not in the routes array, set the match to the NotFound view
     if (!match) {

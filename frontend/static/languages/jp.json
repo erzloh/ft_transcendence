@@ -243,6 +243,13 @@
 	"tournament data": "トーナメント",
 	"no stats": "統計が見つかりません",
 
+	"pacman statistics": "パックマンの統計",
+	"db pacman": "パックマン",
+	"db pacman character": "キャラクター",
+	"db ghost": "ゴースト",
+	"db ghost character": "キャラクター",
+	"db map": "マップ",
+
 	"graphics": "グラフィックス",
 	"ultra": "ウルトラ",
 	"medium": "普通",
@@ -254,5 +261,6 @@
 
 	"404-message": "お探しのページが見つかりませんでした。",
 
-	"games-not-available-mobile": "ゲームはモバイルで利用できません。"
+	"games-not-available-mobile": "ゲームはモバイルで利用できません。",
+	"credits": "クレジット"
 }

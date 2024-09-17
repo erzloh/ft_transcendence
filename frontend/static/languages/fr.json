@@ -242,6 +242,13 @@
 	"tournament data": "tournoi",
 	"no stats": "aucune statistique",
 
+	"pacman statistics": "statistiques pac-man",
+	"db pacman": "pac-man",
+	"db pacman character": "personnage",
+	"db ghost": "fantôme",
+	"db ghost character": "personnage",
+	"db map": "carte",	
+
 	"graphics": "graphiques",
 	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",
 	"ultra": "ultra",
@@ -254,5 +261,6 @@
 
 	"404-message": "la page que vous recherchez est introuvable.",
 
-	"games-not-available-mobile": "les jeux ne sont pas disponibles sur mobile."
+	"games-not-available-mobile": "les jeux ne sont pas disponibles sur mobile.",
+	"credits": "crédits"
 }

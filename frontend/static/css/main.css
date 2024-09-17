@@ -12236,15 +12236,6 @@ label {
   max-width: 25rem;
 }
 
-select {
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  padding: 5px;
-  margin-left: 10px;
-}
-
 .custom-checkbox {
   -moz-appearance: none;
        appearance: none;
@@ -12262,6 +12253,32 @@ select {
 .custom-checkbox:checked {
   background-color: rgb(133, 169, 176);
   border-color: rgba(255, 255, 255, 0.5);
+}
+
+#languageSwitcher {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 5px;
+  margin-left: 10px;
+  width: 130px;
+}
+
+.title {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+
+.credits {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 1;
 }
 
 .loading-icon {
@@ -12585,6 +12602,7 @@ select {
   border: 1px solid rgba(255, 255, 255, 0.5);
   overflow-y: auto;
   animation: fadeIn 0.5s ease-out;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
 }
 
 .global-table-container {
@@ -12695,4 +12713,25 @@ button:focus,
   background-color: inherit;
   border-color: inherit;
   box-shadow: none;
+}
+
+.spark {
+  position: fixed;
+  pointer-events: none;
+  width: 25px;
+  height: 25px;
+  background-image: url("/static/assets/UI/icons/asterix.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--randomX), var(--randomY)) rotate(720deg);
+  }
 }
