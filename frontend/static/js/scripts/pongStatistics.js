@@ -239,12 +239,12 @@ export function pongStatistics () {
 				// Add the stats to the table
 				stats.map(stat => {
 					const tr = document.createElement('tr');
-					const columns = ['match_date', 'player_one', 'player_two', 'player_tree', 'player_four', 'winner', 'match_duration'];
+					const columns = ['date', 'player_one', 'player_two', 'player_three', 'player_four', 'winner', 'duration'];
 					columns.forEach(column => {
 						const td = document.createElement('td');
-						if (column === 'match_date') {
+						if (column === 'date') {
 							td.textContent = formatDate(stat[column]);
-						} else if (column === 'match_duration') {
+						} else if (column === 'duration') {
 							td.textContent = stat[column].substring(3);
 						} else {
 							td.textContent = stat[column];
