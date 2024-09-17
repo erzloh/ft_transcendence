@@ -21,7 +21,7 @@ Content-Type: application/json
 
 POST https://localhost/api/logout
 Content-Type: application/json
-Cookie: jwt=2122e1cf9af50899c5e0240c180cc1440c28e111
+Cookie: jwt=4b72f1dd2d468b957be551f9d192cdc08d3ff4c1
 
 {}
 
