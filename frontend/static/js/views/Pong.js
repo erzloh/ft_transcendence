@@ -1,5 +1,6 @@
 import AbstractView from "./AbstractView.js";
 import { PongGame, eventListeners }  from "../scripts/pong/pong.js";
+import { initCursorClickEffect } from "../visual/effects.js";
 
 export default class Pong extends AbstractView {
     constructor() {
@@ -14,6 +15,7 @@ export default class Pong extends AbstractView {
 
 	loadJS() {
 		this.pongGame = new PongGame();
+		initCursorClickEffect();
 	}
 
 	stopJS(){

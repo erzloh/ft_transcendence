@@ -63,4 +63,35 @@ export const loadTransition = () => {
 
 	lowerRect.style.display = "block";
 	lowerRect.style.top = "50%";
-  }
+}
+
+export const initCursorClickEffect = () => {
+	let body = document.querySelector('body');
+	let canvas = document.querySelector('canvas');
+	if (!canvas) return;
+	canvas.addEventListener('click', (event) => {
+		for (let i = 0; i < 50; i++){
+			let spark = document.createElement('div');
+			spark.className = 'spark';
+
+			spark.style.top = (event.clientY) + 'px';
+			spark.style.left = (event.clientX) + 'px';
+
+			let randomX = (Math.random() - 0.5) * window.innerWidth / 3;
+			let randomY = (Math.random() - 0.5) * window.innerHeight / 3;
+
+			spark.style.setProperty('--randomX', randomX + 'px');
+			spark.style.setProperty('--randomY', randomY + 'px');
+
+			// change animation duration as a varible
+			let duration = Math.random() * 1.5 + 0.5;
+			spark.style.animation = `animate ${duration}s ease-out forwards`;
+
+			body.appendChild(spark);
+
+			setTimeout(() => {
+				spark.remove();
+			}, 2000);
+		}
+	});
+}

@@ -133,7 +133,7 @@ export class PongGame {
 		this.stopGameLoop();
 		this.totalTime += (this.timer.min * 60) + this.timer.sec;
 		this.gameOver = true;
-		this.matchScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.matchScore.textContent = this.leftPad.score + "-" + this.rightPad.score;
 		this.tournament.setCurrentMatchWinner(side);
 		if (this.tournament.tournamentOver) {
 			this.endTournament(side);
