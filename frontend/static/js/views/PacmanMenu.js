@@ -13,7 +13,6 @@ export default class extends AbstractView {
 
 	loadJS() {
 		var pacmanMenu = new PacmanMenu();
-		pacmanMenu.Initialize();
 	}
 	
 	stopJS(){

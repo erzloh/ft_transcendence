@@ -38,8 +38,8 @@ export class Tournament {
 				default:
 					break;
 			}
-			this.matchTournament.innerHTML = this.matchId + 1;
-			this.playersTournament.innerHTML = this.usernames[this.currentMatch.left] + " VS " + this.usernames[this.currentMatch.right];
+			this.matchTournament.textContent = this.matchId + 1;
+			this.playersTournament.textContent = this.usernames[this.currentMatch.left] + " VS " + this.usernames[this.currentMatch.right];
 			this.tournamentModal.show();
 			return this.currentMatch;
 		}
@@ -62,9 +62,9 @@ export class Tournament {
 			}
 		}
 		if (!this.tournamentOver) {
-			this.matchIdModal.innerHTML = this.matchId + 1;
-			this.winner.innerHTML = this.usernames[this.currentMatch[side]];
-			this.timeElapsed.innerHTML = this.pG.timer.getTime();
+			this.matchIdModal.textContent = this.matchId + 1;
+			this.winner.textContent = this.usernames[this.currentMatch[side]];
+			this.timeElapsed.textContent = this.pG.timer.getTime();
 			this.tournamentMatchEndModal.show();
 
 			this.matchId++;
@@ -150,15 +150,15 @@ export class Timer {
 		this.updateDisplay();
 	}
 	updateDisplay() {
-		this.timer.innerHTML = this.getTime();
+		this.timer.textContent = this.getTime();
 
 		if (this.leftMinimizeCD > 0)
-			this.lMinimizeLabel.innerHTML = this.leftMinimizeCD.toString().padStart(2, '0');
+			this.lMinimizeLabel.textContent = this.leftMinimizeCD.toString().padStart(2, '0');
 		else
 			updateTextForElem(this.lMinimizeLabel, "ready");
 
 		if (this.rightMinimizeCD > 0)
-			this.rMinimizeLabel.innerHTML = this.rightMinimizeCD.toString().padStart(2, '0');
+			this.rMinimizeLabel.textContent = this.rightMinimizeCD.toString().padStart(2, '0');
 		else
 			updateTextForElem(this.rMinimizeLabel, "ready");
 	}
@@ -168,14 +168,14 @@ export class Timer {
 			if (this.leftMinimizeCD > 0)
 				return false;
 			this.leftMinimizeCD = this.minimizeCooldown;
-			this.lMinimizeLabel.innerHTML = this.leftMinimizeCD.toString().padStart(2, '0');
+			this.lMinimizeLabel.textContent = this.leftMinimizeCD.toString().padStart(2, '0');
 			return true;
 		}
 		else if (placement =="right") {
 			if (this.rightMinimizeCD > 0)
 				return false;
 			this.rightMinimizeCD = this.minimizeCooldown;
-			this.rMinimizeLabel.innerHTML = this.rightMinimizeCD.toString().padStart(2, '0');
+			this.rMinimizeLabel.textContent = this.rightMinimizeCD.toString().padStart(2, '0');
 			return true;
 		}
 		return false;

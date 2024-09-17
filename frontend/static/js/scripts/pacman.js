@@ -65,9 +65,7 @@ class PacmanGame {
 		this.gamePaused = false;
 
 		this.boundPacmanHandleKeyDown = this.pacmanHandleKeyDown.bind(this);
-	}
 
-	Initialize() {
 		this.swapButton.addEventListener('click', () => this.swapPlayers());
 		this.startButton.addEventListener("click", () => this.StartGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
@@ -77,8 +75,8 @@ class PacmanGame {
 			pacman: "Player1", ghost: "Player2"
 		};
 
-		this.pacmanUsername.innerHTML = this.usernames.pacman;
-		this.ghostUsername.innerHTML = this.usernames.ghost;
+		this.pacmanUsername.textContent = this.usernames.pacman;
+		this.ghostUsername.textContent = this.usernames.ghost;
 
 		const keybindsString = localStorage.getItem('pacmanKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
@@ -99,7 +97,7 @@ class PacmanGame {
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "objective";
 		switch (this.gamemode) {
 			case "objective":
-				this.pGamemode.innerHTML = this.objective;
+				this.pGamemode.textContent = this.objective;
 				break;
 			case "endless":
 				document.querySelectorAll('.total-score').forEach(elem => {
@@ -126,8 +124,6 @@ class PacmanGame {
 		this.createCharacter("ghost", 0, 0);
 		updateTextForElem(this.pacmanSpellName, this.pacman.spellName);
 		updateTextForElem(this.ghostSpellName, this.ghost.spellName);
-		// this.pacmanSpellName.innerHTML = this.pacman.spellName;
-		// this.ghostSpellName.innerHTML = this.ghost.spellName;
 
 		this.images.imgPacman1.src = 'static/assets/pacman/images/' + this.pacmanSkin + '1.png';
 		this.images.imgPacman2.src = 'static/assets/pacman/images/' + this.pacmanSkin + '2.png';
@@ -376,7 +372,7 @@ class PacmanGame {
 		}
 		if (event.code == "Escape")
 			this.pauseGame();
-		if (!this.gamePaused) {
+		if (!this.gamePaused && this.gameStart) {
 			switch (event.code) {
 				case this.keybinds.pUp:
 					this.pacman.setDirection("up");
@@ -427,8 +423,8 @@ class PacmanGame {
 		}
 		localStorage.setItem('pacmanKeybinds', JSON.stringify(this.keybinds));
 
-		this.pacmanUsername.innerHTML = this.usernames.pacman;
-		this.ghostUsername.innerHTML = this.usernames.ghost;
+		this.pacmanUsername.textContent = this.usernames.pacman;
+		this.ghostUsername.textContent = this.usernames.ghost;
 		this.resetGame();
 	}
 

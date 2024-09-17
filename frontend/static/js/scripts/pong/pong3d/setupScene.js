@@ -13,6 +13,7 @@ export function setupScene(canvasRef) {
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvasRef });
     renderer.setSize(canvasRef.width, canvasRef.height);
+	renderer.setClearColor(0x002e40, 0.01);
 
 	const renderScene = new RenderPass(scene, camera);
 	const composer = new EffectComposer(renderer)
@@ -21,7 +22,7 @@ export function setupScene(canvasRef) {
 	const bloomPass = new UnrealBloomPass(new THREE.Vector2(canvasRef), 0.2, 0.1, 0.9);
 	composer.addPass(bloomPass);
 
-	bloomPass.strength = 0.2;
+	bloomPass.strength = 0.15;
 	bloomPass.radius = 0.2;
 	bloomPass.threshold = 0.4;
 

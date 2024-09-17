@@ -15,7 +15,6 @@ export default class Pong extends AbstractView {
 
 	loadJS() {
 		this.pongGame = new PongGame();
-		this.pongGame.initialize();
 		initCursorClickEffect();
 	}
 

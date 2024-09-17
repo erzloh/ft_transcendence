@@ -70,10 +70,11 @@ export class PongMenu {
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
+
+		this.initialize();
 	}
 
-	async Initialize() {
-		// Add Event Listener to the Start Button
+	async initialize() {
 		this.keysButton.addEventListener("click", () => this.showKeysConfig());
 		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
 		this.gamestyleButton.addEventListener("click", () => this.showGamestyleConfig());
@@ -130,8 +131,8 @@ export class PongMenu {
 				const rightPaddleInput = document.getElementById('rightPaddleInput');
 				const rightPaddleColor = document.getElementById('rightPaddleColor');
 
-				leftPaddleUsernameLabel.innerHTML = this.usernames.p1;
-				rightPaddleUsernameLabel.innerHTML = this.usernames.p2;
+				leftPaddleUsernameLabel.textContent = this.usernames.p1;
+				rightPaddleUsernameLabel.textContent = this.usernames.p2;
 				leftPaddleColor.value = this.colors.p1;
 				rightPaddleColor.value = this.colors.p2;
 
@@ -160,7 +161,7 @@ export class PongMenu {
 				const playerPaddleInput = document.getElementById('playerPaddleInput');
 				const playerPaddleColor = document.getElementById('playerPaddleColor');
 
-				playerPaddleName.innerHTML = this.usernames.p1;
+				playerPaddleName.textContent = this.usernames.p1;
 				playerPaddleColor.value = this.colors.p1;
 
 				playerPaddleInput.addEventListener('keypress', (event) => this.paddleInputHandle(event, playerPaddleInput, playerPaddleName, "player", "p1"));
@@ -220,10 +221,10 @@ export class PongMenu {
 				const player4Input = document.getElementById('player4Input');
 				const player4Color = document.getElementById('player4Color');
 
-				player1Name.innerHTML = this.usernames.p1;
-				player2Name.innerHTML = this.usernames.p2;
-				player3Name.innerHTML = this.usernames.p3;
-				player4Name.innerHTML = this.usernames.p4;
+				player1Name.textContent = this.usernames.p1;
+				player2Name.textContent = this.usernames.p2;
+				player3Name.textContent = this.usernames.p3;
+				player4Name.textContent = this.usernames.p4;
 				player1Color.value = this.colors.p1;
 				player2Color.value = this.colors.p2;
 				player3Color.value = this.colors.p3;
@@ -231,7 +232,7 @@ export class PongMenu {
 
 				if (this.displayName != "") {
 					this.usernames.p1 = this.displayName;
-					player1Name.innerHTML = this.usernames.p1;
+					player1Name.textContent = this.usernames.p1;
 					localStorage.setItem('pongUsernames', JSON.stringify(this.usernames));
 					player1Input.style.opacity = 0;
 				}
@@ -261,9 +262,9 @@ export class PongMenu {
 		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && playerInput.value != "") {
 			this.usernames[playerUsername] = playerInput.value;
 			playerInput.value = ""; // Clear the input box
-			playerLabel.innerHTML =   this.usernames[playerUsername];
+			playerLabel.textContent =   this.usernames[playerUsername];
 
-			this.toastBody.innerHTML = playerName + " " + getText("paddle-username-changed");
+			this.toastBody.textContent = playerName + " " + getText("paddle-username-changed");
 			this.toastValue.textContent = this.usernames[playerUsername];
 			this.toastBootstrap.show();
 
@@ -303,7 +304,7 @@ export class PongMenu {
 		let rangeInput = document.getElementById('pongRangeInput');
 		let rangeLabel = document.getElementById('rangeLabel');
 
-		rangeLabel.innerHTML = this.objective;
+		rangeLabel.textContent = this.objective;
 		localStorage.setItem('pongObjective', JSON.stringify(this.objective));
 
 		rangeInput.addEventListener('input', (event) => {
@@ -623,7 +624,7 @@ export class PongMenu {
 	}
 
 	changeKeybind(event, key, btn) {
-		btn.innerHTML = "...";
+		btn.textContent = "...";
 		this.waitForKey = true;
 		this.waitingKey = key;
 	}
