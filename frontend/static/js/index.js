@@ -72,7 +72,6 @@ const router = async () => {
 
 	// Test if the current path is in the routes array
 	let match = routes.find(route => route.path === location.pathname);
-	console.log(match);
 	
 	// If the current path is not in the routes array, set the match to the NotFound view
     if (!match) {
