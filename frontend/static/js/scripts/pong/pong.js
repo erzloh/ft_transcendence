@@ -275,7 +275,7 @@ export class PongGame {
 					"player_three": this.usernames.p3,
 					"player_four": this.usernames.p4,
 					"winner": winner,
-					"match_duration": this.totalTime,
+					"duration": this.totalTime,
 					"user": localStorage.getItem('user_id')
 				};
 				response = await fetch(`${BASE_URL}/api/record_tournament/`, {
