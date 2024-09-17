@@ -19,7 +19,7 @@ class CustomPasswordValidator:
 			raise ValidationError('password-uppercase-error')
 		if not re.findall('[0-9]', password):
 			raise ValidationError('password-number-error')
-		if not re.findall('[!@#$%^&*(),.?":{}|<>]', password):
+		if not re.findall('[!@#$%^&*(),.?":{}|<>_+=\-/\\\\]', password):
 			raise ValidationError('password-special-error')
 
 	def get_help_text(self):
