@@ -27,10 +27,16 @@ export class PongGame {
 
 		this.leftScore = document.getElementById("leftScore");
 		this.rightScore = document.getElementById("rightScore");
+		this.leftPaddleName = document.getElementById('leftPaddleName');
+		this.rightPaddleName = document.getElementById('rightPaddleName');
 
 		this.pWidth = 12, this.pHeight = 80, this.bSize = 12, this.pSpeed = 1.6, this.bSpeed = 1;
 		this.gameStarted = false, this.gameOver = false;
 		this.paused = false;
+		this.totalTime = 0;
+		this.tournament;
+		this.currentMatch;
+
 
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
@@ -48,6 +54,12 @@ export class PongGame {
 			p1: "player1", p2: "player2", p3: "player3", p4: "player4"
 		};
 
+		this.leftPaddleName.textContent = this.usernames.p1;
+		if (this.gamemode != "AI")
+			this.rightPaddleName.textContent = this.usernames.p2;
+		else
+			this.rightPaddleName.textContent = "AI";
+
 		const colorsString = localStorage.getItem('pongColors');
 		this.colors = colorsString ? JSON.parse(colorsString) : {
 			p1: "#ff0000", p2: "#00ff00", p3: "#266fff", p4: "#ff00ff"
@@ -57,14 +69,6 @@ export class PongGame {
 		this.aiDifficulty = aiDifficultyString ? JSON.parse(aiDifficultyString) : "easy";
 		localStorage.setItem('pongAIDifficulty', JSON.stringify(this.aiDifficulty));
 
-		const leftPaddleName = document.getElementById('leftPaddleName');
-		const rightPaddleName = document.getElementById('rightPaddleName');
-		leftPaddleName.innerHTML = this.usernames.p1;
-		if (this.gamemode != "AI")
-			rightPaddleName.innerHTML = this.usernames.p2;
-		else
-			rightPaddleName.innerHTML = "AI";
-
 		const keybindsString = localStorage.getItem('pongKeybinds');
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			lUp : 'KeyW', lDown : 'KeyS', lMini: 'KeyE',
@@ -73,21 +77,16 @@ export class PongGame {
 
 		const objectiveString = localStorage.getItem('pongObjective');
 		this.objective = objectiveString ? JSON.parse(objectiveString) : 3;
-		this.objectiveLabel.innerHTML = this.objective;
+		this.objectiveLabel.textContent = this.objective;
 
 		this.boundPongHandleKeyDown = this.handleKeyDown.bind(this);
 		this.boundPongHandleKeyUp = this.handleKeyUp.bind(this);
 		
-		this.tournament;
-		this.currentMatch;
-
 		this.drawObjects = this.drawObjects.bind(this);
-	}
 
-	initialize() {
 		this.startButton.addEventListener("click", () => this.startGame());
 		this.endgameModalPlayAgain.addEventListener("click", () => this.resetGame());
-		this.tournamentModalNextMatch.addEventListener("click", () => this.nextMatch());
+		this.tournamentModalNextMatch.addEventListener("click", () => this.initTournamentMatch());
 		this.gameOver = false;
 
 		document.addEventListener("keydown", this.boundPongHandleKeyDown);
@@ -97,6 +96,16 @@ export class PongGame {
 		eventListeners["keyup"] = this.boundPongHandleKeyUp;
 
 		this.timer = new Timer(this);
+
+		if (this.gamemode == "tournament") {
+			this.setupTournament();
+		}
+		else {
+			this.setupGame();
+		}
+	}
+
+	setupGame() {
 		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
 			this.pWidth, this.pHeight, "left", this.colors.p1, this.pSpeed, this.cvs.height, 
 			false, this);
@@ -106,7 +115,6 @@ export class PongGame {
 			this.gamemode == "AI" ? true : false, this);
 
 		this.ball = new Ball(this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
-
 		this.colorBoxLeft.style.backgroundColor = this.colors.p1;
 		this.colorBoxRight.style.backgroundColor = this.colors.p2;
 
@@ -114,60 +122,32 @@ export class PongGame {
 			this.colorBoxRight.style.backgroundColor = "#FFF";
 			this.rightPad.ball = this.ball;
 		}
-		else if (this.gamemode == "tournament") {
-			this.tournament = new Tournament(4, this.usernames, this);
-			this.currentMatch = this.tournament.getCurrentPlayers();
-			leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
-			rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
-			this.leftPad.color = this.colors[this.currentMatch.left];
-			this.rightPad.color = this.colors[this.currentMatch.right];
-			this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
-			this.colorBoxLeft.style.backgroundColor = this.colors[this.currentMatch.left];
-			this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
-			this.colorBoxRight.style.backgroundColor = this.colors[this.currentMatch.right];
-		}
 	}
 
-	restartTournament() {
+	setupTournament() {
 		this.tournament = new Tournament(4, this.usernames, this);
-		this.currentMatch = this.tournament.getCurrentPlayers();
-		leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
-		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
-		this.leftPad.color = this.colors[this.currentMatch.left];
-		this.rightPad.color = this.colors[this.currentMatch.right];
-		this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
-		this.colorBoxLeft.style.backgroundColor = this.colors[this.currentMatch.left];
-		this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
-		this.colorBoxRight.style.backgroundColor = this.colors[this.currentMatch.right];
-
-		this.resetTournamentMatch();
+		this.initTournamentMatch();
 	}
 
 	winMatch(side) {
 		this.stopGameLoop();
+		this.totalTime += (this.timer.min * 60) + this.timer.sec;
 		this.gameOver = true;
-		this.matchScore.innerHTML = "score: " + this.leftPad.score + "-" + this.rightPad.score;
+		this.matchScore.textContent = "score: " + this.leftPad.score + "-" + this.rightPad.score;
 		this.tournament.setCurrentMatchWinner(side);
 		if (this.tournament.tournamentOver) {
 			this.endTournament(side);
 		}
 	}
 	
-	nextMatch() {
+	initTournamentMatch() {
 		this.currentMatch = this.tournament.getCurrentPlayers();
-		leftPaddleName.innerHTML = this.usernames[this.currentMatch.left];
-		rightPaddleName.innerHTML = this.usernames[this.currentMatch.right];
-		this.leftPad.color = this.colors[this.currentMatch.left];
-		this.rightPad.color = this.colors[this.currentMatch.right];
+		this.leftPaddleName.textContent = this.usernames[this.currentMatch.left];
+		this.rightPaddleName.textContent = this.usernames[this.currentMatch.right];
 		this.modalColorBox1.style.backgroundColor = this.colors[this.currentMatch.left];
 		this.colorBoxLeft.style.backgroundColor = this.colors[this.currentMatch.left];
 		this.modalColorBox2.style.backgroundColor = this.colors[this.currentMatch.right];
 		this.colorBoxRight.style.backgroundColor = this.colors[this.currentMatch.right];
-
-		this.resetTournamentMatch();
-	}
-
-	resetTournamentMatch() {
 		this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 		
 		this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
@@ -180,8 +160,8 @@ export class PongGame {
 		
 		this.ball = new Ball(this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
 
-		this.leftScore.innerHTML = "0";
-		this.rightScore.innerHTML = "0";
+		this.leftScore.textContent = "0";
+		this.rightScore.textContent = "0";
 		
 		this.gameStarted = false;
 		this.startButton.style.display = "block";
@@ -191,25 +171,16 @@ export class PongGame {
 
 	resetGame() {
 		if (this.gamemode == "tournament") {
-			this.restartTournament();
+			this.totalTime = 0;
+			this.setupTournament();
 		}
 		else {
 			this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height);
 		
-			this.leftPad = new Pad(0, this.cvs.height / 2 - this.pHeight / 2, 
-				this.pWidth, this.pHeight, "left", this.colors.p1, this.pSpeed, this.cvs.height, 
-				false, this);
+			this.setupGame();
 	
-			this.rightPad = new Pad(this.cvs.width - this.pWidth, this.cvs.height / 2 - this.pHeight / 2, 
-				this.pWidth, this.pHeight, "right", this.gamemode == "AI" ? "#FFF" : this.colors.p2, this.pSpeed, this.cvs.height,
-				this.gamemode == "AI" ? true : false, this);	
-			
-			this.ball = new Ball(this.bSize, "#FFF", this.bSpeed, this.cvs.height, this.cvs.width, this);
-			
-			this.rightPad.ball = this.ball;
-	
-			this.leftScore.innerHTML = "0";
-			this.rightScore.innerHTML = "0";
+			this.leftScore.textContent = "0";
+			this.rightScore.textContent = "0";
 			
 			this.gameStarted = false;
 			this.startButton.style.display = "block";
@@ -231,7 +202,9 @@ export class PongGame {
 		updateTextForElem(this.matchEndLabel, "won-the-tournament");
 		this.endgameModalWinner.textContent = this.usernames[this.currentMatch[side]];
 		this.endgameModalScore.textContent = this.leftPad.score + "-" + this.rightPad.score;
-		this.endgameModalTime.innerHTML = this.timer.getTime();
+		this.endgameModalTime.textContent = this.timer.getTime();
+
+		this.sendMatchData(this.usernames[this.currentMatch[side]]);
 
 		this.endgameModal.show();
 	}
@@ -245,7 +218,7 @@ export class PongGame {
 		updateTextForElem(this.matchEndLabel, "won-the-game");
 		this.endgameModalWinner.textContent = winner;
 		this.endgameModalScore.textContent = this.leftPad.score + "-" + this.rightPad.score;
-		this.endgameModalTime.innerHTML = this.timer.getTime();
+		this.endgameModalTime.textContent = this.timer.getTime();
 
 		this.endgameModal.show();
 	}
@@ -293,6 +266,26 @@ export class PongGame {
 					body: JSON.stringify(matchData)
 				})
 				break;
+			case "tournament":
+				console.log("tournament match saved");
+				matchData = {
+					"date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
+					"player_one": this.usernames.p1,
+					"player_two": this.usernames.p2,
+					"player_three": this.usernames.p3,
+					"player_four": this.usernames.p4,
+					"winner": winner,
+					"match_duration": this.totalTime,
+					"user": localStorage.getItem('user_id')
+				};
+				response = await fetch(`${BASE_URL}/api/record_tournament/`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(matchData)
+				})
+				break;
 			default:
 				break;
 		}
@@ -313,7 +306,6 @@ export class PongGame {
 				this.startGameLoop();
 			}
 			this.paused = !this.paused;
-
 		}	
 	}
 
@@ -336,7 +328,7 @@ export class PongGame {
 	scorePoint = (pad) => {
 		if (pad == "left") {
 			this.leftPad.score++;
-			this.leftScore.innerHTML = this.leftPad.score;
+			this.leftScore.textContent = this.leftPad.score;
 			if (this.leftPad.score >= this.objective) {
 				if (this.gamemode == "tournament")
 					this.winMatch(pad);
@@ -346,7 +338,7 @@ export class PongGame {
 		}
 		else if (pad == "right") {
 			this.rightPad.score++;
-			this.rightScore.innerHTML = this.rightPad.score;
+			this.rightScore.textContent = this.rightPad.score;
             if (this.rightPad.score >= this.objective) {
 				if (this.gamemode == "tournament")
 					this.winMatch(pad);
@@ -402,55 +394,59 @@ export class PongGame {
 		if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(event.code) > -1) {
 			event.preventDefault();
 		}
-		switch (event.code) {
-			case this.keybinds.lUp:
-				this.leftPad.direction = "up";
-				break;
-			case this.keybinds.lDown:
-				this.leftPad.direction = "down";
-				break;
-			case this.keybinds.lMini:
-				if (this.gamestyle == "enhanced")
-					this.leftPad.useMinimize();
-				break;
-			case this.keybinds.rUp:
-				this.rightPad.direction = "up";
-				break;
-			case this.keybinds.rDown:
-				this.rightPad.direction = "down";
-				break;
-			case this.keybinds.rMini:
-				if (this.gamestyle == "enhanced" && this.gamemode != "AI")
-					this.rightPad.useMinimize();
-				break;
-			case 'Escape':
-				this.pauseGame();			
-				break;
-			default:
-				break;
+		if (!this.paused && this.gameStarted) {
+			switch (event.code) {
+				case this.keybinds.lUp:
+					this.leftPad.direction = "up";
+					break;
+				case this.keybinds.lDown:
+					this.leftPad.direction = "down";
+					break;
+				case this.keybinds.lMini: 
+					if (this.gamestyle == "enhanced")
+						this.leftPad.useMinimize();
+					break;
+				case this.keybinds.rUp:
+					this.rightPad.direction = "up";
+					break;
+				case this.keybinds.rDown:
+					this.rightPad.direction = "down";
+					break;
+				case this.keybinds.rMini:
+					if (this.gamestyle == "enhanced" && this.gamemode != "AI")
+						this.rightPad.useMinimize();
+					break;
+				default:
+					break;
+			}
 		}
+		if (event.code == 'Escape') {
+			this.pauseGame();
+		}	
 	};
 
 	handleKeyUp = (event) => {
-		switch (event.code) {
-			case this.keybinds.lUp:
-				if (this.leftPad.direction == "up")
-					this.leftPad.direction = "";
-				break;
-			case this.keybinds.lDown:
-				if (this.leftPad.direction == "down")
-					this.leftPad.direction = "";
-				break;
-			case this.keybinds.rUp:
-				if (this.rightPad.direction == "up")
-					this.rightPad.direction = "";
-				break;
-			case this.keybinds.rDown:
-				if (this.rightPad.direction == "down")	
-					this.rightPad.direction = "";
-				break;
-			default:
-				break;
+		if (!this.paused && this.gameStarted) {
+			switch (event.code) {
+				case this.keybinds.lUp:
+					if (this.leftPad.direction == "up")
+						this.leftPad.direction = "";
+					break;
+				case this.keybinds.lDown:
+					if (this.leftPad.direction == "down")
+						this.leftPad.direction = "";
+					break;
+				case this.keybinds.rUp:
+					if (this.rightPad.direction == "up")
+						this.rightPad.direction = "";
+					break;
+				case this.keybinds.rDown:
+					if (this.rightPad.direction == "down")	
+						this.rightPad.direction = "";
+					break;
+				default:
+					break;
+			}
 		}
 	};
 

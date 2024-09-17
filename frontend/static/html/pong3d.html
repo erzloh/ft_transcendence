@@ -21,7 +21,7 @@
         <div class="row-12">
 			<div class="col-12 d-flex flex-column align-items-center mb-3" id="gameContainer">
 				<canvas class="glass" id="canvas" width="800" height="400"></canvas>
-				<!-- <button id="btnStart" class="btn btn-lg text-light btn-filled" data-translate="start game">start game</button> -->
+				<button id="btnStart" class="btn btn-lg text-light btn-filled" data-translate="start game"></button>
 			</div>
 		</div>
         <div class="row mb-3 text-white pong-player-box-container">
@@ -32,8 +32,11 @@
 				<p class="h3 mt-1" style="display: inline;" id="rightPaddleName">Player 2</p>
 			</div>
 		</div>
-
-
+		<div class="row justify-content-center mb-3">
+			<div class="col-12 text-center mt-5 d-flex justify-content-center">
+				<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/pongMenu" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
+			</div>
+		</div>
 
 		<div class="modal glass-modal-bg" id="pauseModal" data-bs-backdrop="static" tabindex="-1" aria-pledby="pauseModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg modal-dialog-centered">
@@ -83,16 +86,6 @@
 					</div>
 			  	</div>
 			</div>
-		</div>
-	</div>
-</div>
-<div class="container full-height d-flex flex-column align-items-center justify-content-center games-page-mobile" style="display: none;">
-	<div class="container p-5 glass">
-		<p class="text-white text-center p-0 m-0" data-translate="games-not-available-mobile">games are not available on mobile.</p>
-	</div>
-	<div class="row justify-content-center mb-3">
-		<div class="col-12 text-center mt-5 d-flex justify-content-center">
-			<a role="button" class="return-btn btn btn-lg text-light text-center d-flex align-items-center justify-content-center p-3" href="/" data-link><img src="static/assets/UI/icons/left_arrow.svg" alt="return button" id="left-arrow"></a>
 		</div>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 import AbstractView from "./AbstractView.js";
 //import { basePong }  from "../scripts/pong/basicPong.js";
-import { pongThree } from "../scripts/pong/pong3d/main.js";
+import { pongThree, eventListeners } from "../scripts/pong/pong3d/main.js";
 
 export default class Pong extends AbstractView {
     constructor() {
@@ -13,27 +13,18 @@ export default class Pong extends AbstractView {
         return (await fetch("/static/html/pong3d.html")).text();
     }
 
-    // async getJS() {
-    //     const pongLogic = await (await fetch("static/js/scripts/pongLogic.js")).text();
-    //     const AI = await (await fetch("static/js/scripts/network.js")).text();
-    //     return pongLogic + AI;
-    //     // return (await fetch("static/js/scripts/pongLogic.js")).text();
-    // }
-
     loadJS() {
         this.pongThree = new pongThree();
-        this.pongThree.initialize();
     }
 
     stopJS() {
-        console.log("stop");
         this.pongThree.stopGameLoop();
     }
 
     cleanUpEventListeners() {
-        // for (const [event, listener] of Object.entries(eventListeners)) {
-        //     document.removeEventListener(event, listener);
-        // }
+        for (const [event, listener] of Object.entries(eventListeners)) {
+            document.removeEventListener(event, listener);
+        }
     }
 
 }

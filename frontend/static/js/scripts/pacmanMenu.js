@@ -50,8 +50,8 @@ export class PacmanMenu {
 			pacman: "Player1", ghost: "Player2"
 		};
 
-		this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
-		this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
+		this.pacmanUsernameLabel.textContent = this.usernames.pacman;
+		this.ghostUsernameLabel.textContent = this.usernames.ghost;
 
 		const pacmanSkinString = localStorage.getItem('pacmanSkin');
 		this.pacmanSkin = pacmanSkinString ? JSON.parse(pacmanSkinString) : "pac-man";
@@ -96,13 +96,23 @@ export class PacmanMenu {
 
 		this.setPacmanSkinImage();
 		this.setGhostSkinImage();
+
+		this.keysButton.addEventListener("click", () => this.showKeysConfig());
+		this.pSkinButton.addEventListener("click", () => this.showPacmanSkinConfig());
+		this.gSkinButton.addEventListener("click", () => this.showGhostSkinConfig());
+		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
+		this.mapButton.addEventListener("click", () => this.showMapConfig());
+		this.colorButton.addEventListener("click", () => this.showColorSchemeConfig());
+
+		document.addEventListener("keydown", this.boundKeyDownSettings);
+		eventListeners["keydown"] = this.boundKeyDownSettings;
 	}
 
 	pacmanPlayerInputHandle(event) {
 		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && this.pacmanInput.value != "") {
 			this.usernames.pacman = this.pacmanInput.value;
 			this.pacmanInput.value = ""; // Clear the input box
-			this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
+			this.pacmanUsernameLabel.textContent = this.usernames.pacman;
 
 			updateTextForElem(this.toastBody, "pacman-username-changed");
 			this.toastValue.textContent = this.usernames.pacman;
@@ -116,7 +126,7 @@ export class PacmanMenu {
 		if (((event.type == 'keypress' && event.key === 'Enter') || event.type == 'blur') && this.ghostInput.value != "") {
 			this.usernames.ghost = this.ghostInput.value;
 			this.ghostInput.value = ""; // Clear the input box
-			this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
+			this.ghostUsernameLabel.textContent = this.usernames.ghost;
 
 			updateTextForElem(this.toastBody, "ghost-username-changed");
 			this.toastValue.textContent = this.usernames.ghost;
@@ -124,19 +134,6 @@ export class PacmanMenu {
 
 			localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames))
 		}
-	}
-
-	Initialize() {
-		// Add Event Listener to the Start Button
-		this.keysButton.addEventListener("click", () => this.showKeysConfig());
-		this.pSkinButton.addEventListener("click", () => this.showPacmanSkinConfig());
-		this.gSkinButton.addEventListener("click", () => this.showGhostSkinConfig());
-		this.gamemodeButton.addEventListener("click", () => this.showGamemodeConfig());
-		this.mapButton.addEventListener("click", () => this.showMapConfig());
-		this.colorButton.addEventListener("click", () => this.showColorSchemeConfig());
-
-		document.addEventListener("keydown", this.boundKeyDownSettings);
-		eventListeners["keydown"] = this.boundKeyDownSettings;
 	}
 
 	showKeysConfig() {
@@ -337,7 +334,7 @@ export class PacmanMenu {
 				updateTextForElem(pacmanDesc1, "pac-man-passive-desc");
 				updateTextForElem(pacmanTitle2, "pac-man-frenzy");
 				updateTextForElem(pacmanDesc2, "pac-man-frenzy-desc");
-				cooldown.innerHTML = "20";
+				cooldown.textContent = "20";
 				break;
 			case "pac-woman":
 				updateTextForElem(pacmanTitle, "pac-woman-name");
@@ -345,7 +342,7 @@ export class PacmanMenu {
 				updateTextForElem(pacmanDesc1, "pac-woman-active-desc");
 				updateTextForElem(pacmanTitle2, "pac-woman-passive");
 				updateTextForElem(pacmanDesc2, "pac-woman-passive-desc");
-				cooldown.innerHTML = "25";
+				cooldown.textContent = "25";
 				break;
 			case "pac-MIB":
 				updateTextForElem(pacmanTitle, "pac-MIB-name");
@@ -353,7 +350,7 @@ export class PacmanMenu {
 				updateTextForElem(pacmanDesc1, "pac-MIB-active-desc");
 				updateTextForElem(pacmanTitle2, "pac-MIB-passive");
 				updateTextForElem(pacmanDesc2, "pac-MIB-passive-desc");
-				cooldown.innerHTML = "20";
+				cooldown.textContent = "20";
 				break;
 			case "pac-venturer":
 				updateTextForElem(pacmanTitle, "pac-venturer-name");
@@ -361,7 +358,7 @@ export class PacmanMenu {
 				updateTextForElem(pacmanDesc1, "pac-venturer-active-desc");
 				updateTextForElem(pacmanTitle2, "pac-venturer-passive");
 				updateTextForElem(pacmanDesc2, "pac-venturer-passive-desc");
-				cooldown.innerHTML = "20";
+				cooldown.textContent = "20";
 				break;
 		}
 
@@ -434,7 +431,7 @@ export class PacmanMenu {
 				updateTextForElem(ghostDesc1, "blue-ghost-active-desc");
 				updateTextForElem(ghostTitle2, "blue-ghost-passive");
 				updateTextForElem(ghostDesc2, "blue-ghost-passive-desc");
-				cooldown.innerHTML = "5";
+				cooldown.textContent = "5";
 				break;
 			case "orange-ghost":
 				updateTextForElem(ghostTitle, "orange-ghost-name");
@@ -442,7 +439,7 @@ export class PacmanMenu {
 				updateTextForElem(ghostDesc1, "orange-ghost-active-desc");
 				updateTextForElem(ghostTitle2, "orange-ghost-passive");
 				updateTextForElem(ghostDesc2, "orange-ghost-passive-desc");
-				cooldown.innerHTML = "20";
+				cooldown.textContent = "20";
 				break;
 			case "pink-ghost":
 				updateTextForElem(ghostTitle, "pink-ghost-name");
@@ -450,7 +447,7 @@ export class PacmanMenu {
 				updateTextForElem(ghostDesc1, "pink-ghost-active-desc");
 				updateTextForElem(ghostTitle2, "pink-ghost-effect");
 				updateTextForElem(ghostDesc2, "pink-ghost-effect-desc");
-				cooldown.innerHTML = "25";
+				cooldown.textContent = "25";
 				break;
 			case "green-ghost":
 				updateTextForElem(ghostTitle, "green-ghost-name");
@@ -458,7 +455,7 @@ export class PacmanMenu {
 				updateTextForElem(ghostDesc1, "green-ghost-active-desc");
 				updateTextForElem(ghostTitle2, "green-ghost-passive");
 				updateTextForElem(ghostDesc2, "green-ghost-passive-desc");
-				cooldown.innerHTML = "25";
+				cooldown.textContent = "25";
 				break;
 		}
 
@@ -523,7 +520,7 @@ export class PacmanMenu {
 				let rangeInput = document.getElementById('rangeInput');
 				let rangeLabel = document.getElementById('rangeLabel');
 
-				rangeLabel.innerHTML = this.objective;
+				rangeLabel.textContent = this.objective;
 				rangeInput.value = this.objective;
 				localStorage.setItem('objective', JSON.stringify(this.objective));
 
@@ -678,8 +675,8 @@ export class PacmanMenu {
 		this.usernames.ghost = tmpUsername;
 		localStorage.setItem('pacmanUsernames', JSON.stringify(this.usernames));
 
-		this.pacmanUsernameLabel.innerHTML = this.usernames.pacman;
-		this.ghostUsernameLabel.innerHTML = this.usernames.ghost;
+		this.pacmanUsernameLabel.textContent = this.usernames.pacman;
+		this.ghostUsernameLabel.textContent = this.usernames.ghost;
 
 		this.oldKeys = this.keybinds;
 		this.keybinds = {
@@ -813,7 +810,7 @@ export class PacmanMenu {
 	}
 
 	changeKeybind(event, key, btn) {
-		btn.innerHTML = "...";
+		btn.textContent = "...";
 		this.waitForKey = true;
 		this.waitingKey = key;
 	}

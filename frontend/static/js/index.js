@@ -92,7 +92,7 @@ const router = async () => {
     appDiv.innerHTML = await view.getHtml();
 
 	// Load the JS of the view
-	await view.loadJS();
+	view.loadJS();
 
 	// Focus on the main element
 	appDiv.focus();

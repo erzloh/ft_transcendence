@@ -14,7 +14,6 @@ export default class extends AbstractView {
 
 	loadJS() {
 		this.pacmanGame = new PacmanGame();
-		this.pacmanGame.Initialize();
 	}
 
 	stopJS(){

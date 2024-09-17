@@ -24,7 +24,7 @@ export async function loadModels(scene) {
             if (plane) {
 				//plane.scale.set(100, 100, 100);
                 plane.material.transparent = true;
-                plane.material.opacity = 0.5;
+                plane.material.opacity = 0.3;
 
  //               const planeGeometry = plane.geometry;
 //				const parent = plane.parent;
