@@ -218,7 +218,7 @@ export function pongStatistics () {
 		// Get the tournament stats and add them to the table
 		const fillTournamentStats = async () => {
 			console.log('Fetching tournament stats');
-			const response = await fetch(`${BASE_URL}/api/TournamentPong_match_history/`);
+			const response = await fetch(`${BASE_URL}/api/tournament_history/`);
 			console.log(response);
 			if (response.status === 200) {
 				const stats = await response.json();
@@ -239,12 +239,12 @@ export function pongStatistics () {
 				// Add the stats to the table
 				stats.map(stat => {
 					const tr = document.createElement('tr');
-					const columns = ['match_date', 'player_one', 'player_two', 'player_tree', 'player_four', 'winner', 'match_duration'];
+					const columns = ['date', 'player_one', 'player_two', 'player_three', 'player_four', 'winner', 'duration'];
 					columns.forEach(column => {
 						const td = document.createElement('td');
-						if (column === 'match_date') {
+						if (column === 'date') {
 							td.textContent = formatDate(stat[column]);
-						} else if (column === 'match_duration') {
+						} else if (column === 'duration') {
 							td.textContent = stat[column].substring(3);
 						} else {
 							td.textContent = stat[column];
@@ -262,6 +262,7 @@ export function pongStatistics () {
 
 	// Select the pvp stats by default
 	pvpBtn.classList.add('selected');
+	pvpBtn.setAttribute('aria-presed', 'true');
 	// Fill the table with pvp stats by default
 	fillPvpTable();
 	// Fill the global stats table
@@ -271,8 +272,11 @@ export function pongStatistics () {
 	pvpBtn.addEventListener('click', () => {
 		// Remove the selected class from all buttons
 		pvpBtn.classList.add('selected');
+		pvpBtn.setAttribute('aria-presed', 'true');
 		aiBtn.classList.remove('selected');
+		aiBtn.setAttribute('aria-presed', 'false');
 		tournamentBtn.classList.remove('selected');
+		tournamentBtn.setAttribute('aria-presed', 'false');
 
 		// Fill the table with pvp stats
 		fillPvpTable();
@@ -281,8 +285,11 @@ export function pongStatistics () {
 	aiBtn.addEventListener('click', () => {
 		// Remove the selected class from all buttons
 		pvpBtn.classList.remove('selected');
+		pvpBtn.setAttribute('aria-presed', 'false');
 		aiBtn.classList.add('selected');
+		aiBtn.setAttribute('aria-presed', 'true');
 		tournamentBtn.classList.remove('selected');
+		tournamentBtn.setAttribute('aria-presed', 'false');
 
 		// Fill the table with ai stats
 		fillAiTable();
@@ -291,8 +298,11 @@ export function pongStatistics () {
 	tournamentBtn.addEventListener('click', () => {
 		// Remove the selected class from all buttons
 		pvpBtn.classList.remove('selected');
+		pvpBtn.setAttribute('aria-presed', 'false');
 		aiBtn.classList.remove('selected');
+		aiBtn.setAttribute('aria-presed', 'false');
 		tournamentBtn.classList.add('selected');
+		tournamentBtn.setAttribute('aria-presed', 'true');
 
 		// Fill the table with tournament stats
 		fillTournamentTable();

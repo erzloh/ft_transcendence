@@ -149,7 +149,7 @@ export class Timer {
 	}
 
 	updateDisplay() {
-		this.timer.innerHTML = this.getTime();
+		this.timer.textContent = this.getTime();
 	}
 
 	getTime() {
@@ -178,7 +178,7 @@ export class CooldownTimer {
 		}
 		this.sec = this.spellCD;
 		if (this.cooldownDisplay != null)
-			this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');
+			this.cooldownDisplay.textContent = this.sec.toString().padStart(2, '0');
 		if (!this.interval) {
 			this.interval = setInterval(() => {
 				this.cooldown();
@@ -206,7 +206,7 @@ export class CooldownTimer {
 				this.stop();
 			}
 			if (this.cooldownDisplay != null)
-				this.cooldownDisplay.innerHTML = this.sec.toString().padStart(2, '0');
+				this.cooldownDisplay.textContent = this.sec.toString().padStart(2, '0');
 		}
 		else {
 			if (this.cooldownDisplay != null)

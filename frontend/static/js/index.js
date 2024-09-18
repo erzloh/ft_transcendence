@@ -1,4 +1,3 @@
-//
 // ------------------------------- IMPORT VIEWS -------------------------------
 // A view is a class containing the HTML and JS of a page
 import Home from "./views/Home.js";
@@ -20,7 +19,7 @@ import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUALS -------------------------------
 import './visual/interactiveBg.js'
-import { animateLetters, moveNoise, initLoadTransition, loadTransition } from './visual/effects.js'
+import { animateLetters, moveNoise, initLoadTransition } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { setLanguage, updateTexts } from "./utils/languages.js";
@@ -92,7 +91,7 @@ const router = async () => {
     appDiv.innerHTML = await view.getHtml();
 
 	// Load the JS of the view
-	await view.loadJS();
+	view.loadJS();
 
 	// Focus on the main element
 	appDiv.focus();

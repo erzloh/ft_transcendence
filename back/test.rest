@@ -21,7 +21,7 @@ Content-Type: application/json
 
 POST https://localhost/api/logout
 Content-Type: application/json
-Cookie: jwt=2122e1cf9af50899c5e0240c180cc1440c28e111
+Cookie: jwt=4b72f1dd2d468b957be551f9d192cdc08d3ff4c1
 
 {}
 
@@ -165,3 +165,26 @@ Cookie: jwt=8f959505666f7be154f13beb27a39ead11655d5a
 GET https://localhost/api/PvPong_match_history/
 Content-Type: application/json
 Cookie: jwt=476034a39153dfeefaf2f69ff174c4e094d41e3c
+
+### TOURNAMENT ##############################################################
+
+POST https://localhost/api/record_tournament/
+Content-Type: application/json
+Cookie: jwt= 68dcf9c68bf3630d0d51c8d6e0ef37c57a296819
+
+{
+    "date": "2021-06-01",
+    "player_one": "groscon",
+    "player_two": "noobman",
+    "player_three": "pascal",
+    "player_four": "noob2",
+    "winner": "pascal",
+    "duration": 440,
+    "user": 1
+}
+
+###
+
+GET https://localhost/api/tournament_history/
+Content-Type: application/json
+Cookie: jwt=68dcf9c68bf3630d0d51c8d6e0ef37c57a296819

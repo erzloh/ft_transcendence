@@ -24,7 +24,7 @@ export async function loadModels(scene) {
             if (plane) {
 				//plane.scale.set(100, 100, 100);
                 plane.material.transparent = true;
-                plane.material.opacity = 0.5;
+                plane.material.opacity = 0.3;
 
  //               const planeGeometry = plane.geometry;
 //				const parent = plane.parent;
@@ -55,7 +55,7 @@ export async function loadFonts(scene) {
                 const textGeometry = new TextGeometry('0', {
                     font: font,
                     size: 2,
-                    height: 0.5,
+                    depth: 0.5,
                     curveSegments: 12,
                     bevelEnabled: true,
                     bevelThickness: 0.1,

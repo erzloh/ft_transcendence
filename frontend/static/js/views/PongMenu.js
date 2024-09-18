@@ -13,7 +13,6 @@ export default class extends AbstractView {
 
 	loadJS() {
 		var pongMenu = new PongMenu();
-		pongMenu.Initialize();
 	}
 	
 	stopJS(){

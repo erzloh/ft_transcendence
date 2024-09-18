@@ -5,7 +5,7 @@ export function createTextGeometry(scoreValue, font) {
     return new TextGeometry(scoreValue.toString(), {
         font: font,
         size: 2,
-        height: 0.5,
+        depth: 0.5,
         curveSegments: 12,
         bevelEnabled: true,
         bevelThickness: 0.1,

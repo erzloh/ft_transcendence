@@ -1,5 +1,6 @@
 import AbstractView from "./AbstractView.js";
 import { PacmanGame, eventListeners } from "../scripts/pacman.js";
+import { initCursorClickEffect } from "../visual/effects.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -14,7 +15,7 @@ export default class extends AbstractView {
 
 	loadJS() {
 		this.pacmanGame = new PacmanGame();
-		this.pacmanGame.Initialize();
+		initCursorClickEffect();
 	}
 
 	stopJS(){
