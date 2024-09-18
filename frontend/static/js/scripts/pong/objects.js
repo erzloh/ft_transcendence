@@ -342,6 +342,7 @@ export class Pad {
 			(this.placement === "right" && this.ball.dx < 0))) {
 				this.goMid();
 			} else {
+
 				this.AiPredictPaddle();
 			}
 		}
@@ -351,7 +352,7 @@ export class Pad {
 	
 	checkMinimize() {
 		const cvsPortion = this.pG.cvs.width / 5;
-		if (this.pG.timer.rightMinimizeCD == 0 && this.ball.dx < 0 && this.ball.x < cvsPortion) {
+		if (this.pG.timer.rightMinimizeCD == 0 && this.ball.dx < 0 && this.ball.x < cvsPortion && this.pG.gamestyle == "enhanced") {
             this.useMinimize();
 		}
 	}
@@ -364,6 +365,7 @@ export class Pad {
 			if (this.ball && this.ball.dx > 0) {
 				this.predictedPosition = this.predictBallPosition();
 				console.log("Predicted Position:", this.predictedPosition);
+				console.log(this.pG.aiDifficulty);
 			}
 		}
 		if (this.predictedPosition && this.ball && this.ball.dx > 0) {
@@ -390,30 +392,46 @@ export class Pad {
 		
 	}
 
-	predictBallPosition() {
-		if (!this.ball) {
-			return null;
-		}
-	
-		let futureX = this.ball.x;
-		let futureY = this.ball.y;
-		let velocityX = this.ball.dx;
-		let velocityY = this.ball.dy;
-	
-		const paddleX = this.x;
-	
-		while (futureX < paddleX) {
-			futureX += velocityX;
-			futureY += velocityY;
-	
-			if (futureY + this.ball.size / 2 >= 600 || futureY - this.ball.size / 2 <= 0) {
-				velocityY *= -1;
-			}
-		}
-	
-		return {y: futureY };
-	}
-	
+predictBallPosition() {
+    if (!this.ball) {
+        return null;
+    }
+    let futureX = this.ball.x;
+    let futureY = this.ball.y;
+    let velocityX = this.ball.dx;
+    let velocityY = this.ball.dy;
+	const paddleX = this.x;
+
+    if (this.pG.aiDifficulty === 'easy') {
+        const framesAhead = 60;
+
+        for (let i = 0; i < framesAhead; i++) {
+            futureX += velocityX;
+            futureY += velocityY;
+
+            if (futureX >= paddleX) {
+                return { y: futureY };
+            }
+
+            if (futureY + this.ball.size / 2 >= this.pG.cvs.height || futureY - this.ball.size / 2 <= 0) {
+                velocityY *= -1;
+            }
+        }
+		return { y: futureY };
+    } else {
+        while (futureX < paddleX) {
+            futureX += velocityX;
+            futureY += velocityY;
+            if (futureY + this.ball.size / 2 >= this.pG.cvs.height || futureY - this.ball.size / 2 <= 0) {
+                velocityY *= -1;
+            }
+        }
+        return { y: futureY };
+    }
+}
+
+
+
 	paddleEdgeCollision() {
 		if (this.y < 0) {
 			this.y = 0;
@@ -422,7 +440,7 @@ export class Pad {
 		}
 	}
 
-	/// Return Paddle in the middle after hitting the ball
+	// Return Paddle in the middle after hitting the ball
 	goMid() {
 		const middleY = (this.maxY - this.height) / 2;
 		const moveSpeed = this.dy; 
