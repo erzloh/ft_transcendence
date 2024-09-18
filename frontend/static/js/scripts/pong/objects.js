@@ -400,7 +400,7 @@ export class Pad {
 		let velocityX = this.ball.dx;
 		let velocityY = this.ball.dy;
 	
-		const paddleX = this.x; // Use the paddle's fixed x-position
+		const paddleX = this.x;
 	
 		while (futureX < paddleX) {
 			futureX += velocityX;
@@ -425,7 +425,7 @@ export class Pad {
 	/// Return Paddle in the middle after hitting the ball
 	goMid() {
 		const middleY = (this.maxY - this.height) / 2;
-		const moveSpeed = this.dy; // Adjust this value to control the speed of repositioning
+		const moveSpeed = this.dy; 
 	
 		if (Math.abs(this.y - middleY) > moveSpeed) {
 			if (this.y < middleY) {
