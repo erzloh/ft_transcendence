@@ -12154,7 +12154,7 @@ label {
 .gradient-bg .g1 {
   position: absolute;
   background: radial-gradient(circle at center, rgba(101, 55, 125, 0.8) 0, rgba(101, 55, 125, 0) 50%) no-repeat;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: color-burn;
   width: 80%;
   height: 80%;
   top: 10%;
@@ -12166,7 +12166,7 @@ label {
 .gradient-bg .g2 {
   position: absolute;
   background: radial-gradient(circle at center, rgba(138, 171, 203, 0.8) 0, rgba(138, 171, 203, 0) 50%) no-repeat;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: color-burn;
   width: 80%;
   height: 80%;
   top: 10%;
@@ -12178,7 +12178,7 @@ label {
 .gradient-bg .g3 {
   position: absolute;
   background: radial-gradient(circle at center, rgba(70, 57, 120, 0.8) 0, rgba(70, 57, 120, 0) 50%) no-repeat;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: color-burn;
   width: 80%;
   height: 80%;
   top: calc(10% + 200px);
@@ -12190,7 +12190,7 @@ label {
 .gradient-bg .g4 {
   position: absolute;
   background: radial-gradient(circle at center, rgba(57, 21, 79, 0.8) 0, rgba(57, 21, 79, 0) 50%) no-repeat;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: color-burn;
   width: 80%;
   height: 80%;
   top: 10%;
@@ -12202,7 +12202,7 @@ label {
 .gradient-bg .g5 {
   position: absolute;
   background: radial-gradient(circle at center, rgba(67, 78, 146, 0.8) 0, rgba(67, 78, 146, 0) 50%) no-repeat;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: color-burn;
   width: 160%;
   height: 160%;
   top: -30%;
@@ -12214,7 +12214,7 @@ label {
 .gradient-bg .interactive {
   position: absolute;
   background: radial-gradient(circle at center, rgba(80, 56, 116, 0.8) 0, rgba(80, 56, 116, 0) 50%) no-repeat;
-  mix-blend-mode: hard-light;
+  mix-blend-mode: color-burn;
   width: 100%;
   height: 100%;
   top: -50%;
