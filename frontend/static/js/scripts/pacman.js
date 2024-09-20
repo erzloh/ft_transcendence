@@ -221,6 +221,18 @@ class PacmanGame {
 			updateTextForElem(this.toastBody, "game-saved");
 			this.toastBootstrap.show();
 		}
+		if (this.gamemode == "endless") {
+			matchData = {
+				"max_endless_score": this.pacman.score
+			};
+			response = await fetch(`${BASE_URL}/api/pacman_endless_update`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(matchData)
+			});
+		}
 	}
 
 	partyOver(winner) {
