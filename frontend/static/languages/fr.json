@@ -248,6 +248,7 @@
 	"db ghost": "fantôme",
 	"db ghost character": "personnage",
 	"db map": "carte",	
+	"max score pacman": "score max endless",
 
 	"graphics": "graphiques",
 	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",
