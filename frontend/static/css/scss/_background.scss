@@ -50,7 +50,8 @@ $color-interactive: rgb(80, 56, 116);
 // $color-interactive: rgb(135, 15, 15);
 
 $circle-size: 80%;
-$blending: hard-light;
+// $blending: hard-light;
+$blending: color-burn;
 
 @keyframes moveInCircle {
 	0% {
@@ -91,9 +92,9 @@ $blending: hard-light;
 .gradient-bg {
 	z-index: -2;
 	width: 100vw;
-	height: 100vh;
+	height: 100%;
 	position: absolute;
-	overflow: hidden;
+	// overflow: hidden;
 	background: linear-gradient(40deg, $color-bg1, $color-bg2);
 	top: 0;
 	left: 0;

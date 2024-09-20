@@ -29,6 +29,35 @@ export const animateLetters = () => {
 	}, 30);
 };
 
+// Background interactive bubble
+export const initInteractiveBubble = () => {
+	const interBubble = document.querySelector('.interactive');
+	if (!interBubble) return;
+
+    let curX = window.innerWidth / 2;
+    let curY = window.innerHeight / 2;
+    let tgX = 0;
+    let tgY = 0;
+
+    function move() {
+		const easingFactor = 30;
+
+        curX += (tgX - curX) / easingFactor;
+        curY += (tgY - curY) / easingFactor;
+        interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+        requestAnimationFrame(() => {
+            move();
+        });
+    }
+
+    window.addEventListener('mousemove', (event) => {
+        tgX = event.clientX;
+        tgY = event.clientY;
+    });
+
+    move();
+};
+
 // Background noise animation
 export const moveNoise = () => {
 	const noiseElement = document.querySelector('.background-noise');

@@ -17,9 +17,8 @@ import Friends from "./views/Friends.js";
 import PongStatistics from "./views/PongStatistics.js";
 import PacmanStatistics from "./views/PacmanStatistics.js";
 
-// ------------------------------- IMPORT VISUALS -------------------------------
-import './visual/interactiveBg.js'
-import { animateLetters, moveNoise, initLoadTransition } from './visual/effects.js'
+// ------------------------------- IMPORT VISUAL EFFECTS -------------------------------
+import { animateLetters, moveNoise, initLoadTransition, initInteractiveBubble } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
 import { setLanguage, updateTexts } from "./utils/languages.js";
@@ -33,11 +32,15 @@ export const DEFAULT_TEXT = '16px';
 // Store interval IDs (to be able to clear them later)
 export const ids = {};
 
+// Store the current view
+let view = null;
+
 // ------------------------------- THE APP STARTS HERE -------------------------------
-// When the DOM is loaded, call the router function
+// When the DOM is loaded, call initialization functions and the router function
 document.addEventListener("DOMContentLoaded", async () => {
-	// Initializations
+	// Initialization
 	initLoadTransition();
+	initInteractiveBubble();
 
 	// Load the view
 	await router();
@@ -62,9 +65,6 @@ const routes = [
 	{ path: "/pong-statistics", view: PongStatistics },
 	{ path: "/pacman-statistics", view: PacmanStatistics }
 ];
-
-// Store the current view
-let view = null;
 
 // Loads the view (HTML and JS) in the div with id "app" according to the current path
 const router = async () => {
