@@ -30,7 +30,7 @@ export class PongGame {
 		this.leftPaddleName = document.getElementById('leftPaddleName');
 		this.rightPaddleName = document.getElementById('rightPaddleName');
 
-		this.pWidth = 12, this.pHeight = 80, this.bSize = 12, this.pSpeed = 1.6, this.bSpeed = 1;
+		this.pWidth = 12, this.pHeight = 80, this.bSize = 12, this.pSpeed = 1.6, this.bSpeed = 1.1;
 		this.gameStarted = false, this.gameOver = false;
 		this.paused = false;
 		this.totalTime = 0;

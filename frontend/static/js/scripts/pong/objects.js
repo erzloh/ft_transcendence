@@ -258,7 +258,7 @@ export class Ball {
 	resetPosition() {
 		this.x = this.maxX / 2;
 		this.y = this.maxY / 2;
-		this.speed = this.baseSpeed + 0.2;
+		this.speed = this.baseSpeed + 0.3;
 
 		if (Math.random() > 0.5) {
 			this.dx = this.baseSpeed;
