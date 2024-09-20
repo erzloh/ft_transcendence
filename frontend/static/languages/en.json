@@ -158,7 +158,8 @@
 	"chosen-map": "chosen map:",
 	"chosen-theme": "chosen theme:",
 	"changed-key": "changed key:",
-	"swapped-usernames": "Swapped players usernames.",
+	"swapped-usernames": "Swapped players.",
+	"game-saved": "game saved in player history.",
 
 	"lpad-move-up": "left paddle move up",
 	"lpad-move-down": "left paddle move down",

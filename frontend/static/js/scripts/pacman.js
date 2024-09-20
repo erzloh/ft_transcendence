@@ -32,6 +32,10 @@ class PacmanGame {
 		this.canvas = document.getElementById('cvsPacman');
 		this.c = this.canvas.getContext('2d');
 
+		this.toastNotification = document.getElementById('liveToast');
+		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
+		this.toastBody = document.getElementById('toastBody');
+
 		// Map data
 		this.cells;
 		this.fruitArray = [];
@@ -212,9 +216,10 @@ class PacmanGame {
 			body: JSON.stringify(matchData)
 		});
 		if (response.status === 400) {
-			console.log("User isn't logged. Game history has not been saved.");
-		} else if (response.status === 200) {
-			console.log("Game saved.");
+			console.log("Could not save game in user history. Is user logged ?");
+		} else if (response.status < 300) {
+			updateTextForElem(this.toastBody, "game-saved");
+			this.toastBootstrap.show();
 		}
 	}
 
@@ -273,7 +278,6 @@ class PacmanGame {
 
 		// Get the map's JSON data
 		const mapData = await this.loadMap("static/assets/pacman/maps/" + this.mapName + ".json");
-		console.log(mapData);
 		const { tileSize: tmpTileSize, width: tmpWidth, height: tmpHeight, data: tmpData } = mapData;
 		this.tileSize = tmpTileSize;
 		this.width = tmpWidth;
@@ -425,6 +429,10 @@ class PacmanGame {
 
 		this.pacmanUsername.textContent = this.usernames.pacman;
 		this.ghostUsername.textContent = this.usernames.ghost;
+
+		updateTextForElem(this.toastBody, "swapped-usernames");
+		this.toastBootstrap.show();
+
 		this.resetGame();
 	}
 

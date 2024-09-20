@@ -482,10 +482,10 @@ export class PacmanMenu {
 				<div class="col-auto mr-2 ml-3">
 					<div class="row justify-content-center text-center mt-2 mb-1">
 						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-light" id="btnObjective" data-translate="objective">objective</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnObjective" data-translate="objective"></button>
 						</div>
 						<div class="col-4 d-flex justify-content-center">
-							<button role="button" class="btn btn-lg text-white" id="btnEndless" data-translate="endless">endless</button>
+							<button role="button" class="btn btn-lg text-white btn-filled" id="btnEndless" data-translate="endless"></button>
 						</div>
 						<div class="col-10 mt-4 mb-3">
 							<p class="text-white" id="gamemodeDescription"></p>
@@ -508,8 +508,6 @@ export class PacmanMenu {
 
 		switch (this.gamemode) {
 			case "objective":
-				btnObjective.disabled = true;
-				btnEndless.disabled = false;
 				updateTextForElem(pDescription, "objective-description");
 				rangeContainer.innerHTML = `
 					<div class="col-12 d-flex justify-content-center align-items-center mb-2">
@@ -532,8 +530,6 @@ export class PacmanMenu {
 
 				break;
 			case "endless":
-				btnObjective.disabled = false;
-				btnEndless.disabled = true;
 				updateTextForElem(pDescription, "endless-description");
 				break;
 			default:
@@ -542,6 +538,11 @@ export class PacmanMenu {
 
 		this.settingsModal.show();
 
+		const gamemodes = {
+			"objective": document.getElementById('btnObjective'),
+			"endless": document.getElementById('btnEndless')
+		}
+		this.applySelectedSetting("pacmanGamemode", gamemodes);
 		updateTexts();
 	}
 

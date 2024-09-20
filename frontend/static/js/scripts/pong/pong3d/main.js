@@ -25,6 +25,10 @@ export class pongThree {
 		this.endgameModal = new bootstrap.Modal(document.getElementById('endgameModal'));
 		this.matchEndLabel = document.getElementById('matchEndLabel');
 
+		this.toastNotification = document.getElementById('liveToast');
+		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
+		this.toastBody = document.getElementById('toastBody');
+
         this.scoreLeftValue = 0;
         this.scoreRightValue = 0;
 		this.controller = setupScene(this.canvasRef);
@@ -219,8 +223,9 @@ export class pongThree {
 		})
 		if (response.status === 400) {
 			console.log("User isn't logged. Game history has not been saved.")
-		} else if (response.status === 200) {
-			console.log("Game saved.")
+		} else if (response.status < 300) {
+			updateTextForElem(this.toastBody, "game-saved");
+			this.toastBootstrap.show();
 		}
 	}
 
