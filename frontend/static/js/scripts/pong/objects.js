@@ -364,8 +364,8 @@ export class Pad {
 			this.lastAIUpdate = currentTime;
 			if (this.ball && this.ball.dx > 0) {
 				this.predictedPosition = this.predictBallPosition();
-				console.log("Predicted Position:", this.predictedPosition);
-				console.log(this.pG.aiDifficulty);
+				// console.log("Predicted Position:", this.predictedPosition);
+				// console.log(this.pG.aiDifficulty);
 			}
 		}
 		if (this.predictedPosition && this.ball && this.ball.dx > 0) {

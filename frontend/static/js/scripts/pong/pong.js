@@ -30,6 +30,10 @@ export class PongGame {
 		this.leftPaddleName = document.getElementById('leftPaddleName');
 		this.rightPaddleName = document.getElementById('rightPaddleName');
 
+		this.toastNotification = document.getElementById('liveToast');
+		this.toastBootstrap = bootstrap.Toast.getOrCreateInstance(this.toastNotification);
+		this.toastBody = document.getElementById('toastBody');
+
 		this.pWidth = 12, this.pHeight = 80, this.bSize = 12, this.pSpeed = 1.6, this.bSpeed = 1.1;
 		this.gameStarted = false, this.gameOver = false;
 		this.paused = false;
@@ -229,7 +233,6 @@ export class PongGame {
 		let response;
 		switch (this.gamemode) {
 			case "pvp":
-				console.log("PVP match saved");
 				matchData = {
 					"player_one": this.usernames.p1,
 					"player_two": this.usernames.p2,
@@ -248,7 +251,6 @@ export class PongGame {
 				})
 				break;
 			case "AI":
-				console.log("AI match saved");
 				matchData = {
 					"player_one": this.usernames.p1,
 					"ai_level" : this.aiDifficulty,
@@ -267,7 +269,6 @@ export class PongGame {
 				})
 				break;
 			case "tournament":
-				console.log("tournament match saved");
 				matchData = {
 					"date": date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay(),
 					"player_one": this.usernames.p1,
@@ -289,10 +290,11 @@ export class PongGame {
 			default:
 				break;
 		}
-		if (response.status === 400) {
-			console.log("User isn't logged. Game history has not been saved.")
-		} else if (response.status === 200) {
-			console.log("Game saved.")
+		if (response.status > 300) {
+			console.log("Could not save game in user history. Is user logged ?")
+		} else if (response.status < 300) {
+			updateTextForElem(this.toastBody, "game-saved");
+			this.toastBootstrap.show();
 		}
 	}
 	
@@ -372,7 +374,6 @@ export class PongGame {
 		this.leftPad.move();
 		this.rightPad.move();
 		this.ball.move();
-		console.log("log");
 	}
 
 	startGameLoop() {
