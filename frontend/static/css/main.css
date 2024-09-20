@@ -11973,6 +11973,7 @@ html, body {
   font-variant-ligatures: no-common-ligatures;
   overflow-x: hidden;
   cursor: url("/static/assets/UI/icons/cursor_big.svg") 15 15, auto;
+  height: 100%;
 }
 
 button {
@@ -12007,7 +12008,9 @@ button {
   }
 }
 .full-height {
-  height: 100vh;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  min-height: 100vh;
 }
 
 .big-text {
@@ -12035,6 +12038,7 @@ label {
 
 .return-btn {
   animation: waitFadeIn 1s ease-out;
+  margin-bottom: 32px;
 }
 
 .fixed-width-btn {
@@ -12136,9 +12140,8 @@ label {
 .gradient-bg {
   z-index: -2;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   position: absolute;
-  overflow: hidden;
   background: linear-gradient(40deg, rgb(34, 23, 51), rgb(34, 23, 51));
   top: 0;
   left: 0;
@@ -12343,6 +12346,8 @@ button:focus,
 
 .container-settings {
   max-width: 25rem;
+  overflow-y: auto;
+  margin-top: 32px;
 }
 
 .custom-checkbox {
@@ -12394,6 +12399,7 @@ button:focus,
   max-width: 25rem;
   max-height: 1000px !important;
   overflow-y: auto;
+  margin-top: 32px;
 }
 
 .text-input {
@@ -12443,6 +12449,7 @@ button:focus,
   max-width: 25rem;
   max-height: 1000px !important;
   overflow-y: auto;
+  margin-top: 32px;
 }
 
 .container-friends {
