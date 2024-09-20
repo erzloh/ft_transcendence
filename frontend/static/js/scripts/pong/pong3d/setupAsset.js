@@ -6,7 +6,6 @@ import { BloomPass } from 'three/addons/postprocessing/BloomPass.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { Reflector } from 'three/addons/objects/Reflector.js';
-//console.log(Reflector);
 
 
 export async function loadModels(scene) {

@@ -523,7 +523,7 @@ export class BlueGhost extends GhostBase {
 		this.lastX = this.x;
 		this.lastY = this.y;
 		this.baseSpeed = this.speed;
-		this.speedBoost = this.speed * 115/100;
+		this.speedBoost = this.speed * 110/100;
 		this.cellValue = "Nothing";
 	}
 

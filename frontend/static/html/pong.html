@@ -1,4 +1,16 @@
 <div class="full-height d-flex align-items-center justify-content-center pong-page">
+	<div class="toast-container position-fixed top-0 end-0 p-3">
+		<div id="liveToast" class="toast" style="background-color: rgba(0, 0, 0, 0); border: none; max-width: none; width: auto;" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="d-flex glass">
+				<div class="toast-body">
+					<div class="col-12 justify-content-center align-items-center p-2">
+						<p class="text-white text-center" style="display: inline; margin-right: 5px;" id="toastBody"></p>
+					</div>
+				</div>
+				<button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-p="Close"></button>
+			</div>
+		</div>
+	</div>
 	<div class="row justify-content-center pong-interface-container">
 		<div class="col-12 text-center">
 			<p class="text-white h1" animated-letters data-translate="pong">pong</p>
@@ -21,13 +33,6 @@
 					</div>
 				</div>
 			</div>
-
-
-			<!-- <p class="text-white h3 mt-2" id="objectiveLabel">points to win: </p> -->
-			<!-- <div class="col-3 d-flex justify-content-center align-items-end mt-2">
-				<img src="/static/assets/UI/icons/time.svg" width="32px"/>
-				<p id="timer" class="h3 text-white text-center mb-0 ms-2">00:00</p>
-			</div> -->
 		</div>
 		<div class="row-12">
 			<div class="col-12 d-flex flex-column align-items-center mb-3" id="gameContainer">
@@ -119,7 +124,6 @@
 									</div>
 									<div class="col d-flex justify-content-center align-items-center mt-3 mb-2">
 										<img src="/static/assets/UI/icons/score.svg" width="28x"/>
-										<!-- <p class="h4 text-white text-center" id="matchScore" style="display: inline; margin-right: 10px;" data-translate="score"></p> -->
 										<p class="h4 text-white text-center ms-3" id="matchScore" style="display: inline;" ></p>
 									</div>
 									<div class="col d-flex justify-content-center align-items-center mb-3">
@@ -150,7 +154,6 @@
 							<div class="col-12 d-flex flex-column align-items-center">
 								<div class="col-10 d-flex justify-content-center mt-2 mb-2">
 									<img src="/static/assets/UI/icons/score.svg" width="28x"/>
-									<!-- <p class="h4 text-white" data-translate="score" style="display: inline; margin-right: 10px;"></p> -->
 									<p class="h4 text-white ms-3" id="endgameModalScore" style="display: inline;"></p>
 								</div>
 								<div class="col d-flex justify-content-center align-items-center mb-3">
