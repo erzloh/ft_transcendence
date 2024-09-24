@@ -258,7 +258,7 @@ export class Ball {
 	resetPosition() {
 		this.x = this.maxX / 2;
 		this.y = this.maxY / 2;
-		this.speed = this.baseSpeed + 0.2;
+		this.speed = this.baseSpeed + 0.3;
 
 		if (Math.random() > 0.5) {
 			this.dx = this.baseSpeed;
@@ -364,8 +364,8 @@ export class Pad {
 			this.lastAIUpdate = currentTime;
 			if (this.ball && this.ball.dx > 0) {
 				this.predictedPosition = this.predictBallPosition();
-				console.log("Predicted Position:", this.predictedPosition);
-				console.log(this.pG.aiDifficulty);
+				// console.log("Predicted Position:", this.predictedPosition);
+				// console.log(this.pG.aiDifficulty);
 			}
 		}
 		if (this.predictedPosition && this.ball && this.ball.dx > 0) {

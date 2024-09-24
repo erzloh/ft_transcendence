@@ -1,5 +1,7 @@
 .container-settings {
 	max-width: rem(400px);
+	overflow-y: auto;
+	margin-top: $glass-margin-top;
 }
 
 .custom-checkbox {

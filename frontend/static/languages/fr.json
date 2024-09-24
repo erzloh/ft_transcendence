@@ -118,7 +118,8 @@
     "chosen-map": "carte choisie:",
     "chosen-theme": "thème choisi:",
     "changed-key": "touche changée:",
-    "swapped-usernames": "Noms d'utilisateur des joueurs échangés.",
+    "swapped-usernames": "Joueurs échangés.",
+    "game-saved": "jeu enregistré dans l'historique du joueur.",
     "lpad-move-up": "raquette gauche bouge vers le haut",
     "lpad-move-down": "raquette gauche bouge vers le bas",
     "lpad-minimize": "minimiser la raquette gauche",
@@ -248,6 +249,7 @@
 	"db ghost": "fantôme",
 	"db ghost character": "personnage",
 	"db map": "carte",	
+	"max score pacman": "score max endless",
 
 	"graphics": "graphiques",
 	"enable bg": "activer l'arrière-plan interactif de qualité supérieure (attention : peut ralentir l'appareil)",

@@ -135,7 +135,8 @@
     "chosen-map": "選択されたマップ：",
     "chosen-theme": "選択されたテーマ：",
     "changed-key": "キーが変更されました：",
-    "swapped-usernames": "プレイヤーのユーザー名が交代しました。",
+    "swapped-usernames": "プレイヤーが交代されました。",
+    "game-saved": "ゲームがプレイヤーの履歴に保存されました。",
     "lpad-move-up": "左パドルを上に移動",
     "lpad-move-down": "左パドルを下に移動",
     "lpad-minimize": "左パドルを最小化",
@@ -249,6 +250,7 @@
 	"db ghost": "ゴースト",
 	"db ghost character": "キャラクター",
 	"db map": "マップ",
+	"max score pacman": "エンドレスの最高スコア",
 
 	"graphics": "グラフィックス",
 	"ultra": "ウルトラ",

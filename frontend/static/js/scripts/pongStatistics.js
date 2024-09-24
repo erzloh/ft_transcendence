@@ -19,7 +19,7 @@ export function pongStatistics () {
 		// Create the table headers
 		const thead = document.createElement('thead');
 		const tr = document.createElement('tr');
-		const columns = ['total games', 'total duration', 'average duration'];
+		const columns = ['total games', 'total duration'];
 		columns.forEach(column => {
 			const th = document.createElement('th');
 			th.setAttribute('data-translate', column);
@@ -40,7 +40,7 @@ export function pongStatistics () {
 				const responseData = await response.json();
 				
 				const tr = document.createElement('tr');
-				const columns = ['total_pong_matches', 'total_pong_time', 'average_pong_time'];
+				const columns = ['total_pong_matches', 'total_pong_time'];
 				columns.forEach(column => {
 					const td = document.createElement('td');
 					if (column === 'total_pong_time') {

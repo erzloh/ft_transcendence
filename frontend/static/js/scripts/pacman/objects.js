@@ -8,12 +8,11 @@ export class Star {
 		this.pcG = pcG;
 	}
 
-	// This function will return false if the fruit gets eaten by pacman
 	render() {
 		if (Math.abs(this.pcG.pacman.py - this.y) < 0.5 &&
 			Math.abs(this.pcG.pacman.px - this.x) < 0.5) {
-			for (var y = 1; y < this.pcG.height - 1; y++) {
-				for (var x = 1; x < this.pcG.width - 1; x++) {
+			for (var y = 0; y < this.pcG.height; y++) {
+				for (var x = 0; x < this.pcG.width; x++) {
 					if (this.pcG.cells[y][x].value === 6)
 						this.pcG.cells[y][x].value = 5;
 					else if (this.pcG.cells[y][x].value === 8)
@@ -96,8 +95,6 @@ export class Timer {
 		this.pcG.updateGame();
 		this.pcG.renderGame();
 
-		console.log("pacman loop");
-
 		if (this.dsec == 100) {
 			this.dsec = 0;
 			this.sec++;
@@ -109,7 +106,7 @@ export class Timer {
 				while (!fruitSpawned) {
 				var ypos = Math.floor(Math.random() * (this.pcG.height - 1));
 				var xpos = Math.floor(Math.random() * (this.pcG.width - 1));
-				if (this.pcG.cells[ypos][xpos].value !== 1) {
+				if (this.pcG.cells[ypos][xpos].value !== 1 && this.pcG.cells[ypos][xpos].value !== 9) {
 					fruitSpawned = true;
 					var ran = Math.floor(Math.random() * 3);
 					switch (ran) {
