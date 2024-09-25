@@ -1,10 +1,16 @@
 import { BASE_URL } from '../index.js'
 import { updateTextForElem } from '../utils/languages.js';
 import { formatDate, formatSeconds } from '../utils/date.js'
-
+import { isUserConnected } from "../utils/utils.js";
+import { navigateTo } from '../index.js';
 
 // Function that will be called when the view is loaded
-export function pacmanStatistics () {
+export async function pacmanStatistics () {
+	if (!(await isUserConnected())) {
+		navigateTo('/signin');
+		return;
+	}
+
 	// Fetch global statistics and fill the global stat table
 	const fillPacmanGlobalStatTable = async () => {
 		const response = await fetch(`${BASE_URL}/api/pacman_stats`);
