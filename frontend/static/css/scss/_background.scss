@@ -107,6 +107,7 @@ $blending: color-burn;
 		filter: url(#goo) blur(40px);
 		width: 100%;
 		height: 100%;
+		overflow: hidden;
 	}
 
 	@mixin g($color, $top, $left, $animation, $transform-origin, $opacity, $circle-size: 80%) {

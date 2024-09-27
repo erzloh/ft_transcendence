@@ -4,7 +4,7 @@ PROJECT_NAME = transcendence
 # Default target
 all: up
 
-# Build the images and the containers and start them
+# Build the docker images and the containers and start them
 up:
 	@docker compose -f ${COMPOSE_FILE_PATH} -p ${PROJECT_NAME} up -d --build
 
@@ -41,4 +41,4 @@ hard_clean:
 	@echo "\033[32mAll Docker resources have been cleaned.\033[0m"
 
 
-.PHONY: all up down clean re hard_clean
+.PHONY: all up down clean re re_soft hard_clean

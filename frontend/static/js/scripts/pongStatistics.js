@@ -1,9 +1,16 @@
 import { BASE_URL } from '../index.js';
 import { updateTextForElem } from '../utils/languages.js';
 import { formatDate, formatSeconds } from '../utils/date.js';
+import { isUserConnected } from "../utils/utils.js";
+import { navigateTo } from '../index.js';
 
 // Function that will be called when the view is loaded
-export function pongStatistics () {
+export async function pongStatistics () {
+	if (!(await isUserConnected())) {
+		navigateTo('/signin');
+		return;
+	}
+
 	// Select elements
 	const pvpBtn = document.getElementById('pvp-stat-btn');
 	const aiBtn = document.getElementById('ai-stat-btn');

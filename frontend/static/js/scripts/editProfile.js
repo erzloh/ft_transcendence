@@ -1,9 +1,15 @@
 import { updateTextForElem } from "../utils/languages.js";
 import { navigateTo } from '../index.js';
 import { BASE_URL } from '../index.js';
+import { isUserConnected } from "../utils/utils.js";
 
 // Function that will be called when the view is loaded
 export async function editProfile () {
+	if (!(await isUserConnected())) {
+		navigateTo('/signin');
+		return;
+	}
+	
 	// State of all forms
 	const changes = {
 		profilePicture: false,

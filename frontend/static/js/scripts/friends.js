@@ -1,8 +1,14 @@
 import { BASE_URL, navigateTo } from "../index.js"
 import { updateTextForElem } from "../utils/languages.js";
+import { isUserConnected } from "../utils/utils.js";
 
 // Function that will be called when the view is loaded
 export async function friends () {
+	if (!(await isUserConnected())) {
+		navigateTo('/signin');
+		return;
+	}
+
     // Make a call to the API to get all the users.
 	// The response will be a JSON array where each element is a user.
 	// Get the user-elements class element
