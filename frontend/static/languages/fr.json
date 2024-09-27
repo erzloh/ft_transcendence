@@ -55,7 +55,7 @@
 	"pac-venturer-active" : "actif : grappin",
 	"pac-venturer-active-desc" : "Utilisant son grappin préféré, Pac-Aventurier se propulse en ligne droite jusqu'à heurter un mur.",
 	"pac-venturer-passive" : "passif : exploration",
-	"pac-venturer-passive-desc" : "Pac-Aventurier se déplace 10% plus vite et gagne 10% de points supplémentaires.",
+	"pac-venturer-passive-desc" : "Pac-Aventurier gagne 10% de points supplémentaires.",
 
 	"blue-ghost-name" : "fantôme bleu",
 	"blue-ghost-active" : "actif : bloc fantôme",

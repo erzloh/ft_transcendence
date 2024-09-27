@@ -320,12 +320,11 @@ export class Pacventurer extends PacmanBase {
 	constructor(x, y, direction, pacmanGame) {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "grappling hook";
-		this.speed *= 110/100;
-		this.pointFactor = 110/100;
-		this.grapplingCD = 20;
+		this.pointFactor = 105/100;
+		this.grapplingCD = 12;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.grapplingCD,	this.stopSpell.bind(this));
 		this.grappling = false;
-		this.grapplingSpeed = 400/100;
+		this.grapplingSpeed = 500/100;
 		this.grapplingDirection = "";
 	}
 

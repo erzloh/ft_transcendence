@@ -134,7 +134,7 @@ export class Timer {
 				while (!starSpawned) {
 					var ypos = Math.floor(Math.random() * (this.pcG.height - 1));
 					var xpos = Math.floor(Math.random() * (this.pcG.width - 1));
-					if (this.pcG.cells[ypos][xpos].value !== 1) {
+					if (this.pcG.cells[ypos][xpos].value !== 1 && this.pcG.cells[ypos][xpos].value !== 9) {
 						this.pcG.starArray.push(new Star(xpos, ypos, this.images.imgStar, this.pcG));
 						starSpawned = true;
 					}

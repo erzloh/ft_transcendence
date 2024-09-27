@@ -55,7 +55,7 @@
 	"pac-venturer-active" : "active: grappling hook",
 	"pac-venturer-active-desc" : "Using his favorite grappling hook, Pac-Venturer propels himself in a straight line until he hits a wall.",
 	"pac-venturer-passive" : "passive: exploration",
-	"pac-venturer-passive-desc" : "Pac-Venturer moves 10% faster and gains 10% more points.",
+	"pac-venturer-passive-desc" : "Pac-Venturer gains 5% more points.",
 
 	"blue-ghost-name" : "blue ghost",
 	"blue-ghost-active" : "active: ghost block",

@@ -358,7 +358,7 @@ export class PacmanMenu {
 				updateTextForElem(pacmanDesc1, "pac-venturer-active-desc");
 				updateTextForElem(pacmanTitle2, "pac-venturer-passive");
 				updateTextForElem(pacmanDesc2, "pac-venturer-passive-desc");
-				cooldown.textContent = "20";
+				cooldown.textContent = "12";
 				break;
 		}
 
