@@ -18,13 +18,14 @@ import PongStatistics from "./views/PongStatistics.js";
 import PacmanStatistics from "./views/PacmanStatistics.js";
 
 // ------------------------------- IMPORT VISUAL EFFECTS -------------------------------
-import { animateLetters, moveNoise, initLoadTransition, initInteractiveBubble } from './visual/effects.js'
+import { animateLetters, initLoadTransition, initInteractiveBubble } from './visual/effects.js'
 
 // ------------------------------- IMPORT UTILS ---------------------------------
-import { setLanguage, updateTexts } from "./utils/languages.js";
+import { updateTexts } from "./utils/languages.js";
+import { applySettings } from "./utils/applySettings.js";
+import { attachEventListenersToLinks } from "./utils/utils.js";
 
 // ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
-// Set the base URL of the website
 export const BASE_URL = "https://localhost";
 export const BIG_TEXT = '20px';
 export const DEFAULT_TEXT = '16px';
@@ -37,13 +38,14 @@ let view = null;
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call initialization functions and the router function
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
 	// Initialization
 	initLoadTransition();
 	initInteractiveBubble();
+	applySettings();
 
 	// Load the view
-	await router();
+	router();
 });
 
 // ------------------------------- ROUTING -------------------------------
@@ -66,9 +68,8 @@ const routes = [
 	{ path: "/pacman-statistics", view: PacmanStatistics }
 ];
 
-// Loads the view (HTML and JS) in the div with id "app" according to the current path
+// Loads the view (HTML and JS) in the div with the id "app" according to the current path
 const router = async () => {
-
 	// Test if the current path is in the routes array
 	let match = routes.find(route => route.path === location.pathname);
 	
@@ -106,40 +107,6 @@ const router = async () => {
 	animateLetters();
 };
 
-// Load script
-const loadScript = async (view) => {
-	// Get the dynamic script element
-	const dynamicScript = document.getElementById('dynamic-script');
-
-	// Create a new script element
-	const newScript = document.createElement('script');
-    //newScript.type = 'module'; // Ensure the script is treated as an ES module
-	newScript.textContent = await view.getJS();
-	newScript.id = 'dynamic-script';
-
-	// Replace the dynamic script element with the new script element
-	// This is needed to load the new JS content
-	dynamicScript.parentNode.replaceChild(newScript, dynamicScript);
-}
-
-// Function to attach event listeners to the links
-// Overwrite the default behavior of the links (<a> tags)
-// When a link is clicked, the navigateTo function is called
-// The navigateTo function changes the URL and calls the router function 
-// to load the new view without reloading the page.
-const attachEventListenersToLinks = () => {
-	// Select all links with the attribute data-link
-	const links = document.querySelectorAll('[data-link]');
-
-	// Attach event listener to each link
-	links.forEach(link => {
-		link.addEventListener("click", e => {
-			e.preventDefault();
-			navigateTo(link.href);
-		});
-	});
-}
-
 // ------------------------------- NAVIGATION -------------------------------
 // Navigate to a new view
 export const navigateTo = url => {
@@ -152,50 +119,3 @@ export const navigateTo = url => {
 
 // Listen for the popstate event (back and forward buttons) and call the router function
 window.addEventListener("popstate", router);
-
-// ------------------------------- APPLY SETTINGS -------------------------------
-// Apply the settings from the local storage
-
-// Background gradients
-let graphicsSetting = localStorage.getItem('graphics');
-// If the graphics setting is not set, set it to "medium" by default
-if (!graphicsSetting) {
-	localStorage.setItem('graphics', 'medium');
-	graphicsSetting = 'medium';
-}
-
-if (graphicsSetting === 'ultra') {
-	document.querySelector('.gradients-container').style.display = 'block';
-	document.querySelector('#video-background').style.display = 'none';
-} else if (graphicsSetting === 'medium') {
-	document.querySelector('.gradients-container').style.display = 'none';
-	document.querySelector('#video-background').style.display = 'block';
-} else {
-	document.querySelector('.gradients-container').style.display = 'none';
-	document.querySelector('#video-background').style.display = 'none';
-}
-
-// Background noise
-let noiseSetting = localStorage.getItem('noise');
-// If the noise setting is not set, set it to "on" by default
-if (!noiseSetting) {
-	localStorage.setItem('noise', 'on');
-	noiseSetting = 'on';
-}
-
-if (noiseSetting === 'on') {
-	document.querySelector('.background-noise').style.display = 'block';
-	ids.moveNoiseInterval = setInterval(moveNoise, 100);
-} else {
-	document.querySelector('.background-noise').style.display = 'none';
-}
-
-// Set Language
-setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
-
-// Set text size
-if (localStorage.getItem('bigText') === 'on') {
-	document.documentElement.style.fontSize = BIG_TEXT;
-} else {
-	document.documentElement.style.fontSize = DEFAULT_TEXT;
-}
