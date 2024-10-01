@@ -2,6 +2,7 @@ import { updateTextForElem } from "../utils/languages.js";
 import { navigateTo } from '../index.js';
 import { BASE_URL } from '../index.js';
 import { isUserConnected } from "../utils/utils.js";
+import { validateUsername, validateEmail, validatePassword } from "../utils/validateInput.js";
 
 // Function that will be called when the view is loaded
 export async function editProfile () {
@@ -31,10 +32,9 @@ export async function editProfile () {
 	const avatarErrorElem = document.getElementById('avatar-error');
 	
 	// Add event listeners for when the user leaves the input fields
-	usernameElem.addEventListener('blur', validateUsername);
-	emailElem.addEventListener('blur', validateEmail);
-	passwordElem.addEventListener('blur', validatePassword);
-
+	usernameElem.addEventListener('blur', () => validateUsername(usernameElem, usernameErrorElem));
+	emailElem.addEventListener('blur', () => validateEmail(emailElem, emailErrorElem));
+	passwordElem.addEventListener('blur', () => validatePassword(passwordElem, passwordErrorElem));
 
 	avatarInputElem.addEventListener('change', () => {
 		changes.profilePicture = true;
@@ -63,7 +63,7 @@ export async function editProfile () {
 	const responseAvatar = await fetch(`${BASE_URL}/api/user_avatar`);
 
 	if (responseAvatar.status !== 200) {
-		avatarElem.src = 'static/assets/images/profile_pic_2.png';
+		avatarElem.src = 'static/assets/images/profile_pic_transparent.png';
 	} else {
 		const blob = await responseAvatar.blob();
 		const url = URL.createObjectURL(blob);
@@ -102,62 +102,6 @@ export async function editProfile () {
 		return true;
 	}
 
-	// Validates the username, returns true if it is valid
-	function validateUsername() {
-		const username = usernameElem.value;
-		if (username === '') {
-			updateTextForElem(usernameErrorElem, 'username-empty-error');
-			return false;
-		} else {
-			usernameErrorElem.textContent = '\u00A0';
-			return true;
-		}
-	}
-
-	function validateEmail() {
-		const email = emailElem.value;
-		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (email === '') {
-			updateTextForElem(emailErrorElem, 'e-mail-empty-error');
-			return false;
-		} else if (!emailPattern.test(email)) {
-			updateTextForElem(emailErrorElem, 'e-mail-invalid-error');
-			return false;
-		} else {
-			emailErrorElem.textContent = '\u00A0';
-			return true;
-		}
-	}
-
-	function validatePassword() {
-		const password = passwordElem.value;
-		if (password === '') {
-			updateTextForElem(passwordErrorElem, 'password-empty-error');
-			return false;
-		} else if (password.length < 8) {
-			updateTextForElem(passwordErrorElem, 'password-short-error');
-			return false;
-		} else if (password.length > 64) {
-			updateTextForElem(passwordErrorElem, 'password-long-error');
-			return false;
-		} else if (!/[A-Z]/.test(password)) {
-			updateTextForElem(passwordErrorElem, 'password-uppercase-error');
-			return false;
-		} else if (!/[a-z]/.test(password)) {
-			updateTextForElem(passwordErrorElem, 'password-lowercase-error');
-			return false;
-		} else if (!/\d/.test(password)) {
-			updateTextForElem(passwordErrorElem, 'password-number-error');
-			return false;
-		} else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-			updateTextForElem(passwordErrorElem, 'password-special-error');
-			return false;
-		} else {
-			passwordErrorElem.textContent = '\u00A0';
-			return true;
-		}
-	}
-
 	async function submitForm(e) {
 		// Prevent the default behavior of the form
 		e.preventDefault();
@@ -174,19 +118,19 @@ export async function editProfile () {
 			formData.append('profile_picture', avatarInputElem.files[0]);
 		}
 		if (changes.username) {
-			if (!validateUsername()) {
+			if (!validateUsername(usernameElem, usernameErrorElem)) {
 				formValid = false;
 			}
 			formData.append('username', usernameElem.value);
 		}
 		if (changes.email) {
-			if (!validateEmail()) {
+			if (!validateEmail(emailElem, emailErrorElem)) {
 				formValid = false;
 			}
 			formData.append('email', emailElem.value);
 		}
 		if (changes.password) {
-			if (!validatePassword()) {
+			if (!validatePassword(passwordElem, passwordErrorElem)) {
 				formValid = false;
 			}
 			formData.append('password', passwordElem.value);
