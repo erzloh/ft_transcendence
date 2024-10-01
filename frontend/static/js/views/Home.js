@@ -1,5 +1,5 @@
 import AbstractView from "./AbstractView.js";
-import { home, eventListeners } from "../scripts/home.js";
+// import { home } from "../scripts/home.js";
 
 export default class extends AbstractView {
     constructor() {
@@ -10,19 +10,4 @@ export default class extends AbstractView {
     async getHtml() {
 		return (await fetch("static/html/home.html")).text();
     }
-	
-	loadJS() {
-		home();
-	}
-
-	stopJS(){
-		// No loop in this view
-	}
-
-
-	cleanUpEventListeners() {
-		for (const [event, listener] of Object.entries(eventListeners)) {
-			document.removeEventListener(event, listener);
-		}
-	}
 }

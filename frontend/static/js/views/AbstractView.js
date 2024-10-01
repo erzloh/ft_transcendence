@@ -18,8 +18,8 @@ export default class {
 	// Calls a function that contains the JavaScript code for the view
 	loadJS() {}
 
+	// Stops the JavaScript code of the view (used for views with loops like in the games)
 	stopJS() {}
-
 
 	// Removes all the event listeners attached to the document that were added by the view 
 	cleanUpEventListeners() {}
