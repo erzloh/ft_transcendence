@@ -226,8 +226,8 @@ export class pongThree {
 			},
 			body: JSON.stringify(matchData)
 		})
-		if (response.status === 400) {
-			console.log("User isn't logged. Game history has not been saved.")
+		if (response.status > 300) {
+			console.log("Could not save game in user history. Is user logged ?")
 		} else if (response.status < 300) {
 			updateTextForElem(this.toastBody, "game-saved");
 			this.toastBootstrap.show();

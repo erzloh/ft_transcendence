@@ -215,7 +215,7 @@ class PacmanGame {
 			},
 			body: JSON.stringify(matchData)
 		});
-		if (response.status === 400) {
+		if (response.status > 300) {
 			console.log("Could not save game in user history. Is user logged ?");
 		} else if (response.status < 300) {
 			updateTextForElem(this.toastBody, "game-saved");
