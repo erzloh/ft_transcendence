@@ -81,6 +81,12 @@ const router = async () => {
     if (view) {
         view.cleanUpEventListeners();
         view.stopJS();
+
+		const modals = document.querySelectorAll('.modal.show');
+		modals.forEach(modal => {
+			const modalInstance = bootstrap.Modal.getInstance(modal);
+			modalInstance.hide();
+		});
     }
 	
 	// Create a new instance of the view

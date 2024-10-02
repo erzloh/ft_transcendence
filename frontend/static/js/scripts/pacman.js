@@ -305,7 +305,7 @@ class PacmanGame {
 		this.timer = new Timer(this);
 
 		// Create the cells array
-		this.cells = this.createCellArray(tmpData);
+		this.cells = this.parseMap(tmpData);
 
 		if (this.gamemode == "objective")
 			this.pacman.objective = this.objective;
@@ -322,7 +322,7 @@ class PacmanGame {
 	}
 
 	// Create the cells array
-	createCellArray(data) {
+	parseMap(data) {
 		let tmp = [];
 		for (let y = 0; y < this.height; y++) {
 			let row = [];
@@ -343,41 +343,27 @@ class PacmanGame {
 	}
 
 	createCharacter(type, x, y) {
-		if (type == "pacman") {
-			switch (this.pacmanSkin) {
-				case "pac-man":
-					this.pacman = new Pacman(x, y, "none", this);
-					break;
-				case "pac-woman":
-					this.pacman = new PacWoman(x, y, "none", this);
-					break;
-				case "pac-MIB":
-					this.pacman = new PacMIB(x, y, "none", this);
-					break;
-				case "pac-venturer":
-					this.pacman = new Pacventurer(x, y, "none", this);
-					break;
-				default:
-					break;
-			}
+		const pacmanSkins = {
+			"pac-man": Pacman,
+			"pac-woman": PacWoman,
+			"pac-MIB": PacMIB,
+			"pac-venturer": Pacventurer,
+		};
+	
+		const ghostSkins = {
+			"blue-ghost": BlueGhost,
+			"orange-ghost": OrangeGhost,
+			"pink-ghost": PinkGhost,
+			"green-ghost": GreenGhost,
+		};
+	
+		if (type === "pacman") {
+			const PacmanClass = pacmanSkins[this.pacmanSkin];
+			if (PacmanClass) this.pacman = new PacmanClass(x, y, "none", this);
 		} 
-		else if (type == "ghost") {
-			switch (this.ghostSkin) {
-				case "blue-ghost":
-					this.ghost = new BlueGhost(x, y, "none", this);
-					break;
-				case "orange-ghost":
-					this.ghost = new OrangeGhost(x, y, "none", this);
-					break;
-				case "pink-ghost":
-					this.ghost = new PinkGhost(x, y, "none", this);
-					break;
-				case "green-ghost":
-					this.ghost = new GreenGhost(x, y, "none", this);
-					break;
-				default:
-					break;
-			}
+		else if (type === "ghost") {
+			const GhostClass = ghostSkins[this.ghostSkin];
+			if (GhostClass) this.ghost = new GhostClass(x, y, "none", this);
 		}
 	}
 

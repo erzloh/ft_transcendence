@@ -37,7 +37,7 @@
 	"pac-man-passive" : "passif : gourmandise",
 	"pac-man-passive-desc" : "En mangeant un fruit, Pac-Man entre dans une frénésie pendant 5 secondes.",
 	"pac-man-frenzy" : "effet : frénésie",
-	"pac-man-frenzy-desc" : "Pac-Man se déplace 20% plus vite et peut manger le Fantôme. Manger le Fantôme le désactive pendant 5 secondes et accorde 300 points.",
+	"pac-man-frenzy-desc" : "Pac-Man se déplace 30% plus vite et peut manger le Fantôme. Manger le Fantôme le désactive pendant 5 secondes et accorde 300 points.",
 
 	"pac-woman-name" : "pac-woman",
 	"pac-woman-active" : "actif : turbo",

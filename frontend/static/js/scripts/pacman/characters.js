@@ -172,8 +172,8 @@ export class Pacman extends PacmanBase {
 		super(x, y, direction, pacmanGame);
 		this.spellName = "gluttony";
 		this.frenzyDuration = 5;
-		this.frenzyCooldown = 20;
-		this.frenzySpeedBoost = 120 / 100;
+		this.frenzyCooldown = 17;
+		this.frenzySpeedBoost = 130 / 100;
 		this.disableGhostDuration = 5;
 		this.inFrenzy = false;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.frenzyDuration, this.frenzyCooldown, this.stopSpell.bind(this));
@@ -274,7 +274,7 @@ export class PacMIB extends PacmanBase {
 		this.stunCooldown = 20;
 		this.baseSpeed = this.speed;
 		this.speedBoost = this.speed * 120/100;
-		this.speedDuration = 5;
+		this.speedDuration = 3;
 		this.speedy = false;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, this.stunDuration, this.stunCooldown, this.stopSpell.bind(this));
 		this.warpSpeedTimer = new CooldownTimer(null, this, this.speedDuration, this.speedDuration, this.stopSpeedBoost.bind(this));
