@@ -25,10 +25,7 @@ export function setupScene(canvasRef) {
 	bloomPass.strength = 0.15;
 	bloomPass.radius = 0.2;
 	bloomPass.threshold = 0.4;
-
-	//renderer.toneMapping = THREE.LinearToneMapping;
-	//renderer.toneMappingExposure = 0.5;
-
+	
 	const outputPass = new OutputPass();
 	composer.addPass(outputPass);
 
