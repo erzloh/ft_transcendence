@@ -119,7 +119,7 @@ class PacmanGame {
 		this.mapName = mapNameString ? JSON.parse(mapNameString) : "maze";
 
 		const themeString = localStorage.getItem('pacmanTheme');
-		this.theme = themeString ? JSON.parse(themeString) : {
+		this.theme = themeString ? JSON.parse(themeString) : { name: 'obsidian',
 			backgroundColor : 'rgb(10, 0, 20)', ghostWallColor1 : 'rgb(110, 55, 225)', ghostWallColor2 : 'rgb(75, 20, 200)',
 			wallColor : 'rgb(60, 0, 120)', dotColor : 'rgb(105,55,165)', glowColor : 'rgb(145,85,210)'
 		};

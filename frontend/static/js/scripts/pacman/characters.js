@@ -324,7 +324,7 @@ export class Pacventurer extends PacmanBase {
 		this.grapplingCD = 15;
 		this.cooldownTimer = new CooldownTimer(this.cooldownDisplay, this, 0, this.grapplingCD,	this.stopSpell.bind(this));
 		this.grappling = false;
-		this.grapplingSpeed = 1000/100;
+		this.grapplingSpeed = 800/100;
 		this.grapplingDirection = "";
 	}
 
