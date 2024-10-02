@@ -100,9 +100,6 @@ const router = async () => {
 	// Load the JS of the view
 	view.loadJS();
 
-	// Focus on the main element
-	appDiv.focus();
-
 	// Overwrite the default behavior of the links to not reload the page
 	attachEventListenersToLinks();
 
