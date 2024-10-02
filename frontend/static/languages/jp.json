@@ -215,7 +215,7 @@
 	"save-success": "保存成功！",
 	"save-failure": "保存中にエラーが発生しました",
 	"avatar-empty-error": "アバターは空にできません",
-	"avatar-size-error": "アバターは2MB未満である必要があります",
+	"avatar-size-error": "アバターは1MB未満である必要があります",
 	"avatar-invalid-error": "アバターが無効です",
 
 	"logout": "ログアウト",

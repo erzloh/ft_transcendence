@@ -216,7 +216,7 @@
 	"save-success": "sauvegarde réussie!",
 	"save-failure": "une erreur s'est produite lors de la sauvegarde",
 	"avatar-invalid-error": "avatar invalide",
-	"avatar-size-error": "l'avatar doit être inférieur à 2 Mo",
+	"avatar-size-error": "l'avatar doit être inférieur à 1 Mo",
 	"avatar-empty-error": "l'avatar ne peut pas être vide",
 
 	"friends": "amis",

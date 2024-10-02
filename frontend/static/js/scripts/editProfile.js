@@ -94,7 +94,7 @@ export async function editProfile () {
 			return false;
 		}
 		// check if the file is less than 2MB
-		if (avatar.size > 2 * 1024 * 1024) {
+		if (avatar.size > 1024 * 1024) {
 			updateTextForElem(avatarErrorElem, 'avatar-size-error');
 			return false;
 		}
