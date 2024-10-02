@@ -7,12 +7,11 @@ export async function profile() {
 		const response = await fetch(`${BASE_URL}/api/profile`);
 
 		// If the user is not logged in, redirect to the login page
-		if (response.status === 401 || response.status === 400) {
+		if (response.status !== 200) {
 			navigateTo('/signin');
 		}
-
 		// If the user is logged in, show the profile page
-		if (response.status === 200) {
+		else {
 			const responseData = await response.json();
 			const user = responseData.user;
 
@@ -30,7 +29,7 @@ export async function profile() {
 			const responseAvatar = await fetch(`${BASE_URL}/api/user_avatar`);
 
 			if (responseAvatar.status !== 200) {
-				avatarElem.src = 'static/assets/images/profile_pic_2.png';
+				avatarElem.src = 'static/assets/images/profile_pic_transparent.png';
 			} else {
 				const blob = await responseAvatar.blob();
 				const url = URL.createObjectURL(blob);
