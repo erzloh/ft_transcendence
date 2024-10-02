@@ -57,7 +57,7 @@ export class PongMenu {
 		const gamemodeString = localStorage.getItem('pongGamemode');
 		this.gamemode = gamemodeString ? JSON.parse(gamemodeString) : "pvp";
 		this.lastGamemode = "pvp";
-		localStorage.setItem('gamemode', JSON.stringify(this.gamemode));
+		localStorage.setItem('pongGamemode', JSON.stringify(this.gamemode));
 
 		const gamestyleString = localStorage.getItem('pongGamestyle');
 		this.gamestyle = gamestyleString ? JSON.parse(gamestyleString) : "enhanced";
@@ -607,7 +607,8 @@ export class PongMenu {
 		this.gamestyle = gamestyle;
 		// TODO: change this to /pong3d
 		this.btnStartGame.href = this.gamestyle == "3D" ? "/pong3d" : "/pong";
-		localStorage.setItem('gamestyle', JSON.stringify(this.gamestyle));
+		localStorage.setItem('pongGamestyle', JSON.stringify(this.gamestyle));
+		localStorage.setItem('pongGamemode', JSON.stringify(this.gamemode));
 		updateTextForElem(this.currentGamestyleLabel, this.gamestyle);
 
 		this.showGamestyleConfig();
