@@ -19,8 +19,8 @@ export async function friends () {
 	const userElementsContainer = document.getElementById('user-elements');
 	const friendElementsContainer = document.getElementById('friend-elements');
 
-	// Get the current user's username
 	const fillUsersContainter = async () => {
+		// Get the current user's username
 		const responseProfile = await fetch(`${BASE_URL}/api/profile`);
 		if (responseProfile.status === 200) {
 			const responseData = await responseProfile.json();
@@ -42,7 +42,7 @@ export async function friends () {
 				// Empty the container
 				userElementsContainer.innerHTML = '';
 
-				users.map(async user => {
+				users.forEach(async user => {
 					// Check that the user is not the current user
 					if (user.username === current_username) {
 						return;
@@ -73,8 +73,6 @@ export async function friends () {
 						await fillFriendsContainter();
 					}
 
-					// const url = 'static/assets/images/profile_pic_transparent.png';
-
 					// Create the user element
 					// Create the container that contains the profile pic and the username
 					const userDiv = document.createElement('div');
@@ -94,7 +92,7 @@ export async function friends () {
 
 					// Append the profile picture and username
 					userDiv.appendChild(profilePic);
-					userDiv.appendChild(userName);
+					userDiv.appendChild(userName);	
 
 					// Create the plus icon img element
 					const minusIcon = document.createElement('img');
@@ -149,7 +147,7 @@ export async function friends () {
 			// Empty the container
 			friendElementsContainer.innerHTML = '';
 
-			friends.map(async friend => {
+			friends.forEach(async friend => {
 
 				// Event Listener to remove a friend
 				const removeFriend = async () => {

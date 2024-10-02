@@ -1,6 +1,7 @@
 import { BASE_URL } from '../index.js';
 import { updateTextForElem } from '../utils/languages.js';
 import { navigateTo } from '../index.js';
+import { validateUsername, validateEmail, validatePassword } from '../utils/validateInput.js';
 
 // Function that will be called when the view is loaded
 export function signUp () {
@@ -14,82 +15,25 @@ export function signUp () {
 	const passwordErrorElem = document.getElementById('password-error');
 	
 	// Add event listeners for when the user leaves the input fields
-	usernameElem.addEventListener('blur', validateUsername);
-	emailElem.addEventListener('blur', validateEmail);
-	passwordElem.addEventListener('blur', validatePassword);
+	usernameElem.addEventListener('blur', () => validateUsername(usernameElem, usernameErrorElem));
+	emailElem.addEventListener('blur', () => validateEmail(emailElem, emailErrorElem));
+	passwordElem.addEventListener('blur', () => validatePassword(passwordElem, passwordErrorElem));
 	
 	// Add event listener for the submit button
 	const signUpButtonElem = document.getElementById('sign-up-button');
 	signUpButtonElem.addEventListener('click', submitForm);
-
-	// Validates the username, returns true if it is valid
-	function validateUsername() {
-		const username = usernameElem.value;
-		if (username === '') {
-			updateTextForElem(usernameErrorElem, 'username-empty-error');
-			return false;
-		} else {
-			usernameErrorElem.textContent = '\u00A0';
-			return true;
-		}
-	}
-
-	function validateEmail() {
-		const email = emailElem.value;
-		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (email === '') {
-			updateTextForElem(emailErrorElem, 'e-mail-empty-error');
-			return false;
-		} else if (!emailPattern.test(email)) {
-			updateTextForElem(emailErrorElem, 'e-mail-invalid-error');
-			return false;
-		} else {
-			emailErrorElem.textContent = '\u00A0';
-			return true;
-		}
-	}
-
-	function validatePassword() {
-		const password = passwordElem.value;
-		if (password === '') {
-			updateTextForElem(passwordErrorElem, 'password-empty-error');
-			return false;
-		} else if (password.length < 8) {
-			updateTextForElem(passwordErrorElem, 'password-short-error');
-			return false;
-		} else if (password.length > 64) {
-			updateTextForElem(passwordErrorElem, 'password-long-error');
-			return false;
-		} else if (!/[A-Z]/.test(password)) {
-			updateTextForElem(passwordErrorElem, 'password-uppercase-error');
-			return false;
-		} else if (!/[a-z]/.test(password)) {
-			updateTextForElem(passwordErrorElem, 'password-lowercase-error');
-			return false;
-		} else if (!/\d/.test(password)) {
-			updateTextForElem(passwordErrorElem, 'password-number-error');
-			return false;
-		} else if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
-			updateTextForElem(passwordErrorElem, 'password-special-error');
-			return false;
-		} else {
-			passwordErrorElem.textContent = '\u00A0';
-			return true;
-		}
-	}
 
 	async function submitForm(e) {
 		// Prevent the default behavior of the form
 		e.preventDefault();
 
 		// Make sure that all the fields are valid (at least front-end-wise)
-		const usernameValid = validateUsername();
-		const emailValid = validateEmail();
-		const passwordValid = validatePassword();
+		const usernameValid = validateUsername(usernameElem, usernameErrorElem);
+		const emailValid = validateEmail(emailElem, emailErrorElem);
+		const passwordValid = validatePassword(passwordElem, passwordErrorElem);
 
 		// If all the fields are valid, send the data to the server
 		if (usernameValid && emailValid && passwordValid) {
-			// Prepare the data to be sent
 			const username = usernameElem.value;
 			const email = emailElem.value;
 			const password = passwordElem.value;
@@ -111,9 +55,7 @@ export function signUp () {
 
 			// If the status is an error, show the error message in the correct fields
 			if (response.status === 400) {
-				// Get the response data into json
 				const responseData = await response.json();
-				console.log(responseData);
 				if (responseData.username) {
 					updateTextForElem(document.getElementById('username-error'), responseData.username[0]);
 				}
@@ -148,7 +90,7 @@ export function signUp () {
 				// If the response status is unknown, show an error message
 				const containerLogin = document.querySelector('.container-login');
 				containerLogin.innerHTML = `
-					<div class="error">
+					<div class="error text-center">
 						<h1 id="failure-message" class="text-white">An error occured in the server</h1>
 						<p class="text-white">${responseData.error}</p>
 					</div>

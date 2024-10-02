@@ -1,5 +1,6 @@
 import { navigateTo } from "../index.js";
 import { updateTextForElem } from "../utils/languages.js";
+import { validateUsername } from "../utils/validateInput.js";
 
 export function signIn() {
 	// Get the form elements from the HTML
@@ -9,24 +10,12 @@ export function signIn() {
 	const passwordErrorElem = document.getElementById("password-error");
 
 	// Add event listeners for when the user leaves the input fields
-	usernameElem.addEventListener("blur", validateUsername);
-	passwordElem.addEventListener("blur", validatePassword);
+	usernameElem.addEventListener("blur", () => validateUsername(usernameElem, usernameErrorElem));
+	passwordElem.addEventListener("blur", () => validatePassword(passwordElem, passwordErrorElem));
 
 	const signInButton = document.querySelector("#sign-in-button");
 
-	// Validates the username, returns true if it is valid
-	function validateUsername() {
-		const username = usernameElem.value;
-		if (username === '') {
-			updateTextForElem(usernameErrorElem, 'username-empty-error');
-			return false;
-		} else {
-			usernameErrorElem.textContent = '\u00A0';
-			return true;
-		}
-	}
-
-	function validatePassword() {
+	const validatePassword = (passwordElem, passwordErrorElem) => {
 		const password = passwordElem.value;
 		if (password === '') {
 			updateTextForElem(passwordErrorElem, 'password-empty-error');
@@ -39,17 +28,12 @@ export function signIn() {
 
 	// Add event listener for the submit button
 	signInButton.addEventListener("click", async (e) => {
-		// // test
-		// document.cookie = "session=123";
-		// navigateTo("/profile");
-		// return
-
 		// Prevent the default behavior of the form
 		e.preventDefault();
 
 		// Validate the form
-		const usernameValid = validateUsername();
-		const passwordValid = validatePassword();
+		const usernameValid = validateUsername(usernameElem, usernameErrorElem);
+		const passwordValid = validatePassword(passwordElem, passwordErrorElem);
 
 		// If the form is not valid, return
 		if (!usernameValid || !passwordValid) {
@@ -82,16 +66,14 @@ export function signIn() {
 
 		} else if (response.status === 200) {
 			// If the response status is success, navigate to the profile page
-			// // simulate getting a cookie from the server
-			// document.cookie = "session=123";
 			navigateTo("/profile");
 		} else {
 			// If the response status is unknown, show an error message
 			const containerLogin = document.querySelector('.container-login');
 			containerLogin.innerHTML = `
-				<div class="error">
+				<div class="error text-center">
 					<h5 id="failure-message" class="text-white">An error occured in the server</h5>
-					<p class="text-white">${responseData.error}</p>
+					<p class="text-white"></p>
 				</div>
 			`;
 			updateTextForElem(document.getElementById('failure-message'), 'sign-up-failure');
