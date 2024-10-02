@@ -89,12 +89,9 @@ export async function pongStatistics () {
 
 		// Get the pvp stats and add them to the table
 		const fillPvpStats = async () => {
-			console.log('Fetching pvp stats');
 			const response = await fetch(`${BASE_URL}/api/PvPong_match_history/`);
-			console.log(response);
 			if (response.status === 200) {
 				const stats = await response.json();
-				console.log(stats);
 
 				// If there are no stats
 				if (stats.length === 0) {
@@ -109,7 +106,7 @@ export async function pongStatistics () {
 				}
 
 				// Add the stats to the table
-				stats.map(stat => {
+				stats.forEach(stat => {
 					const tr = document.createElement('tr');
 					const columns = ['match_date', 'player_one', 'player_two', 'match_score', 'winner', 'match_duration'];
 					columns.forEach(column => {
@@ -157,12 +154,9 @@ export async function pongStatistics () {
 
 		// Get the ai stats and add them to the table
 		const fillAiStats = async () => {
-			console.log('Fetching ai stats');
 			const response = await fetch(`${BASE_URL}/api/AIpong_match_history/`);
-			console.log(response);
 			if (response.status === 200) {
 				const stats = await response.json();
-				console.log(stats);
 
 				// If there are no stats
 				if (stats.length === 0) {
@@ -177,7 +171,7 @@ export async function pongStatistics () {
 				}
 
 				// Add the stats to the table
-				stats.map(stat => {
+				stats.forEach(stat => {
 					const tr = document.createElement('tr');
 					const columns = ['match_date', 'player_one', 'ai_level', 'match_score', 'winner', 'match_duration'];
 					columns.forEach(column => {
@@ -224,12 +218,9 @@ export async function pongStatistics () {
 
 		// Get the tournament stats and add them to the table
 		const fillTournamentStats = async () => {
-			console.log('Fetching tournament stats');
 			const response = await fetch(`${BASE_URL}/api/tournament_history/`);
-			console.log(response);
 			if (response.status === 200) {
 				const stats = await response.json();
-				console.log(stats);
 
 				// If there are no stats
 				if (stats.length === 0) {
@@ -244,7 +235,7 @@ export async function pongStatistics () {
 				}
 
 				// Add the stats to the table
-				stats.map(stat => {
+				stats.forEach(stat => {
 					const tr = document.createElement('tr');
 					const columns = ['date', 'player_one', 'player_two', 'player_three', 'player_four', 'winner', 'duration'];
 					columns.forEach(column => {
@@ -269,7 +260,7 @@ export async function pongStatistics () {
 
 	// Select the pvp stats by default
 	pvpBtn.classList.add('selected');
-	pvpBtn.setAttribute('aria-presed', 'true');
+	pvpBtn.setAttribute('aria-pressed', 'true');
 	// Fill the table with pvp stats by default
 	fillPvpTable();
 	// Fill the global stats table
@@ -277,9 +268,9 @@ export async function pongStatistics () {
 
 	// Add Event Listener to each stat button
 	pvpBtn.addEventListener('click', () => {
-		// Remove the selected class from all buttons
 		pvpBtn.classList.add('selected');
 		pvpBtn.setAttribute('aria-presed', 'true');
+		// Remove the selected class from all oter buttons
 		aiBtn.classList.remove('selected');
 		aiBtn.setAttribute('aria-presed', 'false');
 		tournamentBtn.classList.remove('selected');
@@ -290,11 +281,11 @@ export async function pongStatistics () {
 	});
 
 	aiBtn.addEventListener('click', () => {
-		// Remove the selected class from all buttons
-		pvpBtn.classList.remove('selected');
-		pvpBtn.setAttribute('aria-presed', 'false');
 		aiBtn.classList.add('selected');
 		aiBtn.setAttribute('aria-presed', 'true');
+
+		pvpBtn.classList.remove('selected');
+		pvpBtn.setAttribute('aria-presed', 'false');
 		tournamentBtn.classList.remove('selected');
 		tournamentBtn.setAttribute('aria-presed', 'false');
 
@@ -303,13 +294,13 @@ export async function pongStatistics () {
 	});
 
 	tournamentBtn.addEventListener('click', () => {
-		// Remove the selected class from all buttons
+		tournamentBtn.classList.add('selected');
+		tournamentBtn.setAttribute('aria-presed', 'true');
+
 		pvpBtn.classList.remove('selected');
 		pvpBtn.setAttribute('aria-presed', 'false');
 		aiBtn.classList.remove('selected');
 		aiBtn.setAttribute('aria-presed', 'false');
-		tournamentBtn.classList.add('selected');
-		tournamentBtn.setAttribute('aria-presed', 'true');
 
 		// Fill the table with tournament stats
 		fillTournamentTable();
