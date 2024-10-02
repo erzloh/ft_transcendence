@@ -90,7 +90,7 @@ export function signUp () {
 				// If the response status is unknown, show an error message
 				const containerLogin = document.querySelector('.container-login');
 				containerLogin.innerHTML = `
-					<div class="error">
+					<div class="error text-center">
 						<h1 id="failure-message" class="text-white">An error occured in the server</h1>
 						<p class="text-white">${responseData.error}</p>
 					</div>

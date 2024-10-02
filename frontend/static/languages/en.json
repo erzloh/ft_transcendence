@@ -218,7 +218,7 @@
 	"save-success": "save successful!",
 	"save-failure": "an error occured while saving",
 	"avatar-invalid-error": "avatar must be a valid image file",
-	"avatar-size-error": "avatar must be at most 1MB",
+	"avatar-size-error": "avatar must be at most 2MB",
 	"avatar-empty-error": "avatar cannot be empty",
 
 	"friends": "friends",

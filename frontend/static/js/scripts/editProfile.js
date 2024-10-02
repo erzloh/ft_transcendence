@@ -39,8 +39,8 @@ export async function editProfile () {
 	avatarInputElem.addEventListener('change', () => {
 		changes.profilePicture = true;
 		// change the image if its valid
-		const avatar = avatarInputElem.files[0];
 		if (validateAvatar()) {
+			const avatar = avatarInputElem.files[0];
 			const url = URL.createObjectURL(avatar);
 			avatarElem.src = url;
 		}
@@ -106,6 +106,20 @@ export async function editProfile () {
 		// Prevent the default behavior of the form
 		e.preventDefault();
 
+		// Check if at least one input has changed
+		let changesAvailable = false;
+
+		for (let value of Object.values(changes)) {
+			if (value === true) {
+				changesAvailable = true;
+				break;
+			}
+		}
+
+		if (!changesAvailable) {
+			return;
+		}
+
 		// Data to be sent to the server
 		const formData = new FormData();
 
@@ -136,18 +150,7 @@ export async function editProfile () {
 			formData.append('password', passwordElem.value);
 		}
 
-		// Check if at least one inpout has changed
-		let changesAvailable = false;
-
-		for (let value of Object.values(changes)) {
-			if (value === true) {
-				changesAvailable = true;
-				break;
-			}
-		}
-
-		if (formValid && changesAvailable) {
-			console.log(formData);
+		if (formValid) {
 			// Send the data to the server
 			const response = await fetch(`${BASE_URL}/api/update_user`, {
 				method: 'PUT',
@@ -158,7 +161,7 @@ export async function editProfile () {
 			if (response.status === 400) {
 				// Get the response data into json
 				const responseData = await response.json();
-				console.log(responseData);
+
 				if (responseData.username) {
 					updateTextForElem(document.getElementById('username-error'), responseData.username[0]);
 				}
@@ -189,19 +192,15 @@ export async function editProfile () {
 					navigateTo('/profile');
 				}, 1000);
 			} else {
-				const responseData = await response.json();
-				// If the response status is unknown, show an error message
-				const containerLogin = document.querySelector('.container-login');
+				const containerLogin = document.querySelector('.container-edit');
 				containerLogin.innerHTML = `
-					<div class="error">
+					<div class="error text-center">
 						<h1 id="failure-message" class="text-white">An error occured in the server</h1>
-						<p class="text-white">${responseData.error}</p>
+						<p class="text-white"></p>
 					</div>
 				`;
 				updateTextForElem(document.getElementById('failure-message'), 'save-failure');
 			}
-		} else {
-			console.log('Form is not valid');
 		}
 	};
 }

@@ -32,10 +32,10 @@ export const validatePassword = (passwordElem, passwordErrorElem) => {
 	if (password === '') {
 		updateTextForElem(passwordErrorElem, 'password-empty-error');
 		return false;
-	} else if (password.length < 8) {
+	} else if (password.length < 9) {
 		updateTextForElem(passwordErrorElem, 'password-short-error');
 		return false;
-	} else if (password.length > 64) {
+	} else if (password.length > 20) {
 		updateTextForElem(passwordErrorElem, 'password-long-error');
 		return false;
 	} else if (!/[A-Z]/.test(password)) {

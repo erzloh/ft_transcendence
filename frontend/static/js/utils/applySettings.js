@@ -57,9 +57,9 @@ const applyTextSize = () => {
 }
 
 // Apply the settings from the local storage
-export const applySettings = () => {
+export const applySettings = async () => {
 	applyGraphics();
 	applyNoise(100);
 	applyTextSize();
-	setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
+	await setLanguage(localStorage.getItem('language') ? localStorage.getItem('language') : 'en');
 }

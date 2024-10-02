@@ -38,11 +38,11 @@ let view = null;
 
 // ------------------------------- THE APP STARTS HERE -------------------------------
 // When the DOM is loaded, call initialization functions and the router function
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
 	// Initialization
 	initLoadTransition();
 	initInteractiveBubble();
-	applySettings();
+	await applySettings();
 
 	// Load the view
 	router();

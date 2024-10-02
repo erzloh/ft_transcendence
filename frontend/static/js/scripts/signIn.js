@@ -15,7 +15,7 @@ export function signIn() {
 
 	const signInButton = document.querySelector("#sign-in-button");
 
-	function validatePassword(passwordElem, passwordErrorElem) {
+	const validatePassword = (passwordElem, passwordErrorElem) => {
 		const password = passwordElem.value;
 		if (password === '') {
 			updateTextForElem(passwordErrorElem, 'password-empty-error');
@@ -71,9 +71,9 @@ export function signIn() {
 			// If the response status is unknown, show an error message
 			const containerLogin = document.querySelector('.container-login');
 			containerLogin.innerHTML = `
-				<div class="error">
+				<div class="error text-center">
 					<h5 id="failure-message" class="text-white">An error occured in the server</h5>
-					<p class="text-white">${responseData.error}</p>
+					<p class="text-white"></p>
 				</div>
 			`;
 			updateTextForElem(document.getElementById('failure-message'), 'sign-up-failure');
