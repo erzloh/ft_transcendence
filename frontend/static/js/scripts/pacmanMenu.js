@@ -334,7 +334,7 @@ export class PacmanMenu {
 				updateTextForElem(pacmanDesc1, "pac-man-passive-desc");
 				updateTextForElem(pacmanTitle2, "pac-man-frenzy");
 				updateTextForElem(pacmanDesc2, "pac-man-frenzy-desc");
-				cooldown.textContent = "20";
+				cooldown.textContent = "17";
 				break;
 			case "pac-woman":
 				updateTextForElem(pacmanTitle, "pac-woman-name");

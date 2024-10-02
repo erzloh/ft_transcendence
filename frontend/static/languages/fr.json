@@ -37,7 +37,7 @@
 	"pac-man-passive" : "passif : gourmandise",
 	"pac-man-passive-desc" : "En mangeant un fruit, Pac-Man entre dans une frénésie pendant 5 secondes.",
 	"pac-man-frenzy" : "effet : frénésie",
-	"pac-man-frenzy-desc" : "Pac-Man se déplace 20% plus vite et peut manger le Fantôme. Manger le Fantôme le désactive pendant 5 secondes et accorde 300 points.",
+	"pac-man-frenzy-desc" : "Pac-Man se déplace 30% plus vite et peut manger le Fantôme. Manger le Fantôme le désactive pendant 5 secondes et accorde 300 points.",
 
 	"pac-woman-name" : "pac-woman",
 	"pac-woman-active" : "actif : turbo",
@@ -49,7 +49,7 @@
 	"pac-MIB-active" : "actif : flash",
 	"pac-MIB-active-desc" : "Pac-Man-In-Black aveugle le Fantôme, le désactivant pendant 3 secondes.",
 	"pac-MIB-passive" : "passif : maître de la téléportation",
-	"pac-MIB-passive-desc" : "Pac-Man-In-Black est habitué à se téléporter, il gagne 20% de vitesse pendant 5 secondes après une téléportation.",
+	"pac-MIB-passive-desc" : "Pac-Man-In-Black est habitué à se téléporter, il gagne 20% de vitesse pendant 3 secondes après une téléportation.",
 
 	"pac-venturer-name" : "pac-aventurier",
 	"pac-venturer-active" : "actif : grappin",

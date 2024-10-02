@@ -37,7 +37,7 @@
 	"pac-man-passive" : "passive: gluttony",
 	"pac-man-passive-desc" : "When eating a fruit, Pac-Man goes into a frenzy for 5 seconds.",
 	"pac-man-frenzy" : "effect: frenzy",
-	"pac-man-frenzy-desc" : "Pac-Man moves 20% faster and can eat the Ghost. Eating the Ghost disables it for 5 seconds and grants Pac-Man 300 points.",
+	"pac-man-frenzy-desc" : "Pac-Man moves 30% faster and can eat the Ghost. Eating the Ghost disables it for 5 seconds and grants Pac-Man 300 points.",
 
 	"pac-woman-name" : "pac-woman",
 	"pac-woman-active" : "active: turbo",
@@ -49,7 +49,7 @@
 	"pac-MIB-active" : "active: flash",
 	"pac-MIB-active-desc" : "Pac-Man-In-Black flashes the Ghost, disabling it for 3 seconds.",
 	"pac-MIB-passive" : "passive: warp master",
-	"pac-MIB-passive-desc" : "Pac-Man-In-Black is used to teleporting, he gains 20% move speed for 5 seconds after warping.",
+	"pac-MIB-passive-desc" : "Pac-Man-In-Black is used to teleporting, he gains 20% move speed for 3 seconds after warping.",
 
 	"pac-venturer-name" : "pac-venturer",
 	"pac-venturer-active" : "active: grappling hook",
