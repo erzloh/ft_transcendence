@@ -365,7 +365,6 @@ export class Pad {
 			if (this.ball && this.ball.dx > 0) {
 				this.predictedPosition = this.predictBallPosition();
 				// console.log("Predicted Position:", this.predictedPosition);
-				// console.log(this.pG.aiDifficulty);
 			}
 		}
 		if (this.predictedPosition && this.ball && this.ball.dx > 0) {
