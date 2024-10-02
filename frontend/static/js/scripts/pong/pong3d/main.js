@@ -38,7 +38,6 @@ export class pongThree {
 		this.gamePaused = false;
 		this.gameStart = false;
 		this.timer = new Timer();
-		this.keys = { ArrowUp: false, ArrowDown: false, KeyW: false, KeyS: false };
 		
 		const usernamesString = localStorage.getItem('pongUsernames');
 		this.usernames = usernamesString ? JSON.parse(usernamesString) : {
@@ -51,6 +50,12 @@ export class pongThree {
 		this.keybinds = keybindsString ? JSON.parse(keybindsString) : {
 			lUp : 'KeyW', lDown : 'KeyS', lMini: 'KeyE',
 			rUp : 'ArrowUp', rDown : 'ArrowDown', rMini: 'ArrowRight'
+		};
+		this.keys = {
+			[this.keybinds.rUp]: false,
+			[this.keybinds.rDown]: false,
+			[this.keybinds.lUp]: false,
+			[this.keybinds.lDown]: false
 		};
 
 		const objectiveString = localStorage.getItem('pongObjective');
@@ -113,10 +118,10 @@ export class pongThree {
 		const paddleSpeed = 0.1;
 		const zBound = 8.5 - 2.5;
 
-		if (this.keys.ArrowUp) this.objects.paddleRight.position.z -= paddleSpeed;
-		if (this.keys.ArrowDown) this.objects.paddleRight.position.z += paddleSpeed;
-		if (this.keys.KeyW) this.objects.paddleLeft.position.z -= paddleSpeed;
-		if (this.keys.KeyS) this.objects.paddleLeft.position.z += paddleSpeed;
+		if (this.keys[this.keybinds.rUp]) this.objects.paddleRight.position.z -= paddleSpeed;
+		if (this.keys[this.keybinds.rDown]) this.objects.paddleRight.position.z += paddleSpeed;
+		if (this.keys[this.keybinds.lUp]) this.objects.paddleLeft.position.z -= paddleSpeed;
+		if (this.keys[this.keybinds.lDown]) this.objects.paddleLeft.position.z += paddleSpeed;
 
 		this.objects.paddleLeft.position.z = Math.max(-zBound, Math.min(zBound, this.objects.paddleLeft.position.z));
 		this.objects.paddleRight.position.z = Math.max(-zBound, Math.min(zBound, this.objects.paddleRight.position.z));
