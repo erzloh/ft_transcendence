@@ -53,10 +53,6 @@ export function settings() {
 
 	// Apply the graphics setting from the local storage
 	let graphicsSetting = localStorage.getItem('graphics');
-	if (!graphicsSetting) {
-		localStorage.setItem('graphics', 'medium');
-		graphicsSetting = 'medium';
-	}
 
 	if (graphicsSetting === 'ultra') {
 		ultraRadio.checked = true;
@@ -67,10 +63,6 @@ export function settings() {
 	}
 
 	let noiseSetting = localStorage.getItem('noise');
-	if (!noiseSetting) {
-		localStorage.setItem('noise', 'on');
-		noiseSetting = 'on';
-	}
 
 	if (noiseSetting === 'on') {
 		noiseCheckbox.checked = true;
@@ -103,9 +95,7 @@ export function settings() {
 	const bigTextSetting = localStorage.getItem('bigText');
 	if (bigTextSetting === 'on') {
 		bigTextCheckbox.checked = true;
-		document.documentElement.style.fontSize = BIG_TEXT;
 	} else {
 		bigTextCheckbox.checked = false;
-		document.documentElement.style.fontSize = DEFAULT_TEXT;
 	}
 }
