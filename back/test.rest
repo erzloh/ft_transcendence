@@ -2,7 +2,7 @@ POST https://localhost/api/login
 Content-Type: application/json
 
 {
-    "username": "pascal",
+    "username": "louis",
     "password": "Pascal1234!"
 }
 
@@ -29,7 +29,7 @@ Cookie: jwt=4b72f1dd2d468b957be551f9d192cdc08d3ff4c1
 
 GET https://localhost/api/profile
 Content-Type: application/json
-Cookie: jwt=3464dab5b29ea5576b277276ca583b37c586de61
+Cookie: jwt=846e62ea89779a49b52160a5c5d0967044db66a2
 
 ###
 
