@@ -1,3 +1,8 @@
+
+networks:
+  transcendence:
+    driver: bridge 
+
 services:
   nginx:
     image: nginx
@@ -12,6 +17,8 @@ services:
       - media_volume:/usr/share/nginx/html/media
     depends_on:
       - web
+    networks:
+      - transcendence
 
   db:
     image: postgres
@@ -23,6 +30,8 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
+    networks:
+      - transcendence
   
   web:
     build:
@@ -43,12 +52,16 @@ services:
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+    networks:
+      - transcendence
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    networks:
+      - transcendence
 
 volumes:
   media_volume:
