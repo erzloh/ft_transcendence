@@ -45,6 +45,21 @@ To run this project locally, follow these steps:
 git clone https://github.com/erzloh/ft_transcendence.git
 cd ft_transcendence
 ```
+
+### Configure the Environment
+Create a `.env` file in the root directory and add the following environment variables:
+
+```bash
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_HOST=
+POSTGRES_PORT=
+DJANGO_SECRET_KEY=
+```
+
+Replace the values with your desired settings.
+
 ### Launch the Project
 Simply run the following command in your terminal at the root of the project:
 
