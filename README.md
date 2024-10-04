@@ -12,7 +12,7 @@
 - **Authentication System**: User registration, login, profile management, and game history tracking.
 - **Pong Game**: 
   - **1v1 Mode**: Compete with friends or against an AI.
-  - **Tournaments**: Create tournaments to play with friemds.
+  - **Tournaments**: Create tournaments to play with friends.
   - **3D Graphics**: Enhanced visuals powered by **Three.js** for a modern gaming feel.
 - **2-Player Pac-Man Game**:
   - **Character Selection**: Choose from different characters with unique abilities.
@@ -24,14 +24,14 @@
 ## Games
 
 ### Pong
-The prerequisite for this project was to recreate **Pong** using Javascript. We developed a **Pong** game that fits the aesthetic of **Satori** while maintaining the basic **Pong** mechanics. 
+The prerequisite for this project was to recreate **Pong** using Javascript. We developed a **Pong** game that fits the website's aesthetic while maintaining the basic **Pong** mechanics. 
 An AI opponent is available with two difficulty levels, and we created an **enhanced** game style that adds an active skill and new physics.
 A 3D version of the basic **Pong** was also developed to allow users to enjoy the game from new perspectives.
 
 ### Pacman
-This game has the apparence of the classic **Pacman** but functions as a **catch** game where the **Pacman** player must collect a set amount of point before the **Ghost** player catches them.
+This game has the appearance of the classic **Pacman** but functions as a **catch** game where the **Pacman** player must collect a set amount of points before the **Ghost** player catches them.
 Different characters are available for each role, each featuring unique **active skills** and **passive skills** to allow players to enjoy multiple styles of matchups.
-Players can choose from six different **maps** in addition to their preferred **theme**, making the game highly customisable.
+Players can choose from six different **maps** in addition to their preferred **theme**, making the game highly customizable.
 
 ## Installation & Setup
 
