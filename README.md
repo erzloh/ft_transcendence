@@ -1,6 +1,6 @@
 # satori
 
-**ft_transcendence** is our final project of **École 42 (Lausanne)**. It is an arcade-like website, we called **satori**, that brings together a **Pong** game, a 2-player **Pac-Man** game, and a variety of additional features such as **3D graphics, an AI opponent, user authentication and game statistics**. Particular emphasis was placed on delivering a **high-quality user experience** through a **modern-looking polished aesthetic**, prioritizing **accessibility, multi-language support, and a fully responsive interface**.
+**ft_transcendence** is our final project of **42 Lausanne**, a school belonging to the **42 Network**. It is an arcade-like website, we called **satori**, that brings together a **Pong** game, a 2-player **Pac-Man** game, and a variety of additional features such as **3D graphics, an AI opponent, user authentication and game statistics**. Particular emphasis was placed on delivering a **high-quality user experience** through a **modern-looking polished aesthetic**, prioritizing **accessibility, multi-language support, and a fully responsive interface**.
 
 ![satori_home](GitHub/satori_home.gif)
 
@@ -21,6 +21,18 @@
 - **Multi-language Support**: Available in multiple languages to cater to global users.
 - **Docker & Makefile**: Utilize Docker for containerized deployment and a Makefile for simplifying project launch and management.
 
+## Games
+
+### Pong
+The prerequisite for this project was to recreate **Pong** using Javascript. We developed a **Pong** game that fits the aesthetic of **Satori** while maintaining the basic **Pong** mechanics. 
+An AI opponent is available with two difficulty levels, and we created an **enhanced** game style that adds an active skill and new physics.
+A 3D version of the basic **Pong** was also developed to allow users to enjoy the game from new perspectives.
+
+### Pacman
+This game has the apparence of the classic **Pacman** but functions as a **catch** game where the **Pacman** player must collect a set amount of point before the **Ghost** player catches them.
+Different characters are available for each role, each featuring unique **active skills** and **passive skills** to allow players to enjoy multiple styles of matchups.
+Players can choose from six different **maps** in addition to their preferred **theme**, making the game highly customisable.
+
 ## Installation & Setup
 
 To run this project locally, follow these steps:
@@ -33,23 +45,8 @@ To run this project locally, follow these steps:
 git clone https://github.com/erzloh/ft_transcendence.git
 cd ft_transcendence
 ```
-
-### Configure the Environment
-Create a `.env` file in the root directory and add the following environment variables:
-
-```bash
-POSTGRES_DB=
-POSTGRES_USER=
-POSTGRES_PASSWORD=
-POSTGRES_HOST=
-POSTGRES_PORT=
-DJANGO_SECRET_KEY=
-```
-
-Replace the values with your desired settings.
-
 ### Launch the Project
-Simply run the following command in your terminal:
+Simply run the following command in your terminal at the root of the project:
 
 ```bash
 make
@@ -83,10 +80,10 @@ Now, your application should be up and running on https://localhost 🎉!
 
 ## Contributors
 
-This project was developed by a collaborative team of 5 developers at École 42:
+This project was developed by a collaborative team of 5 developers at 42 Lausanne:
 
-- **[Eric Holzer]** - Frontend Developer & UI/UX Specialist
+- **[Eric Holzer]** - Frontend Developer | UI/UX Specialist
+- **[Sacha Da Silva]** - Game Developer (Pac-Man & Pong) | Frontend Developer (Game Menus)
 - **[Louis Bertholet]** - Backend Developer
-- **[Sacha Da Silva]** - Game Developer (Pac-Man & Pong)
-- **[Cyrill Gross]** - Game Developer (Pong) and 3D Specialist
+- **[Cyrill Gross]** - Game Developer (Pong) | 3D Specialist
 - **[Ethan Bernard]** - AI Developer (Pong)
