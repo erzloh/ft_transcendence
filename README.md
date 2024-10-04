@@ -1,6 +1,6 @@
 # satori
 
-**ft_transcendence** is our final project of **42 Lausanne**, a school belonging to the **42 Network**. It is an arcade-like website, we called **satori**, that brings together a **Pong** game, a 2-player **Pac-Man** game, and a variety of additional features such as **3D graphics, an AI opponent, user authentication and game statistics**. Particular emphasis was placed on delivering a **high-quality user experience** through a **modern-looking polished aesthetic**, prioritizing **accessibility, multi-language support, and a fully responsive interface**.
+**ft_transcendence** is our final project of **42 Lausanne**. It is an arcade-like website, we called **satori**, that brings together a **Pong** game, a 2-player **Pac-Man** game, and a variety of additional features such as **3D graphics, an AI opponent, user authentication and game statistics**. Particular emphasis was placed on delivering a **high-quality user experience** through a **modern-looking polished aesthetic**, prioritizing **accessibility, multi-language support, and a fully responsive interface**.
 
 ![satori_home](GitHub/satori_home.gif)
 
