@@ -1,6 +1,6 @@
 # satori
 
-**ft_transcendence** is our final project of **École 42**. It is an arcade-like website, we called **satori**, that brings together a **Pong** game, a 2-player **Pac-Man** game, and a variety of additional features such as **3D graphics, an AI opponent, user authentication and game statistics**. Particular emphasis was placed on delivering a **high-quality user experience** through a **modern-looking polished aesthetic**, prioritizing **accessibility, multi-language support, and a fully responsive interface**.
+**ft_transcendence** is our final project of **École 42 (Lausanne)**. It is an arcade-like website, we called **satori**, that brings together a **Pong** game, a 2-player **Pac-Man** game, and a variety of additional features such as **3D graphics, an AI opponent, user authentication and game statistics**. Particular emphasis was placed on delivering a **high-quality user experience** through a **modern-looking polished aesthetic**, prioritizing **accessibility, multi-language support, and a fully responsive interface**.
 
 ![satori_home](GitHub/satori_home.gif)
 
@@ -33,6 +33,21 @@ To run this project locally, follow these steps:
 git clone https://github.com/erzloh/ft_transcendence.git
 cd ft_transcendence
 ```
+
+### Configure the Environment
+Create a `.env` file in the root directory and add the following environment variables:
+
+```bash
+POSTGRES_DB=
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_HOST=
+POSTGRES_PORT=
+DJANGO_SECRET_KEY=
+```
+
+Replace the values with your desired settings.
+
 ### Launch the Project
 Simply run the following command in your terminal:
 
