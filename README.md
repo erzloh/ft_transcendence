@@ -53,12 +53,12 @@ Create a `.env` file in the root directory and add the following environment var
 POSTGRES_DB=
 POSTGRES_USER=
 POSTGRES_PASSWORD=
-POSTGRES_HOST=
-POSTGRES_PORT=
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
 DJANGO_SECRET_KEY=
 ```
 
-Replace the values with your desired settings.
+Replace the values with your desired settings to log to the database. PPOSTGRES_PORT must be 5432 and POSTGRES_HOST must be "db". If you don't put a django key, one will be created.
 
 ### Launch the Project
 Simply run the following command in your terminal at the root of the project:
