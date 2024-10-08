@@ -2,7 +2,7 @@ POST https://localhost/api/login
 Content-Type: application/json
 
 {
-    "username": "louis",
+    "username": "pascal",
     "password": "Pascal1234!"
 }
 

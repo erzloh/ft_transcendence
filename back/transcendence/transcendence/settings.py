@@ -1,14 +1,19 @@
 
 from pathlib import Path
+from django.core.management.utils import get_random_secret_key
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
-DEBUG = False
+if not SECRET_KEY:
+    print("WARNING: DJANGO_SECRET_KEY is not set in the environment variables, a random key is being used. This is not safe for production use.")
+    SECRET_KEY = get_random_secret_key()
 
-ALLOWED_HOSTS = ["*"]
+DEBUG = True
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
