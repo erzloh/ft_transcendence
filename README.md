@@ -58,7 +58,7 @@ POSTGRES_PORT=5432
 DJANGO_SECRET_KEY=
 ```
 
-Replace the values with your desired settings to log to the database. PPOSTGRES_PORT must be 5432 and POSTGRES_HOST must be "db". If you don't put a django key, one will be created.
+Replace the values with your desired settings to log to the database. POSTGRES_PORT must be 5432 and POSTGRES_HOST must be "db". If you don't put a django key, one will be created.
 
 ### Launch the Project
 Simply run the following command in your terminal at the root of the project:
