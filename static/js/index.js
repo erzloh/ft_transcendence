@@ -33,6 +33,9 @@ export const DEFAULT_TEXT = '16px';
 // Store interval IDs (to be able to clear them later)
 export const ids = {};
 
+const repoName = '/ft_transcendence';
+const isGithubPages = location.hostname.includes('github.io');
+
 // Store the current view
 let view = null;
 
@@ -71,7 +74,15 @@ const routes = [
 // Loads the view (HTML and JS) in the div with the id "app" according to the current path
 const router = async () => {
 	// Test if the current path is in the routes array
-	let match = routes.find(route => route.path === location.pathname);
+	let path = location.pathname;
+	if (isGithubPages && path.startsWith(repoName)) {
+		path = path.substring(repoName.length);
+	}
+	if (path === '') {
+		path = '/';
+	}
+	
+	let match = routes.find(route => route.path === path);
 	
 	// If the current path is not in the routes array, set the match to the NotFound view
     if (!match) {
@@ -114,7 +125,8 @@ const router = async () => {
 // Navigate to a new view
 export const navigateTo = url => {
 	// Change the URL to the new URL and add a state to the history stack
-    history.pushState(null, null, url);
+    const newUrl = isGithubPages ? repoName + url : url;
+    history.pushState(null, null, newUrl);
 
 	// Update the view
     router();
