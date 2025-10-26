@@ -287,10 +287,10 @@ export class PacmanMenu {
 				 <div class="row justify-content-center mt-2 mb-1">
 					<div class="col-10 d-flex justify-content-center">
 						<div class="d-flex justify-content-between w-100">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pac-man_high_res.png" alt="An image of pac-man." text="Pacman">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacWomanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pac-woman_high_res.png" alt="An image of pac-girl.">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacMIBSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pac-MIB_high_res.png" alt="An image of Pac-Man-In-Black.">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacventurerSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pac-venturer_high_res.png" alt="An image of pac-venturer.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacmanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="static/assets/pacman/images/pac-man_high_res.png" alt="An image of pac-man." text="Pacman">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacWomanSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="static/assets/pacman/images/pac-woman_high_res.png" alt="An image of pac-girl.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacMIBSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="static/assets/pacman/images/pac-MIB_high_res.png" alt="An image of Pac-Man-In-Black.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPacventurerSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="static/assets/pacman/images/pac-venturer_high_res.png" alt="An image of pac-venturer.">
 						</div>
 					</div>
 				</div>
@@ -300,7 +300,7 @@ export class PacmanMenu {
 						<hr class="text-white">
 						<div class="col-12 mb-1">
 							<p class="h5 text-left text-white fw-bold" id="pacmanTitle1" style="display: inline; vertical-align: middle;">Title</p>
-							<img src="/static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
+							<img src="static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
 							<p id="cooldown" class="h5 text-white" style="display: inline; vertical-align: middle;">00:00</p>
 						</div>
 						<p class="text-white text-left lh-sm" id="pacmanDesc1" style="min-height: 4em; line-height: 1;">Description 1</p>
@@ -384,10 +384,10 @@ export class PacmanMenu {
 				 <div class="row justify-content-center mt-2 mb-1">
 					<div class="col-10 d-flex justify-content-center">
 							<div class="d-flex justify-content-between w-100">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pBlueGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/blue-ghost_high_res.png" alt="An image of a blue ghost.">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pOrangeGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/orange-ghost_high_res.png" alt="An image of an orange ghost.">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pPinkGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/pink-ghost_high_res.png" alt="An image of a pink ghost.">
-							<img class="clickable" role="button" tabindex="0" width="64px" id="pGreenGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="/static/assets/pacman/images/green-ghost_high_res.png" alt="An image of a green ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pBlueGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="static/assets/pacman/images/blue-ghost_high_res.png" alt="An image of a blue ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pOrangeGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="static/assets/pacman/images/orange-ghost_high_res.png" alt="An image of an orange ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pPinkGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="static/assets/pacman/images/pink-ghost_high_res.png" alt="An image of a pink ghost.">
+							<img class="clickable" role="button" tabindex="0" width="64px" id="pGreenGhostSkin" style="border: 1px solid white; padding: 5px; border-radius: 5px;" src="static/assets/pacman/images/green-ghost_high_res.png" alt="An image of a green ghost.">
 						</div>
 					</div>
 				</div>
@@ -397,7 +397,7 @@ export class PacmanMenu {
 						<hr class="text-white">
 						<div class="col-12 mb-1">
 							<p class="h5 text-left text-white fw-bold" id="ghostTitle1" style="display: inline; vertical-align: middle;">Title</p>
-							<img src="/static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
+							<img src="static/assets/UI/icons/time.svg" style="width: 22px; margin-left:5px;  margin-right: -8px; vertical-align: middle;" alt="Clock Icon"/>
 							<p id="cooldown" class="h5 text-white" style="display: inline; vertical-align: middle;">00:00</p>
 						</div>
 						<p class="text-white text-left lh-sm" id="ghostDesc1" style="min-height: 4em; line-height: auto;">Description 1</p>
@@ -556,29 +556,29 @@ export class PacmanMenu {
 					<div class="row justify-content-center text-center mb-4">
 						<div class="col-4 d-flex flex-column align-items-center">
 							<p class="h4 text-white" data-translate="maze">maze</p>
-							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/maze.png" id="pMaze" alt="A map that has the form of a maze." tabindex="0"/>
 						</div>
 						<div class="col-4 d-flex flex-column align-items-center">
 							<p class="h4 text-white" data-translate="spiral">spiral</p>
-							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/spiral.png" id="pSpiral" alt="A map that has the form of a spiral." tabindex="0"/>
 						</div>
 						<div class="col-4 d-flex flex-column align-items-center">
 							<p class="h4 text-white" data-translate="butterfly">butterfly</p>
-							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/butterfly.png" id="pButterfly" alt="A map that has the form of a butterfly." tabindex="0"/>
 						</div>
 					</div>
 					<div class="row justify-content-center text-center">
 						<div class="col-4 d-flex flex-column align-items-center">
 							<p class="h4 text-white" data-translate="battlefield"></p>
-							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/battlefield.png" id="pBattlefield" alt="A map that looks like a battlefield." tabindex="0"/>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/battlefield.png" id="pBattlefield" alt="A map that looks like a battlefield." tabindex="0"/>
 						</div>
 						<div class="col-4 d-flex flex-column align-items-center">
 							<p class="h4 text-white" data-translate="trench"></p>
-							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/trench.png" id="pTrench" alt="A map that has a trench." tabindex="0"/>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/trench.png" id="pTrench" alt="A map that has a trench." tabindex="0"/>
 						</div>
 						<div class="col-4 d-flex flex-column align-items-center">
 							<p class="h4 text-white" data-translate="flower"></p>
-							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/flower.png" id="pFlower" alt="A map that looks like a flower." tabindex="0"/>
+							<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/flower.png" id="pFlower" alt="A map that looks like a flower." tabindex="0"/>
 						</div>
 					</div>
 				</div>
@@ -625,19 +625,19 @@ export class PacmanMenu {
 						<div class="row justify-content-center text-center">
 							<div class="col-3 d-flex flex-column align-items-center">
 								<p class="h4 text-white" data-translate="obsidian">obsidian</p>
-								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/obsidian.png" id="pObsidian" alt="A map that has the color of obsidian." tabindex="0"/>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/obsidian.png" id="pObsidian" alt="A map that has the color of obsidian." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
 								<p class="h4 text-white" data-translate="autumn">autumn</p>
-								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/autumn.png" id="pAutumn" alt="A map that has the color of autumn." tabindex="0"/>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/autumn.png" id="pAutumn" alt="A map that has the color of autumn." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
 								<p class="h4 text-white" data-translate="garden">garden</p>
-								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/garden.png" id="pGarden" alt="A map that has the color of a garden." tabindex="0"/>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/garden.png" id="pGarden" alt="A map that has the color of a garden." tabindex="0"/>
 							</div>
 							<div class="col-3 d-flex flex-column align-items-center">
 								<p class="h4 text-white" data-translate="retro">retro</p>
-								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="/static/assets/pacman/images/retro.png" id="pRetro" alt="A map that has the color of the retro pac-man." tabindex="0"/>
+								<img class="img-fluid clickable" style="max-height: 275px; border: 1px solid white; padding: 5px; border-radius: 5px;" role="button" src="static/assets/pacman/images/retro.png" id="pRetro" alt="A map that has the color of the retro pac-man." tabindex="0"/>
 							</div>
 						</div>
 					</div>
