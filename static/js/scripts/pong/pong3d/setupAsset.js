@@ -12,7 +12,7 @@ export async function loadModels(scene) {
     const loader = new GLTFLoader();
     
     return new Promise((resolve, reject) => {
-        loader.load('/static/assets/pong/scene.gltf', (gltf) => {
+        loader.load('static/assets/pong/scene.gltf', (gltf) => {
             scene.add(gltf.scene);
 
             const ball = gltf.scene.getObjectByName('Ball');
@@ -43,7 +43,7 @@ export async function loadFonts(scene) {
     const fontLoader = new FontLoader();
 
     return new Promise((resolve, reject) => {
-        fontLoader.load('/static/assets/pong/Orbitron_Regular.json', (font) => {
+        fontLoader.load('static/assets/pong/Orbitron_Regular.json', (font) => {
             const textMaterial = new THREE.MeshStandardMaterial({
                 color: 0xffffff,
                 emissive: 0xffffff,

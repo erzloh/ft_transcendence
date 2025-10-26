@@ -729,11 +729,11 @@ export class PacmanMenu {
 	}
 
 	setPacmanSkinImage() {
-		this.imgCurrentPacSkin.src = "/static/assets/pacman/images/" + this.pacmanSkin + "_high_res.png";
+		this.imgCurrentPacSkin.src = "static/assets/pacman/images/" + this.pacmanSkin + "_high_res.png";
 	}
 
 	setGhostSkinImage() {
-		this.imgCurrentGhostSkin.src = "/static/assets/pacman/images/" + this.ghostSkin + "_high_res.png";
+		this.imgCurrentGhostSkin.src = "static/assets/pacman/images/" + this.ghostSkin + "_high_res.png";
 	}
 
 	selectGamemode(event, gamemode) {

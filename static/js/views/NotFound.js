@@ -8,6 +8,6 @@ export default class extends AbstractView {
     }
 
     async getHtml() {
-        return (await fetch(`${BASE_URL}/static/html/notFound.html`)).text();
+        return (await fetch(`${BASE_URL}static/html/notFound.html`)).text();
     }
 }

@@ -10,7 +10,7 @@ export default class Pong extends AbstractView {
     }
 
     async getHtml() {
-        return (await fetch("/static/html/pong3d.html")).text();
+        return (await fetch("static/html/pong3d.html")).text();
     }
 
     loadJS() {
