@@ -4,6 +4,14 @@
 
 ![satori_home](GitHub/satori_home.gif)
 
+## Live Demo
+
+The frontend of this project is deployed on GitHub Pages and can be accessed at the following URL:
+
+[https://erzloh.github.io/ft_transcendence/](https://erzloh.github.io/ft_transcendence/)
+
+**Note:** This is a frontend-only deployment. As a result, backend-dependent features such as user authentication, profile management, and game statistics are not functional. Keep reading to learn how to install and run the full project on your machine.
+
 ## Features & Tech Stack
 
 - **Modern Frontend**: A rich UI designed with **Bootstrap** and custom **CSS/SCSS**, providing a polished aesthetic.
