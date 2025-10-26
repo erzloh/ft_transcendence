@@ -11972,7 +11972,7 @@ html, body {
   padding: 0;
   font-variant-ligatures: no-common-ligatures;
   overflow-x: hidden;
-  cursor: url("/static/assets/UI/icons/cursor_big.svg") 15 15, auto;
+  cursor: url("static/assets/UI/icons/cursor_big.svg") 15 15, auto;
   height: 100%;
 }
 
@@ -12018,16 +12018,16 @@ button {
 }
 
 input, select, a, .clickable {
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer !important;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer !important;
 }
 
 label {
-  cursor: url("/static/assets/UI/icons/cursor_big.svg") 15 15, auto;
+  cursor: url("static/assets/UI/icons/cursor_big.svg") 15 15, auto;
 }
 
 .btn:hover {
   border: 1px solid white;
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 
 .btn-filled {
@@ -12292,7 +12292,7 @@ label {
   pointer-events: none;
   width: 25px;
   height: 25px;
-  background-image: url("/static/assets/UI/icons/asterix.svg");
+  background-image: url("static/assets/UI/icons/asterix.svg");
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -12501,7 +12501,7 @@ button:focus,
 .user-element .plus-icon-list:hover {
   filter: brightness(0.7);
   rotate: 90deg;
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 .user-element p {
   display: inline;
@@ -12535,7 +12535,7 @@ button:focus,
 .friend-element .minus-icon-list:hover {
   filter: brightness(0.7);
   rotate: 180deg;
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 .friend-element p {
   display: inline;
@@ -12569,16 +12569,16 @@ button:focus,
 #rangeInput::-webkit-slider-runnable-track {
   width: 100%;
   height: 20px;
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
-  background: url("/static/assets/pacman/images/food2.png") repeat-x;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  background: url("static/assets/pacman/images/food2.png") repeat-x;
   border: none;
 }
 
 #rangeInput::-moz-range-track {
   width: 100%;
   height: 20px;
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
-  background: url("/static/assets/pacman/images/food2.png") repeat-x;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  background: url("static/assets/pacman/images/food2.png") repeat-x;
   border: none;
 }
 
@@ -12587,9 +12587,9 @@ button:focus,
   appearance: none;
   width: 40px;
   height: 40px;
-  background: url("/static/assets/pacman/images/pac-man_high_res.png") no-repeat;
+  background: url("static/assets/pacman/images/pac-man_high_res.png") no-repeat;
   background-size: cover;
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
   border: none;
   margin-top: -10px;
 }
@@ -12597,9 +12597,9 @@ button:focus,
 #rangeInput::-moz-range-thumb {
   width: 40px;
   height: 40px;
-  background: url("/static/assets/pacman/images/pac-man_high_res.png") no-repeat;
+  background: url("static/assets/pacman/images/pac-man_high_res.png") no-repeat;
   background-size: cover;
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
   border: none;
 }
 
@@ -12665,15 +12665,15 @@ button:focus,
   height: 8px;
   background: transparent;
   outline: none;
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 #pongRangeInput::-webkit-slider-thumb {
   background: rgb(220, 250, 255);
-  cursor: url("/static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
+  cursor: url("static/assets/UI/icons/cursor_pointer_big.svg") 15 15, pointer;
 }
 #pongRangeInput::-webkit-slider-runnable-track {
   background: rgba(255, 255, 255, 0.5);
-  cursor: url("/static/assets/UI/icons/cursor_big.svg") 15 15, auto;
+  cursor: url("static/assets/UI/icons/cursor_big.svg") 15 15, auto;
 }
 
 .pong-interface-container {
