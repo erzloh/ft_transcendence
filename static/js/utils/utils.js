@@ -22,7 +22,7 @@ export const attachEventListenersToLinks = () => {
 	links.forEach(link => {
 		link.addEventListener("click", e => {
 			e.preventDefault();
-			navigateTo(link.href);
+			navigateTo(link.pathname);
 		});
 	});
 }
