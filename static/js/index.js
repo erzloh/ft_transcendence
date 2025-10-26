@@ -26,7 +26,7 @@ import { applySettings } from "./utils/applySettings.js";
 import { attachEventListenersToLinks } from "./utils/utils.js";
 
 // ------------------------------- CONFIGURE GLOBAL VARIABLES -------------------------------
-export const BASE_URL = "https://localhosthttps://erzloh.github.io/ft_transcendence";
+export const BASE_URL = "https://erzloh.github.io/ft_transcendence";
 export const BIG_TEXT = '20px';
 export const DEFAULT_TEXT = '16px';
 
